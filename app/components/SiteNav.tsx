@@ -12,7 +12,7 @@ const NAV_ITEMS = [
   { label: "Rooms", href: "/#rooms", hasMenu: true },
   { label: "Activities", href: "/#amenities" },
   { label: "Gallery", href: "/#journal" },
-  { label: "Blog", href: "/#journal" },
+  { label: "Blog", href: "/blog" },
   { label: "Contact Us", href: "/#book" },
 ];
 
@@ -32,6 +32,34 @@ const itemVariants: Variants = {
     transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } 
   },
 };
+
+// Small helper so internal routes (like /blog) use Next's Link for fast client-side nav,
+// while in-page anchors (#faq, #rooms, etc.) stay as plain anchors for smooth scrolling.
+function NavLink({
+  href,
+  className,
+  onClick,
+  children,
+}: {
+  href: string;
+  className?: string;
+  onClick?: () => void;
+  children: React.ReactNode;
+}) {
+  const isHashLink = href.includes("#");
+  if (isHashLink) {
+    return (
+      <a href={href} className={className} onClick={onClick}>
+        {children}
+      </a>
+    );
+  }
+  return (
+    <Link href={href} className={className} onClick={onClick}>
+      {children}
+    </Link>
+  );
+}
 
 export function SiteNav() {
   const { scrollY } = useScroll();
@@ -148,14 +176,14 @@ export function SiteNav() {
                   </AnimatePresence>
                 </div>
               ) : (
-                <motion.a
-                  key={item.label}
-                  href={item.href}
-                  variants={itemVariants} 
-                  className="relative text-[13px] font-bold tracking-wide text-ink-900 transition-colors duration-300 inline-flex items-center gap-1 group px-3 py-2 rounded-full hover:bg-ink-900/5"
-                >
-                  {item.label}
-                </motion.a>
+                <motion.div key={item.label} variants={itemVariants}>
+                  <NavLink
+                    href={item.href}
+                    className="relative text-[13px] font-bold tracking-wide text-ink-900 transition-colors duration-300 inline-flex items-center gap-1 group px-3 py-2 rounded-full hover:bg-ink-900/5"
+                  >
+                    {item.label}
+                  </NavLink>
+                </motion.div>
               )
             )}
           </motion.nav>
@@ -164,10 +192,10 @@ export function SiteNav() {
           <motion.a
             href="#book"
             variants={itemVariants}
-            className="inline-flex items-center gap-2 rounded-full bg-accent-emerald px-6 py-2.5 text-xs sm:text-sm font-bold text-beige-100 transition-all duration-300 hover:bg-ink-700 hover:-translate-y-0.5 shadow-[var(--shadow-soft)] whitespace-nowrap"
+            className="inline-flex items-center gap-2 rounded-full bg-accent-emerald px-6 py-2.5 text-xs sm:text-sm font-bold transition-all duration-300 hover:bg-ink-700 hover:-translate-y-0.5 shadow-[var(--shadow-soft)] whitespace-nowrap"
           >
-            Book Now
-            <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden>
+            <span className="text-yellow-400 group-hover:text-yellow-300">Book Now</span>
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden className="text-beige-100">
               <path d="M1 7H13M13 7L7.5 1.5M13 7L7.5 12.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </motion.a>
@@ -177,15 +205,15 @@ export function SiteNav() {
         <div className="flex items-center gap-3 lg:hidden">
           <a
             href="#book"
-            className="inline-flex items-center gap-2 rounded-full bg-accent-emerald px-4 py-2 text-xs font-bold text-beige-100 transition-all duration-300 hover:bg-ink-700 shadow-[var(--shadow-soft)] whitespace-nowrap sm:hidden"
+            className="inline-flex items-center gap-2 rounded-full bg-accent-emerald px-4 py-2 text-xs font-bold transition-all duration-300 hover:bg-ink-700 shadow-[var(--shadow-soft)] whitespace-nowrap sm:hidden"
           >
-            Book
+            <span className="text-yellow-400">Book</span>
           </a>
           <a
             href="#book"
-            className="hidden sm:inline-flex items-center gap-2 rounded-full bg-accent-emerald px-5 py-2.5 text-sm font-bold text-beige-100 transition-all duration-300 hover:bg-ink-700 shadow-[var(--shadow-soft)] whitespace-nowrap"
+            className="hidden sm:inline-flex items-center gap-2 rounded-full bg-accent-emerald px-5 py-2.5 text-sm font-bold transition-all duration-300 hover:bg-ink-700 shadow-[var(--shadow-soft)] whitespace-nowrap"
           >
-            Book Now
+            <span className="text-yellow-400">Book Now</span>
           </a>
           <button
             type="button"
@@ -269,17 +297,20 @@ export function SiteNav() {
                     </AnimatePresence>
                   </div>
                 ) : (
-                  <motion.a
+                  <motion.div
                     key={item.label}
-                    href={item.href}
-                    onClick={() => setMobileOpen(false)}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.05 }}
-                    className="px-3 py-3 rounded-lg text-sm font-bold text-ink-900 hover:bg-beige-200 transition-colors"
                   >
-                    {item.label}
-                  </motion.a>
+                    <NavLink
+                      href={item.href}
+                      onClick={() => setMobileOpen(false)}
+                      className="block px-3 py-3 rounded-lg text-sm font-bold text-ink-900 hover:bg-beige-200 transition-colors"
+                    >
+                      {item.label}
+                    </NavLink>
+                  </motion.div>
                 )
               )}
             </nav>
