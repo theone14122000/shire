@@ -10,7 +10,7 @@ import { Container } from "../ui/Container";
 import { SectionHeading } from "../ui/SectionHeading";
 
 /* ------------------------------------------------------------------ */
-/*  Card data — reuses the same images as their linked blog posts      */
+/*  Card data — kitchen card now uses its own dedicated hero image     */
 /* ------------------------------------------------------------------ */
 const CARDS = [
   {
@@ -19,7 +19,7 @@ const CARDS = [
     href: "/blog/best-time-to-visit-fagu",
   },
   {
-    image: "/images/blog-why-choose-shire.jpg",
+    image: "/images/kitchen-hero.jpg",
     alt: "The shire's in-house kitchen preparing a meal",
     href: "/kitchen",
   },
