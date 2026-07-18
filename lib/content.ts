@@ -42,8 +42,12 @@ export const hero = {
   primaryCta: { label: "Book Your Stay", href: "#rooms" },
   secondaryCta: { label: "Take the Virtual Walkthrough", href: "#walkthrough" },
   meta: [
-    { label: "Location", value: "Pagey, near Kalpa" },
-    { label: "Capacity", value: "6 rooms · full shire" },
+    {
+      label: "Location",
+      value: "Pagey, near Kalpa",
+      href: "https://www.google.com/maps?ll=31.066671,77.309332&z=13&t=m&hl=en&gl=IN&mapclient=embed&cid=4674173627328913394",
+    },
+    { label: "Capacity", value: "7 rooms · full shire" },
     { label: "Seasons", value: "Open year-round" },
     { label: "Rating", value: "4.7 / 5" },
   ],
