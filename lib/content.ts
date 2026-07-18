@@ -488,7 +488,10 @@ export const footer = {
       links: [
         { label: "himalayanshire@gmail.com", href: "mailto:" + brand.email },
         { label: "+91 81698 98066", href: "tel:+918169898066" },
-        { label: "Pagey, near Kalpa, Kinnaur", href: "#" },
+        {
+          label: "Fagu, Shimla",
+          href: "https://www.google.com/maps?ll=31.066671,77.309332&z=13&t=m&hl=en&gl=IN&mapclient=embed&cid=4674173627328913394",
+        },
       ],
     },
     {
