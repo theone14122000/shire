@@ -10,21 +10,21 @@ import { Container } from "../ui/Container";
 import { SectionHeading } from "../ui/SectionHeading";
 
 /* ------------------------------------------------------------------ */
-/*  Card data — images + blog links                                    */
+/*  Card data — reuses the same images as their linked blog posts      */
 /* ------------------------------------------------------------------ */
 const CARDS = [
   {
-    image: "/images/journal-orchard-trail.jpg",
+    image: "/images/blog-best-time-fagu.jpg",
     alt: "Sunlit apple orchard walking trail near Fagu",
     href: "/blog/best-time-to-visit-fagu",
   },
   {
-    image: "/images/journal-kitchen.jpg",
+    image: "/images/blog-why-choose-shire.jpg",
     alt: "The shire's in-house kitchen preparing a meal",
     href: "/blog/why-choose-the-himalayan-shire",
   },
   {
-    image: "/images/journal-winter-kinnaur.jpg",
+    image: "/images/blog-why-fagu.jpg",
     alt: "Snow-covered Himalayan landscape near Shimla",
     href: "/blog/why-choose-fagu-for-your-next-holiday",
   },
