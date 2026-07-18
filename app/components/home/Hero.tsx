@@ -14,8 +14,6 @@ import { hero } from "@/lib/content";
 const MAPS_URL =
   "https://www.google.com/maps?ll=31.066671,77.309332&z=13&t=m&hl=en&gl=IN&mapclient=embed&cid=4674173627328913394";
 
-const headingWords = "The Himalayan Shire".split(" ");
-
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
 
@@ -44,13 +42,11 @@ export function Hero() {
     mouseY.set(yPos * 40);
   }
 
-  // Stats: Location first (blinking, redirects to Google Maps), then the
-  // original three meta items — any duplicate "location / near Kalpa" entry
-  // from hero.meta is filtered out, and capacity is forced to "7 Rooms".
+  // Stats: Location first (live dot, redirects to Google Maps), then the
+  // original meta items — duplicate "location / near Kalpa" entries are
+  // filtered out, and capacity is forced to "7 Rooms".
   const restMeta = hero.meta
-    .filter(
-      (m) => !/location/i.test(m.label) && !/kalpa/i.test(m.value)
-    )
+    .filter((m) => !/location/i.test(m.label) && !/kalpa/i.test(m.value))
     .map((m) =>
       /capacit|room/i.test(m.label) ? { ...m, value: "7 Rooms" } : m
     );
@@ -61,8 +57,9 @@ export function Hero() {
       value: "View on Map",
       href: MAPS_URL,
       live: true,
+      icon: "pin" as const,
     },
-    ...restMeta,
+    ...restMeta.map((m) => ({ ...m, icon: iconFor(m.label) })),
   ];
 
   return (
@@ -72,7 +69,7 @@ export function Hero() {
       onMouseMove={handleMouseMove}
       className="relative h-[92vh] min-h-[620px] w-full overflow-hidden bg-ink-900"
     >
-      {/* Looping cinematic video background */}
+      {/* Cinematic video background */}
       <motion.div style={{ y }} className="absolute inset-0">
         <motion.div
           initial={{ scale: 1.15, opacity: 0 }}
@@ -98,7 +95,7 @@ export function Hero() {
             className="absolute inset-0 h-full w-full object-cover"
             aria-hidden="true"
           >
-            <source src="/videos/herobg.mp4" type="video/mp4" />
+            <source src="/videos/hero.mp4" type="video/mp4" />
           </video>
         </motion.div>
       </motion.div>
@@ -107,16 +104,6 @@ export function Hero() {
       <motion.div
         style={{ x: springX, y: springY }}
         className="pointer-events-none absolute left-1/2 top-1/3 h-[32rem] w-[32rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/10 blur-[120px] mix-blend-screen"
-        aria-hidden
-      />
-
-      {/* Film-grain / texture overlay for cinematic depth */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-[0.06] mix-blend-overlay"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
-        }}
         aria-hidden
       />
 
@@ -149,40 +136,33 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
           style={{ opacity: contentOpacity }}
-          className="mb-4 text-[10px] sm:text-xs uppercase tracking-[0.4em] text-white/50 font-bold"
+          className="mb-5 text-[10px] sm:text-xs uppercase tracking-[0.4em] text-white/50 font-bold"
         >
           Fagu · Shimla · Himachal Pradesh
         </motion.p>
 
-        <h1 className="overflow-hidden">
-          <motion.span
-            style={{ y: contentY, opacity: contentOpacity }}
-            className="flex flex-wrap justify-center gap-x-4 font-display text-[13vw] sm:text-6xl md:text-7xl lg:text-8xl font-black leading-[1.02] tracking-tight text-white/90"
+        {/* Single-line, fluidly-sized heading — no clipping, no wrap-overlap */}
+        <motion.h1
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          style={{ y: contentY, opacity: contentOpacity }}
+          className="font-display font-black text-white/95 leading-[1.05] tracking-tight whitespace-nowrap"
+        >
+          <span
+            style={{ fontSize: "clamp(2.4rem, 8vw, 6.5rem)" }}
+            className="block"
           >
-            {headingWords.map((word, i) => (
-              <motion.span
-                key={word}
-                initial={{ opacity: 0, y: 60 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.9,
-                  delay: 0.4 + i * 0.12,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                className="inline-block"
-              >
-                {word}
-              </motion.span>
-            ))}
-          </motion.span>
-        </h1>
+            The Himalayan Shire
+          </span>
+        </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.85, ease: [0.22, 1, 0.36, 1] }}
           style={{ opacity: contentOpacity }}
-          className="mt-6 max-w-[46ch] text-sm sm:text-base md:text-lg text-white/60 font-semibold leading-relaxed"
+          className="mt-7 max-w-[46ch] text-sm sm:text-base md:text-lg text-white/60 font-semibold leading-relaxed"
         >
           A private Himalayan hideaway of seven rooms, wrapped in deodar
           forest and mountain silence — crafted for those who seek stillness.
@@ -197,10 +177,10 @@ export function Hero() {
         >
           <a
             href="#book"
-            className="inline-flex items-center gap-2 rounded-full bg-accent-emerald px-7 py-3 text-sm font-bold transition-all duration-300 hover:-translate-y-0.5 hover:bg-ink-700 shadow-[var(--shadow-soft)]"
+            className="inline-flex items-center gap-2 rounded-full bg-amber-400 px-7 py-3 text-sm font-bold text-ink-900 transition-all duration-300 hover:-translate-y-0.5 hover:bg-amber-300 shadow-[0_8px_30px_rgba(251,191,36,0.35)]"
           >
-            <span className="text-yellow-400">Book Your Stay</span>
-            <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden className="text-white/90">
+            Book Your Stay
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden>
               <path d="M1 7H13M13 7L7.5 1.5M13 7L7.5 12.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </a>
@@ -231,7 +211,7 @@ export function Hero() {
         />
       </motion.div>
 
-      {/* Meta / stats strip */}
+      {/* Meta / stats strip — dynamic, per-stat icons, hover lift */}
       <motion.div
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -241,9 +221,17 @@ export function Hero() {
         <Container>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/10">
             {metaItems.map((m, i) => {
-              const content = (
+              const baseClass =
+                "group relative overflow-hidden bg-ink-900/60 px-4 py-3 sm:py-4 flex flex-col gap-1 transition-all duration-300 hover:bg-ink-800/70";
+
+              const inner = (
                 <>
-                  <span className="flex items-center gap-1.5 text-[10px] uppercase tracking-[0.22em] text-yellow-400/70 font-bold">
+                  {/* hover glow sweep */}
+                  <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-amber-400/10 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+
+                  <span className="relative flex items-center gap-1.5 text-[10px] uppercase tracking-[0.22em] text-amber-300/70 font-bold">
+                    <StatIcon name={m.icon} />
+                    {m.label}
                     {"live" in m && m.live && (
                       <motion.span
                         animate={{ opacity: [1, 0.2, 1], scale: [1, 1.3, 1] }}
@@ -252,19 +240,15 @@ export function Hero() {
                           repeat: Infinity,
                           ease: "easeInOut",
                         }}
-                        className="h-2 w-2 rounded-full bg-red-500 shadow-[0_0_8px_2px_rgba(239,68,68,0.7)]"
+                        className="ml-0.5 h-1.5 w-1.5 rounded-full bg-red-500 shadow-[0_0_8px_2px_rgba(239,68,68,0.7)]"
                       />
                     )}
-                    {m.label}
                   </span>
-                  <span className="text-sm sm:text-base text-yellow-400 font-bold">
+                  <span className="relative text-sm sm:text-lg text-amber-300 font-black tracking-tight group-hover:text-amber-200 transition-colors">
                     {m.value}
                   </span>
                 </>
               );
-
-              const baseClass =
-                "bg-ink-900/60 px-4 py-3 sm:py-4 flex flex-col gap-0.5";
 
               return (
                 <motion.div
@@ -282,17 +266,12 @@ export function Hero() {
                       href={m.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`${baseClass} group transition-colors hover:bg-ink-800/70 cursor-pointer`}
+                      className={`${baseClass} cursor-pointer`}
                     >
-                      <span className="flex items-center gap-1.5 text-[10px] uppercase tracking-[0.22em] text-yellow-400/70 font-bold">
-                        {content.props.children[0]}
-                      </span>
-                      <span className="text-sm sm:text-base text-yellow-400 font-bold group-hover:underline underline-offset-4 decoration-yellow-400/60">
-                        {m.value}
-                      </span>
+                      {inner}
                     </a>
                   ) : (
-                    <div className={baseClass}>{content}</div>
+                    <div className={baseClass}>{inner}</div>
                   )}
                 </motion.div>
               );
@@ -302,4 +281,57 @@ export function Hero() {
       </motion.div>
     </section>
   );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Small icon set for the stats strip                                 */
+/* ------------------------------------------------------------------ */
+function iconFor(label: string): "bed" | "calendar" | "leaf" {
+  if (/room|capacit|bed/i.test(label)) return "bed";
+  if (/check|date|night/i.test(label)) return "calendar";
+  return "leaf";
+}
+
+function StatIcon({ name }: { name: "pin" | "bed" | "calendar" | "leaf" }) {
+  const common = {
+    width: 11,
+    height: 11,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 2,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    "aria-hidden": true,
+  };
+
+  switch (name) {
+    case "pin":
+      return (
+        <svg {...common}>
+          <path d="M12 21s-7-6.5-7-11a7 7 0 1 1 14 0c0 4.5-7 11-7 11z" />
+          <circle cx="12" cy="10" r="2.5" />
+        </svg>
+      );
+    case "bed":
+      return (
+        <svg {...common}>
+          <path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6" />
+          <path d="M3 18h18M5 10V7a2 2 0 0 1 2-2h3v5" />
+        </svg>
+      );
+    case "calendar":
+      return (
+        <svg {...common}>
+          <rect x="3" y="5" width="18" height="16" rx="2" />
+          <path d="M16 3v4M8 3v4M3 10h18" />
+        </svg>
+      );
+    default:
+      return (
+        <svg {...common}>
+          <path d="M12 2C8 6 4 9 4 14a8 8 0 0 0 16 0c0-5-4-8-8-12z" />
+        </svg>
+      );
+  }
 }
