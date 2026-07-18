@@ -70,10 +70,10 @@ export const rooms = [
       "Stylish washroom with shower",
     ],
     images: [
+      "/images/rooms/chir-pine-4.jpg",
       "/images/rooms/chir-pine-1.jpg",
       "/images/rooms/chir-pine-2.jpg",
       "/images/rooms/chir-pine-3.jpg",
-      "/images/rooms/chir-pine-4.jpg",
       "/images/rooms/chir-pine-5.jpg",
     ],
   },
