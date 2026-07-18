@@ -75,13 +75,16 @@ export function Hero() {
       {/* Looping cinematic video background */}
       <motion.div style={{ y }} className="absolute inset-0">
         <motion.div
-          initial={{ scale: 1 }}
-          animate={{ scale: 1.08 }}
+          initial={{ scale: 1.15, opacity: 0 }}
+          animate={{ scale: 1.08, opacity: 1 }}
           transition={{
-            duration: 20,
-            repeat: Infinity,
-            repeatType: "reverse",
-            ease: "easeInOut",
+            opacity: { duration: 1.5, ease: [0.22, 1, 0.36, 1] },
+            scale: {
+              duration: 20,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut",
+            },
           }}
           className="absolute inset-0"
         >
@@ -95,9 +98,7 @@ export function Hero() {
             className="absolute inset-0 h-full w-full object-cover"
             aria-hidden="true"
           >
-            {/* Paste your video source(s) here — mp4 required, webm optional for smaller file size */}
-            <source src="/videos/hero.mp4" type="video/mp4" />
-            <source src="/videos/hero.webm" type="video/webm" />
+            <source src="/videos/herobg.mp4" type="video/mp4" />
           </video>
         </motion.div>
       </motion.div>
@@ -105,7 +106,7 @@ export function Hero() {
       {/* Floating ambient glow orb — reacts to cursor */}
       <motion.div
         style={{ x: springX, y: springY }}
-        className="pointer-events-none absolute left-1/2 top-1/3 h-[32rem] w-[32rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-beige-100/10 blur-[120px] mix-blend-screen"
+        className="pointer-events-none absolute left-1/2 top-1/3 h-[32rem] w-[32rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/10 blur-[120px] mix-blend-screen"
         aria-hidden
       />
 
@@ -141,35 +142,14 @@ export function Hero() {
         aria-hidden
       />
 
-      {/* Award badge */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-        className="absolute top-6 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:right-8 z-10"
-      >
-        <div className="flex items-center gap-2 rounded-full border border-beige-100/25 bg-ink-900/40 px-4 py-1.5 backdrop-blur-md shadow-lg">
-          <motion.span
-            animate={{ rotate: [0, 15, -15, 0] }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-            className="text-beige-100"
-          >
-            ★
-          </motion.span>
-          <span className="text-[10px] sm:text-xs uppercase tracking-[0.2em] font-bold text-beige-100/90">
-            Award-Winning Himalayan Retreat
-          </span>
-        </div>
-      </motion.div>
-
       {/* Centerpiece headline */}
       <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
         <motion.p
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
           style={{ opacity: contentOpacity }}
-          className="mb-4 text-[10px] sm:text-xs uppercase tracking-[0.4em] text-beige-100/70 font-bold"
+          className="mb-4 text-[10px] sm:text-xs uppercase tracking-[0.4em] text-white/50 font-bold"
         >
           Fagu · Shimla · Himachal Pradesh
         </motion.p>
@@ -177,7 +157,7 @@ export function Hero() {
         <h1 className="overflow-hidden">
           <motion.span
             style={{ y: contentY, opacity: contentOpacity }}
-            className="flex flex-wrap justify-center gap-x-4 font-display text-[13vw] sm:text-6xl md:text-7xl lg:text-8xl font-black leading-[1.02] tracking-tight text-beige-100"
+            className="flex flex-wrap justify-center gap-x-4 font-display text-[13vw] sm:text-6xl md:text-7xl lg:text-8xl font-black leading-[1.02] tracking-tight text-white/90"
           >
             {headingWords.map((word, i) => (
               <motion.span
@@ -186,7 +166,7 @@ export function Hero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
                   duration: 0.9,
-                  delay: 0.5 + i * 0.12,
+                  delay: 0.4 + i * 0.12,
                   ease: [0.22, 1, 0.36, 1],
                 }}
                 className="inline-block"
@@ -200,9 +180,9 @@ export function Hero() {
         <motion.p
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.8, delay: 0.85, ease: [0.22, 1, 0.36, 1] }}
           style={{ opacity: contentOpacity }}
-          className="mt-6 max-w-[46ch] text-sm sm:text-base md:text-lg text-beige-100/80 font-semibold leading-relaxed"
+          className="mt-6 max-w-[46ch] text-sm sm:text-base md:text-lg text-white/60 font-semibold leading-relaxed"
         >
           A private Himalayan hideaway of seven rooms, wrapped in deodar
           forest and mountain silence — crafted for those who seek stillness.
@@ -211,7 +191,7 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.2, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.8, delay: 1.05, ease: [0.22, 1, 0.36, 1] }}
           style={{ opacity: contentOpacity }}
           className="mt-9 flex flex-wrap items-center justify-center gap-4"
         >
@@ -220,13 +200,13 @@ export function Hero() {
             className="inline-flex items-center gap-2 rounded-full bg-accent-emerald px-7 py-3 text-sm font-bold transition-all duration-300 hover:-translate-y-0.5 hover:bg-ink-700 shadow-[var(--shadow-soft)]"
           >
             <span className="text-yellow-400">Book Your Stay</span>
-            <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden className="text-beige-100">
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden className="text-white/90">
               <path d="M1 7H13M13 7L7.5 1.5M13 7L7.5 12.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </a>
           <a
             href="#rooms"
-            className="inline-flex items-center gap-2 rounded-full border-2 border-beige-100/40 px-7 py-3 text-sm font-bold text-beige-100 transition-all duration-300 hover:-translate-y-0.5 hover:border-beige-100 hover:bg-beige-100/10"
+            className="inline-flex items-center gap-2 rounded-full border-2 border-white/30 px-7 py-3 text-sm font-bold text-white/80 transition-all duration-300 hover:-translate-y-0.5 hover:border-white/60 hover:text-white hover:bg-white/10"
           >
             Explore Rooms
           </a>
@@ -237,17 +217,17 @@ export function Hero() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.6 }}
+        transition={{ duration: 1, delay: 1.4 }}
         style={{ opacity: contentOpacity }}
         className="absolute bottom-28 sm:bottom-32 lg:bottom-36 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
       >
-        <span className="text-[10px] uppercase tracking-[0.3em] text-beige-100/70 font-bold">
+        <span className="text-[10px] uppercase tracking-[0.3em] text-white/50 font-bold">
           Scroll
         </span>
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-          className="h-8 w-[1px] bg-gradient-to-b from-beige-100/80 to-transparent"
+          className="h-8 w-[1px] bg-gradient-to-b from-white/60 to-transparent"
         />
       </motion.div>
 
@@ -256,10 +236,10 @@ export function Hero() {
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className="absolute inset-x-0 bottom-0 z-10 border-t border-beige-100/15 bg-ink-900/40 backdrop-blur-md"
+        className="absolute inset-x-0 bottom-0 z-10 border-t border-white/10 bg-ink-900/40 backdrop-blur-md"
       >
         <Container>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-beige-100/10">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/10">
             {metaItems.map((m, i) => {
               const content = (
                 <>
