@@ -21,7 +21,7 @@ const CARDS = [
   {
     image: "/images/blog-why-choose-shire.jpg",
     alt: "The shire's in-house kitchen preparing a meal",
-    href: "/blog/why-choose-the-himalayan-shire",
+    href: "/kitchen",
   },
   {
     image: "/images/blog-why-fagu.jpg",
