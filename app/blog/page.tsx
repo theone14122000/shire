@@ -68,7 +68,7 @@ const BLOG_POSTS = [
 ];
 
 /* ------------------------------------------------------------------ */
-/*  Sun rays — 12 alternating long / short (PRESERVED)                 */
+/*  Sun rays — 12 alternating long / short                             */
 /* ------------------------------------------------------------------ */
 const SUN_RAYS = Array.from({ length: 12 }, (_, i) => {
   const angle = (i * 30 * Math.PI) / 180;
@@ -83,7 +83,7 @@ const SUN_RAYS = Array.from({ length: 12 }, (_, i) => {
 });
 
 /* ------------------------------------------------------------------ */
-/*  Motion                                                             */
+/*  Motion (for everything EXCEPT the sun — sun is pure CSS below)     */
 /* ------------------------------------------------------------------ */
 const stagger: Variants = {
   hidden: {},
@@ -127,10 +127,20 @@ export default function BlogListingPage() {
   return (
     <main
       ref={pageRef}
-      className="relative min-h-screen isolate overflow-hidden bg-[#052e23] font-sans text-white selection:bg-amber-300/30 selection:text-amber-100"
+      className="min-h-screen bg-gradient-to-b from-emerald-900 via-[#022c22] to-emerald-950 font-sans text-white selection:bg-amber-500/30 selection:text-amber-100"
     >
+      {/* Premium Noise Texture Overlay */}
+      <div
+        aria-hidden
+        className="pointer-events-none fixed inset-0 z-[5] opacity-[0.04] mix-blend-overlay"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+        }}
+      />
+
       {/* ============================================================ */}
-      {/*  SUN ANIMATION — PRESERVED exactly (pure CSS keyframes).      */}
+      {/*  SUN ANIMATION — pure CSS keyframes (preserved exactly)       */}
       {/* ============================================================ */}
       <style>{`
         @keyframes sunDrift {
@@ -150,32 +160,13 @@ export default function BlogListingPage() {
         .sun-glow      { transform-origin: center; animation: sunGlow 4.5s ease-in-out infinite; }
       `}</style>
 
-      {/* Premium emerald depth — radial light pools */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10"
-        style={{
-          background:
-            "radial-gradient(70% 50% at 85% 5%, rgba(251,191,36,0.14) 0%, transparent 55%), radial-gradient(55% 45% at 10% 20%, rgba(16,185,129,0.22) 0%, transparent 60%), radial-gradient(90% 70% at 50% 110%, rgba(4,120,87,0.28) 0%, transparent 65%)",
-        }}
-      />
-      {/* Fine grain for tactile premium finish */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.05] mix-blend-overlay"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
-        }}
-      />
-
       <MotionConfig reducedMotion="user">
         <SiteNav />
 
         {/* Scroll-progress hairline */}
         <div className="pointer-events-none fixed inset-x-0 top-0 z-[60] h-[3px] bg-black/20">
           <motion.span
-            className="block h-full origin-left bg-gradient-to-r from-amber-400 via-amber-300 to-emerald-400"
+            className="block h-full origin-left bg-gradient-to-r from-amber-400 via-emerald-500 to-emerald-700"
             style={{ scaleX: scrollYProgress }}
           />
         </div>
@@ -185,16 +176,16 @@ export default function BlogListingPage() {
           {/* Parallax glows */}
           <motion.div
             aria-hidden
-            className="pointer-events-none absolute -left-24 top-10 h-80 w-80 rounded-full bg-amber-300/20 blur-[120px]"
+            className="pointer-events-none absolute -left-24 top-10 h-80 w-80 rounded-full bg-amber-400/15 blur-[120px]"
             style={reduce ? undefined : { y: glowLeftY }}
           />
           <motion.div
             aria-hidden
-            className="pointer-events-none absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-emerald-400/25 blur-[130px]"
+            className="pointer-events-none absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-emerald-500/15 blur-[130px]"
             style={reduce ? undefined : { y: glowRightY }}
           />
 
-          {/* ---- SUN (top-right) — CSS drift wrapper (PRESERVED) ---- */}
+          {/* ---- SUN (top-right) — CSS drift wrapper ---- */}
           <div
             aria-hidden
             className="sun-drift pointer-events-none absolute right-6 top-24 z-0 h-28 w-28 sm:right-12 sm:top-28 sm:h-40 sm:w-40 lg:right-[9%] lg:top-28 lg:h-52 lg:w-52"
@@ -211,15 +202,15 @@ export default function BlogListingPage() {
               viewport={{ once: true, amount: 0.3 }}
               className="mb-12 text-center"
             >
-              <span className="inline-flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-[0.22em] text-amber-300">
-                <span className="h-px w-6 bg-amber-400/70" aria-hidden />
+              <span className="inline-flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-[0.22em] text-amber-400">
+                <span className="h-px w-6 bg-amber-500" aria-hidden />
                 Blog
-                <span className="h-px w-6 bg-amber-400/70" aria-hidden />
+                <span className="h-px w-6 bg-amber-500" aria-hidden />
               </span>
               <h1 className="mt-4 font-display text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl">
-                Stories From The <span className="text-amber-400">Shire</span>
+                Stories From The Shire
               </h1>
-              <p className="mx-auto mt-4 max-w-2xl text-base font-medium text-emerald-100/70 sm:text-lg">
+              <p className="mx-auto mt-4 max-w-2xl text-base font-medium text-emerald-200/80 sm:text-lg">
                 Travel guides, behind-the-scenes stories, and practical tips for
                 your Himalayan getaway near Shimla.
               </p>
@@ -235,7 +226,7 @@ export default function BlogListingPage() {
                 className="mb-16"
               >
                 <Link href={`/blog/${featured.slug}`} className="group block">
-                  <div className="grid grid-cols-1 overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] shadow-lg shadow-emerald-950/40 backdrop-blur-md transition-all duration-500 hover:-translate-y-1 hover:border-amber-300/40 hover:shadow-2xl hover:shadow-emerald-950/60 lg:grid-cols-2">
+                  <div className="grid grid-cols-1 overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-lg backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-amber-400/30 hover:bg-white/[0.07] lg:grid-cols-2">
                     <div className="relative aspect-[16/10] overflow-hidden lg:aspect-auto">
                       <Image
                         src={featured.image}
@@ -245,29 +236,29 @@ export default function BlogListingPage() {
                         sizes="(max-width: 1024px) 100vw, 50vw"
                         priority
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/50 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                       <span className="absolute left-4 top-4 rounded-full bg-amber-400 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-emerald-950 shadow-sm">
                         Featured
                       </span>
                     </div>
 
                     <div className="flex flex-col justify-center gap-4 p-6 sm:p-8 lg:p-10">
-                      <div className="flex flex-wrap items-center gap-3 text-xs font-bold text-amber-300">
-                        <span className="rounded-full border border-white/10 bg-emerald-800/40 px-3 py-1">{featured.tag}</span>
-                        <span className="text-emerald-100/70">{featured.date}</span>
-                        <span className="text-emerald-100/40">·</span>
-                        <span className="text-emerald-100/70">{featured.readTime}</span>
+                      <div className="flex flex-wrap items-center gap-3 text-xs font-bold text-emerald-300">
+                        <span className="rounded-full bg-emerald-800/40 px-3 py-1 text-amber-300">{featured.tag}</span>
+                        <span>{featured.date}</span>
+                        <span>·</span>
+                        <span>{featured.readTime}</span>
                       </div>
-                      <h2 className="font-display text-2xl font-black leading-tight text-white transition-colors group-hover:text-amber-300 sm:text-3xl lg:text-4xl">
+                      <h2 className="font-display text-2xl font-black leading-tight text-white transition-colors group-hover:text-amber-50 sm:text-3xl lg:text-4xl">
                         {featured.title}
                       </h2>
-                      <p className="text-sm leading-relaxed text-emerald-100/70 sm:text-base">
+                      <p className="text-sm leading-relaxed text-emerald-200/80 sm:text-base">
                         {featured.excerpt}
                       </p>
-                      <div className="flex items-center gap-2 pt-2 text-sm font-bold text-amber-300">
+                      <div className="flex items-center gap-2 pt-2 text-sm font-bold text-amber-400">
                         <span>{featured.author}</span>
                       </div>
-                      <span className="mt-2 inline-flex items-center gap-2 text-sm font-bold text-amber-300 transition-colors group-hover:text-amber-200">
+                      <span className="mt-2 inline-flex items-center gap-2 text-sm font-bold text-amber-400 transition-colors group-hover:text-amber-300">
                         Read Article
                         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform group-hover:translate-x-1">
                           <path d="M1 7h12M8 2l5 5-5 5" />
@@ -290,7 +281,7 @@ export default function BlogListingPage() {
               {rest.map((post) => (
                 <motion.article key={post.slug} variants={fadeUp}>
                   <Link href={`/blog/${post.slug}`} className="group block h-full">
-                    <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] shadow-sm shadow-emerald-950/30 backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:border-amber-300/40 hover:bg-white/[0.06] hover:shadow-xl hover:shadow-emerald-950/50">
+                    <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-sm backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:border-amber-400/30 hover:bg-white/[0.07]">
                       <div className="relative aspect-[16/10] overflow-hidden">
                         <Image
                           src={post.image}
@@ -299,21 +290,20 @@ export default function BlogListingPage() {
                           className="object-cover transition-transform duration-700 group-hover:scale-105"
                           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/60 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                       </div>
                       <div className="flex flex-1 flex-col gap-3 p-5 sm:p-6">
                         <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-amber-300">
-                          <span className="rounded-full border border-white/10 bg-emerald-800/40 px-2.5 py-0.5">{post.tag}</span>
-                          <span className="text-emerald-100/60">{post.readTime}</span>
+                          <span className="rounded-full bg-emerald-800/40 px-2.5 py-0.5">{post.tag}</span>
+                          <span>{post.readTime}</span>
                         </div>
-                        <h3 className="font-display text-lg font-black leading-snug text-white transition-colors group-hover:text-amber-300 sm:text-xl">
+                        <h3 className="font-display text-lg font-black leading-snug text-white transition-colors group-hover:text-amber-50 sm:text-xl">
                           {post.title}
                         </h3>
-                        <p className="flex-1 text-sm leading-relaxed text-emerald-100/65">
+                        <p className="flex-1 text-sm leading-relaxed text-emerald-200/80">
                           {post.excerpt}
                         </p>
-                        <div className="flex items-center justify-between pt-2 text-xs text-emerald-100/50">
-                          <span className="font-bold text-amber-300">{post.author}</span>
+                        <div className="flex items-center justify-between pt-2 text-xs text-emerald-300">
+                          <span className="font-bold text-amber-400">{post.author}</span>
                           <span>{post.date}</span>
                         </div>
                         <span className="mt-3 h-1 w-8 rounded-full bg-amber-400 transition-all duration-500 group-hover:w-full" />
@@ -327,14 +317,11 @@ export default function BlogListingPage() {
         </section>
 
         {/* ===================== Trust Section ===================== */}
-        <section className="relative overflow-hidden border-t border-white/10 py-20 sm:py-24 lg:py-32">
-          {/* deeper emerald tone for this band */}
-          <div aria-hidden className="pointer-events-none absolute inset-0 bg-[#04241c]/60" />
-
-          {/* ---- SUN (left side) — CSS drift wrapper, reversed path (PRESERVED) ---- */}
+        <section className="relative overflow-hidden border-t border-white/10 bg-transparent py-20 sm:py-24 lg:py-32">
+          {/* ---- SUN (left side) — CSS drift wrapper, reversed path ---- */}
           <div
             aria-hidden
-            className="sun-drift-rev pointer-events-none absolute left-4 top-12 z-0 h-32 w-32 opacity-70 sm:left-10 sm:top-16 sm:h-44 sm:w-44 lg:left-[6%] lg:top-20 lg:h-56 lg:w-56"
+            className="sun-drift-rev pointer-events-none absolute left-4 top-12 z-0 h-32 w-32 opacity-60 sm:left-10 sm:top-16 sm:h-44 sm:w-44 lg:left-[6%] lg:top-20 lg:h-56 lg:w-56"
           >
             <SunMark />
           </div>
@@ -350,23 +337,23 @@ export default function BlogListingPage() {
                 className="flex flex-col gap-8 lg:col-span-5"
               >
                 <div>
-                  <motion.span variants={fadeUp} className="mb-4 inline-flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-[0.22em] text-amber-300">
-                    <span className="h-px w-6 bg-amber-400/70" aria-hidden />
+                  <motion.span variants={fadeUp} className="mb-4 inline-flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-[0.22em] text-amber-400">
+                    <span className="h-px w-6 bg-amber-500" aria-hidden />
                     {trustData.eyebrow}
                   </motion.span>
                   <motion.h2 variants={fadeUp} className="font-display text-4xl font-black tracking-tight text-white sm:text-5xl">
                     {trustData.heading}
                   </motion.h2>
-                  <motion.p variants={fadeUp} className="mt-4 text-base font-medium leading-relaxed text-emerald-100/75">
+                  <motion.p variants={fadeUp} className="mt-4 text-base font-medium leading-relaxed text-emerald-200/80">
                     {trustData.intro}
                   </motion.p>
                 </div>
 
                 <motion.div variants={fadeUp} className="grid grid-cols-2 gap-4">
                   {trustData.stats.map((stat, i) => (
-                    <div key={i} className="rounded-2xl border border-white/10 bg-white/[0.04] p-5 shadow-sm shadow-emerald-950/30 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-amber-300/40 hover:bg-white/[0.07] hover:shadow-md">
+                    <div key={i} className="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-white/10">
                       <div className="font-display text-3xl font-black text-amber-400">{stat.value}</div>
-                      <div className="mt-1 text-[10px] font-bold uppercase tracking-wider text-emerald-100/70">
+                      <div className="mt-1 text-[10px] font-bold uppercase tracking-wider text-emerald-200/70">
                         {stat.label}
                       </div>
                     </div>
@@ -380,7 +367,7 @@ export default function BlogListingPage() {
                 initial="hidden"
                 whileInView="show"
                 viewport={{ once: true, amount: 0.2 }}
-                className="rounded-3xl border border-white/10 bg-white p-4 shadow-xl shadow-emerald-950/40 sm:p-6 lg:col-span-7"
+                className="rounded-3xl border border-white/10 bg-white/5 p-4 backdrop-blur-md sm:p-6 lg:col-span-7"
               >
                 <div className="elfsight-app-b9e7c232-8950-4e65-9497-1821a28950e6" data-elfsight-app-lazy />
               </motion.div>
@@ -388,17 +375,17 @@ export default function BlogListingPage() {
           </div>
         </section>
 
+        {/* ===================== Footer ===================== */}
+        <SiteFooter />
+
         <Script src="https://elfsightcdn.com/platform.js" strategy="lazyOnload" />
       </MotionConfig>
-
-      {/* ===================== Footer ===================== */}
-      <SiteFooter />
     </main>
   );
 }
 
 /* ================================================================== */
-/*  SunMark — PRESERVED (halo + spinning rays + pulsing core)          */
+/*  SunMark — halo + spinning rays + pulsing core, ALL via CSS classes */
 /* ================================================================== */
 function SunMark() {
   const gid = useId().replace(/:/g, "");
