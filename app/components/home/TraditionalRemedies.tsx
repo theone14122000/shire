@@ -7,12 +7,12 @@ import { Container } from "../ui/Container";
 import { useRef } from "react";
 
 /* ------------------------------------------------------------------ */
-/*  Dark green text palette (tuned for #A4CE8B)                        */
+/*  Light text palette (tuned for dark emerald background)             */
 /* ------------------------------------------------------------------ */
 const TEXT = {
-  heading: "#0a1f08",
-  body: "#0d240a",
-  muted: "#122e0e",
+  heading: "#FFFFFF",
+  body: "#E4F3DC",
+  muted: "#BEE3B4",
   onChip: "#0a1f08",
   onButton: "#0a1f08",
 } as const;
@@ -92,24 +92,23 @@ export function TraditionalRemedies() {
     <section
       id="setting"
       ref={sectionRef}
-      className="relative scroll-mt-24 overflow-hidden py-20 sm:py-24 lg:py-32"
-      style={{ backgroundColor: "#A4CE8B" }}
+      className="relative scroll-mt-24 overflow-hidden py-20 sm:py-24 lg:py-32 bg-accent-emerald"
     >
       {/* ---- Animated decorative blobs with scroll-linked parallax ---- */}
       <motion.div
         aria-hidden
         className="pointer-events-none absolute -left-24 -top-24 h-[28rem] w-[28rem] rounded-full blur-[120px]"
-        style={{ y: blob1Y, backgroundColor: "rgba(10, 31, 8, 0.10)" }}
+        style={{ y: blob1Y, backgroundColor: "rgba(255, 255, 255, 0.08)" }}
       />
       <motion.div
         aria-hidden
         className="pointer-events-none absolute -bottom-24 -right-24 h-[28rem] w-[28rem] rounded-full blur-[120px]"
-        style={{ y: blob2Y, backgroundColor: "rgba(84, 107, 65, 0.15)" }}
+        style={{ y: blob2Y, backgroundColor: "rgba(164, 206, 139, 0.18)" }}
       />
       <motion.div
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full blur-[100px]"
-        style={{ x: blob3X, backgroundColor: "rgba(255, 255, 255, 0.25)" }}
+        style={{ x: blob3X, backgroundColor: "rgba(255, 255, 255, 0.12)" }}
       />
 
       {/* Faint warm ring, bottom-left (cohesive with the sun palette) */}
@@ -120,8 +119,8 @@ export function TraditionalRemedies() {
         transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
       >
         <div
-          className="h-24 w-24 rounded-full border border-dashed opacity-25"
-          style={{ borderColor: "rgba(232, 163, 23, 0.45)" }}
+          className="h-24 w-24 rounded-full border border-dashed opacity-30"
+          style={{ borderColor: "rgba(245, 200, 66, 0.55)" }}
         />
       </motion.div>
 
@@ -138,10 +137,10 @@ export function TraditionalRemedies() {
             className="order-2 lg:order-1 lg:col-span-6"
           >
             <div
-              className="group relative overflow-hidden rounded-[2.5rem] shadow-2xl transition-all duration-700 hover:shadow-[0_32px_64px_rgba(10,31,8,0.15)]"
+              className="group relative overflow-hidden rounded-[2.5rem] shadow-2xl transition-all duration-700 hover:shadow-[0_32px_64px_rgba(0,0,0,0.35)]"
               style={{
-                border: "6px solid rgba(10, 31, 8, 0.15)",
-                backgroundColor: "rgba(10, 31, 8, 0.10)",
+                border: "6px solid rgba(255, 255, 255, 0.15)",
+                backgroundColor: "rgba(255, 255, 255, 0.08)",
               }}
             >
               <div className="relative aspect-[4/5] overflow-hidden sm:aspect-square lg:aspect-[4/5]">
@@ -156,7 +155,7 @@ export function TraditionalRemedies() {
                 ) : (
                   <div
                     className="absolute inset-0 flex items-center justify-center"
-                    style={{ backgroundColor: "rgba(255, 255, 255, 0.50)" }}
+                    style={{ backgroundColor: "rgba(255, 255, 255, 0.10)" }}
                   >
                     <span className="italic" style={{ color: TEXT.muted }}>
                       Landscape View
@@ -164,7 +163,7 @@ export function TraditionalRemedies() {
                   </div>
                 )}
 
-                <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
 
                 <div className="absolute left-5 top-5">
                   <span
@@ -172,7 +171,7 @@ export function TraditionalRemedies() {
                     style={{
                       color: TEXT.onChip,
                       backgroundColor: "rgba(255, 255, 255, 0.92)",
-                      border: "1px solid rgba(10, 31, 8, 0.20)",
+                      border: "1px solid rgba(255, 255, 255, 0.30)",
                     }}
                   >
                     Near Shimla, Himachal Pradesh
@@ -235,7 +234,7 @@ export function TraditionalRemedies() {
               ))}
             </motion.div>
 
-            {/* Feature tags — hover float effect */}
+            {/* Feature tags — glassy hover float effect */}
             <motion.div variants={fadeUp} className="flex flex-wrap gap-2.5 pt-2">
               {["Bird Watching", "Sunrise Views", "Board Games", "Guided Hikes"].map(
                 (tag) => (
@@ -243,13 +242,14 @@ export function TraditionalRemedies() {
                     key={tag}
                     className="cursor-default rounded-lg px-4 py-1.5 text-xs font-bold backdrop-blur-sm"
                     style={{
-                      color: TEXT.onChip,
-                      backgroundColor: "rgba(255,255,255,0.92)",
-                      border: "1px solid rgba(10,31,8,0.20)",
+                      color: TEXT.heading,
+                      backgroundColor: "rgba(255,255,255,0.10)",
+                      border: "1px solid rgba(255,255,255,0.25)",
                     }}
                     whileHover={{
                       y: -4,
-                      boxShadow: "0 6px 16px rgba(10,31,8,0.10)",
+                      backgroundColor: "rgba(255,255,255,0.18)",
+                      boxShadow: "0 6px 16px rgba(0,0,0,0.25)",
                     }}
                     transition={{ type: "spring", stiffness: 400, damping: 15 }}
                   >
