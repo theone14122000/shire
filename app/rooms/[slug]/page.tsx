@@ -1,8 +1,10 @@
 import { rooms } from "@/lib/rooms";
 import { notFound } from "next/navigation";
-import { SiteNav } from "@/components/SiteNav";
-import { RoomPageContent } from "@/components/rooms/RoomPageContent";
-import { SiteFooter } from "@/components/SiteFooter";
+
+// 🔍 RELATIVE IMPORTS (adjust `../../` if your components live elsewhere)
+import { SiteNav } from "../../components/SiteNav";
+import { RoomPageContent } from "../../components/rooms/RoomPageContent";
+import { SiteFooter } from "../../components/SiteFooter";
 
 export async function generateStaticParams() {
   return rooms.map((room) => ({
