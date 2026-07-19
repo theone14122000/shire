@@ -32,7 +32,7 @@ const FAQS: Faq[] = [
         We have a total of seven bedrooms — all with attached washrooms. You
         can book any number of rooms, from just one room to all seven rooms.
         All the information about the seven rooms is mentioned in the{" "}
-        <Link href="/#rooms" className="font-bold text-emerald-800 underline decoration-emerald-400 underline-offset-2 hover:text-emerald-900">
+        <Link href="/#rooms" className="font-bold text-amber-400 underline decoration-amber-400/50 underline-offset-2 hover:text-amber-300">
           rooms section
         </Link>{" "}
         of the website.
@@ -62,7 +62,7 @@ const FAQS: Faq[] = [
           href={MAPS_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-bold text-emerald-800 underline decoration-emerald-400 underline-offset-2 hover:text-emerald-900"
+          className="font-bold text-amber-400 underline decoration-amber-400/50 underline-offset-2 hover:text-amber-300"
         >
           See the exact location on Google Maps
         </a>
@@ -102,7 +102,7 @@ const FAQS: Faq[] = [
           href="https://www.thehimalayanshire.com/activities/"
           target="_blank"
           rel="noopener noreferrer"
-          className="font-bold text-emerald-800 underline decoration-emerald-400 underline-offset-2 hover:text-emerald-900"
+          className="font-bold text-amber-400 underline decoration-amber-400/50 underline-offset-2 hover:text-amber-300"
         >
           this blog
         </a>{" "}
@@ -192,10 +192,20 @@ export default function FaqPage() {
   return (
     <main
       ref={pageRef}
-      className="min-h-screen bg-gradient-to-b from-[#c2e7c9] via-[#aedcb6] to-[#cdebd2] font-sans text-black"
+      className="min-h-screen bg-gradient-to-b from-emerald-900 via-[#022c22] to-emerald-950 font-sans text-white selection:bg-amber-500/30 selection:text-amber-100"
     >
+      {/* Premium Noise Texture Overlay */}
+      <div
+        aria-hidden
+        className="pointer-events-none fixed inset-0 z-[5] opacity-[0.04] mix-blend-overlay"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+        }}
+      />
+
       {/* ============================================================ */}
-      {/*  SUN ANIMATION — pure CSS keyframes, matches the blog page.   */}
+      {/*  SUN ANIMATION — pure CSS keyframes, preserved exactly.       */}
       {/* ============================================================ */}
       <style>{`
         @keyframes sunDrift {
@@ -219,7 +229,7 @@ export default function FaqPage() {
         <SiteNav />
 
         {/* Scroll-progress hairline */}
-        <div className="pointer-events-none fixed inset-x-0 top-0 z-[60] h-[3px] bg-emerald-950/10">
+        <div className="pointer-events-none fixed inset-x-0 top-0 z-[60] h-[3px] bg-black/20">
           <motion.span
             className="block h-full origin-left bg-gradient-to-r from-amber-400 via-emerald-500 to-emerald-700"
             style={{ scaleX: scrollYProgress }}
@@ -228,15 +238,15 @@ export default function FaqPage() {
 
         {/* ===================== Hero + FAQ List ===================== */}
         <section className="relative overflow-hidden py-16 sm:py-20 lg:py-24">
-          {/* Parallax glows */}
+          {/* Parallax glows (Gold and Emerald) */}
           <motion.div
             aria-hidden
-            className="pointer-events-none absolute -left-24 top-10 h-80 w-80 rounded-full bg-amber-200/40 blur-[120px]"
+            className="pointer-events-none absolute -left-24 top-10 h-80 w-80 rounded-full bg-amber-400/15 blur-[120px]"
             style={reduce ? undefined : { y: glowLeftY }}
           />
           <motion.div
             aria-hidden
-            className="pointer-events-none absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-emerald-400/30 blur-[130px]"
+            className="pointer-events-none absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-emerald-500/15 blur-[130px]"
             style={reduce ? undefined : { y: glowRightY }}
           />
 
@@ -257,15 +267,15 @@ export default function FaqPage() {
               viewport={{ once: true, amount: 0.3 }}
               className="mb-12 text-center sm:mb-16"
             >
-              <span className="inline-flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-[0.22em] text-emerald-800">
-                <span className="h-px w-6 bg-emerald-600" aria-hidden />
+              <span className="inline-flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-[0.22em] text-amber-400">
+                <span className="h-px w-6 bg-amber-500" aria-hidden />
                 FAQs
-                <span className="h-px w-6 bg-emerald-600" aria-hidden />
+                <span className="h-px w-6 bg-amber-500" aria-hidden />
               </span>
-              <h1 className="mt-4 font-display text-4xl font-black tracking-tight text-black sm:text-5xl lg:text-6xl">
+              <h1 className="mt-4 font-display text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl">
                 Frequently Asked Questions
               </h1>
-              <p className="mx-auto mt-4 max-w-2xl text-base font-medium text-emerald-950/75 sm:text-lg">
+              <p className="mx-auto mt-4 max-w-2xl text-base font-medium text-emerald-200/80 sm:text-lg">
                 Everything guests usually ask before booking a stay at The
                 Himalayan Shire, Fagu.
               </p>
@@ -292,18 +302,18 @@ export default function FaqPage() {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, amount: 0.3 }}
-              className="mt-14 flex flex-col items-center gap-4 rounded-3xl border border-emerald-300/60 bg-white/70 p-8 text-center shadow-sm backdrop-blur sm:mt-16"
+              className="mt-14 flex flex-col items-center gap-4 rounded-3xl border border-white/10 bg-white/5 p-8 text-center shadow-lg backdrop-blur-md sm:mt-16"
             >
-              <h2 className="font-display text-xl font-black text-black sm:text-2xl">
+              <h2 className="font-display text-xl font-black text-white sm:text-2xl">
                 Still have a question?
               </h2>
-              <p className="max-w-md text-sm text-neutral-700 sm:text-base">
+              <p className="max-w-md text-sm text-emerald-200/80 sm:text-base">
                 Reach out and we'll get back to you with everything you need
                 to plan your stay.
               </p>
               <Link
                 href="/#top"
-                className="inline-flex items-center gap-2 rounded-full bg-emerald-700 px-7 py-3 text-sm font-bold tracking-wide text-white shadow-lg shadow-emerald-700/30 transition-all duration-300 hover:-translate-y-0.5 hover:bg-emerald-800"
+                className="inline-flex items-center gap-2 rounded-full bg-amber-400 px-7 py-3 text-sm font-bold tracking-wide text-emerald-950 shadow-lg shadow-amber-400/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-amber-300"
               >
                 Get in Touch
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -325,14 +335,14 @@ export default function FaqPage() {
 }
 
 /* ================================================================== */
-/*  FAQ Accordion Item — smooth height/opacity reveal via AnimatePresence */
+/*  FAQ Accordion Item — Glassmorphism on Dark Emerald                 */
 /* ================================================================== */
 function FaqAccordionItem({ index, faq }: { index: number; faq: Faq }) {
   const [open, setOpen] = useState(false);
   const panelId = useId();
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-emerald-300/60 bg-white shadow-sm shadow-emerald-900/5 transition-colors duration-300 hover:border-emerald-400">
+    <div className="group overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-sm backdrop-blur-sm transition-all duration-300 hover:border-amber-400/30 hover:bg-white/[0.07]">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
@@ -341,10 +351,12 @@ function FaqAccordionItem({ index, faq }: { index: number; faq: Faq }) {
         className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left sm:px-6 sm:py-5"
       >
         <span className="flex items-center gap-3">
-          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-xs font-black text-emerald-800">
+          <span className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-black transition-colors duration-300 ${
+            open ? "bg-amber-400 text-emerald-950" : "bg-white/10 text-amber-400"
+          }`}>
             {String(index + 1).padStart(2, "0")}
           </span>
-          <span className="font-display text-base font-black leading-snug text-black sm:text-lg">
+          <span className="font-display text-base font-black leading-snug text-white transition-colors group-hover:text-amber-50 sm:text-lg">
             {faq.question}
           </span>
         </span>
@@ -360,7 +372,7 @@ function FaqAccordionItem({ index, faq }: { index: number; faq: Faq }) {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="shrink-0 text-emerald-700"
+          className="shrink-0 text-amber-400 transition-colors group-hover:text-amber-300"
           aria-hidden
         >
           <path d="M3 5l4 4 4-4" />
@@ -378,7 +390,7 @@ function FaqAccordionItem({ index, faq }: { index: number; faq: Faq }) {
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             className="overflow-hidden"
           >
-            <div className="px-5 pb-5 pl-16 text-sm leading-relaxed text-neutral-700 sm:px-6 sm:pb-6 sm:pl-[3.75rem] sm:text-base">
+            <div className="px-5 pb-5 pl-16 text-sm leading-relaxed text-emerald-100/90 sm:px-6 sm:pb-6 sm:pl-[3.75rem] sm:text-base">
               {faq.answer}
             </div>
           </motion.div>
