@@ -33,6 +33,16 @@ const fadeUp: Variants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
 };
 
+const wordUp: Variants = {
+  hidden: { opacity: 0, y: "0.5em", rotateX: -40 },
+  show: {
+    opacity: 1,
+    y: 0,
+    rotateX: 0,
+    transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] },
+  },
+};
+
 export function RoomPageContent({ room }: { room: Room }) {
   const heroRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
@@ -40,15 +50,21 @@ export function RoomPageContent({ room }: { room: Room }) {
     offset: ["start start", "end start"],
   });
 
-  const heroImageY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+  // Multi-layer parallax for depth
+  const heroImageY = useTransform(scrollYProgress, [0, 1], ["0%", "22%"]);
+  const heroImageScale = useTransform(scrollYProgress, [0, 1], [1.05, 1.18]);
+  const ghostTitleY = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
+  const ghostTitleX = useTransform(scrollYProgress, [0, 1], ["0%", "8%"]);
   const heroContentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
-  const backdropTextY = useTransform(scrollYProgress, [0, 1], ["0%", "-12%"]);
-  const backdropTextScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
+  const heroContentY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const springX = useSpring(mouseX, { stiffness: 35, damping: 18 });
-  const springY = useSpring(mouseY, { stiffness: 35, damping: 18 });
+  const springX = useSpring(mouseX, { stiffness: 40, damping: 20 });
+  const springY = useSpring(mouseY, { stiffness: 40, damping: 20 });
+  // Second orb drifts the opposite way for parallax richness
+  const orbX = useSpring(useMotionValue(0), { stiffness: 30, damping: 22 });
+  const orbY = useSpring(useMotionValue(0), { stiffness: 30, damping: 22 });
 
   function handleMouseMove(e: React.MouseEvent<HTMLElement>) {
     const rect = heroRef.current?.getBoundingClientRect();
@@ -57,6 +73,8 @@ export function RoomPageContent({ room }: { room: Room }) {
     const y = (e.clientY - rect.top) / rect.height - 0.5;
     mouseX.set(x * 30);
     mouseY.set(y * 30);
+    orbX.set(x * -50);
+    orbY.set(y * -50);
   }
 
   const bgImage = `/images/${room.slug}.jpg`;
@@ -67,24 +85,26 @@ export function RoomPageContent({ room }: { room: Room }) {
     { label: "Floor", value: room.floor, icon: "layers" as const },
   ];
 
+  const titleWords = room.name.split(" ");
+
   return (
     <>
       {/* ======================== */}
-      {/* HERO — dynamic cinematic background + overlapping glass panel */}
+      {/* HERO — dynamic layered cinematic background            */}
       {/* ======================== */}
       <section
         ref={heroRef}
         onMouseMove={handleMouseMove}
         className="relative flex h-[90vh] min-h-[600px] w-full items-end overflow-hidden bg-ink-900"
       >
-        {/* Dynamic background layer */}
-        <motion.div style={{ y: heroImageY }} className="absolute inset-0">
+        {/* Layer 1 — the room photo, dual parallax (translate + scale) */}
+        <motion.div style={{ y: heroImageY, scale: heroImageScale }} className="absolute inset-0">
           <motion.div
             initial={{ scale: 1.12, opacity: 0 }}
             animate={{ scale: 1.05, opacity: 1 }}
             transition={{
               opacity: { duration: 1.4, ease: [0.22, 1, 0.36, 1] },
-              scale: { duration: 24, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" },
+              scale: { duration: 22, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" },
             }}
             className="absolute inset-0"
           >
@@ -99,79 +119,91 @@ export function RoomPageContent({ room }: { room: Room }) {
           </motion.div>
         </motion.div>
 
-        {/* Animated gradient mesh overlay */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: "linear-gradient(135deg, rgba(6,78,59,0.45) 0%, rgba(15,23,42,0.6) 50%, rgba(245,158,11,0.25) 100%)",
-          }}
+        {/* Layer 2 — animated emerald→amber duotone wash */}
+        <motion.div
           aria-hidden
+          className="pointer-events-none absolute inset-0 mix-blend-soft-light"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: [0.4, 0.7, 0.4] }}
+          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+          style={{
+            background:
+              "linear-gradient(120deg, rgba(6,78,59,0.55) 0%, transparent 45%, rgba(251,191,36,0.28) 100%)",
+          }}
         />
 
-        {/* Cinematic grain */}
-        <div
-          className="absolute inset-0 pointer-events-none opacity-[0.06] mix-blend-overlay"
-          style={{
-            backgroundImage:
-              "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
-          }}
-          aria-hidden
-        />
-
-        {/* Floating ambient glow orb — emerald/gold tint */}
+        {/* Layer 3 — drifting emerald glow */}
         <motion.div
           style={{ x: springX, y: springY }}
-          className="pointer-events-none absolute left-1/2 top-1/3 h-[28rem] w-[28rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-400/15 blur-[130px] mix-blend-screen"
+          className="pointer-events-none absolute right-1/4 top-1/4 h-[24rem] w-[24rem] rounded-full bg-emerald-400/20 blur-[120px] mix-blend-screen"
+          aria-hidden
+        />
+        {/* Layer 4 — counter-drifting amber glow */}
+        <motion.div
+          style={{ x: orbX, y: orbY }}
+          className="pointer-events-none absolute bottom-1/4 left-1/4 h-[22rem] w-[22rem] rounded-full bg-amber-300/20 blur-[110px] mix-blend-screen"
           aria-hidden
         />
 
-        {/* Large decorative backdrop text */}
+        {/* Layer 5 — animated fine grid texture */}
         <motion.div
-          style={{ y: backdropTextY, scale: backdropTextScale }}
-          className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden"
           aria-hidden
-        >
-          <span className="select-none font-display text-[18vw] font-black leading-none tracking-tight text-white/5">
-            {room.name.split(" ")[0]}
-          </span>
-        </motion.div>
-
-        {/* Vignette + gradient for text legibility */}
-        <div
-          className="absolute inset-0 pointer-events-none"
+          className="pointer-events-none absolute inset-0 opacity-[0.12]"
+          animate={{ backgroundPosition: ["0px 0px", "40px 40px"] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
           style={{
-            background: "linear-gradient(to top, rgba(6,20,18,0.95) 0%, rgba(6,20,18,0.6) 35%, rgba(6,20,18,0.15) 70%, rgba(6,20,18,0.4) 100%)",
+            backgroundImage:
+              "linear-gradient(rgba(16,185,129,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(16,185,129,0.4) 1px, transparent 1px)",
+            backgroundSize: "40px 40px",
+          }}
+        />
+
+        {/* Overlapping GHOST title — huge, behind headline, parallax drift */}
+        <motion.span
+          aria-hidden
+          style={{ y: ghostTitleY, x: ghostTitleX }}
+          className="pointer-events-none absolute -bottom-4 left-0 z-[5] select-none whitespace-nowrap font-display text-[26vw] font-black uppercase leading-none tracking-tighter text-white/[0.06] sm:text-[22vw] lg:text-[18vw]"
+        >
+          {room.category}
+        </motion.span>
+
+        {/* Vignette + gradient for text legibility (emerald-tinted) */}
+        <div
+          className="absolute inset-0 z-[6] pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(to top, rgba(4,22,18,0.94) 0%, rgba(4,22,18,0.5) 42%, rgba(4,22,18,0.12) 66%, rgba(4,22,18,0.4) 100%)",
           }}
           aria-hidden
         />
 
-        {/* Urgency pill */}
+        {/* Urgency pill — floating glass badge, top */}
         <motion.div
           initial={{ opacity: 0, y: -14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="absolute left-1/2 top-6 z-20 -translate-x-1/2 sm:left-8 sm:translate-x-0"
+          className="absolute left-1/2 top-6 z-20 -translate-x-1/2 sm:left-6 sm:translate-x-0"
         >
-          <div className="inline-flex items-center gap-2 rounded-full border border-amber-400/30 bg-amber-500/10 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.16em] text-amber-200 backdrop-blur-md">
+          <div className="inline-flex items-center gap-2 rounded-full border border-amber-300/25 bg-emerald-950/40 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.16em] text-white/85 backdrop-blur-md">
             <motion.span
               animate={{ opacity: [1, 0.3, 1], scale: [1, 1.4, 1] }}
               transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
               className="h-1.5 w-1.5 rounded-full bg-amber-400 shadow-[0_0_8px_2px_rgba(251,191,36,0.6)]"
             />
-            4 guests viewing {room.name} right now
+            4 guests viewing <span className="text-amber-300">{room.name}</span> right now
           </div>
         </motion.div>
 
         {/* Back link */}
         <motion.div
-          initial={{ opacity: 0, x: 14 }}
+          initial={{ opacity: 0, x: -14 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="absolute right-8 top-6 z-20"
+          className="absolute right-6 top-6 z-20 sm:left-6 sm:right-auto"
         >
           <Link
             href="/#rooms"
-            className="group inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-bold text-white/80 backdrop-blur-md transition-colors hover:bg-white/20 hover:text-white"
+            className="group inline-flex items-center gap-2 rounded-full border border-emerald-300/20 bg-emerald-950/40 px-4 py-2 text-xs font-bold text-white/80 backdrop-blur-md transition-colors hover:border-amber-300/50 hover:bg-emerald-900/60 hover:text-amber-200"
           >
             <svg width="12" height="12" viewBox="0 0 14 14" fill="none" className="transition-transform group-hover:-translate-x-1">
               <path d="M13 7H1M1 7L6.5 1.5M1 7L6.5 12.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
@@ -180,78 +212,111 @@ export function RoomPageContent({ room }: { room: Room }) {
           </Link>
         </motion.div>
 
-        {/* Overlapping glass content panel */}
+        {/* Centerpiece content */}
         <motion.div
-          style={{ opacity: heroContentOpacity }}
-          className="relative z-10 mx-auto w-full max-w-7xl -mb-16 px-4 pb-14 sm:px-6 sm:pb-18 lg:px-8"
+          style={{ opacity: heroContentOpacity, y: heroContentY }}
+          className="relative z-10 mx-auto w-full max-w-7xl px-4 pb-10 sm:px-6 sm:pb-14 lg:px-8"
         >
-          <div className="rounded-3xl border border-white/15 bg-ink-900/40 p-6 backdrop-blur-xl sm:p-8 lg:p-10 shadow-[0_20px_60px_rgba(0,0,0,0.35)]">
-            <motion.div variants={stagger} initial="hidden" animate="show" className="flex flex-col gap-5">
-              <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-3">
-                <span className="inline-flex items-center rounded-full border border-amber-400/40 bg-amber-400/20 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-amber-200 backdrop-blur-sm">
-                  {room.category}
-                </span>
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-500/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-emerald-300">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                  Available Now
-                </span>
-              </motion.div>
-
-              <motion.h1
-                variants={fadeUp}
-                className="font-display text-5xl font-black leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-7xl"
-              >
-                {room.name}
-              </motion.h1>
-
-              <motion.p
-                variants={fadeUp}
-                className="max-w-2xl text-sm leading-relaxed text-white/75 sm:text-base lg:text-lg"
-              >
-                {room.description}
-              </motion.p>
-
-              <motion.div variants={fadeUp} className="mt-2 flex flex-wrap items-center gap-4">
-                <a
-                  href="#book"
-                  className="inline-flex items-center gap-2 rounded-full bg-amber-400 px-7 py-3.5 text-sm font-bold text-ink-900 shadow-[0_10px_30px_rgba(251,191,36,0.35)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-amber-300"
-                >
-                  Book This Room
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M1 7H13M13 7L7.5 1.5M13 7L7.5 12.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </a>
-                <a
-                  href="#gallery"
-                  className="inline-flex items-center gap-2 rounded-full border-2 border-emerald-400/30 bg-emerald-500/10 px-7 py-3.5 text-sm font-bold text-emerald-200 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-emerald-400/60 hover:bg-emerald-500/20"
-                >
-                  View Gallery
-                </a>
-              </motion.div>
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            animate="show"
+            className="flex flex-col gap-5"
+          >
+            <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-3">
+              <span className="inline-flex items-center gap-2 rounded-full border border-amber-300/40 bg-gradient-to-r from-emerald-500/20 to-amber-400/20 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-amber-200 backdrop-blur-sm">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                {room.category}
+              </span>
             </motion.div>
-          </div>
+
+            {/* Kinetic word-by-word title with gradient-highlighted last word */}
+            <motion.h1
+              variants={stagger}
+              className="font-display text-5xl font-black leading-[0.92] tracking-tight text-white sm:text-6xl lg:text-7xl [transform-style:preserve-3d] [transform-perspective:1000px]"
+            >
+              {titleWords.map((word, i) => {
+                const isLast = i === titleWords.length - 1 && titleWords.length > 1;
+                return (
+                  <motion.span
+                    key={`${word}-${i}`}
+                    variants={wordUp}
+                    className={`mr-[0.25em] inline-block ${
+                      isLast
+                        ? "bg-gradient-to-r from-amber-300 via-amber-400 to-emerald-400 bg-clip-text text-transparent"
+                        : ""
+                    }`}
+                  >
+                    {word}
+                  </motion.span>
+                );
+              })}
+            </motion.h1>
+
+            <motion.p
+              variants={fadeUp}
+              className="max-w-2xl text-sm leading-relaxed text-white/70 sm:text-base lg:text-lg"
+            >
+              {room.description}
+            </motion.p>
+
+            <motion.div variants={fadeUp} className="mt-2 flex flex-wrap items-center gap-4">
+              <a
+                href="#book"
+                className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-amber-400 px-7 py-3.5 text-sm font-bold text-ink-900 shadow-[0_10px_30px_rgba(251,191,36,0.4)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-amber-300"
+              >
+                {/* shine sweep */}
+                <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/50 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+                <span className="relative">Book This Room</span>
+                <svg className="relative" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M1 7H13M13 7L7.5 1.5M13 7L7.5 12.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </a>
+              <a
+                href="#gallery"
+                className="inline-flex items-center gap-2 rounded-full border-2 border-emerald-300/40 bg-emerald-950/20 px-7 py-3.5 text-sm font-bold text-white/85 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-amber-300/60 hover:bg-emerald-900/40 hover:text-amber-100"
+              >
+                View Gallery
+              </a>
+            </motion.div>
+          </motion.div>
         </motion.div>
+
+        {/* Bottom accent line — emerald↔amber shimmer */}
+        <motion.div
+          aria-hidden
+          className="absolute inset-x-0 bottom-0 z-20 h-[3px]"
+          style={{
+            background:
+              "linear-gradient(90deg, #10b981, #fbbf24, #10b981)",
+            backgroundSize: "200% auto",
+          }}
+          animate={{ backgroundPosition: ["0% center", "200% center"] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+        />
       </section>
 
       {/* ======================== */}
-      {/* SPECS STRIP — elevated glass cards */}
+      {/* SPECS STRIP — glass stat cards, dynamic reveal          */}
       {/* ======================== */}
-      <section className="relative -mt-1 z-20 border-b border-emerald-200/60 bg-white/80 backdrop-blur-md py-8">
+      <section className="relative -mt-px border-b border-emerald-200/70 bg-gradient-to-b from-white/80 to-emerald-50/60 backdrop-blur-md">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             variants={stagger}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.4 }}
-            className="grid grid-cols-3 divide-x divide-emerald-200/60"
+            className="grid grid-cols-3 divide-x divide-emerald-200/70"
           >
             {specs.map((spec) => (
               <motion.div
                 key={spec.label}
                 variants={fadeUp}
-                className="group flex flex-col items-center gap-1.5 px-2 py-6 text-center transition-colors duration-300 hover:bg-emerald-50/80 sm:gap-2 sm:py-8"
+                className="group relative flex flex-col items-center gap-1.5 px-2 py-6 text-center transition-colors duration-300 hover:bg-emerald-50 sm:gap-2 sm:py-8"
               >
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-emerald-100 text-emerald-700 transition-transform duration-300 group-hover:scale-110 group-hover:bg-amber-100 sm:h-10 sm:w-10">
+                {/* hover accent bar */}
+                <span className="absolute inset-x-0 bottom-0 mx-auto h-[3px] w-0 rounded-full bg-gradient-to-r from-emerald-500 to-amber-400 transition-all duration-500 group-hover:w-2/3" />
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-emerald-100 to-amber-100 text-emerald-700 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6 sm:h-10 sm:w-10">
                   <SpecIcon name={spec.icon} />
                 </span>
                 <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-emerald-700/70 sm:text-[11px]">
@@ -267,10 +332,17 @@ export function RoomPageContent({ room }: { room: Room }) {
       </section>
 
       {/* ======================================= */}
-      {/* FACILITIES — premium cards */}
+      {/* FACILITIES — premium cards                           */}
       {/* ======================================= */}
-      <section className="bg-gradient-to-b from-white to-emerald-50/40 py-16 sm:py-20 lg:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="relative overflow-hidden bg-emerald-50/60 py-16 sm:py-20 lg:py-24">
+        {/* faint overlapping section watermark */}
+        <span
+          aria-hidden
+          className="pointer-events-none absolute -right-10 top-6 select-none font-display text-[16vw] font-black uppercase leading-none tracking-tighter text-emerald-900/[0.04]"
+        >
+          Comfort
+        </span>
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -282,7 +354,10 @@ export function RoomPageContent({ room }: { room: Room }) {
               Room Highlights
             </span>
             <h2 className="font-display text-3xl font-black tracking-tight text-black sm:text-4xl">
-              Amenities & Comforts
+              Amenities &amp;{" "}
+              <span className="bg-gradient-to-r from-emerald-600 to-amber-500 bg-clip-text text-transparent">
+                Comforts
+              </span>
             </h2>
           </motion.div>
 
@@ -297,8 +372,9 @@ export function RoomPageContent({ room }: { room: Room }) {
               <motion.div
                 key={facility}
                 variants={fadeUp}
-                className="group flex items-center gap-4 rounded-2xl border border-emerald-200/60 bg-white/80 p-5 shadow-sm backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:border-amber-300 hover:shadow-lg hover:shadow-amber-900/5"
+                className="group relative flex items-center gap-4 overflow-hidden rounded-2xl border border-emerald-200/70 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-amber-300 hover:shadow-lg hover:shadow-amber-900/5"
               >
+                <span className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-emerald-500 to-amber-400 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-emerald-100 to-amber-100 text-emerald-700 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M20 6L9 17l-5-5" />
@@ -312,10 +388,16 @@ export function RoomPageContent({ room }: { room: Room }) {
       </section>
 
       {/* ================================== */}
-      {/* GALLERY */}
+      {/* GALLERY                                              */}
       {/* ================================== */}
-      <section id="gallery" className="scroll-mt-24 py-16 sm:py-20 lg:py-24 bg-emerald-50/30">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section id="gallery" className="relative scroll-mt-24 overflow-hidden py-16 sm:py-20 lg:py-24">
+        <span
+          aria-hidden
+          className="pointer-events-none absolute -left-10 top-10 select-none font-display text-[16vw] font-black uppercase leading-none tracking-tighter text-emerald-900/[0.04]"
+        >
+          Gallery
+        </span>
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -328,7 +410,10 @@ export function RoomPageContent({ room }: { room: Room }) {
                 {room.images.length} Photos
               </span>
               <h2 className="mt-1 font-display text-3xl font-black tracking-tight text-black sm:text-4xl">
-                Visual Tour Gallery
+                Visual Tour{" "}
+                <span className="bg-gradient-to-r from-emerald-600 to-amber-500 bg-clip-text text-transparent">
+                  Gallery
+                </span>
               </h2>
             </div>
           </motion.div>
@@ -349,7 +434,7 @@ export function RoomPageContent({ room }: { room: Room }) {
                 <motion.div
                   key={img}
                   variants={fadeUp}
-                  className={`group relative overflow-hidden rounded-3xl border border-emerald-200/60 bg-white p-2.5 shadow-sm transition-all duration-500 hover:-translate-y-1.5 hover:border-amber-300 hover:shadow-2xl hover:shadow-emerald-900/10 ${
+                  className={`group relative overflow-hidden rounded-3xl border border-emerald-100 bg-white p-2.5 shadow-sm transition-all duration-500 hover:-translate-y-1.5 hover:border-amber-300 hover:shadow-2xl hover:shadow-emerald-900/10 ${
                     isHero ? "col-span-2 row-span-2" : isWide ? "col-span-2" : "col-span-1"
                   }`}
                 >
@@ -362,13 +447,13 @@ export function RoomPageContent({ room }: { room: Room }) {
                       sizes="(max-width: 768px) 50vw, 25vw"
                       className="object-cover transition-transform duration-700 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/70 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                     <div className="absolute bottom-0 left-0 right-0 translate-y-4 p-3.5 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
                       <span className="inline-block truncate rounded-full bg-white/95 px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider text-emerald-900 shadow-sm">
                         {label}
                       </span>
                     </div>
-                    <div className="absolute right-3 top-3 flex items-center gap-1.5 rounded-full bg-black/60 px-2.5 py-1 text-[10px] font-bold text-white backdrop-blur-md">
+                    <div className="absolute right-3 top-3 flex items-center gap-1.5 rounded-full bg-emerald-950/60 px-2.5 py-1 text-[10px] font-bold text-amber-200 backdrop-blur-md">
                       {i + 1} / {room.images.length}
                     </div>
                   </div>
@@ -383,12 +468,21 @@ export function RoomPageContent({ room }: { room: Room }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.5 }}
             transition={{ duration: 0.6 }}
-            className="relative mt-10 overflow-hidden rounded-[2rem] border border-emerald-200/60 bg-white/80 p-5 shadow-sm backdrop-blur"
+            className="relative mt-10 overflow-hidden rounded-[2rem] border border-emerald-100 bg-white p-5 shadow-sm"
           >
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-400 via-emerald-500 to-amber-400" />
+            <motion.div
+              aria-hidden
+              className="pointer-events-none absolute inset-x-0 top-0 h-[2px]"
+              style={{
+                background: "linear-gradient(90deg, #fbbf24, #10b981, #fbbf24)",
+                backgroundSize: "200% auto",
+              }}
+              animate={{ backgroundPosition: ["0% center", "200% center"] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+            />
             <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
               <div className="flex items-center gap-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full border border-emerald-200/60 bg-emerald-50">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full border border-emerald-100 bg-gradient-to-br from-emerald-50 to-amber-50">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-emerald-700">
                     <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
                     <polyline points="14 2 14 8 20 8" />
@@ -399,13 +493,13 @@ export function RoomPageContent({ room }: { room: Room }) {
                 <div>
                   <p className="text-sm font-bold text-black">Want the full experience?</p>
                   <p className="mt-0.5 text-xs text-neutral-600">
-                    Download our detailed room brochure with floor plans & specs
+                    Download our detailed room brochure with floor plans &amp; specs
                   </p>
                 </div>
               </div>
               <a
                 href="#brochure"
-                className="inline-flex items-center gap-2 rounded-full border border-emerald-200/60 bg-emerald-50 px-6 py-3 text-xs font-bold text-emerald-900 transition-all duration-300 hover:-translate-y-0.5 hover:bg-emerald-100"
+                className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-gradient-to-r from-emerald-50 to-amber-50 px-6 py-3 text-xs font-bold text-emerald-900 transition-all duration-300 hover:-translate-y-0.5 hover:border-amber-300 hover:from-emerald-100 hover:to-amber-100"
               >
                 Download Brochure
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -423,7 +517,7 @@ export function RoomPageContent({ room }: { room: Room }) {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Spec icons */
+/*  Spec icons                                                         */
 /* ------------------------------------------------------------------ */
 function SpecIcon({ name }: { name: "ruler" | "mountain" | "layers" }) {
   const common = {
