@@ -62,7 +62,6 @@ export function RoomPageContent({ room }: { room: Room }) {
   const mouseY = useMotionValue(0);
   const springX = useSpring(mouseX, { stiffness: 40, damping: 20 });
   const springY = useSpring(mouseY, { stiffness: 40, damping: 20 });
-  // Second orb drifts the opposite way for parallax richness
   const orbX = useSpring(useMotionValue(0), { stiffness: 30, damping: 22 });
   const orbY = useSpring(useMotionValue(0), { stiffness: 30, damping: 22 });
 
@@ -97,7 +96,6 @@ export function RoomPageContent({ room }: { room: Room }) {
         onMouseMove={handleMouseMove}
         className="relative flex h-[90vh] min-h-[600px] w-full items-end overflow-hidden bg-ink-900"
       >
-        {/* Layer 1 — the room photo, dual parallax (translate + scale) */}
         <motion.div style={{ y: heroImageY, scale: heroImageScale }} className="absolute inset-0">
           <motion.div
             initial={{ scale: 1.12, opacity: 0 }}
@@ -119,7 +117,6 @@ export function RoomPageContent({ room }: { room: Room }) {
           </motion.div>
         </motion.div>
 
-        {/* Layer 2 — animated emerald→amber duotone wash */}
         <motion.div
           aria-hidden
           className="pointer-events-none absolute inset-0 mix-blend-soft-light"
@@ -132,20 +129,17 @@ export function RoomPageContent({ room }: { room: Room }) {
           }}
         />
 
-        {/* Layer 3 — drifting emerald glow */}
         <motion.div
           style={{ x: springX, y: springY }}
           className="pointer-events-none absolute right-1/4 top-1/4 h-[24rem] w-[24rem] rounded-full bg-emerald-400/20 blur-[120px] mix-blend-screen"
           aria-hidden
         />
-        {/* Layer 4 — counter-drifting amber glow */}
         <motion.div
           style={{ x: orbX, y: orbY }}
           className="pointer-events-none absolute bottom-1/4 left-1/4 h-[22rem] w-[22rem] rounded-full bg-amber-300/20 blur-[110px] mix-blend-screen"
           aria-hidden
         />
 
-        {/* Layer 5 — animated fine grid texture */}
         <motion.div
           aria-hidden
           className="pointer-events-none absolute inset-0 opacity-[0.12]"
@@ -158,7 +152,6 @@ export function RoomPageContent({ room }: { room: Room }) {
           }}
         />
 
-        {/* Overlapping GHOST title — huge, behind headline, parallax drift */}
         <motion.span
           aria-hidden
           style={{ y: ghostTitleY, x: ghostTitleX }}
@@ -167,7 +160,6 @@ export function RoomPageContent({ room }: { room: Room }) {
           {room.category}
         </motion.span>
 
-        {/* Vignette + gradient for text legibility (emerald-tinted) */}
         <div
           className="absolute inset-0 z-[6] pointer-events-none"
           style={{
@@ -177,7 +169,6 @@ export function RoomPageContent({ room }: { room: Room }) {
           aria-hidden
         />
 
-        {/* Urgency pill — floating glass badge, top */}
         <motion.div
           initial={{ opacity: 0, y: -14 }}
           animate={{ opacity: 1, y: 0 }}
@@ -194,7 +185,6 @@ export function RoomPageContent({ room }: { room: Room }) {
           </div>
         </motion.div>
 
-        {/* Back link */}
         <motion.div
           initial={{ opacity: 0, x: -14 }}
           animate={{ opacity: 1, x: 0 }}
@@ -212,7 +202,6 @@ export function RoomPageContent({ room }: { room: Room }) {
           </Link>
         </motion.div>
 
-        {/* Centerpiece content */}
         <motion.div
           style={{ opacity: heroContentOpacity, y: heroContentY }}
           className="relative z-10 mx-auto w-full max-w-7xl px-4 pb-10 sm:px-6 sm:pb-14 lg:px-8"
@@ -230,7 +219,6 @@ export function RoomPageContent({ room }: { room: Room }) {
               </span>
             </motion.div>
 
-            {/* Kinetic word-by-word title with gradient-highlighted last word */}
             <motion.h1
               variants={stagger}
               className="font-display text-5xl font-black leading-[0.92] tracking-tight text-white sm:text-6xl lg:text-7xl [transform-style:preserve-3d] [transform-perspective:1000px]"
@@ -265,7 +253,6 @@ export function RoomPageContent({ room }: { room: Room }) {
                 href="#book"
                 className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-amber-400 px-7 py-3.5 text-sm font-bold text-ink-900 shadow-[0_10px_30px_rgba(251,191,36,0.4)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-amber-300"
               >
-                {/* shine sweep */}
                 <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/50 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
                 <span className="relative">Book This Room</span>
                 <svg className="relative" width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -282,13 +269,11 @@ export function RoomPageContent({ room }: { room: Room }) {
           </motion.div>
         </motion.div>
 
-        {/* Bottom accent line — emerald↔amber shimmer */}
         <motion.div
           aria-hidden
           className="absolute inset-x-0 bottom-0 z-20 h-[3px]"
           style={{
-            background:
-              "linear-gradient(90deg, #10b981, #fbbf24, #10b981)",
+            background: "linear-gradient(90deg, #10b981, #fbbf24, #10b981)",
             backgroundSize: "200% auto",
           }}
           animate={{ backgroundPosition: ["0% center", "200% center"] }}
@@ -297,34 +282,45 @@ export function RoomPageContent({ room }: { room: Room }) {
       </section>
 
       {/* ======================== */}
-      {/* SPECS STRIP — glass stat cards, dynamic reveal          */}
+      {/* SPECS STRIP — Premium Emerald Band */}
       {/* ======================== */}
-      <section className="relative -mt-px border-b border-emerald-200/70 bg-gradient-to-b from-white/80 to-emerald-50/60 backdrop-blur-md">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="relative bg-gradient-to-b from-emerald-950 via-emerald-900 to-emerald-800 py-14 sm:py-18 lg:py-22">
+        {/* Subtle luxury texture overlay */}
+        <div 
+          className="absolute inset-0 opacity-[0.04] pointer-events-none mix-blend-overlay"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          }}
+        />
+        
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             variants={stagger}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.4 }}
-            className="grid grid-cols-3 divide-x divide-emerald-200/70"
+            className="grid grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-0"
           >
-            {specs.map((spec) => (
+            {specs.map((spec, idx) => (
               <motion.div
                 key={spec.label}
                 variants={fadeUp}
-                className="group relative flex flex-col items-center gap-1.5 px-2 py-6 text-center transition-colors duration-300 hover:bg-emerald-50 sm:gap-2 sm:py-8"
+                className={`group relative flex flex-col items-center gap-3 py-8 text-center transition-all duration-500 hover:bg-white/5 sm:px-6 ${
+                  idx !== 0 ? "sm:border-l sm:border-white/10" : ""
+                }`}
               >
-                {/* hover accent bar */}
-                <span className="absolute inset-x-0 bottom-0 mx-auto h-[3px] w-0 rounded-full bg-gradient-to-r from-emerald-500 to-amber-400 transition-all duration-500 group-hover:w-2/3" />
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-emerald-100 to-amber-100 text-emerald-700 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6 sm:h-10 sm:w-10">
+                <span className="flex h-12 w-12 items-center justify-center rounded-full border border-amber-400/30 bg-amber-400/10 text-amber-200 transition-all duration-300 group-hover:scale-110 group-hover:border-amber-300 group-hover:bg-amber-400/20">
                   <SpecIcon name={spec.icon} />
                 </span>
-                <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-emerald-700/70 sm:text-[11px]">
+                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-200/70 sm:text-[11px]">
                   {spec.label}
                 </span>
-                <span className="font-display text-sm font-black text-black sm:text-base">
+                <span className="font-display text-xl font-black text-white sm:text-2xl">
                   {spec.value}
                 </span>
+                
+                {/* Animated bottom accent */}
+                <span className="absolute bottom-0 left-1/2 h-[2px] w-0 -translate-x-1/2 rounded-full bg-gradient-to-r from-amber-400 to-emerald-400 transition-all duration-500 group-hover:w-16" />
               </motion.div>
             ))}
           </motion.div>
@@ -335,7 +331,6 @@ export function RoomPageContent({ room }: { room: Room }) {
       {/* FACILITIES — premium cards                           */}
       {/* ======================================= */}
       <section className="relative overflow-hidden bg-emerald-50/60 py-16 sm:py-20 lg:py-24">
-        {/* faint overlapping section watermark */}
         <span
           aria-hidden
           className="pointer-events-none absolute -right-10 top-6 select-none font-display text-[16vw] font-black uppercase leading-none tracking-tighter text-emerald-900/[0.04]"
