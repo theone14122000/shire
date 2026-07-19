@@ -12,6 +12,7 @@ import {
 import Link from "next/link";
 import { useRef, useId, useState } from "react";
 import { SiteNav } from "../components/SiteNav";
+import { SiteFooter } from "../components/SiteFooter"; // <-- Added import
 
 const MAPS_URL =
   "https://www.google.com/maps?ll=31.066671,77.309332&z=13&t=m&hl=en&gl=IN&mapclient=embed&cid=4674173627328913394";
@@ -345,6 +346,9 @@ export default function FaqPage() {
           </div>
         </section>
       </MotionConfig>
+
+      {/* Footer */}
+      <SiteFooter />
     </main>
   );
 }
