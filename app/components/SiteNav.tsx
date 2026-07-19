@@ -4,11 +4,12 @@ import { motion, useScroll, Variants, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { rooms } from "@/lib/rooms";
 
 const NAV_ITEMS = [
   { label: "Home", href: "/" },
-  { label: "FAQ", href: "/#faq" },
+  { label: "FAQ", href: "/faq" },
   { label: "Rooms", href: "/#rooms", hasMenu: true },
   { label: "Activities", href: "/#amenities" },
   { label: "Gallery", href: "/#journal" },
@@ -63,14 +64,24 @@ function NavLink({
 
 export function SiteNav() {
   const { scrollY } = useScroll();
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [desktopDropdown, setDesktopDropdown] = useState(false);
   const [mobileRoomsOpen, setMobileRoomsOpen] = useState(false);
+  const [hoveredLabel, setHoveredLabel] = useState<string | null>(null);
 
   useEffect(() => {
     return scrollY.on("change", (v) => setScrolled(v > 60));
   }, [scrollY]);
+
+  // Active tab = exact route match for non-hash links (e.g. /faq, /blog).
+  // Hash links (#rooms, #book, etc.) live on the homepage and aren't
+  // tracked as "active" here since scroll position, not route, decides that.
+  function isActive(href: string) {
+    if (href.includes("#")) return false;
+    return href === "/" ? pathname === "/" : pathname?.startsWith(href);
+  }
 
   return (
     <motion.header
@@ -107,26 +118,41 @@ export function SiteNav() {
         {/* Right Side: Navigation + Book Now Button */}
         <div className="hidden lg:flex items-center gap-6 xl:gap-8">
           
-          {/* Desktop Nav Links */}
+          {/* Desktop Nav Links — animated sliding pill follows hover/active tab */}
           <motion.nav
             aria-label="Primary"
             className="flex items-center gap-1"
             variants={navVariants}
             initial="hidden"
             animate="show"
+            onMouseLeave={() => setHoveredLabel(null)}
           >
-            {NAV_ITEMS.map((item) => 
-              item.hasMenu ? (
-                <div 
+            {NAV_ITEMS.map((item) => {
+              const active = isActive(item.href);
+              const highlighted = hoveredLabel === item.label || (!hoveredLabel && active);
+
+              return item.hasMenu ? (
+                <div
                   key={item.label}
                   className="relative"
-                  onMouseEnter={() => setDesktopDropdown(true)}
+                  onMouseEnter={() => {
+                    setDesktopDropdown(true);
+                    setHoveredLabel(item.label);
+                  }}
                   onMouseLeave={() => setDesktopDropdown(false)}
                 >
                   <motion.button
                     variants={itemVariants}
-                    className="relative text-[13px] font-bold tracking-wide text-ink-900 transition-colors duration-300 inline-flex items-center gap-1 group px-3 py-2 rounded-full hover:bg-ink-900/5"
+                    onFocus={() => setHoveredLabel(item.label)}
+                    className="relative z-10 text-[13px] font-bold tracking-wide text-ink-900 transition-colors duration-300 inline-flex items-center gap-1 px-3 py-2 rounded-full"
                   >
+                    {highlighted && (
+                      <motion.span
+                        layoutId="nav-pill"
+                        transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                        className="absolute inset-0 -z-10 rounded-full bg-ink-900/5"
+                      />
+                    )}
                     {item.label}
                     <motion.svg
                       width="10"
@@ -176,16 +202,36 @@ export function SiteNav() {
                   </AnimatePresence>
                 </div>
               ) : (
-                <motion.div key={item.label} variants={itemVariants}>
+                <motion.div key={item.label} variants={itemVariants} className="relative">
                   <NavLink
                     href={item.href}
-                    className="relative text-[13px] font-bold tracking-wide text-ink-900 transition-colors duration-300 inline-flex items-center gap-1 group px-3 py-2 rounded-full hover:bg-ink-900/5"
+                    className="relative z-10 text-[13px] font-bold tracking-wide text-ink-900 transition-colors duration-300 inline-flex items-center gap-1 px-3 py-2 rounded-full"
                   >
-                    {item.label}
+                    <span
+                      onMouseEnter={() => setHoveredLabel(item.label)}
+                      onFocus={() => setHoveredLabel(item.label)}
+                      className="relative"
+                    >
+                      {highlighted && (
+                        <motion.span
+                          layoutId="nav-pill"
+                          transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                          className="absolute inset-0 -z-10 -mx-3 -my-2 rounded-full bg-ink-900/5"
+                        />
+                      )}
+                      {item.label}
+                      {active && (
+                        <motion.span
+                          layoutId="nav-active-dot"
+                          transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                          className="absolute -bottom-1.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-accent-emerald"
+                        />
+                      )}
+                    </span>
                   </NavLink>
                 </motion.div>
-              )
-            )}
+              );
+            })}
           </motion.nav>
 
           {/* Book Now CTA */}
@@ -245,8 +291,9 @@ export function SiteNav() {
           >
             {/* Replaced container-luxe with mx-auto max-w to remove horizontal padding */}
             <nav aria-label="Mobile" className="mx-auto w-full max-w-[1400px] py-4 flex flex-col gap-1">
-              {NAV_ITEMS.map((item, i) => 
-                item.hasMenu ? (
+              {NAV_ITEMS.map((item, i) => {
+                const active = isActive(item.href);
+                return item.hasMenu ? (
                   <div key="rooms-mobile">
                     <button
                       onClick={() => setMobileRoomsOpen(!mobileRoomsOpen)}
@@ -306,13 +353,20 @@ export function SiteNav() {
                     <NavLink
                       href={item.href}
                       onClick={() => setMobileOpen(false)}
-                      className="block px-3 py-3 rounded-lg text-sm font-bold text-ink-900 hover:bg-beige-200 transition-colors"
+                      className={`flex items-center justify-between px-3 py-3 rounded-lg text-sm font-bold transition-colors ${
+                        active
+                          ? "bg-accent-mint text-ink-900"
+                          : "text-ink-900 hover:bg-beige-200"
+                      }`}
                     >
                       {item.label}
+                      {active && (
+                        <span className="h-1.5 w-1.5 rounded-full bg-accent-emerald" />
+                      )}
                     </NavLink>
                   </motion.div>
-                )
-              )}
+                );
+              })}
             </nav>
           </motion.div>
         )}
