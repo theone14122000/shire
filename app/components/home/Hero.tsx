@@ -1,24 +1,12 @@
 "use client";
 
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useMotionValue,
-  useSpring,
-} from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
 import { useRef } from "react";
 import { Container } from "../ui/Container";
 import { hero } from "@/lib/content";
 
 const MAPS_URL =
   "https://www.google.com/maps?ll=31.066671,77.309332&z=13&t=m&hl=en&gl=IN&mapclient=embed&cid=4674173627328913394";
-
-const BOOKING_URL =
-  "https://letsbook.me/booking/thehimalayanshire?checkin=2026-07-19&checkout=2026-07-20&adults=2&children=0";
-
-const TITLE_LINE_1 = "The Himalayan";
-const TITLE_LINE_2 = "Shire";
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -28,20 +16,14 @@ export function Hero() {
     offset: ["start start", "end start"],
   });
 
-  // Parallax + fade as user scrolls past the hero
+  // Parallax for the video layer only
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
-  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
 
   // Subtle cursor-reactive parallax for the floating glow orb
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const springX = useSpring(mouseX, { stiffness: 40, damping: 20 });
   const springY = useSpring(mouseY, { stiffness: 40, damping: 20 });
-
-  // Cursor-reactive tilt for the headline (reduced intensity for smoother feel)
-  const tiltX = useSpring(useMotionValue(0), { stiffness: 50, damping: 18 });
-  const tiltY = useSpring(useMotionValue(0), { stiffness: 50, damping: 18 });
 
   function handleMouseMove(e: React.MouseEvent<HTMLElement>) {
     const rect = ref.current?.getBoundingClientRect();
@@ -50,8 +32,6 @@ export function Hero() {
     const yPos = (e.clientY - rect.top) / rect.height - 0.5;
     mouseX.set(x * 40);
     mouseY.set(yPos * 40);
-    tiltY.set(x * 4); // Reduced from 8
-    tiltX.set(-yPos * 4); // Reduced from 8
   }
 
   // Stats: Location first (live dot, redirects to Google Maps), then the
@@ -107,7 +87,7 @@ export function Hero() {
             className="absolute inset-0 h-full w-full object-cover"
             aria-hidden="true"
           >
-            <source src="/videos/hero.mp4" type="video/mp4" />
+            <source src="/hero/hero.mp2" type="video/mp4" />
           </video>
         </motion.div>
       </motion.div>
@@ -140,78 +120,6 @@ export function Hero() {
         }}
         aria-hidden
       />
-
-      {/* Centerpiece: animated headline + CTA */}
-      <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
-        <motion.div style={{ opacity: contentOpacity, y: contentY }} className="flex flex-col items-center">
-          {/* Eyebrow badge with live pulse */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 backdrop-blur-md"
-          >
-            <motion.span
-              animate={{ opacity: [1, 0.2, 1], scale: [1, 1.4, 1] }}
-              transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-              className="h-1.5 w-1.5 rounded-full bg-amber-400 shadow-[0_0_8px_2px_rgba(251,191,36,0.6)]"
-            />
-            <span className="text-[9px] sm:text-[11px] uppercase tracking-[0.28em] font-bold text-white/70">
-              Fagu · Shimla · Himachal
-            </span>
-          </motion.div>
-
-          {/* Cinematic headline — slow clip-path + blur reveal + subtle cursor tilt */}
-          <motion.h1
-            style={{ rotateX: tiltX, rotateY: tiltY, transformPerspective: 1000 }}
-            className="font-display font-black leading-[0.9] tracking-tight [transform-style:preserve-3d]"
-          >
-            <AnimatedLine text={TITLE_LINE_1} baseDelay={0.4} />
-            <AnimatedLine text={TITLE_LINE_2} baseDelay={0.65} shimmer />
-          </motion.h1>
-
-          {/* Subtitle */}
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.0, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-6 max-w-[42ch] text-xs sm:text-base text-white/55 font-medium leading-relaxed"
-          >
-            A private forest retreat of seven rooms, cradled in the deodar
-            hills — where the mountains keep their quiet.
-          </motion.p>
-
-          {/* CTA */}
-          <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.9, delay: 1.15, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-9 flex flex-wrap items-center justify-center gap-4 sm:gap-5"
-          >
-            <motion.a
-              href={BOOKING_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ y: -3 }}
-              whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center gap-2 rounded-full bg-amber-400 px-6 py-3 text-xs sm:px-7 sm:py-3.5 sm:text-sm font-bold text-ink-900 shadow-[0_8px_30px_rgba(251,191,36,0.35)] transition-colors duration-300 hover:bg-amber-300"
-            >
-              Book Your Stay
-              <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden>
-                <path d="M1 7H13M13 7L7.5 1.5M13 7L7.5 12.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </motion.a>
-            <motion.a
-              href="#rooms"
-              whileHover={{ y: -3 }}
-              whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center gap-2 rounded-full border-2 border-white/30 bg-white/5 px-6 py-3 text-xs sm:px-7 sm:py-3.5 sm:text-sm font-bold text-white/85 backdrop-blur-sm transition-colors duration-300 hover:border-white/60 hover:bg-white/10 hover:text-white"
-            >
-              Explore Rooms
-            </motion.a>
-          </motion.div>
-        </motion.div>
-      </div>
 
       {/* Meta / stats strip — dynamic, per-stat icons, hover lift, fully responsive */}
       <motion.div
@@ -282,43 +190,6 @@ export function Hero() {
         </Container>
       </motion.div>
     </section>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/*  Cinematic per-line animated headline (slow clip-path + blur reveal) */
-/* ------------------------------------------------------------------ */
-function AnimatedLine({
-  text,
-  baseDelay,
-  shimmer = false,
-}: {
-  text: string;
-  baseDelay: number;
-  shimmer?: boolean;
-}) {
-  return (
-    <motion.div
-      className="relative overflow-hidden"
-      initial={{ clipPath: "inset(0 100% 0 0)", filter: "blur(12px)", opacity: 0 }}
-      animate={{ clipPath: "inset(0 0% 0 0)", filter: "blur(0px)", opacity: 1 }}
-      transition={{ 
-        duration: 1.4, 
-        delay: baseDelay, 
-        ease: [0.33, 1, 0.68, 1],
-        filter: { duration: 1.0 }
-      }}
-    >
-      <span
-        className={`block text-[15vw] sm:text-6xl md:text-7xl lg:text-[7.5rem] ${
-          shimmer
-            ? "bg-gradient-to-r from-amber-100 via-amber-300 to-amber-100 bg-[length:200%_auto] bg-clip-text text-transparent animate-[shimmer_6s_linear_infinite]"
-            : "text-white/90"
-        }`}
-      >
-        {text}
-      </span>
-    </motion.div>
   );
 }
 
