@@ -87,7 +87,7 @@ export function Hero() {
             className="absolute inset-0 h-full w-full object-cover"
             aria-hidden="true"
           >
-            <source src="/hero/hero.mp2" type="video/mp4" />
+            <source src="/hero/hero.mp4" type="video/mp4" />
           </video>
         </motion.div>
       </motion.div>
