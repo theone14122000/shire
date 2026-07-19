@@ -17,7 +17,7 @@ export function Hero() {
   });
 
   // Parallax for the video layer only
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "14%"]);
 
   // Subtle cursor-reactive parallax for the floating glow orb
   const mouseX = useMotionValue(0);
@@ -59,62 +59,72 @@ export function Hero() {
       ref={ref}
       id="top"
       onMouseMove={handleMouseMove}
-      className="relative h-[92vh] min-h-[560px] w-full overflow-hidden bg-ink-900"
+      className="relative h-[70vh] min-h-[480px] w-full overflow-hidden bg-ink-900 sm:h-[80vh] sm:min-h-[560px] lg:h-[92vh]"
     >
-      {/* Cinematic video background */}
-      <motion.div style={{ y }} className="absolute inset-0">
+      {/*
+        Cinematic video frame — full-bleed on mobile for max screen real
+        estate; on lg+ it pulls in with a letterboxed, rounded, gold-edged
+        frame so the hero reads as a curated visual rather than a plain
+        full-bleed clip. This is the "unique" treatment vs a flat rectangle.
+      */}
+      <div className="absolute inset-0 lg:inset-6">
         <motion.div
-          initial={{ scale: 1.15, opacity: 0 }}
-          animate={{ scale: 1.08, opacity: 1 }}
-          transition={{
-            opacity: { duration: 1.5, ease: [0.22, 1, 0.36, 1] },
-            scale: {
-              duration: 20,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "easeInOut",
-            },
-          }}
-          className="absolute inset-0"
+          style={{ y }}
+          className="absolute inset-0 overflow-hidden lg:rounded-[1.75rem] lg:border lg:border-amber-400/20 lg:shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]"
         >
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            poster="/images/hero-1.jpg"
-            className="absolute inset-0 h-full w-full object-cover"
-            aria-hidden="true"
+          <motion.div
+            initial={{ scale: 1.15, opacity: 0 }}
+            animate={{ scale: 1.08, opacity: 1 }}
+            transition={{
+              opacity: { duration: 1.5, ease: [0.22, 1, 0.36, 1] },
+              scale: {
+                duration: 20,
+                repeat: Infinity,
+                repeatType: "reverse",
+                ease: "easeInOut",
+              },
+            }}
+            className="absolute inset-0"
           >
-            <source src="/hero/hero.mp4" type="video/mp4" />
-          </video>
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              poster="/images/hero-1.jpg"
+              className="absolute inset-0 h-full w-full object-cover object-[center_38%] sm:object-center"
+              aria-hidden="true"
+            >
+              <source src="/hero/hero.mp4" type="video/mp4" />
+            </video>
+          </motion.div>
+
+          {/* Cinematic dark overlay */}
+          <div className="absolute inset-0 hero-overlay pointer-events-none" />
+
+          {/* Vignette */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                "radial-gradient(circle at center, transparent 35%, rgba(8,18,18,0.7) 100%)",
+            }}
+            aria-hidden
+          />
         </motion.div>
-      </motion.div>
+      </div>
 
       {/* Floating ambient glow orb — reacts to cursor */}
       <motion.div
         style={{ x: springX, y: springY }}
-        className="pointer-events-none absolute left-1/2 top-1/3 h-[32rem] w-[32rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/10 blur-[120px] mix-blend-screen"
+        className="pointer-events-none absolute left-1/2 top-1/3 h-[22rem] w-[22rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/10 blur-[100px] mix-blend-screen sm:h-[28rem] sm:w-[28rem] lg:h-[32rem] lg:w-[32rem] lg:blur-[120px]"
         aria-hidden
       />
 
-      {/* Cinematic dark overlay */}
-      <div className="absolute inset-0 hero-overlay pointer-events-none" />
-
-      {/* Vignette */}
+      {/* Bottom gradient to lift meta strip — sits above the frame margin */}
       <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(circle at center, transparent 35%, rgba(8,18,18,0.7) 100%)",
-        }}
-        aria-hidden
-      />
-
-      {/* Bottom gradient to lift meta strip */}
-      <div
-        className="absolute inset-x-0 bottom-0 h-56 pointer-events-none"
+        className="absolute inset-x-0 bottom-0 z-[5] h-40 pointer-events-none sm:h-48 lg:h-56"
         style={{
           background: "linear-gradient(to top, rgba(8,18,18,0.95), transparent)",
         }}
@@ -129,7 +139,7 @@ export function Hero() {
         className="absolute inset-x-0 bottom-0 z-10 border-t border-white/10 bg-ink-900/40 backdrop-blur-md"
       >
         <Container>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/10">
+          <div className="grid grid-cols-2 gap-px bg-white/10 sm:grid-cols-4">
             {metaItems.map((m, i) => {
               const baseClass =
                 "group relative overflow-hidden bg-ink-900/60 px-3 py-3 sm:px-4 sm:py-4 flex flex-col gap-1 transition-all duration-300 hover:bg-ink-800/70";
