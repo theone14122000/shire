@@ -24,6 +24,9 @@ type Faq = {
   answer: React.ReactNode;
 };
 
+const linkClass =
+  "font-bold text-amber-300 underline decoration-amber-400/50 underline-offset-2 transition-colors hover:text-amber-200";
+
 const FAQS: Faq[] = [
   {
     question: "How many rooms do you have and can we book just 1 room?",
@@ -32,7 +35,7 @@ const FAQS: Faq[] = [
         We have a total of seven bedrooms — all with attached washrooms. You
         can book any number of rooms, from just one room to all seven rooms.
         All the information about the seven rooms is mentioned in the{" "}
-        <Link href="/#rooms" className="font-bold text-amber-400 underline decoration-amber-400/50 underline-offset-2 hover:text-amber-300">
+        <Link href="/#rooms" className={linkClass}>
           rooms section
         </Link>{" "}
         of the website.
@@ -58,12 +61,7 @@ const FAQS: Faq[] = [
         Fagu is located 19 kms ahead of Shimla, 5 kms ahead of Kufri, on the
         main highway going towards Theog / Narkanda. Our property is 2 kms
         on the link road from Fagu.{" "}
-        <a
-          href={MAPS_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="font-bold text-amber-400 underline decoration-amber-400/50 underline-offset-2 hover:text-amber-300"
-        >
+        <a href={MAPS_URL} target="_blank" rel="noopener noreferrer" className={linkClass}>
           See the exact location on Google Maps
         </a>
         .
@@ -102,7 +100,7 @@ const FAQS: Faq[] = [
           href="https://www.thehimalayanshire.com/activities/"
           target="_blank"
           rel="noopener noreferrer"
-          className="font-bold text-amber-400 underline decoration-amber-400/50 underline-offset-2 hover:text-amber-300"
+          className={linkClass}
         >
           this blog
         </a>{" "}
@@ -149,7 +147,7 @@ const FAQS: Faq[] = [
 ];
 
 /* ------------------------------------------------------------------ */
-/*  Sun rays — 12 alternating long / short (same geometry as Blog)     */
+/*  Sun rays — 12 alternating long / short (PRESERVED)                 */
 /* ------------------------------------------------------------------ */
 const SUN_RAYS = Array.from({ length: 12 }, (_, i) => {
   const angle = (i * 30 * Math.PI) / 180;
@@ -192,20 +190,10 @@ export default function FaqPage() {
   return (
     <main
       ref={pageRef}
-      className="min-h-screen bg-gradient-to-b from-emerald-900 via-[#022c22] to-emerald-950 font-sans text-white selection:bg-amber-500/30 selection:text-amber-100"
+      className="relative min-h-screen isolate overflow-hidden bg-[#052e23] font-sans text-white selection:bg-amber-300/30 selection:text-amber-100"
     >
-      {/* Premium Noise Texture Overlay */}
-      <div
-        aria-hidden
-        className="pointer-events-none fixed inset-0 z-[5] opacity-[0.04] mix-blend-overlay"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
-        }}
-      />
-
       {/* ============================================================ */}
-      {/*  SUN ANIMATION — pure CSS keyframes, preserved exactly.       */}
+      {/*  SUN ANIMATION — PRESERVED exactly (pure CSS keyframes).      */}
       {/* ============================================================ */}
       <style>{`
         @keyframes sunDrift {
@@ -225,32 +213,51 @@ export default function FaqPage() {
         .sun-glow      { transform-origin: center; animation: sunGlow 4.5s ease-in-out infinite; }
       `}</style>
 
+      {/* Premium emerald depth — radial light pools */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10"
+        style={{
+          background:
+            "radial-gradient(70% 50% at 85% 5%, rgba(251,191,36,0.14) 0%, transparent 55%), radial-gradient(55% 45% at 10% 20%, rgba(16,185,129,0.22) 0%, transparent 60%), radial-gradient(90% 70% at 50% 110%, rgba(4,120,87,0.28) 0%, transparent 65%)",
+        }}
+      />
+      {/* Fine grain for tactile premium finish */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.05] mix-blend-overlay"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+        }}
+      />
+
       <MotionConfig reducedMotion="user">
         <SiteNav />
 
         {/* Scroll-progress hairline */}
         <div className="pointer-events-none fixed inset-x-0 top-0 z-[60] h-[3px] bg-black/20">
           <motion.span
-            className="block h-full origin-left bg-gradient-to-r from-amber-400 via-emerald-500 to-emerald-700"
+            className="block h-full origin-left bg-gradient-to-r from-amber-400 via-amber-300 to-emerald-400"
             style={{ scaleX: scrollYProgress }}
           />
         </div>
 
         {/* ===================== Hero + FAQ List ===================== */}
         <section className="relative overflow-hidden py-16 sm:py-20 lg:py-24">
-          {/* Parallax glows (Gold and Emerald) */}
+          {/* Parallax glows */}
           <motion.div
             aria-hidden
-            className="pointer-events-none absolute -left-24 top-10 h-80 w-80 rounded-full bg-amber-400/15 blur-[120px]"
+            className="pointer-events-none absolute -left-24 top-10 h-80 w-80 rounded-full bg-amber-300/20 blur-[120px]"
             style={reduce ? undefined : { y: glowLeftY }}
           />
           <motion.div
             aria-hidden
-            className="pointer-events-none absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-emerald-500/15 blur-[130px]"
+            className="pointer-events-none absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-emerald-400/25 blur-[130px]"
             style={reduce ? undefined : { y: glowRightY }}
           />
 
-          {/* ---- SUN (top-right) — CSS drift wrapper ---- */}
+          {/* ---- SUN (top-right) — CSS drift wrapper (PRESERVED) ---- */}
           <div
             aria-hidden
             className="sun-drift pointer-events-none absolute right-6 top-24 z-0 h-28 w-28 sm:right-12 sm:top-28 sm:h-40 sm:w-40 lg:right-[9%] lg:top-28 lg:h-52 lg:w-52"
@@ -267,15 +274,16 @@ export default function FaqPage() {
               viewport={{ once: true, amount: 0.3 }}
               className="mb-12 text-center sm:mb-16"
             >
-              <span className="inline-flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-[0.22em] text-amber-400">
-                <span className="h-px w-6 bg-amber-500" aria-hidden />
+              <span className="inline-flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-[0.22em] text-amber-300">
+                <span className="h-px w-6 bg-amber-400/70" aria-hidden />
                 FAQs
-                <span className="h-px w-6 bg-amber-500" aria-hidden />
+                <span className="h-px w-6 bg-amber-400/70" aria-hidden />
               </span>
               <h1 className="mt-4 font-display text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl">
-                Frequently Asked Questions
+                Frequently Asked{" "}
+                <span className="text-amber-400">Questions</span>
               </h1>
-              <p className="mx-auto mt-4 max-w-2xl text-base font-medium text-emerald-200/80 sm:text-lg">
+              <p className="mx-auto mt-4 max-w-2xl text-base font-medium text-emerald-100/70 sm:text-lg">
                 Everything guests usually ask before booking a stay at The
                 Himalayan Shire, Fagu.
               </p>
@@ -302,21 +310,28 @@ export default function FaqPage() {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, amount: 0.3 }}
-              className="mt-14 flex flex-col items-center gap-4 rounded-3xl border border-white/10 bg-white/5 p-8 text-center shadow-lg backdrop-blur-md sm:mt-16"
+              className="relative mt-14 flex flex-col items-center gap-4 overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] p-8 text-center shadow-lg shadow-emerald-950/40 backdrop-blur-md sm:mt-16"
             >
+              {/* gold top hairline */}
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-amber-400 to-transparent"
+              />
               <h2 className="font-display text-xl font-black text-white sm:text-2xl">
-                Still have a question?
+                Still have a{" "}
+                <span className="text-amber-400">question?</span>
               </h2>
-              <p className="max-w-md text-sm text-emerald-200/80 sm:text-base">
+              <p className="max-w-md text-sm text-emerald-100/70 sm:text-base">
                 Reach out and we'll get back to you with everything you need
                 to plan your stay.
               </p>
               <Link
                 href="/#top"
-                className="inline-flex items-center gap-2 rounded-full bg-amber-400 px-7 py-3 text-sm font-bold tracking-wide text-emerald-950 shadow-lg shadow-amber-400/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-amber-300"
+                className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-amber-400 px-7 py-3 text-sm font-bold tracking-wide text-ink-900 shadow-[0_10px_30px_rgba(251,191,36,0.35)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-amber-300"
               >
-                Get in Touch
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/50 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+                <span className="relative">Get in Touch</span>
+                <svg className="relative" width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path
                     d="M1 7H13M13 7L7.5 1.5M13 7L7.5 12.5"
                     stroke="currentColor"
@@ -335,14 +350,20 @@ export default function FaqPage() {
 }
 
 /* ================================================================== */
-/*  FAQ Accordion Item — Glassmorphism on Dark Emerald                 */
+/*  FAQ Accordion Item — glass card on emerald                         */
 /* ================================================================== */
 function FaqAccordionItem({ index, faq }: { index: number; faq: Faq }) {
   const [open, setOpen] = useState(false);
   const panelId = useId();
 
   return (
-    <div className="group overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-sm backdrop-blur-sm transition-all duration-300 hover:border-amber-400/30 hover:bg-white/[0.07]">
+    <div
+      className={`group overflow-hidden rounded-2xl border bg-white/[0.04] shadow-sm shadow-emerald-950/30 backdrop-blur-sm transition-all duration-300 ${
+        open
+          ? "border-amber-300/40 bg-white/[0.06]"
+          : "border-white/10 hover:border-amber-300/30 hover:bg-white/[0.06]"
+      }`}
+    >
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
@@ -351,12 +372,16 @@ function FaqAccordionItem({ index, faq }: { index: number; faq: Faq }) {
         className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left sm:px-6 sm:py-5"
       >
         <span className="flex items-center gap-3">
-          <span className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-black transition-colors duration-300 ${
-            open ? "bg-amber-400 text-emerald-950" : "bg-white/10 text-amber-400"
-          }`}>
+          <span
+            className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border text-xs font-black transition-colors duration-300 ${
+              open
+                ? "border-amber-300/50 bg-amber-400 text-ink-900"
+                : "border-white/10 bg-emerald-800/40 text-amber-300"
+            }`}
+          >
             {String(index + 1).padStart(2, "0")}
           </span>
-          <span className="font-display text-base font-black leading-snug text-white transition-colors group-hover:text-amber-50 sm:text-lg">
+          <span className="font-display text-base font-black leading-snug text-white sm:text-lg">
             {faq.question}
           </span>
         </span>
@@ -372,7 +397,7 @@ function FaqAccordionItem({ index, faq }: { index: number; faq: Faq }) {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="shrink-0 text-amber-400 transition-colors group-hover:text-amber-300"
+          className="shrink-0 text-amber-300"
           aria-hidden
         >
           <path d="M3 5l4 4 4-4" />
@@ -390,7 +415,7 @@ function FaqAccordionItem({ index, faq }: { index: number; faq: Faq }) {
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             className="overflow-hidden"
           >
-            <div className="px-5 pb-5 pl-16 text-sm leading-relaxed text-emerald-100/90 sm:px-6 sm:pb-6 sm:pl-[3.75rem] sm:text-base">
+            <div className="px-5 pb-5 pl-16 text-sm leading-relaxed text-emerald-100/75 sm:px-6 sm:pb-6 sm:pl-[3.75rem] sm:text-base">
               {faq.answer}
             </div>
           </motion.div>
@@ -401,7 +426,7 @@ function FaqAccordionItem({ index, faq }: { index: number; faq: Faq }) {
 }
 
 /* ================================================================== */
-/*  SunMark — halo + spinning rays + pulsing core, ALL via CSS classes */
+/*  SunMark — PRESERVED (halo + spinning rays + pulsing core)          */
 /* ================================================================== */
 function SunMark() {
   const gid = useId().replace(/:/g, "");
