@@ -12,7 +12,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
 import type { rooms } from "@/lib/rooms";
-import { SiteFooter } from "@/components/SiteFooter";
 
 type Room = (typeof rooms)[number];
 
@@ -51,7 +50,6 @@ export function RoomPageContent({ room }: { room: Room }) {
     offset: ["start start", "end start"],
   });
 
-  // Multi-layer parallax for depth
   const heroImageY = useTransform(scrollYProgress, [0, 1], ["0%", "22%"]);
   const heroImageScale = useTransform(scrollYProgress, [0, 1], [1.05, 1.18]);
   const ghostTitleY = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
@@ -89,15 +87,12 @@ export function RoomPageContent({ room }: { room: Room }) {
 
   return (
     <>
-      {/* ======================== */}
-      {/* HERO — dynamic layered cinematic background            */}
-      {/* ======================== */}
+      {/* HERO — dynamic layered cinematic background */}
       <section
         ref={heroRef}
         onMouseMove={handleMouseMove}
         className="relative flex h-[90vh] min-h-[600px] w-full items-end overflow-hidden bg-ink-900"
       >
-        {/* Layer 1 — the room photo, dual parallax */}
         <motion.div style={{ y: heroImageY, scale: heroImageScale }} className="absolute inset-0">
           <motion.div
             initial={{ scale: 1.12, opacity: 0 }}
@@ -119,7 +114,6 @@ export function RoomPageContent({ room }: { room: Room }) {
           </motion.div>
         </motion.div>
 
-        {/* Layer 2 — animated emerald→amber duotone wash */}
         <motion.div
           aria-hidden
           className="pointer-events-none absolute inset-0 mix-blend-soft-light"
@@ -132,20 +126,17 @@ export function RoomPageContent({ room }: { room: Room }) {
           }}
         />
 
-        {/* Layer 3 — drifting emerald glow */}
         <motion.div
           style={{ x: springX, y: springY }}
           className="pointer-events-none absolute right-1/4 top-1/4 h-[24rem] w-[24rem] rounded-full bg-emerald-400/20 blur-[120px] mix-blend-screen"
           aria-hidden
         />
-        {/* Layer 4 — counter-drifting amber glow */}
         <motion.div
           style={{ x: orbX, y: orbY }}
           className="pointer-events-none absolute bottom-1/4 left-1/4 h-[22rem] w-[22rem] rounded-full bg-amber-300/20 blur-[110px] mix-blend-screen"
           aria-hidden
         />
 
-        {/* Layer 5 — animated fine grid texture */}
         <motion.div
           aria-hidden
           className="pointer-events-none absolute inset-0 opacity-[0.12]"
@@ -158,7 +149,6 @@ export function RoomPageContent({ room }: { room: Room }) {
           }}
         />
 
-        {/* Overlapping GHOST title */}
         <motion.span
           aria-hidden
           style={{ y: ghostTitleY, x: ghostTitleX }}
@@ -167,7 +157,6 @@ export function RoomPageContent({ room }: { room: Room }) {
           {room.category}
         </motion.span>
 
-        {/* Vignette — fades INTO the emerald canvas below */}
         <div
           className="absolute inset-0 z-[6] pointer-events-none"
           style={{
@@ -177,7 +166,6 @@ export function RoomPageContent({ room }: { room: Room }) {
           aria-hidden
         />
 
-        {/* Urgency pill */}
         <motion.div
           initial={{ opacity: 0, y: -14 }}
           animate={{ opacity: 1, y: 0 }}
@@ -194,7 +182,6 @@ export function RoomPageContent({ room }: { room: Room }) {
           </div>
         </motion.div>
 
-        {/* Back link */}
         <motion.div
           initial={{ opacity: 0, x: -14 }}
           animate={{ opacity: 1, x: 0 }}
@@ -212,7 +199,6 @@ export function RoomPageContent({ room }: { room: Room }) {
           </Link>
         </motion.div>
 
-        {/* Centerpiece content */}
         <motion.div
           style={{ opacity: heroContentOpacity, y: heroContentY }}
           className="relative z-10 mx-auto w-full max-w-7xl px-4 pb-14 sm:px-6 sm:pb-16 lg:px-8"
@@ -230,7 +216,6 @@ export function RoomPageContent({ room }: { room: Room }) {
               </span>
             </motion.div>
 
-            {/* Kinetic word-by-word title — last word solid amber (no gradient) */}
             <motion.h1
               variants={stagger}
               className="font-display text-5xl font-black leading-[0.92] tracking-tight text-white sm:text-6xl lg:text-7xl [transform-style:preserve-3d] [transform-perspective:1000px]"
@@ -278,11 +263,8 @@ export function RoomPageContent({ room }: { room: Room }) {
         </motion.div>
       </section>
 
-      {/* ================================================================= */}
-      {/* PREMIUM EMERALD CANVAS — everything below the hero image           */}
-      {/* ================================================================= */}
+      {/* PREMIUM EMERALD CANVAS */}
       <div className="relative isolate overflow-hidden bg-[#052e23] text-white">
-        {/* Ambient radial glows for depth */}
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 opacity-90"
@@ -291,7 +273,6 @@ export function RoomPageContent({ room }: { room: Room }) {
               "radial-gradient(60% 45% at 15% 0%, rgba(16,185,129,0.22) 0%, transparent 60%), radial-gradient(55% 45% at 95% 20%, rgba(251,191,36,0.12) 0%, transparent 55%), radial-gradient(80% 60% at 50% 100%, rgba(4,120,87,0.25) 0%, transparent 65%)",
           }}
         />
-        {/* Fine noise/grain */}
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 opacity-[0.04] mix-blend-overlay"
@@ -300,7 +281,6 @@ export function RoomPageContent({ room }: { room: Room }) {
               "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
           }}
         />
-        {/* Gold hairline divider */}
         <motion.div
           aria-hidden
           className="relative z-10 h-px w-full"
@@ -511,18 +491,10 @@ export function RoomPageContent({ room }: { room: Room }) {
           </section>
         </div>
       </div>
-
-      {/* ======================== */}
-      {/* FOOTER                                                  */}
-      {/* ======================== */}
-      <SiteFooter />
     </>
   );
 }
 
-/* ------------------------------------------------------------------ */
-/*  Spec icons                                                         */
-/* ------------------------------------------------------------------ */
 function SpecIcon({ name }: { name: "ruler" | "mountain" | "layers" }) {
   const common = {
     width: 16,
