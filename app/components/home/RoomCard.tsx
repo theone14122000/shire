@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import {
   Wifi,
   Wind,
@@ -61,20 +61,20 @@ function getAmenityIcon(amenity: string) {
 }
 
 // --- motion variants ---
-const amenityContainer = {
+const amenityContainer: Variants = {
   hidden: {},
   show: {
     transition: { staggerChildren: 0.07, delayChildren: 0.15 },
   },
 };
 
-const amenityItem = {
+const amenityItem: Variants = {
   hidden: { opacity: 0, y: 10, scale: 0.85 },
   show: {
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as const },
   },
 };
 
@@ -87,7 +87,7 @@ export function RoomCard({ room }: { room: Room }) {
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
       whileHover={{ y: -6 }}
       className="card-luxe group relative flex h-full flex-col overflow-hidden transition-shadow duration-500 hover:shadow-[0_20px_60px_-15px_rgba(6,95,70,0.35)]"
     >
