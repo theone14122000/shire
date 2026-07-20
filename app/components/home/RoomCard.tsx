@@ -21,6 +21,18 @@ import {
   Heart,
   ArrowRight,
   Star,
+  Thermometer,
+  Users,
+  Sun,
+  Moon,
+  Volume2,
+  Sofa,
+  Cigarette,
+  PawPrint,
+  Baby,
+  Wine,
+  Flame,
+  Armchair,
 } from "lucide-react";
 import { ImagePlaceholder } from "../ui/ImagePlaceholder";
 import { formatINR, discountPercent } from "@/lib/format";
@@ -34,22 +46,49 @@ import type { Room } from "@/lib/content";
  * panel. All copy, price, offer badge, and rating come from props.
  */
 
-// --- amenity → icon mapping (keyword match, case-insensitive) ---
+// --- amenity + comfort → icon mapping (keyword match, case-insensitive) ---
+// Order matters: more specific keywords should come first so they win
+// over broader matches (e.g. "air conditioning" before generic "air").
 const AMENITY_ICON_MAP: { keywords: string[]; icon: typeof Wifi }[] = [
+  // connectivity
   { keywords: ["wifi", "wi-fi", "internet"], icon: Wifi },
-  { keywords: ["ac", "air", "conditio"], icon: Wind },
-  { keywords: ["breakfast", "coffee", "tea"], icon: Coffee },
-  { keywords: ["parking", "valet", "car"], icon: Car },
-  { keywords: ["pool", "spa", "jacuzzi"], icon: Waves },
-  { keywords: ["tv", "television", "netflix"], icon: Tv },
-  { keywords: ["bed", "king", "queen"], icon: BedDouble },
-  { keywords: ["bath", "shower", "tub"], icon: Bath },
-  { keywords: ["view", "balcony", "terrace"], icon: Mountain },
-  { keywords: ["safe", "security", "secure"], icon: ShieldCheck },
-  { keywords: ["dining", "restaurant", "meal"], icon: UtensilsCrossed },
-  { keywords: ["gym", "fitness"], icon: Dumbbell },
-  { keywords: ["fridge", "minibar", "refrigerat"], icon: Refrigerator },
+  { keywords: ["tv", "television", "netflix", "smart screen"], icon: Tv },
+
+  // climate / comfort
+  { keywords: ["air condition", "ac", "cooling"], icon: Wind },
+  { keywords: ["heater", "heating", "fireplace", "bukhari"], icon: Flame },
+  { keywords: ["temperature", "climate"], icon: Thermometer },
+  { keywords: ["sunny", "sunrise", "sun-facing"], icon: Sun },
+  { keywords: ["night", "blackout", "moon"], icon: Moon },
+  { keywords: ["quiet", "soundproof", "silent"], icon: Volume2 },
   { keywords: ["cold", "chill", "snow"], icon: Snowflake },
+
+  // food & drink
+  { keywords: ["breakfast", "coffee", "tea"], icon: Coffee },
+  { keywords: ["dining", "restaurant", "meal"], icon: UtensilsCrossed },
+  { keywords: ["minibar", "bar", "wine"], icon: Wine },
+  { keywords: ["fridge", "refrigerat"], icon: Refrigerator },
+
+  // sleep & seating
+  { keywords: ["bed", "king", "queen", "mattress"], icon: BedDouble },
+  { keywords: ["sofa", "lounge", "sitting area"], icon: Sofa },
+  { keywords: ["balcony", "chair", "seating"], icon: Armchair },
+
+  // bath
+  { keywords: ["bath", "shower", "tub"], icon: Bath },
+
+  // property / views
+  { keywords: ["view", "terrace", "mountain", "valley"], icon: Mountain },
+  { keywords: ["pool", "spa", "jacuzzi"], icon: Waves },
+  { keywords: ["parking", "valet", "car"], icon: Car },
+  { keywords: ["gym", "fitness"], icon: Dumbbell },
+  { keywords: ["safe", "security", "secure", "cctv"], icon: ShieldCheck },
+
+  // policies / occupancy
+  { keywords: ["guest", "capacity", "occupancy", "people"], icon: Users },
+  { keywords: ["smoking"], icon: Cigarette },
+  { keywords: ["pet"], icon: PawPrint },
+  { keywords: ["child", "kid", "crib", "family"], icon: Baby },
 ];
 
 function getAmenityIcon(amenity: string) {
@@ -175,7 +214,8 @@ export function RoomCard({ room }: { room: Room }) {
           <h3 className="h-card transition-colors duration-300 group-hover:text-emerald-800">
             {room.name}
           </h3>
-          <p className="text-xs font-semibold text-ink-500">
+          <p className="flex items-center gap-1.5 text-xs font-semibold text-ink-500">
+            <Users size={12} strokeWidth={2.2} className="text-emerald-600" />
             {room.capacity} · {room.beds}
           </p>
         </div>
@@ -185,7 +225,7 @@ export function RoomCard({ room }: { room: Room }) {
           {room.shortNote}
         </p>
 
-        {/* Amenity chips — icon-led, staggered in on scroll */}
+        {/* Amenity / comfort chips — icon-led, staggered in on scroll */}
         <motion.div
           variants={amenityContainer}
           initial="hidden"
