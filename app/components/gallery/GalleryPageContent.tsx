@@ -54,7 +54,7 @@ const GALLERY_ITEMS: GalleryItem[] = [
   { id: "common-balcony", title: "Common Balcony", category: "Common Spaces", src: "/gallery/common-balcony.jpg" },
   { id: "attic-area", title: "Attic Area (Common)", category: "Common Spaces", src: "/gallery/attic-area-common.jpg" },
   { id: "snow-view", title: "Snow View", category: "Views", src: "/gallery/snow-view.jpg" },
-  { id: "common-seating-first-floor", title: "Common Seating on First Floor", category: "Common Spaces", src: "/gallery/common-seating-first-floor.heic" },
+  { id: "common-seating-first-floor", title: "Common Seating on First Floor", category: "Common Spaces", src: "/gallery/common-seating-first-floor.jpg" },
   { id: "mesmerizing-views", title: "Mesmerizing Views", category: "Views", src: "/gallery/mesmerizing-views.jpg" },
   { id: "bonfire", title: "Bonfire", category: "Outdoor", src: "/gallery/bonfire.jpg" },
   { id: "ground-floor-lobby", title: "Ground Floor Lobby — Double Height Ceiling", category: "Common Spaces", src: "/gallery/ground-floor-lobby.jpg" },
