@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
-import { GalleryPageContent } from "@/app/components/gallery/GalleryPageContent";
+import { TopBar } from "../components/TopBar";
+import { SiteNav } from "../components/SiteNav";
+import { SiteFooter } from "../components/SiteFooter";
+import { FloatingActions } from "../components/FloatingActions";
+import { GalleryPageContent } from "../components/gallery/GalleryPageContent";
 
 export const metadata: Metadata = {
   title: "Gallery | The Himalayan Shire",
@@ -8,5 +12,15 @@ export const metadata: Metadata = {
 };
 
 export default function GalleryPage() {
-  return <GalleryPageContent />;
+  return (
+    <>
+      <TopBar />
+      <SiteNav />
+      <main id="main" className="relative">
+        <GalleryPageContent />
+      </main>
+      <SiteFooter />
+      <FloatingActions />
+    </>
+  );
 }
