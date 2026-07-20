@@ -12,7 +12,7 @@ const NAV_ITEMS = [
   { label: "FAQ", href: "/faq" },
   { label: "Rooms", href: "/#rooms", hasMenu: true },
   { label: "Activities", href: "/activities" }, // ✅ Updated to /activities
-  { label: "Gallery", href: "/#journal" },
+  { label: "Gallery", href: "/gallery" },
   { label: "Blog", href: "/blog" },
   { label: "Contact Us", href: "/contact" }, // ✅ Redirect to components/contect/page.tsx
 ];
