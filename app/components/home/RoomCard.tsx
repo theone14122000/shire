@@ -19,7 +19,7 @@ import {
   Snowflake,
   Refrigerator,
   Heart,
-  ArrowRight,
+  ArrowUpRight,
   Star,
   Thermometer,
   Users,
@@ -39,22 +39,17 @@ import { formatINR, discountPercent } from "@/lib/format";
 import type { Room } from "@/lib/content";
 
 /**
- * RoomCard — the admin-ready "room/offer" card.
- *
- * Designed to receive a single typed `Room` object so the same
- * component can render any room the client adds through the admin
- * panel. All copy, price, offer badge, and rating come from props.
+ * RoomCard — editorial, gallery-forward presentation for a single
+ * `Room`. Image reads as the hero; a glass panel overlaps its base
+ * carrying rating + category, and the body below carries name,
+ * icon-led amenities, and price/CTA. Built to feel like a five-star
+ * hospitality brand's booking page, not a generic listing grid.
  */
 
-// --- amenity + comfort → icon mapping (keyword match, case-insensitive) ---
-// Order matters: more specific keywords should come first so they win
-// over broader matches (e.g. "air conditioning" before generic "air").
+// --- amenity + comfort → icon mapping (keyword match, most specific first) ---
 const AMENITY_ICON_MAP: { keywords: string[]; icon: typeof Wifi }[] = [
-  // connectivity
   { keywords: ["wifi", "wi-fi", "internet"], icon: Wifi },
   { keywords: ["tv", "television", "netflix", "smart screen"], icon: Tv },
-
-  // climate / comfort
   { keywords: ["air condition", "ac", "cooling"], icon: Wind },
   { keywords: ["heater", "heating", "fireplace", "bukhari"], icon: Flame },
   { keywords: ["temperature", "climate"], icon: Thermometer },
@@ -62,29 +57,19 @@ const AMENITY_ICON_MAP: { keywords: string[]; icon: typeof Wifi }[] = [
   { keywords: ["night", "blackout", "moon"], icon: Moon },
   { keywords: ["quiet", "soundproof", "silent"], icon: Volume2 },
   { keywords: ["cold", "chill", "snow"], icon: Snowflake },
-
-  // food & drink
   { keywords: ["breakfast", "coffee", "tea"], icon: Coffee },
   { keywords: ["dining", "restaurant", "meal"], icon: UtensilsCrossed },
   { keywords: ["minibar", "bar", "wine"], icon: Wine },
   { keywords: ["fridge", "refrigerat"], icon: Refrigerator },
-
-  // sleep & seating
   { keywords: ["bed", "king", "queen", "mattress"], icon: BedDouble },
   { keywords: ["sofa", "lounge", "sitting area"], icon: Sofa },
   { keywords: ["balcony", "chair", "seating"], icon: Armchair },
-
-  // bath
   { keywords: ["bath", "shower", "tub"], icon: Bath },
-
-  // property / views
   { keywords: ["view", "terrace", "mountain", "valley"], icon: Mountain },
   { keywords: ["pool", "spa", "jacuzzi"], icon: Waves },
   { keywords: ["parking", "valet", "car"], icon: Car },
   { keywords: ["gym", "fitness"], icon: Dumbbell },
   { keywords: ["safe", "security", "secure", "cctv"], icon: ShieldCheck },
-
-  // policies / occupancy
   { keywords: ["guest", "capacity", "occupancy", "people"], icon: Users },
   { keywords: ["smoking"], icon: Cigarette },
   { keywords: ["pet"], icon: PawPrint },
@@ -100,20 +85,27 @@ function getAmenityIcon(amenity: string) {
 }
 
 // --- motion variants ---
-const amenityContainer: Variants = {
-  hidden: {},
+const revealUp: Variants = {
+  hidden: { opacity: 0, y: 8 },
   show: {
-    transition: { staggerChildren: 0.07, delayChildren: 0.15 },
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] as const },
   },
 };
 
+const amenityContainer: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.05, delayChildren: 0.1 } },
+};
+
 const amenityItem: Variants = {
-  hidden: { opacity: 0, y: 10, scale: 0.85 },
+  hidden: { opacity: 0, y: 6, scale: 0.8 },
   show: {
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as const },
+    transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] as const },
   },
 };
 
@@ -123,145 +115,147 @@ export function RoomCard({ room }: { room: Room }) {
 
   return (
     <motion.article
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
-      whileHover={{ y: -6 }}
-      className="card-luxe group relative flex h-full flex-col overflow-hidden transition-shadow duration-500 hover:shadow-[0_20px_60px_-15px_rgba(6,95,70,0.35)]"
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] as const }}
+      className="group relative flex h-full flex-col"
     >
-      {/* Image */}
-      <div className="relative zoom-on-hover overflow-hidden">
-        <ImagePlaceholder
-          kind="product"
-          aspect="4/3"
-          label="Room Image Placeholder"
-          caption={room.imageLabel}
-          className="rounded-b-none border-2 border-transparent group-hover:border-emerald-500/20"
-          showBadge={false}
-        />
-
-        {/* Bottom fade for depth / premium finish */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-ink-900/40 to-transparent" />
-
-        {/* Top-left: offer / featured badge with shimmer sweep */}
-        {room.offerBadge ? (
-          <span className="absolute top-3 left-3 z-10 overflow-hidden rounded-full bg-ink-900 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-beige-100 shadow-[var(--shadow-soft)]">
-            <span className="relative z-10">{room.offerBadge}</span>
-            <motion.span
-              aria-hidden
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-300/40 to-transparent"
-              initial={{ x: "-120%" }}
-              animate={{ x: "220%" }}
-              transition={{
-                duration: 2.2,
-                repeat: Infinity,
-                repeatDelay: 1.4,
-                ease: "easeInOut",
-              }}
+      {/* IMAGE — tall editorial frame */}
+      <div className="relative overflow-hidden rounded-[1.75rem] shadow-[var(--shadow-soft)] transition-shadow duration-500 group-hover:shadow-[0_28px_70px_-20px_rgba(6,95,70,0.4)]">
+        <div className="relative aspect-[4/5] w-full overflow-hidden">
+          <div className="absolute inset-0 scale-[1.02] transition-transform duration-[1400ms] ease-out group-hover:scale-[1.12]">
+            <ImagePlaceholder
+              kind="product"
+              aspect="4/5"
+              label="Room Image Placeholder"
+              caption={room.imageLabel}
+              className="h-full w-full border-none"
+              showBadge={false}
             />
-          </span>
-        ) : null}
-
-        {room.featured && !room.offerBadge ? (
-          <span className="absolute top-3 left-3 z-10 flex items-center gap-1.5 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-500 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-beige-100 shadow-[0_4px_18px_-4px_rgba(16,185,129,0.6)]">
-            <Sparkles size={11} strokeWidth={2.5} aria-hidden />
-            Featured
-          </span>
-        ) : null}
-
-        {/* Top-right: wishlist */}
-        <motion.button
-          type="button"
-          aria-label={saved ? "Remove from wishlist" : "Save to wishlist"}
-          onClick={() => setSaved((s) => !s)}
-          whileTap={{ scale: 0.85 }}
-          whileHover={{ scale: 1.1 }}
-          className="absolute top-3 right-3 z-10 inline-flex h-9 w-9 items-center justify-center rounded-full bg-beige-100/95 text-ink-900 shadow-[var(--shadow-soft)] backdrop-blur transition-colors duration-300 hover:bg-beige-50"
-        >
-          <Heart
-            size={16}
-            strokeWidth={2}
-            className={
-              saved
-                ? "fill-emerald-600 text-emerald-600 transition-colors duration-300"
-                : "text-ink-900 transition-colors duration-300"
-            }
-          />
-        </motion.button>
-      </div>
-
-      {/* Body */}
-      <div className="flex grow flex-col gap-4 p-5 sm:p-6">
-        {/* Rating row */}
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-1.5">
-            <Stars rating={room.rating} />
-            <span className="text-xs font-bold text-ink-900">
-              {room.rating.toFixed(1)}
-            </span>
-            <span className="text-xs font-medium text-ink-500">
-              ({room.reviewCount})
-            </span>
           </div>
-          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-700">
+
+          {/* permanent base scrim for legibility */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-900/85 via-ink-900/10 to-transparent" />
+
+          {/* hover scrim intensifies + warms slightly */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-emerald-950/40 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+        </div>
+
+        {/* top row: badge + wishlist */}
+        <div className="absolute inset-x-0 top-0 flex items-start justify-between p-4">
+          {room.offerBadge ? (
+            <span className="relative overflow-hidden rounded-full bg-beige-100/95 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-ink-900 shadow-[var(--shadow-soft)] backdrop-blur">
+              <span className="relative z-10">{room.offerBadge}</span>
+              <motion.span
+                aria-hidden
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-300/50 to-transparent"
+                initial={{ x: "-120%" }}
+                animate={{ x: "220%" }}
+                transition={{ duration: 2.4, repeat: Infinity, repeatDelay: 1.6, ease: "easeInOut" }}
+              />
+            </span>
+          ) : room.featured ? (
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-500 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-beige-100 shadow-[0_6px_20px_-4px_rgba(16,185,129,0.65)]">
+              <Sparkles size={11} strokeWidth={2.5} aria-hidden />
+              Featured
+            </span>
+          ) : (
+            <span />
+          )}
+
+          <motion.button
+            type="button"
+            aria-label={saved ? "Remove from wishlist" : "Save to wishlist"}
+            onClick={() => setSaved((s) => !s)}
+            whileTap={{ scale: 0.85 }}
+            whileHover={{ scale: 1.1 }}
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-beige-100/95 text-ink-900 shadow-[var(--shadow-soft)] backdrop-blur transition-colors duration-300 hover:bg-beige-50"
+          >
+            <Heart
+              size={16}
+              strokeWidth={2}
+              className={
+                saved
+                  ? "fill-emerald-600 text-emerald-600 transition-colors duration-300"
+                  : "text-ink-900 transition-colors duration-300"
+              }
+            />
+          </motion.button>
+        </div>
+
+        {/* category kicker + name, set into the image */}
+        <div className="absolute inset-x-0 bottom-[4.75rem] px-5">
+          <span className="text-[10px] font-bold uppercase tracking-[0.28em] text-emerald-300">
             {room.category}
           </span>
-        </div>
-
-        {/* Name + capacity */}
-        <div className="flex flex-col gap-1">
-          <h3 className="h-card transition-colors duration-300 group-hover:text-emerald-800">
+          <h3 className="mt-1 font-display text-2xl font-bold leading-tight text-beige-50 drop-shadow-sm sm:text-[1.7rem]">
             {room.name}
           </h3>
-          <p className="flex items-center gap-1.5 text-xs font-semibold text-ink-500">
-            <Users size={12} strokeWidth={2.2} className="text-emerald-600" />
-            {room.capacity} · {room.beds}
-          </p>
         </div>
 
+        {/* FLOATING GLASS STAT PANEL — overlaps the image's bottom edge */}
+        <div className="absolute inset-x-4 bottom-4 flex items-center justify-between rounded-2xl border border-white/15 bg-white/10 px-4 py-3 backdrop-blur-xl">
+          <div className="flex items-center gap-2">
+            <Stars rating={room.rating} />
+            <span className="text-xs font-bold text-beige-50">{room.rating.toFixed(1)}</span>
+            <span className="text-xs font-medium text-beige-100/60">({room.reviewCount})</span>
+          </div>
+          <div className="flex items-center gap-1.5 text-xs font-semibold text-beige-100/85">
+            <Users size={13} strokeWidth={2.2} className="text-emerald-300" />
+            {room.capacity}
+          </div>
+        </div>
+      </div>
+
+      {/* BODY */}
+      <div className="flex grow flex-col gap-4 px-1 pt-5">
         {/* Description */}
-        <p className="line-clamp-2 text-sm font-medium leading-relaxed text-ink-700">
+        <p className="text-sm font-medium leading-relaxed text-ink-700 line-clamp-2">
           {room.shortNote}
         </p>
 
-        {/* Amenity / comfort chips — icon-led, staggered in on scroll */}
+        {/* Beds line */}
+        <p className="text-xs font-semibold uppercase tracking-[0.1em] text-ink-500">
+          {room.beds}
+        </p>
+
+        {/* Amenity icon row — circular, label reveals on hover per-icon */}
         <motion.div
           variants={amenityContainer}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.4 }}
-          className="flex flex-wrap gap-2"
+          className="flex flex-wrap items-center gap-2.5"
         >
-          {room.amenities.slice(0, 4).map((a) => {
+          {room.amenities.slice(0, 5).map((a) => {
             const Icon = getAmenityIcon(a);
             return (
-              <motion.span
-                key={a}
-                variants={amenityItem}
-                whileHover={{ scale: 1.06, y: -1 }}
-                className="group/chip flex items-center gap-1.5 rounded-full border border-emerald-900/10 bg-emerald-50/70 py-1 pl-1.5 pr-2.5 transition-colors duration-300 hover:border-emerald-500/30 hover:bg-emerald-50"
-              >
-                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-600/10 text-emerald-700 transition-colors duration-300 group-hover/chip:bg-emerald-600 group-hover/chip:text-white">
-                  <Icon size={11} strokeWidth={2.4} />
-                </span>
-                <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-ink-700">
+              <motion.div key={a} variants={amenityItem} className="group/icon relative">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full border border-emerald-900/12 bg-emerald-50 text-emerald-700 transition-all duration-300 group-hover/icon:-translate-y-1 group-hover/icon:border-emerald-500/40 group-hover/icon:bg-emerald-600 group-hover/icon:text-white group-hover/icon:shadow-[0_10px_20px_-6px_rgba(6,95,70,0.5)]">
+                  <Icon size={16} strokeWidth={2.2} />
+                </div>
+                {/* tooltip label */}
+                <motion.span
+                  initial={{ opacity: 0, y: 4 }}
+                  className="pointer-events-none absolute left-1/2 top-full z-20 mt-2 -translate-x-1/2 whitespace-nowrap rounded-md bg-ink-900 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.08em] text-beige-100 opacity-0 shadow-[var(--shadow-soft)] transition-all duration-200 group-hover/icon:translate-y-0 group-hover/icon:opacity-100"
+                >
                   {a}
-                </span>
-              </motion.span>
+                </motion.span>
+              </motion.div>
             );
           })}
-          {room.amenities.length > 4 ? (
-            <motion.span
+          {room.amenities.length > 5 ? (
+            <motion.div
               variants={amenityItem}
-              className="flex items-center px-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-emerald-700"
+              className="flex h-10 items-center rounded-full bg-emerald-50 px-3 text-[11px] font-bold text-emerald-700"
             >
-              +{room.amenities.length - 4} more
-            </motion.span>
+              +{room.amenities.length - 5}
+            </motion.div>
           ) : null}
         </motion.div>
 
-        {/* Spacer to push footer down */}
+        {/* Spacer */}
         <div className="grow" />
 
         {/* Price + CTA */}
@@ -295,18 +289,18 @@ export function RoomCard({ room }: { room: Room }) {
             ) : null}
           </div>
 
+          {/* magnetic-style CTA: ring expands + icon rotates on hover */}
           <motion.a
             href="#book"
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            className="group/cta inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-ink-900 px-4 py-2.5 text-xs font-bold text-beige-100 shadow-[var(--shadow-soft)] transition-colors duration-300 hover:bg-gradient-to-r hover:from-emerald-700 hover:to-emerald-600"
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.96 }}
+            className="group/cta relative inline-flex h-12 items-center gap-2 overflow-hidden whitespace-nowrap rounded-full bg-ink-900 pl-5 pr-4 text-xs font-bold text-beige-100 shadow-[var(--shadow-soft)] transition-colors duration-300 hover:bg-gradient-to-r hover:from-emerald-700 hover:to-emerald-600"
           >
-            Book
-            <ArrowRight
-              size={13}
-              strokeWidth={2.4}
-              className="transition-transform duration-300 group-hover/cta:translate-x-1"
-            />
+            <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover/cta:translate-x-full" />
+            <span className="relative">Reserve</span>
+            <span className="relative flex h-6 w-6 items-center justify-center rounded-full bg-beige-100/15 transition-transform duration-300 group-hover/cta:rotate-45">
+              <ArrowUpRight size={13} strokeWidth={2.6} />
+            </span>
           </motion.a>
         </div>
       </div>
@@ -320,18 +314,12 @@ function Stars({ rating }: { rating: number }) {
       {Array.from({ length: 5 }).map((_, i) => {
         const filled = i < Math.floor(rating);
         return (
-          <motion.span
+          <Star
             key={i}
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3, delay: i * 0.05 }}
-          >
-            <Star
-              size={12}
-              strokeWidth={1.4}
-              className={filled ? "fill-emerald-600 text-emerald-600" : "text-ink-300"}
-            />
-          </motion.span>
+            size={11}
+            strokeWidth={1.4}
+            className={filled ? "fill-amber-400 text-amber-400" : "text-beige-100/30"}
+          />
         );
       })}
     </div>
