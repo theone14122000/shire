@@ -414,7 +414,7 @@ function BlogCta() {
 }
 
 /* ================================================================== */
-/*  ActivityGallery — richer bento cards, Ken Burns drift, lightbox     */
+/*  ActivityGallery — one row of 5, auto-toggles between two sets      */
 /* ================================================================== */
 function ActivityGallery({ images }: { images: string[] }) {
   const reduce = useReducedMotion();
@@ -471,12 +471,11 @@ function ActivityGallery({ images }: { images: string[] }) {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] as const }}
-          className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4 lg:grid-cols-6 lg:gap-5 lg:auto-rows-[13rem]"
+          className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5 lg:gap-5"
         >
           {current.map((src, i) => {
             const globalIndex = start + i;
             const label = ACTIVITY_LABELS[globalIndex % ACTIVITY_LABELS.length];
-            const isHero = i === 0;
 
             return (
               <motion.button
@@ -488,11 +487,7 @@ function ActivityGallery({ images }: { images: string[] }) {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] as const }}
                 whileHover={{ y: -4 }}
-                className={`group relative overflow-hidden rounded-2xl border border-white/10 bg-emerald-900/40 p-1 text-left shadow-lg shadow-emerald-950/40 transition-all duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/70 ${
-                  isHero
-                    ? "col-span-2 aspect-[16/11] sm:col-span-2 sm:row-span-2 sm:aspect-auto lg:col-span-3 lg:row-span-2"
-                    : "aspect-square sm:aspect-auto lg:col-span-1"
-                }`}
+                className="group relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/10 bg-emerald-900/40 p-1 text-left shadow-lg shadow-emerald-950/40 transition-all duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/70"
               >
                 {/* animated gradient ring, appears on hover */}
                 <span
@@ -529,11 +524,7 @@ function ActivityGallery({ images }: { images: string[] }) {
 
                   {/* caption label, always visible at base */}
                   <div className="absolute inset-x-0 bottom-0 p-2.5 sm:p-3">
-                    <span
-                      className={`inline-block truncate rounded-full bg-white/10 px-2.5 py-1 font-bold uppercase tracking-wider text-beige-50 backdrop-blur-sm transition-colors duration-300 group-hover:bg-amber-400 group-hover:text-emerald-950 ${
-                        isHero ? "text-[11px] sm:text-xs" : "text-[9px] sm:text-[10px]"
-                      }`}
-                    >
+                    <span className="inline-block truncate rounded-full bg-white/10 px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-beige-50 backdrop-blur-sm transition-colors duration-300 group-hover:bg-amber-400 group-hover:text-emerald-950 sm:text-[10px]">
                       {label}
                     </span>
                   </div>
