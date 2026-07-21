@@ -29,9 +29,13 @@ import {
 import { SiteNav } from "../components/SiteNav";
 import { SiteFooter } from "../components/SiteFooter";
 
-const BLOG_URL = "https://traveltalesfromindia.in/a-small-hike-with-the-himalayan-shire/#google_vignette";
+const BLOG_URL =
+  "https://traveltalesfromindia.in/a-small-hike-with-the-himalayan-shire/#google_vignette";
 
-const ACTIVITY_IMAGES = Array.from({ length: 10 }, (_, i) => `/images/activity/activity-${i + 1}.jpg`);
+const ACTIVITY_IMAGES = Array.from(
+  { length: 10 },
+  (_, i) => `/images/activity/activity-${i + 1}.jpg`
+);
 
 const ACTIVITY_LABELS = [
   "Morning Lawn",
@@ -58,11 +62,11 @@ const BLOCKS: Block[] = [
     title: "Space to Breathe",
     body: (
       <>
-        At The Himalayan Shire, we believe in giving you space to breathe. Beyond your room,
-        you&apos;ll discover plenty of cozy common areas and quiet corners, each offering
-        incredible panoramic views. Whether you want to read a book in our cozy carpeted attic,
-        unwind on the balcony swing, or stroll across the lawn, there is always a perfect spot
-        for some personal space.
+        At The Himalayan Shire, we believe in giving you space to breathe. Beyond
+        your room, you&apos;ll discover plenty of cozy common areas and quiet
+        corners, each offering incredible panoramic views. Whether you want to read
+        a book in our cozy carpeted attic, unwind on the balcony swing, or stroll
+        across the lawn, there is always a perfect spot for some personal space.
       </>
     ),
   },
@@ -75,8 +79,8 @@ const BLOCKS: Block[] = [
         <span className="font-bold text-amber-300">
           Table Tennis, Carrom, board games, and playing cards.
         </span>{" "}
-        If you prefer a quieter afternoon, dive into a good story from our collection of books
-        — our own mini-library.
+        If you prefer a quieter afternoon, dive into a good story from our
+        collection of books — our own mini-library.
       </>
     ),
   },
@@ -85,8 +89,8 @@ const BLOCKS: Block[] = [
     title: "The TV Lounge",
     body: (
       <>
-        Head to the top floor to sink into super-comfy lounge sofas and enjoy a late-night movie
-        marathon on our{" "}
+        Head to the top floor to sink into super-comfy lounge sofas and enjoy a
+        late-night movie marathon on our{" "}
         <span className="font-bold text-amber-300">65-inch LED Smart TV.</span>
       </>
     ),
@@ -96,9 +100,10 @@ const BLOCKS: Block[] = [
     title: "The Lawn",
     body: (
       <>
-        Make use of our sprawling lawn area, with an amazing view of the Himalayan range, to do
-        some early morning Yoga or simply meditate. It&apos;s a space for the whole family,
-        complete with a small slide to keep the little ones happily entertained.
+        Make use of our sprawling lawn area, with an amazing view of the Himalayan
+        range, to do some early morning Yoga or simply meditate. It&apos;s a space
+        for the whole family, complete with a small slide to keep the little ones
+        happily entertained.
       </>
     ),
   },
@@ -107,12 +112,15 @@ const BLOCKS: Block[] = [
     title: "Nature Trails & Orchard Walks",
     body: (
       <>
-        Nestled amidst lush apple orchards and dense deodar forests, the property offers a deeply
-        quiet and peaceful escape, completely free from traffic and city noise. Step right outside
-        to soak in the authentic Himalayan countryside — stroll through the orchards, share a warm
-        conversation with friendly locals, or explore the beautiful, untouched jungle trails just
+        Nestled amidst lush apple orchards and dense deodar forests, the property
+        offers a deeply quiet and peaceful escape, completely free from traffic and
+        city noise. Step right outside to soak in the authentic Himalayan
+        countryside — stroll through the orchards, share a warm conversation with
+        friendly locals, or explore the beautiful, untouched jungle trails just
         steps away from the property. We also offer{" "}
-        <span className="font-bold text-amber-300">bonfire and live barbeque services</span>{" "}
+        <span className="font-bold text-amber-300">
+          bonfire and live barbeque services
+        </span>{" "}
         for an extra charge.
       </>
     ),
@@ -146,9 +154,16 @@ const stagger: Variants = {
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const } },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
+  },
 };
 
+/* ================================================================== */
+/*  Page                                                                */
+/* ================================================================== */
 export default function ActivitiesPage() {
   const pageRef = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
@@ -190,6 +205,7 @@ export default function ActivitiesPage() {
         .ken-burns     { animation: kenBurns 14s ease-in-out infinite; }
       `}</style>
 
+      {/* Background layers */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10"
@@ -210,6 +226,7 @@ export default function ActivitiesPage() {
       <MotionConfig reducedMotion="user">
         <SiteNav />
 
+        {/* Scroll progress bar */}
         <div className="pointer-events-none fixed inset-x-0 top-0 z-[60] h-[3px] bg-black/20">
           <motion.span
             className="block h-full origin-left bg-gradient-to-r from-amber-400 via-amber-300 to-emerald-400"
@@ -217,9 +234,8 @@ export default function ActivitiesPage() {
           />
         </div>
 
+        {/* ── Activities Section ── */}
         <section className="relative overflow-hidden py-16 sm:py-20 lg:py-24">
-          {/* ... (All your existing glows, sun, intro text, blocks, and blog CTA remain unchanged) ... */}
-          {/* Keeping them exactly as you had them for "preserve rest" */}
           <motion.div
             aria-hidden
             className="pointer-events-none absolute -left-24 top-10 h-80 w-80 rounded-full bg-amber-300/20 blur-[120px]"
@@ -239,7 +255,7 @@ export default function ActivitiesPage() {
           </div>
 
           <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-            {/* Header, intro text, blocks, and blog CTA unchanged */}
+            {/* Header */}
             <motion.div
               variants={fadeUp}
               initial="hidden"
@@ -253,12 +269,35 @@ export default function ActivitiesPage() {
                 <span className="h-px w-6 bg-amber-400/70" aria-hidden />
               </span>
               <h1 className="mt-4 font-display text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl">
-                Activities In &amp; Around <span className="text-amber-400">The Property</span>
+                Activities In &amp; Around{" "}
+                <span className="text-amber-400">The Property</span>
               </h1>
             </motion.div>
 
-            {/* ... Rest of your content (intro paragraph, blocks, blog CTA) remains identical ... */}
+            {/* Intro paragraph */}
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.2 }}
+              className="relative mb-14 rounded-2xl border border-white/10 bg-white/[0.03] p-6 text-base leading-relaxed text-emerald-100/80 backdrop-blur-sm sm:p-8 sm:text-lg"
+            >
+              <p>
+                We often get asked — what&apos;s there to do around the property?
+                And we like to say, while there are various things to do here, the
+                best thing to do at the Shire is to just{" "}
+                <span className="font-bold text-amber-300">
+                  sit back and enjoy the breathtaking views
+                </span>{" "}
+                from the property, take a moment from a hyperactive lifestyle,
+                relax and hear the birds chirping all day, or watch the colourful
+                butterflies as they hover around the garden going from flower to
+                flower. Bask in the sun in our beautiful lawn, feel the cool fresh
+                mountain breeze and fill your lungs with pollution-free air.
+              </p>
+            </motion.div>
 
+            {/* Blocks heading */}
             <motion.h2
               variants={fadeUp}
               initial="hidden"
@@ -266,9 +305,11 @@ export default function ActivitiesPage() {
               viewport={{ once: true, amount: 0.3 }}
               className="mb-8 border-l-4 border-amber-400 pl-5 font-display text-2xl font-black text-white sm:text-3xl"
             >
-              Entertainment, Leisure &amp; <span className="text-amber-400">Wellness</span>
+              Entertainment, Leisure &amp;{" "}
+              <span className="text-amber-400">Wellness</span>
             </motion.h2>
 
+            {/* Blocks grid */}
             <motion.div
               variants={stagger}
               initial="hidden"
@@ -284,10 +325,14 @@ export default function ActivitiesPage() {
                     key={block.title}
                     variants={fadeUp}
                     whileHover={{ y: -5 }}
-                    transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] as const }}
-                    className={`group relative flex flex-col gap-4 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-6 shadow-sm shadow-emerald-950/30 backdrop-blur-sm transition-colors duration-300 hover:border-amber-300/40 hover:bg-white/[0.07] hover:shadow-lg hover:shadow-emerald-950/50 ${isLast ? "sm:col-span-2" : ""}`}
+                    transition={{
+                      duration: 0.35,
+                      ease: [0.22, 1, 0.36, 1] as const,
+                    }}
+                    className={`group relative flex flex-col gap-4 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-6 shadow-sm shadow-emerald-950/30 backdrop-blur-sm transition-colors duration-300 hover:border-amber-300/40 hover:bg-white/[0.07] hover:shadow-lg hover:shadow-emerald-950/50 ${
+                      isLast ? "sm:col-span-2" : ""
+                    }`}
                   >
-                    {/* ... block content unchanged ... */}
                     <span
                       aria-hidden
                       className="pointer-events-none absolute -right-2 -top-4 select-none font-display text-7xl font-black leading-none text-white/[0.05] transition-colors duration-300 group-hover:text-amber-300/[0.08]"
@@ -295,7 +340,6 @@ export default function ActivitiesPage() {
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <span className="absolute left-0 top-0 h-full w-1 bg-amber-400 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-
                     <div className="relative flex items-center gap-3">
                       <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 bg-emerald-800/40 text-amber-300 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
                         <Icon size={18} strokeWidth={2} aria-hidden />
@@ -312,6 +356,7 @@ export default function ActivitiesPage() {
               })}
             </motion.div>
 
+            {/* Blog CTA */}
             <motion.div
               variants={fadeUp}
               initial="hidden"
@@ -324,19 +369,24 @@ export default function ActivitiesPage() {
                 className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-amber-400 to-transparent"
               />
               <h2 className="font-display text-xl font-black text-white sm:text-2xl">
-                Love hiking &amp; <span className="text-amber-400">exploring nature?</span>
+                Love hiking &amp;{" "}
+                <span className="text-amber-400">exploring nature?</span>
               </h2>
               <p className="max-w-md text-sm text-emerald-100/70 sm:text-base">
-                Read this blog about hiking and exploring nature around The Himalayan Shire.
+                Read this blog about hiking and exploring nature around The
+                Himalayan Shire.
               </p>
               <BlogCta />
             </motion.div>
           </div>
         </section>
 
+        {/* ── Gallery Section ── */}
         <section className="relative overflow-hidden border-t border-white/10 py-16 sm:py-20 lg:py-24">
-          <div aria-hidden className="pointer-events-none absolute inset-0 bg-[#04241c]/60" />
-
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 bg-[#04241c]/60"
+          />
           <div
             aria-hidden
             className="sun-drift-rev pointer-events-none absolute left-4 top-12 z-0 h-28 w-28 opacity-70 sm:left-10 sm:top-16 sm:h-40 sm:w-40 lg:left-[6%] lg:top-16 lg:h-52 lg:w-52"
@@ -377,6 +427,9 @@ export default function ActivitiesPage() {
   );
 }
 
+/* ================================================================== */
+/*  BlogCta                                                             */
+/* ================================================================== */
 function BlogCta() {
   return (
     <a
@@ -397,74 +450,95 @@ function BlogCta() {
 }
 
 /* ================================================================== */
-/*  ActivityGallery — Fixed & Improved Auto-toggle (5 images per set) */
+/*  ActivityGallery — auto-toggles every 7s, no badges on images        */
 /* ================================================================== */
+const AUTO_INTERVAL = 7000;
+
 function ActivityGallery({ images }: { images: string[] }) {
   const reduce = useReducedMotion();
   const VISIBLE = 5;
-  const pages = Math.ceil(images.length / VISIBLE);
+  const totalPages = Math.ceil(images.length / VISIBLE);
+
   const [page, setPage] = useState(0);
   const [paused, setPaused] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  /* ── Reliable auto-rotate with a single ref-based interval ── */
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const startAutoRotate = useCallback(() => {
-    if (reduce || paused || lightboxIndex !== null) return;
-    intervalRef.current = setInterval(() => {
-      setPage((p) => (p + 1) % pages);
-    }, 7000); // 7 seconds — premium pacing
-  }, [reduce, paused, lightboxIndex, pages]);
+  // Keep latest values in refs so the interval callback never goes stale
+  const pausedRef = useRef(paused);
+  pausedRef.current = paused;
+  const lightboxRef = useRef(lightboxIndex);
+  lightboxRef.current = lightboxIndex;
+  const reduceRef = useRef(reduce);
+  reduceRef.current = reduce;
 
-  const stopAutoRotate = useCallback(() => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
+  useEffect(() => {
+    // Clear any existing timer first
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
     }
-  }, []);
 
-  // Auto-rotate effect
-  useEffect(() => {
-    startAutoRotate();
-    return stopAutoRotate;
-  }, [startAutoRotate, stopAutoRotate]);
+    // Don't start if reduced motion
+    if (reduceRef.current) return;
 
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => stopAutoRotate();
-  }, [stopAutoRotate]);
+    timerRef.current = setInterval(() => {
+      // Check refs at tick time — not at setup time
+      if (pausedRef.current || lightboxRef.current !== null) return;
+      setPage((prev) => (prev + 1) % totalPages);
+    }, AUTO_INTERVAL);
 
-  const currentStart = page * VISIBLE;
-  const currentImages = images.slice(currentStart, currentStart + VISIBLE);
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+    };
+  }, [totalPages]); // Only re-create when totalPages changes (it won't)
 
+  /* ── Derived state ── */
+  const start = page * VISIBLE;
+  const currentImages = images.slice(start, start + VISIBLE);
+
+  /* ── Lightbox navigation ── */
   const closeLightbox = useCallback(() => setLightboxIndex(null), []);
   const showPrev = useCallback(
-    () => setLightboxIndex((i) => (i === null ? null : (i - 1 + images.length) % images.length)),
+    () =>
+      setLightboxIndex((i) =>
+        i === null ? null : (i - 1 + images.length) % images.length
+      ),
     [images.length]
   );
   const showNext = useCallback(
-    () => setLightboxIndex((i) => (i === null ? null : (i + 1) % images.length)),
+    () =>
+      setLightboxIndex((i) => (i === null ? null : (i + 1) % images.length)),
     [images.length]
   );
 
-  // Keyboard handling for lightbox
   useEffect(() => {
     if (lightboxIndex === null) return;
-    const onKeyDown = (e: KeyboardEvent) => {
+    const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") closeLightbox();
       if (e.key === "ArrowLeft") showPrev();
       if (e.key === "ArrowRight") showNext();
     };
-    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
     return () => {
-      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
     };
   }, [lightboxIndex, closeLightbox, showPrev, showNext]);
 
   return (
-    <div className="flex flex-col gap-7" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+    <div
+      className="flex flex-col gap-7"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      {/* ── Image grid ── */}
       <AnimatePresence mode="wait">
         <motion.div
           key={page}
@@ -475,8 +549,9 @@ function ActivityGallery({ images }: { images: string[] }) {
           className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5 lg:gap-5"
         >
           {currentImages.map((src, i) => {
-            const globalIndex = currentStart + i;
-            const label = ACTIVITY_LABELS[globalIndex % ACTIVITY_LABELS.length];
+            const globalIndex = start + i;
+            const label =
+              ACTIVITY_LABELS[globalIndex % ACTIVITY_LABELS.length];
 
             return (
               <motion.button
@@ -486,24 +561,37 @@ function ActivityGallery({ images }: { images: string[] }) {
                 aria-label={`Expand photo: ${label}`}
                 initial={{ opacity: 0, scale: 0.94 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: i * 0.06 }}
+                transition={{
+                  duration: 0.6,
+                  delay: i * 0.06,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
                 whileHover={{ y: -4 }}
                 className="group relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/10 bg-emerald-900/40 p-1 text-left shadow-lg shadow-emerald-950/40 transition-all duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/70"
               >
+                {/* Hover gradient ring */}
                 <span
                   aria-hidden
                   className="pointer-events-none absolute inset-0 z-10 rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                   style={{
                     padding: 1.5,
-                    background: "linear-gradient(135deg, #fbbf24, #10b981 55%, transparent 85%)",
-                    WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                    background:
+                      "linear-gradient(135deg, #fbbf24, #10b981 55%, transparent 85%)",
+                    WebkitMask:
+                      "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
                     WebkitMaskComposite: "xor",
                     maskComposite: "exclude",
                   }}
                 />
 
                 <div className="relative h-full w-full overflow-hidden rounded-[0.9rem]">
-                  <div className={reduce ? "absolute inset-0" : "ken-burns absolute inset-0"}>
+                  <div
+                    className={
+                      reduce
+                        ? "absolute inset-0"
+                        : "ken-burns absolute inset-0"
+                    }
+                  >
                     <Image
                       src={src}
                       alt={`Activity at The Himalayan Shire — ${label}`}
@@ -513,19 +601,13 @@ function ActivityGallery({ images }: { images: string[] }) {
                     />
                   </div>
 
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-emerald-950/75 via-emerald-950/5 to-transparent" />
+                  {/* Base scrim */}
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-emerald-950/60 via-transparent to-transparent" />
+
+                  {/* Hover darken */}
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
-                  <div className="absolute right-2.5 top-2.5 rounded-full bg-emerald-950/60 px-2.5 py-1 text-[10px] font-bold text-amber-300 backdrop-blur-md">
-                    {String(globalIndex + 1).padStart(2, "0")}
-                  </div>
-
-                  <div className="absolute inset-x-0 bottom-0 p-2.5 sm:p-3">
-                    <span className="inline-block truncate rounded-full bg-white/10 px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-beige-50 backdrop-blur-sm transition-colors duration-300 group-hover:bg-amber-400 group-hover:text-emerald-950 sm:text-[10px]">
-                      {label}
-                    </span>
-                  </div>
-
+                  {/* Expand icon on hover */}
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                     <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white shadow-lg backdrop-blur-md">
                       <Expand size={15} strokeWidth={2.2} />
@@ -538,7 +620,7 @@ function ActivityGallery({ images }: { images: string[] }) {
         </motion.div>
       </AnimatePresence>
 
-      {/* Controls */}
+      {/* ── Controls: play/pause + dots ── */}
       <div className="flex items-center justify-center gap-4">
         <button
           type="button"
@@ -546,50 +628,60 @@ function ActivityGallery({ images }: { images: string[] }) {
           aria-label={paused ? "Resume auto-play" : "Pause auto-play"}
           className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/5 text-emerald-100/70 transition-all hover:border-amber-300/40 hover:text-amber-300"
         >
-          {paused ? <Play size={14} strokeWidth={2.4} /> : <Pause size={14} strokeWidth={2.4} />}
+          {paused ? (
+            <Play size={14} strokeWidth={2.4} />
+          ) : (
+            <Pause size={14} strokeWidth={2.4} />
+          )}
         </button>
 
         <div className="flex items-center gap-2">
-          {Array.from({ length: pages }).map((_, i) => (
+          {Array.from({ length: totalPages }).map((_, i) => (
             <button
               key={i}
+              type="button"
               onClick={() => setPage(i)}
-              className={`h-2.5 rounded-full bg-white/20 transition-all duration-500 ${
-                i === page ? "w-10" : "w-2.5"
+              aria-label={`Show image set ${i + 1}`}
+              className={`relative h-2.5 overflow-hidden rounded-full transition-all duration-500 ${
+                i === page ? "w-10 bg-white/20" : "w-2.5 bg-white/20"
               }`}
             >
               {i === page && (
-                <motion.div
-                  className="h-full rounded-full bg-gradient-to-r from-amber-400 to-emerald-400"
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: paused ? 1 : 0 }}
-                  transition={{
-                    duration: paused ? 0 : 7,
-                    ease: "linear",
-                    repeat: paused ? 0 : Infinity,
-                  }}
+                <motion.span
+                  key={`progress-${page}-${paused}`}
+                  className="absolute inset-0 block rounded-full bg-gradient-to-r from-amber-400 to-emerald-400"
                   style={{ transformOrigin: "left" }}
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: paused ? 1 : 1 }}
+                  transition={
+                    paused
+                      ? { duration: 0 }
+                      : { duration: AUTO_INTERVAL / 1000, ease: "linear" }
+                  }
                 />
+              )}
+              {i !== page && (
+                <span className="absolute inset-0 block rounded-full bg-white/40" />
               )}
             </button>
           ))}
         </div>
       </div>
 
-      {/* Lightbox - Unchanged */}
+      {/* ── Lightbox ── */}
       <AnimatePresence>
         {lightboxIndex !== null && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
             className="fixed inset-0 z-[100] flex items-center justify-center bg-[#031a14]/95 backdrop-blur-md"
             onClick={closeLightbox}
           >
-            {/* Lightbox controls and content unchanged from your original */}
-            {/* ... (keeping your full lightbox code exactly as it was) ... */}
             <button
               type="button"
+              aria-label="Close gallery"
               onClick={closeLightbox}
               className="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-emerald-950/60 text-white/80 backdrop-blur-md transition-colors hover:border-amber-300/50 hover:text-amber-200 sm:right-6 sm:top-6"
             >
@@ -602,7 +694,11 @@ function ActivityGallery({ images }: { images: string[] }) {
 
             <button
               type="button"
-              onClick={(e) => { e.stopPropagation(); showPrev(); }}
+              aria-label="Previous photo"
+              onClick={(e) => {
+                e.stopPropagation();
+                showPrev();
+              }}
               className="absolute left-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-emerald-950/60 text-white/80 backdrop-blur-md transition-colors hover:border-amber-300/50 hover:text-amber-200 sm:left-6"
             >
               <ChevronLeft size={20} strokeWidth={2.2} />
@@ -610,7 +706,11 @@ function ActivityGallery({ images }: { images: string[] }) {
 
             <button
               type="button"
-              onClick={(e) => { e.stopPropagation(); showNext(); }}
+              aria-label="Next photo"
+              onClick={(e) => {
+                e.stopPropagation();
+                showNext();
+              }}
               className="absolute right-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-emerald-950/60 text-white/80 backdrop-blur-md transition-colors hover:border-amber-300/50 hover:text-amber-200 sm:right-6"
             >
               <ChevronRight size={20} strokeWidth={2.2} />
@@ -621,7 +721,10 @@ function ActivityGallery({ images }: { images: string[] }) {
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.96 }}
-              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] as const }}
+              transition={{
+                duration: 0.3,
+                ease: [0.22, 1, 0.36, 1] as const,
+              }}
               onClick={(e) => e.stopPropagation()}
               className="relative mx-4 h-[70vh] w-full max-w-4xl sm:h-[78vh]"
             >
@@ -635,7 +738,11 @@ function ActivityGallery({ images }: { images: string[] }) {
               />
               <div className="absolute -bottom-9 left-0 right-0 text-center">
                 <span className="inline-block rounded-full bg-amber-400 px-4 py-1.5 text-[11px] font-bold uppercase tracking-wider text-emerald-950 shadow-sm">
-                  {ACTIVITY_LABELS[lightboxIndex % ACTIVITY_LABELS.length]}
+                  {
+                    ACTIVITY_LABELS[
+                      lightboxIndex % ACTIVITY_LABELS.length
+                    ]
+                  }
                 </span>
               </div>
             </motion.div>
@@ -646,6 +753,9 @@ function ActivityGallery({ images }: { images: string[] }) {
   );
 }
 
+/* ================================================================== */
+/*  SunMark                                                             */
+/* ================================================================== */
 function SunMark() {
   const gid = useId().replace(/:/g, "");
 
@@ -658,8 +768,12 @@ function SunMark() {
             "radial-gradient(circle, rgba(255,224,138,0.75) 0%, rgba(245,200,66,0.45) 45%, rgba(245,200,66,0) 72%)",
         }}
       />
-
-      <svg className="sun-spin absolute inset-0 h-full w-full" viewBox="0 0 200 200" fill="none" aria-hidden>
+      <svg
+        className="sun-spin absolute inset-0 h-full w-full"
+        viewBox="0 0 200 200"
+        fill="none"
+        aria-hidden
+      >
         {SUN_RAYS.map((r, i) => (
           <line
             key={i}
@@ -674,8 +788,11 @@ function SunMark() {
           />
         ))}
       </svg>
-
-      <svg className="sun-pulse absolute inset-0 h-full w-full" viewBox="0 0 200 200" aria-hidden>
+      <svg
+        className="sun-pulse absolute inset-0 h-full w-full"
+        viewBox="0 0 200 200"
+        aria-hidden
+      >
         <defs>
           <radialGradient id={gid} cx="42%" cy="38%" r="65%">
             <stop offset="0%" stopColor="#FFF1B8" />
