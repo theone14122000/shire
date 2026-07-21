@@ -4,53 +4,54 @@ import { motion } from "framer-motion";
 import { Phone, Mail } from "lucide-react";
 import { brand } from "@/lib/content";
 
-/**
- * TopBar — Premium single-line contact bar. Numbers stay tightly aligned,
- * yellow on deep emerald, single continuous row.
- */
 export function TopBar() {
+  // Join all phone numbers into one string with non-breaking spaces
+  const phoneString = brand.phoneDisplay
+    .map((p) => p.replace(/ /g, "\u00A0"))
+    .join(",\u00A0");
+
   return (
     <motion.div
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="relative z-50 w-full border-b border-amber-400/10 bg-[#052923] text-sm font-medium"
+      className="relative z-50 w-full border-b border-amber-400/10 bg-[#052923]"
     >
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-400/30 to-transparent" />
 
-      <div className="container-luxe flex w-full items-center justify-center gap-6 overflow-hidden px-4 py-2.5 sm:justify-end sm:gap-8 sm:px-6">
-        
-        {/* Numbers grouped in one line with clean comma spacing */}
-        <a
-          href={brand.phoneHref[0]}
-          aria-label="Call first number"
-          className="group flex shrink-0 items-center gap-2 text-amber-400 hover:text-amber-300 transition-colors whitespace-nowrap"
-        >
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-900/60 text-emerald-300 transition-colors group-hover:bg-amber-400/10 group-hover:text-amber-400">
-            <Phone size={14} strokeWidth={2.5} />
+      {/* One single non-wrapping line */}
+      <div
+        className="container-luxe flex h-10 items-center justify-center gap-6 px-4 sm:justify-end sm:gap-8 sm:px-6"
+        style={{ whiteSpace: "nowrap", overflow: "hidden" }}
+      >
+        {/* Phone */}
+        <span className="inline-flex items-center gap-2">
+          <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-900/60 text-emerald-300">
+            <Phone size={13} strokeWidth={2.5} />
           </span>
-          <span className="font-sans text-[13px] font-semibold tabular-nums tracking-normal">
-            {brand.phoneDisplay[0]}
-            {brand.phoneDisplay[1] && (
-              <span className="mx-1.5 text-amber-400/60">,</span>
-            )}
-            {brand.phoneDisplay[1]}
+          <span className="text-[13px] font-semibold text-amber-400" style={{ whiteSpace: "nowrap" }}>
+            {brand.phoneDisplay.map((phone, i) => (
+              <a key={i} href={brand.phoneHref[i]} className="hover:text-amber-300 transition-colors">
+                {phone.replace(/ /g, "\u00A0")}
+                {i < brand.phoneDisplay.length - 1 && ",\u00A0"}
+              </a>
+            ))}
           </span>
-        </a>
+        </span>
 
         {/* Separator */}
-        <span className="hidden h-3.5 w-px shrink-0 bg-gradient-to-b from-transparent via-amber-400/40 to-transparent sm:block" />
+        <span className="inline-block h-4 w-px bg-white/15" />
 
         {/* Email */}
         <a
           href={`mailto:${brand.email}`}
-          aria-label={`Email ${brand.email}`}
-          className="group flex shrink-0 items-center gap-2 text-amber-400 hover:text-amber-300 transition-colors whitespace-nowrap"
+          className="inline-flex items-center gap-2 hover:text-amber-300 transition-colors"
+          style={{ whiteSpace: "nowrap" }}
         >
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-900/60 text-emerald-300 transition-colors group-hover:bg-amber-400/10 group-hover:text-amber-400">
-            <Mail size={14} strokeWidth={2.5} />
+          <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-900/60 text-emerald-300">
+            <Mail size={13} strokeWidth={2.5} />
           </span>
-          <span className="font-sans text-[13px] font-semibold tabular-nums tracking-normal">
+          <span className="text-[13px] font-semibold text-amber-400">
             {brand.email}
           </span>
         </a>
