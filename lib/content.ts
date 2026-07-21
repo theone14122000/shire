@@ -403,7 +403,7 @@ export const trustSection = {
   intro:
     "The Himalayan Shire is rated 4.7 / 5 across Google, Tripadvisor, and Booking.com, with the highest marks for hospitality, location, and the view.",
   stats: [
-    { value: "4.7", label: "Average guest rating" },
+    { value: "5", label: "Average guest rating" },
     { value: "180+", label: "Verified reviews" },
     { value: "92%", label: "Would return" },
     { value: "100%", label: "Locally staffed" },
