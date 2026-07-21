@@ -160,9 +160,6 @@ const fadeUp: Variants = {
   },
 };
 
-/* ================================================================== */
-/*  Page                                                                */
-/* ================================================================== */
 export default function ActivitiesPage() {
   const pageRef = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
@@ -182,21 +179,21 @@ export default function ActivitiesPage() {
     >
       <style>{`
         @keyframes sunDrift {
-          0%   { transform: translate3d(0,0,0); }
-          20%  { transform: translate3d(24px,-28px,0); }
-          45%  { transform: translate3d(-20px,-10px,0); }
-          70%  { transform: translate3d(16px,22px,0); }
+          0% { transform: translate3d(0,0,0); }
+          20% { transform: translate3d(24px,-28px,0); }
+          45% { transform: translate3d(-20px,-10px,0); }
+          70% { transform: translate3d(16px,22px,0); }
           100% { transform: translate3d(0,0,0); }
         }
         @keyframes sunSpin  { to { transform: rotate(360deg); } }
         @keyframes sunPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.08); } }
         @keyframes sunGlow  { 0%,100% { opacity:.8; transform:scale(1); } 50% { opacity:1; transform:scale(1.12); } }
         @keyframes kenBurns {
-          0%   { transform: scale(1) translate(0,0); }
-          50%  { transform: scale(1.08) translate(-1%,-1%); }
-          100% { transform: scale(1) translate(0,0); }
+          0%   { transform: scale(1) translate(0, 0); }
+          50%  { transform: scale(1.08) translate(-1%, -1%); }
+          100% { transform: scale(1) translate(0, 0); }
         }
-        @keyframes marqueeScroll {
+        @keyframes marquee {
           0%   { transform: translateX(0); }
           100% { transform: translateX(-50%); }
         }
@@ -207,10 +204,9 @@ export default function ActivitiesPage() {
         .sun-pulse     { transform-origin: center; animation: sunPulse 3.6s ease-in-out infinite; }
         .sun-glow      { transform-origin: center; animation: sunGlow 4.5s ease-in-out infinite; }
         .ken-burns     { animation: kenBurns 14s ease-in-out infinite; }
+        .marquee-track { animation: marquee 35s linear infinite; }
 
-        .marquee-scroll { animation: marqueeScroll 40s linear infinite; }
-
-        .marquee-track:hover .marquee-scroll {
+        .marquee-track:hover {
           animation-play-state: paused;
         }
       `}</style>
@@ -234,7 +230,6 @@ export default function ActivitiesPage() {
           />
         </div>
 
-        {/* ── Activities ─ */}
         <section className="relative overflow-hidden py-16 sm:py-20 lg:py-24">
           <motion.div
             aria-hidden
@@ -299,10 +294,7 @@ export default function ActivitiesPage() {
                     key={block.title}
                     variants={fadeUp}
                     whileHover={{ y: -5 }}
-                    transition={{
-                      duration: 0.35,
-                      ease: [0.22, 1, 0.36, 1] as const,
-                    }}
+                    transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] as const }}
                     className={`group relative flex flex-col gap-4 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-6 shadow-sm shadow-emerald-950/30 backdrop-blur-sm transition-colors duration-300 hover:border-amber-300/40 hover:bg-white/[0.07] ${
                       isLast ? "sm:col-span-2" : ""
                     }`}
@@ -314,9 +306,10 @@ export default function ActivitiesPage() {
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <span className="absolute left-0 top-0 h-full w-1 bg-amber-400 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
                     <div className="relative flex items-center gap-3">
                       <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 bg-emerald-800/40 text-amber-300">
-                        <Icon size={18} strokeWidth={2} />
+                        <Icon size={18} strokeWidth={2} aria-hidden />
                       </span>
                       <h3 className="font-display text-lg font-black text-white sm:text-xl">
                         {block.title}
@@ -337,26 +330,25 @@ export default function ActivitiesPage() {
               viewport={{ once: true, amount: 0.3 }}
               className="relative mt-12 flex flex-col items-center gap-4 overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] p-8 text-center shadow-lg shadow-emerald-950/40 backdrop-blur-md"
             >
-              <span className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-amber-400 to-transparent" />
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-amber-400 to-transparent"
+              />
               <h2 className="font-display text-xl font-black text-white sm:text-2xl">
-                Love hiking &amp;{" "}
-                <span className="text-amber-400">exploring nature?</span>
+                Love hiking &amp; <span className="text-amber-400">exploring nature?</span>
               </h2>
               <p className="max-w-md text-sm text-emerald-100/70 sm:text-base">
-                Read this blog about hiking and exploring nature around The
-                Himalayan Shire.
+                Read this blog about hiking and exploring nature around The Himalayan Shire.
               </p>
               <BlogCta />
             </motion.div>
           </div>
         </section>
 
-        {/* ── Gallery — Single Row Marquee ── */}
+        {/* ── Single Row Marquee Gallery ── */}
         <section className="relative overflow-hidden border-t border-white/10 py-16 sm:py-20 lg:py-24">
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 bg-[#04241c]/60"
-          />
+          <div aria-hidden className="pointer-events-none absolute inset-0 bg-[#04241c]/60" />
+
           <div
             aria-hidden
             className="sun-drift-rev pointer-events-none absolute left-4 top-12 z-0 h-28 w-28 opacity-70 sm:left-10 sm:top-16 sm:h-40 sm:w-40 lg:left-[6%] lg:top-16 lg:h-52 lg:w-52"
@@ -378,8 +370,7 @@ export default function ActivitiesPage() {
                   Gallery
                 </span>
                 <h2 className="mt-3 font-display text-3xl font-black tracking-tight text-white sm:text-4xl">
-                  Moments From The{" "}
-                  <span className="text-amber-400">Shire</span>
+                  Moments From The <span className="text-amber-400">Shire</span>
                 </h2>
               </div>
               <span className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-emerald-100/60 sm:flex">
@@ -398,9 +389,6 @@ export default function ActivitiesPage() {
   );
 }
 
-/* ================================================================== */
-/*  BlogCta                                                             */
-/* ================================================================== */
 function BlogCta() {
   return (
     <a
@@ -417,24 +405,18 @@ function BlogCta() {
 }
 
 /* ================================================================== */
-/*  MarqueeGallery — single row, no badges, pauses on hover            */
+/*  Single Row Infinite Marquee Gallery                                 */
 /* ================================================================== */
 function MarqueeGallery({ images }: { images: string[] }) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const closeLightbox = useCallback(() => setLightboxIndex(null), []);
   const showPrev = useCallback(
-    () =>
-      setLightboxIndex((i) =>
-        i === null ? null : (i - 1 + images.length) % images.length
-      ),
+    () => setLightboxIndex((i) => (i === null ? null : (i - 1 + images.length) % images.length)),
     [images.length]
   );
   const showNext = useCallback(
-    () =>
-      setLightboxIndex((i) =>
-        i === null ? null : (i + 1) % images.length
-      ),
+    () => setLightboxIndex((i) => (i === null ? null : (i + 1) % images.length)),
     [images.length]
   );
 
@@ -455,41 +437,21 @@ function MarqueeGallery({ images }: { images: string[] }) {
 
   return (
     <>
-      <div className="marquee-track relative overflow-hidden">
-        {/* Edge fades */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[#04241c] to-transparent sm:w-28" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[#04241c] to-transparent sm:w-28" />
+      <div className="marquee-track relative overflow-hidden py-4">
+        {/* Fade edges */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-[#04241c] to-transparent sm:w-20" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-[#04241c] to-transparent sm:w-20" />
 
-        {/* Single row — all 10 images duplicated for seamless loop */}
-        <div className="marquee-scroll flex w-max gap-4 sm:gap-5">
+        <div className="marquee-track flex gap-4 sm:gap-6">
           {[...images, ...images].map((src, i) => {
-            const globalIndex = i % images.length;
+            const index = i % images.length;
             return (
-              <button
-                key={`mq-${i}`}
-                type="button"
-                onClick={() => setLightboxIndex(globalIndex)}
-                aria-label={`Expand photo ${globalIndex + 1}`}
-                className="group relative h-52 w-72 flex-shrink-0 overflow-hidden rounded-2xl border border-white/10 bg-emerald-900/40 shadow-lg shadow-emerald-950/40 transition-all duration-500 hover:scale-[1.04] hover:border-amber-300/40 hover:shadow-xl hover:shadow-amber-900/20 sm:h-60 sm:w-80 lg:h-72 lg:w-[26rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/70"
-              >
-                <Image
-                  src={src}
-                  alt={`Activity at The Himalayan Shire`}
-                  fill
-                  sizes="(max-width: 640px) 72vw, (max-width: 1024px) 50vw, 30vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-
-                {/* Subtle scrim */}
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-
-                {/* Expand icon on hover */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-white shadow-lg backdrop-blur-md">
-                    <Expand size={16} strokeWidth={2.2} />
-                  </span>
-                </div>
-              </button>
+              <MarqueeCard
+                key={i}
+                src={src}
+                index={index}
+                onClick={() => setLightboxIndex(index)}
+              />
             );
           })}
         </div>
@@ -507,7 +469,6 @@ function MarqueeGallery({ images }: { images: string[] }) {
           >
             <button
               type="button"
-              aria-label="Close"
               onClick={closeLightbox}
               className="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-emerald-950/60 text-white/80 backdrop-blur-md transition-colors hover:border-amber-300/50 hover:text-amber-200 sm:right-6 sm:top-6"
             >
@@ -520,11 +481,7 @@ function MarqueeGallery({ images }: { images: string[] }) {
 
             <button
               type="button"
-              aria-label="Previous"
-              onClick={(e) => {
-                e.stopPropagation();
-                showPrev();
-              }}
+              onClick={(e) => { e.stopPropagation(); showPrev(); }}
               className="absolute left-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-emerald-950/60 text-white/80 backdrop-blur-md transition-colors hover:border-amber-300/50 hover:text-amber-200 sm:left-6"
             >
               <ChevronLeft size={20} strokeWidth={2.2} />
@@ -532,11 +489,7 @@ function MarqueeGallery({ images }: { images: string[] }) {
 
             <button
               type="button"
-              aria-label="Next"
-              onClick={(e) => {
-                e.stopPropagation();
-                showNext();
-              }}
+              onClick={(e) => { e.stopPropagation(); showNext(); }}
               className="absolute right-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-emerald-950/60 text-white/80 backdrop-blur-md transition-colors hover:border-amber-300/50 hover:text-amber-200 sm:right-6"
             >
               <ChevronRight size={20} strokeWidth={2.2} />
@@ -553,7 +506,7 @@ function MarqueeGallery({ images }: { images: string[] }) {
             >
               <Image
                 src={images[lightboxIndex]}
-                alt={`Activity at The Himalayan Shire`}
+                alt={`Activity at The Himalayan Shire — ${ACTIVITY_LABELS[lightboxIndex % ACTIVITY_LABELS.length]}`}
                 fill
                 priority
                 sizes="100vw"
@@ -564,6 +517,48 @@ function MarqueeGallery({ images }: { images: string[] }) {
         )}
       </AnimatePresence>
     </>
+  );
+}
+
+/* ================================================================== */
+/*  MarqueeCard — Clean, no badge/label                                 */
+/* ================================================================== */
+function MarqueeCard({
+  src,
+  index,
+  onClick,
+}: {
+  src: string;
+  index: number;
+  onClick: () => void;
+}) {
+  const label = ACTIVITY_LABELS[index % ACTIVITY_LABELS.length];
+
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={`Expand photo: ${label}`}
+      className="group relative h-64 w-80 flex-shrink-0 overflow-hidden rounded-3xl border border-white/10 bg-emerald-900/40 shadow-xl shadow-emerald-950/50 transition-all duration-500 hover:scale-105 hover:border-amber-300/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/70"
+    >
+      <Image
+        src={src}
+        alt={`Activity at The Himalayan Shire — ${label}`}
+        fill
+        sizes="(max-width: 640px) 80vw, (max-width: 1024px) 40vw, 25vw"
+        className="object-cover transition-transform duration-700 group-hover:scale-110"
+      />
+
+      {/* Strong scrim for depth */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+
+      {/* Expand icon on hover */}
+      <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-all duration-300 group-hover:opacity-100">
+        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/15 text-white shadow-xl backdrop-blur-md ring-1 ring-white/30">
+          <Expand size={18} strokeWidth={2.2} />
+        </span>
+      </div>
+    </button>
   );
 }
 
