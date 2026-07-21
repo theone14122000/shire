@@ -6,7 +6,7 @@ import { brand } from "@/lib/content";
 
 /**
  * TopBar — Premium single-line contact bar with darker emerald background,
- * bright yellow contact text, smooth lift animations, and luxury micro-interactions.
+ * clean tabular numbers, bright yellow contact text, and luxury micro-interactions.
  */
 export function TopBar() {
   return (
@@ -14,12 +14,12 @@ export function TopBar() {
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="relative z-50 bg-[#052923] text-sm font-medium border-b border-amber-400/10"
+      className="relative z-50 border-b border-amber-400/10 bg-[#052923] text-sm font-medium"
     >
       {/* Subtle top glow line */}
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-400/30 to-transparent" />
 
-      <div className="container-luxe flex items-center justify-center sm:justify-end gap-x-8 gap-y-2 py-3 px-6 text-xs sm:text-sm overflow-x-auto no-scrollbar">
+      <div className="container-luxe no-scrollbar flex flex-nowrap items-center justify-center gap-x-6 overflow-x-auto px-6 py-2.5 sm:justify-end sm:gap-x-8">
         
         {/* Phone Numbers */}
         {brand.phoneDisplay.map((phone, i) => (
@@ -29,20 +29,20 @@ export function TopBar() {
             whileHover={{ y: -2 }}
             whileTap={{ y: 0 }}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
-            className="group inline-flex items-center gap-2.5 whitespace-nowrap text-amber-400 hover:text-amber-300 transition-colors"
+            className="group inline-flex shrink-0 items-center gap-2 whitespace-nowrap text-amber-400 transition-colors hover:text-amber-300"
             aria-label={`Call ${phone}`}
           >
-            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-900/60 text-emerald-300 group-hover:bg-amber-400/10 group-hover:text-amber-400 transition-all duration-300">
-              <Phone size={15} strokeWidth={2.75} />
-            </div>
-            <span className="font-semibold tracking-wide drop-shadow-sm">
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-900/60 text-emerald-300 transition-all duration-300 group-hover:bg-amber-400/10 group-hover:text-amber-400">
+              <Phone size={14} strokeWidth={2.5} />
+            </span>
+            <span className="font-sans text-[13px] font-semibold tabular-nums tracking-normal">
               {phone}
             </span>
           </motion.a>
         ))}
 
         {/* Elegant separator */}
-        <div className="hidden h-3.5 w-px bg-gradient-to-b from-transparent via-amber-400/30 to-transparent sm:block" />
+        <span className="hidden h-3.5 w-px shrink-0 bg-gradient-to-b from-transparent via-amber-400/40 to-transparent sm:block" />
 
         {/* Email */}
         <motion.a
@@ -50,20 +50,17 @@ export function TopBar() {
           whileHover={{ y: -2 }}
           whileTap={{ y: 0 }}
           transition={{ type: "spring", stiffness: 400, damping: 17 }}
-          className="group inline-flex items-center gap-2.5 whitespace-nowrap text-amber-400 hover:text-amber-300 transition-colors"
+          className="group inline-flex shrink-0 items-center gap-2 whitespace-nowrap text-amber-400 transition-colors hover:text-amber-300"
           aria-label={`Email us at ${brand.email}`}
         >
-          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-900/60 text-emerald-300 group-hover:bg-amber-400/10 group-hover:text-amber-400 transition-all duration-300">
-            <Mail size={15} strokeWidth={2.75} />
-          </div>
-          <span className="font-semibold tracking-wide drop-shadow-sm">
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-900/60 text-emerald-300 transition-all duration-300 group-hover:bg-amber-400/10 group-hover:text-amber-400">
+            <Mail size={14} strokeWidth={2.5} />
+          </span>
+          <span className="font-sans text-[13px] font-semibold tracking-normal">
             {brand.email}
           </span>
         </motion.a>
       </div>
-
-      {/* Bottom accent line */}
-      <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
     </motion.div>
   );
 }
