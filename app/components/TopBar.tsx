@@ -1,61 +1,66 @@
 "use client";
 
+import { motion } from "framer-motion";
+import { Phone, Mail } from "lucide-react";
 import { brand } from "@/lib/content";
 
 /**
- * TopBar — the slim emerald strip from the original site (phone +
- * email), sitting above the main nav. Hidden on small screens.
+ * TopBar — the slim premium emerald strip sitting above the main nav.
+ * Features elegant hover states, micro-animations, and gold-accented contact text.
  */
 export function TopBar() {
   return (
-    <div className="bg-accent-emerald text-beige-100 text-xs sm:text-sm font-semibold">
-      <div className="container-luxe flex items-center justify-center sm:justify-end gap-4 sm:gap-6 py-2 sm:py-2.5 overflow-x-auto no-scrollbar">
-        {brand.phoneDisplay.map((p, i) => (
-          <a
-            key={p}
+    <div className="relative z-50 border-b border-white/5 bg-[#031d16] py-2 text-xs font-medium tracking-wide text-beige-100/90 sm:py-2.5">
+      {/* Decorative top ambient line */}
+      <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-amber-400/40 to-transparent" />
+
+      <div className="container-luxe no-scrollbar flex items-center justify-center overflow-x-auto gap-4 sm:justify-end sm:gap-6">
+        
+        {/* Phone Links */}
+        {brand.phoneDisplay.map((phone, i) => (
+          <motion.a
+            key={phone}
             href={brand.phoneHref[i]}
-            className="inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity whitespace-nowrap"
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            whileHover={{ y: -0.5, scale: 1.015 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="group inline-flex items-center gap-2 whitespace-nowrap outline-none transition-colors"
           >
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              aria-hidden
-              className="opacity-90"
-            >
-              <path d="M5 4h3l2 5-2.5 1.5a11 11 0 0 0 6 6L15 14l5 2v3a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2z" />
-            </svg>
-            {p}
-          </a>
+            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-950/50 text-emerald-400 transition-colors group-hover:bg-amber-400/10 group-hover:text-amber-400">
+              <Phone size={11} strokeWidth={2.4} className="transition-transform duration-300 group-hover:rotate-12" />
+            </span>
+            <span className="text-[11px] uppercase tracking-wider text-emerald-100/70">
+              Call:
+            </span>
+            <span className="font-bold text-amber-400 transition-colors duration-200 group-hover:text-amber-300 drop-shadow-[0_1px_4px_rgba(251,191,36,0.15)]">
+              {phone}
+            </span>
+          </motion.a>
         ))}
-        <a
+
+        {/* Separator line on desktop */}
+        <span className="hidden h-3.5 w-px bg-white/10 sm:inline-block" aria-hidden />
+
+        {/* Email Link */}
+        <motion.a
           href={`mailto:${brand.email}`}
-          className="inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity whitespace-nowrap"
+          initial={{ opacity: 0, y: -4 }}
+          animate={{ opacity: 1, y: 0 }}
+          whileHover={{ y: -0.5, scale: 1.015 }}
+          transition={{ duration: 0.25, ease: "easeOut", delay: 0.05 }}
+          className="group inline-flex items-center gap-2 whitespace-nowrap outline-none transition-colors"
         >
-          <svg
-            width="13"
-            height="13"
-            viewBox="0 0 24 24"
-            fill="none"
-            aria-hidden
-            className="opacity-90"
-          >
-            <path
-              d="M3 5h18v14H3z"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M3 5l9 7 9-7"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinejoin="round"
-            />
-          </svg>
-          {brand.email}
-        </a>
+          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-950/50 text-emerald-400 transition-colors group-hover:bg-amber-400/10 group-hover:text-amber-400">
+            <Mail size={11} strokeWidth={2.4} className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          </span>
+          <span className="text-[11px] uppercase tracking-wider text-emerald-100/70">
+            Email:
+          </span>
+          <span className="font-bold text-amber-400 transition-colors duration-200 group-hover:text-amber-300 drop-shadow-[0_1px_4px_rgba(251,191,36,0.15)]">
+            {brand.email}
+          </span>
+        </motion.a>
       </div>
     </div>
   );
