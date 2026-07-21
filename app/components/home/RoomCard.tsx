@@ -33,17 +33,19 @@ import {
   Wine,
   Flame,
   Armchair,
+  ZoomIn,
 } from "lucide-react";
 import { ImagePlaceholder } from "../ui/ImagePlaceholder";
 import { formatINR, discountPercent } from "@/lib/format";
 import type { Room } from "@/lib/content";
 
 /**
- * RoomCard — editorial, gallery-forward presentation for a single
- * `Room`. Image reads as the hero; a glass panel overlaps its base
- * carrying rating + category, and the body below carries name,
- * icon-led amenities, and price/CTA. Built to feel like a five-star
- * hospitality brand's booking page, not a generic listing grid.
+ * RoomCard — property-showcase presentation for a single `Room`.
+ * The full card lifts on hover (not just the image), floating glass
+ * chips surface price + rating directly on the photo, a dedicated
+ * specs strip (beds/guests) reads like a real-estate listing, and
+ * icon-led amenities + price/CTA close out the body. Built to feel
+ * like a five-star hospitality brand's booking marketplace.
  */
 
 // --- amenity + comfort → icon mapping (keyword match, most specific first) ---
@@ -85,15 +87,6 @@ function getAmenityIcon(amenity: string) {
 }
 
 // --- motion variants ---
-const revealUp: Variants = {
-  hidden: { opacity: 0, y: 8 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] as const },
-  },
-};
-
 const amenityContainer: Variants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.05, delayChildren: 0.1 } },
@@ -119,10 +112,10 @@ export function RoomCard({ room }: { room: Room }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] as const }}
-      className="group relative flex h-full flex-col"
+      className="group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-ink-900/8 bg-beige-50 shadow-[var(--shadow-soft)] transition-all duration-500 hover:-translate-y-2 hover:border-emerald-600/25 hover:shadow-[0_32px_80px_-20px_rgba(6,95,70,0.35)]"
     >
       {/* IMAGE — tall editorial frame */}
-      <div className="relative overflow-hidden rounded-[1.75rem] shadow-[var(--shadow-soft)] transition-shadow duration-500 group-hover:shadow-[0_28px_70px_-20px_rgba(6,95,70,0.4)]">
+      <div className="relative overflow-hidden">
         <div className="relative aspect-[4/5] w-full overflow-hidden">
           <div className="absolute inset-0 scale-[1.02] transition-transform duration-[1400ms] ease-out group-hover:scale-[1.12]">
             <ImagePlaceholder
@@ -135,11 +128,25 @@ export function RoomCard({ room }: { room: Room }) {
             />
           </div>
 
-          {/* permanent base scrim for legibility */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-900/85 via-ink-900/10 to-transparent" />
+          {/* permanent top scrim for badge legibility */}
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-ink-900/60 to-transparent" />
+          {/* permanent base scrim for chip legibility */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-ink-900/90 via-ink-900/30 to-transparent" />
 
           {/* hover scrim intensifies + warms slightly */}
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-emerald-950/40 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+
+          {/* center "look closer" cue — purely decorative, editorial flourish */}
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-all duration-500 group-hover:opacity-100">
+            <div className="flex flex-col items-center gap-2">
+              <span className="flex h-12 w-12 items-center justify-center rounded-full border border-white/30 bg-white/15 text-beige-50 backdrop-blur-md transition-transform duration-500 group-hover:scale-100 scale-90">
+                <ZoomIn size={18} strokeWidth={2} />
+              </span>
+              <span className="rounded-full bg-white/15 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-beige-50 backdrop-blur-md">
+                Explore Room
+              </span>
+            </div>
+          </div>
         </div>
 
         {/* top row: badge + wishlist */}
@@ -184,41 +191,69 @@ export function RoomCard({ room }: { room: Room }) {
           </motion.button>
         </div>
 
-        {/* category kicker + name, set into the image */}
-        <div className="absolute inset-x-0 bottom-[4.75rem] px-5">
-          <span className="text-[10px] font-bold uppercase tracking-[0.28em] text-emerald-300">
+        {/* category kicker, set into the image just above the chip row */}
+        <div className="absolute inset-x-0 bottom-[3.75rem] px-5">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.28em] text-emerald-300 backdrop-blur-sm">
+            <span className="h-1 w-1 rounded-full bg-emerald-300" />
             {room.category}
           </span>
-          <h3 className="mt-1 font-display text-2xl font-bold leading-tight text-beige-50 drop-shadow-sm sm:text-[1.7rem]">
-            {room.name}
-          </h3>
         </div>
 
-        {/* FLOATING GLASS STAT PANEL — overlaps the image's bottom edge */}
-        <div className="absolute inset-x-4 bottom-4 flex items-center justify-between rounded-2xl border border-white/15 bg-white/10 px-4 py-3 backdrop-blur-xl">
-          <div className="flex items-center gap-2">
-            <Stars rating={room.rating} />
-            <span className="text-xs font-bold text-beige-50">{room.rating.toFixed(1)}</span>
-            <span className="text-xs font-medium text-beige-100/60">({room.reviewCount})</span>
+        {/* FLOATING CHIP ROW — price (left) + rating (right), overlapping the image base */}
+        <div className="absolute inset-x-4 bottom-4 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-2 backdrop-blur-xl">
+            <span className="text-[9px] font-bold uppercase tracking-[0.14em] text-beige-100/70">
+              From
+            </span>
+            <span className="font-display text-sm font-black leading-none text-beige-50">
+              {formatINR(room.pricePerNight)}
+            </span>
           </div>
-          <div className="flex items-center gap-1.5 text-xs font-semibold text-beige-100/85">
-            <Users size={13} strokeWidth={2.2} className="text-emerald-300" />
-            {room.capacity}
+          <div className="flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-2 backdrop-blur-xl">
+            <Star size={12} strokeWidth={1.6} className="fill-amber-400 text-amber-400" />
+            <span className="text-xs font-bold text-beige-50">{room.rating.toFixed(1)}</span>
+            <span className="text-[10px] font-medium text-beige-100/60">({room.reviewCount})</span>
           </div>
         </div>
       </div>
 
       {/* BODY */}
-      <div className="flex grow flex-col gap-4 px-1 pt-5">
+      <div className="flex grow flex-col gap-4 px-5 pb-5 pt-5">
+        {/* Name */}
+        <h3 className="font-display text-2xl font-bold leading-tight text-ink-900 sm:text-[1.7rem]">
+          {room.name}
+        </h3>
+
         {/* Description */}
-        <p className="text-sm font-medium leading-relaxed text-ink-700 line-clamp-2">
+        <p className="-mt-2 text-sm font-medium leading-relaxed text-ink-700 line-clamp-2">
           {room.shortNote}
         </p>
 
-        {/* Beds line */}
-        <p className="text-xs font-semibold uppercase tracking-[0.1em] text-ink-500">
-          {room.beds}
-        </p>
+        {/* SPECS STRIP — real-estate-listing style: beds + guests */}
+        <div className="grid grid-cols-2 divide-x divide-ink-900/8 overflow-hidden rounded-2xl border border-ink-900/8 bg-ink-900/[0.02]">
+          <div className="flex items-center gap-2.5 px-4 py-3">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-700">
+              <BedDouble size={14} strokeWidth={2.2} />
+            </span>
+            <div className="flex min-w-0 flex-col">
+              <span className="text-[9px] font-bold uppercase tracking-[0.14em] text-ink-500">
+                Sleeping
+              </span>
+              <span className="truncate text-xs font-bold text-ink-900">{room.beds}</span>
+            </div>
+          </div>
+          <div className="flex items-center gap-2.5 px-4 py-3">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-700">
+              <Users size={14} strokeWidth={2.2} />
+            </span>
+            <div className="flex min-w-0 flex-col">
+              <span className="text-[9px] font-bold uppercase tracking-[0.14em] text-ink-500">
+                Capacity
+              </span>
+              <span className="truncate text-xs font-bold text-ink-900">{room.capacity}</span>
+            </div>
+          </div>
+        </div>
 
         {/* Amenity icon row — circular, label reveals on hover per-icon */}
         <motion.div
@@ -308,7 +343,7 @@ export function RoomCard({ room }: { room: Room }) {
   );
 }
 
-function Stars({ rating }: { rating: number }) {
+function Stars({ rating, size = 11 }: { rating: number; size?: number }) {
   return (
     <div className="flex items-center gap-0.5" aria-label={`${rating} out of 5`}>
       {Array.from({ length: 5 }).map((_, i) => {
@@ -316,7 +351,7 @@ function Stars({ rating }: { rating: number }) {
         return (
           <Star
             key={i}
-            size={11}
+            size={size}
             strokeWidth={1.4}
             className={filled ? "fill-amber-400 text-amber-400" : "text-beige-100/30"}
           />
