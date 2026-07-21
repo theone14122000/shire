@@ -5,63 +5,92 @@ import { Phone, Mail } from "lucide-react";
 import { brand } from "@/lib/content";
 
 /**
- * TopBar — the slim premium emerald strip sitting above the main nav.
- * Features elegant hover states, micro-animations, and gold-accented contact text.
+ * TopBar — Enhanced dynamic emerald strip with smooth entrance,
+ * interactive icons, and theme-matched hover states.
+ * Hidden on small screens.
  */
 export function TopBar() {
   return (
-    <div className="relative z-50 border-b border-white/5 bg-[#031d16] py-2 text-xs font-medium tracking-wide text-beige-100/90 sm:py-2.5">
-      {/* Decorative top ambient line */}
-      <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-amber-400/40 to-transparent" />
+    <motion.div
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      className="bg-accent-emerald text-beige-100 text-xs sm:text-sm font-semibold relative overflow-hidden"
+    >
+      {/* Subtle animated gradient overlay */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-10 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+        style={{
+          backgroundSize: "200% 100%",
+          animation: "shimmer 8s linear infinite",
+        }}
+      />
 
-      <div className="container-luxe no-scrollbar flex items-center justify-center overflow-x-auto gap-4 sm:justify-end sm:gap-6">
-        
-        {/* Phone Links */}
-        {brand.phoneDisplay.map((phone, i) => (
+      <div className="container-luxe flex items-center justify-center sm:justify-end gap-4 sm:gap-6 py-2 sm:py-2.5 overflow-x-auto no-scrollbar relative z-10">
+        {brand.phoneDisplay.map((p, i) => (
           <motion.a
-            key={phone}
+            key={p}
             href={brand.phoneHref[i]}
-            initial={{ opacity: 0, y: -4 }}
-            animate={{ opacity: 1, y: 0 }}
-            whileHover={{ y: -0.5, scale: 1.015 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
-            className="group inline-flex items-center gap-2 whitespace-nowrap outline-none transition-colors"
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3 + i * 0.1, duration: 0.4 }}
+            whileHover={{ scale: 1.05, x: 2 }}
+            className="inline-flex items-center gap-1.5 hover:text-white transition-colors whitespace-nowrap group"
+            aria-label={`Call ${p}`}
           >
-            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-950/50 text-emerald-400 transition-colors group-hover:bg-amber-400/10 group-hover:text-amber-400">
-              <Phone size={11} strokeWidth={2.4} className="transition-transform duration-300 group-hover:rotate-12" />
-            </span>
-            <span className="text-[11px] uppercase tracking-wider text-emerald-100/70">
-              Call:
-            </span>
-            <span className="font-bold text-amber-400 transition-colors duration-200 group-hover:text-amber-300 drop-shadow-[0_1px_4px_rgba(251,191,36,0.15)]">
-              {phone}
+            <motion.span
+              whileHover={{ rotate: 12, scale: 1.2 }}
+              transition={{ type: "spring", stiffness: 300, damping: 10 }}
+              className="flex items-center justify-center"
+            >
+              <Phone size={12} strokeWidth={2.5} className="opacity-90 group-hover:opacity-100" />
+            </motion.span>
+            <span className="relative">
+              {p}
+              <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-beige-100/50 group-hover:w-full transition-all duration-300" />
             </span>
           </motion.a>
         ))}
 
-        {/* Separator line on desktop */}
-        <span className="hidden h-3.5 w-px bg-white/10 sm:inline-block" aria-hidden />
+        {/* Separator Dot */}
+        <motion.span
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          className="hidden sm:block w-1 h-1 rounded-full bg-beige-100/40"
+        />
 
-        {/* Email Link */}
         <motion.a
           href={`mailto:${brand.email}`}
-          initial={{ opacity: 0, y: -4 }}
-          animate={{ opacity: 1, y: 0 }}
-          whileHover={{ y: -0.5, scale: 1.015 }}
-          transition={{ duration: 0.25, ease: "easeOut", delay: 0.05 }}
-          className="group inline-flex items-center gap-2 whitespace-nowrap outline-none transition-colors"
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.6, duration: 0.4 }}
+          whileHover={{ scale: 1.05, x: 2 }}
+          className="inline-flex items-center gap-1.5 hover:text-white transition-colors whitespace-nowrap group"
+          aria-label={`Email ${brand.email}`}
         >
-          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-950/50 text-emerald-400 transition-colors group-hover:bg-amber-400/10 group-hover:text-amber-400">
-            <Mail size={11} strokeWidth={2.4} className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-          </span>
-          <span className="text-[11px] uppercase tracking-wider text-emerald-100/70">
-            Email:
-          </span>
-          <span className="font-bold text-amber-400 transition-colors duration-200 group-hover:text-amber-300 drop-shadow-[0_1px_4px_rgba(251,191,36,0.15)]">
+          <motion.span
+            whileHover={{ rotate: -12, scale: 1.2 }}
+            transition={{ type: "spring", stiffness: 300, damping: 10 }}
+            className="flex items-center justify-center"
+          >
+            <Mail size={13} strokeWidth={2.5} className="opacity-90 group-hover:opacity-100" />
+          </motion.span>
+          <span className="relative">
             {brand.email}
+            <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-beige-100/50 group-hover:w-full transition-all duration-300" />
           </span>
         </motion.a>
       </div>
-    </div>
+
+      {/* Inline style for shimmer animation */}
+      <style jsx>{`
+        @keyframes shimmer {
+          0% { background-position: 200% 0; }
+          100% { background-position: -200% 0; }
+        }
+      `}</style>
+    </motion.div>
   );
 }
