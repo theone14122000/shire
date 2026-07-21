@@ -22,16 +22,18 @@ import {
   ChevronLeft,
   ChevronRight,
   Expand,
-  Pause,
-  Play,
   Camera,
 } from "lucide-react";
 import { SiteNav } from "../components/SiteNav";
 import { SiteFooter } from "../components/SiteFooter";
 
-const BLOG_URL = "https://traveltalesfromindia.in/a-small-hike-with-the-himalayan-shire/#google_vignette";
+const BLOG_URL =
+  "https://traveltalesfromindia.in/a-small-hike-with-the-himalayan-shire/#google_vignette";
 
-const ACTIVITY_IMAGES = Array.from({ length: 10 }, (_, i) => `/images/activity/activity-${i + 1}.jpg`);
+const ACTIVITY_IMAGES = Array.from(
+  { length: 10 },
+  (_, i) => `/images/activity/activity-${i + 1}.jpg`
+);
 
 const ACTIVITY_LABELS = [
   "Morning Lawn",
@@ -58,11 +60,11 @@ const BLOCKS: Block[] = [
     title: "Space to Breathe",
     body: (
       <>
-        At The Himalayan Shire, we believe in giving you space to breathe. Beyond your room,
-        you&apos;ll discover plenty of cozy common areas and quiet corners, each offering
-        incredible panoramic views. Whether you want to read a book in our cozy carpeted attic,
-        unwind on the balcony swing, or stroll across the lawn, there is always a perfect spot
-        for some personal space.
+        At The Himalayan Shire, we believe in giving you space to breathe. Beyond
+        your room, you&apos;ll discover plenty of cozy common areas and quiet
+        corners, each offering incredible panoramic views. Whether you want to read
+        a book in our cozy carpeted attic, unwind on the balcony swing, or stroll
+        across the lawn, there is always a perfect spot for some personal space.
       </>
     ),
   },
@@ -75,8 +77,8 @@ const BLOCKS: Block[] = [
         <span className="font-bold text-amber-300">
           Table Tennis, Carrom, board games, and playing cards.
         </span>{" "}
-        If you prefer a quieter afternoon, dive into a good story from our collection of books
-        — our own mini-library.
+        If you prefer a quieter afternoon, dive into a good story from our
+        collection of books — our own mini-library.
       </>
     ),
   },
@@ -85,8 +87,8 @@ const BLOCKS: Block[] = [
     title: "The TV Lounge",
     body: (
       <>
-        Head to the top floor to sink into super-comfy lounge sofas and enjoy a late-night movie
-        marathon on our{" "}
+        Head to the top floor to sink into super-comfy lounge sofas and enjoy a
+        late-night movie marathon on our{" "}
         <span className="font-bold text-amber-300">65-inch LED Smart TV.</span>
       </>
     ),
@@ -96,9 +98,10 @@ const BLOCKS: Block[] = [
     title: "The Lawn",
     body: (
       <>
-        Make use of our sprawling lawn area, with an amazing view of the Himalayan range, to do
-        some early morning Yoga or simply meditate. It&apos;s a space for the whole family,
-        complete with a small slide to keep the little ones happily entertained.
+        Make use of our sprawling lawn area, with an amazing view of the Himalayan
+        range, to do some early morning Yoga or simply meditate. It&apos;s a space
+        for the whole family, complete with a small slide to keep the little ones
+        happily entertained.
       </>
     ),
   },
@@ -107,12 +110,15 @@ const BLOCKS: Block[] = [
     title: "Nature Trails & Orchard Walks",
     body: (
       <>
-        Nestled amidst lush apple orchards and dense deodar forests, the property offers a deeply
-        quiet and peaceful escape, completely free from traffic and city noise. Step right outside
-        to soak in the authentic Himalayan countryside — stroll through the orchards, share a warm
-        conversation with friendly locals, or explore the beautiful, untouched jungle trails just
+        Nestled amidst lush apple orchards and dense deodar forests, the property
+        offers a deeply quiet and peaceful escape, completely free from traffic and
+        city noise. Step right outside to soak in the authentic Himalayan
+        countryside — stroll through the orchards, share a warm conversation with
+        friendly locals, or explore the beautiful, untouched jungle trails just
         steps away from the property. We also offer{" "}
-        <span className="font-bold text-amber-300">bonfire and live barbeque services</span>{" "}
+        <span className="font-bold text-amber-300">
+          bonfire and live barbeque services
+        </span>{" "}
         for an extra charge.
       </>
     ),
@@ -146,9 +152,16 @@ const stagger: Variants = {
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const } },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
+  },
 };
 
+/* ================================================================== */
+/*  Page                                                               */
+/* ================================================================== */
 export default function ActivitiesPage() {
   const pageRef = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
@@ -217,6 +230,7 @@ export default function ActivitiesPage() {
           />
         </div>
 
+        {/* ── Activities Section ── */}
         <section className="relative overflow-hidden py-16 sm:py-20 lg:py-24">
           <motion.div
             aria-hidden
@@ -250,8 +264,31 @@ export default function ActivitiesPage() {
                 <span className="h-px w-6 bg-amber-400/70" aria-hidden />
               </span>
               <h1 className="mt-4 font-display text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl">
-                Activities In &amp; Around <span className="text-amber-400">The Property</span>
+                Activities In &amp; Around{" "}
+                <span className="text-amber-400">The Property</span>
               </h1>
+            </motion.div>
+
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.2 }}
+              className="relative mb-14 rounded-2xl border border-white/10 bg-white/[0.03] p-6 text-base leading-relaxed text-emerald-100/80 backdrop-blur-sm sm:p-8 sm:text-lg"
+            >
+              <p>
+                We often get asked — what&apos;s there to do around the property?
+                And we like to say, while there are various things to do here, the
+                best thing to do at the Shire is to just{" "}
+                <span className="font-bold text-amber-300">
+                  sit back and enjoy the breathtaking views
+                </span>{" "}
+                from the property, take a moment from a hyperactive lifestyle,
+                relax and hear the birds chirping all day, or watch the colourful
+                butterflies as they hover around the garden going from flower to
+                flower. Bask in the sun in our beautiful lawn, feel the cool fresh
+                mountain breeze and fill your lungs with pollution-free air.
+              </p>
             </motion.div>
 
             <motion.h2
@@ -261,7 +298,8 @@ export default function ActivitiesPage() {
               viewport={{ once: true, amount: 0.3 }}
               className="mb-8 border-l-4 border-amber-400 pl-5 font-display text-2xl font-black text-white sm:text-3xl"
             >
-              Entertainment, Leisure &amp; <span className="text-amber-400">Wellness</span>
+              Entertainment, Leisure &amp;{" "}
+              <span className="text-amber-400">Wellness</span>
             </motion.h2>
 
             <motion.div
@@ -279,8 +317,13 @@ export default function ActivitiesPage() {
                     key={block.title}
                     variants={fadeUp}
                     whileHover={{ y: -5 }}
-                    transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] as const }}
-                    className={`group relative flex flex-col gap-4 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-6 shadow-sm shadow-emerald-950/30 backdrop-blur-sm transition-colors duration-300 hover:border-amber-300/40 hover:bg-white/[0.07] hover:shadow-lg hover:shadow-emerald-950/50 ${isLast ? "sm:col-span-2" : ""}`}
+                    transition={{
+                      duration: 0.35,
+                      ease: [0.22, 1, 0.36, 1] as const,
+                    }}
+                    className={`group relative flex flex-col gap-4 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-6 shadow-sm shadow-emerald-950/30 backdrop-blur-sm transition-colors duration-300 hover:border-amber-300/40 hover:bg-white/[0.07] hover:shadow-lg hover:shadow-emerald-950/50 ${
+                      isLast ? "sm:col-span-2" : ""
+                    }`}
                   >
                     <span
                       aria-hidden
@@ -289,7 +332,6 @@ export default function ActivitiesPage() {
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <span className="absolute left-0 top-0 h-full w-1 bg-amber-400 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-
                     <div className="relative flex items-center gap-3">
                       <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 bg-emerald-800/40 text-amber-300 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
                         <Icon size={18} strokeWidth={2} aria-hidden />
@@ -318,19 +360,24 @@ export default function ActivitiesPage() {
                 className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-amber-400 to-transparent"
               />
               <h2 className="font-display text-xl font-black text-white sm:text-2xl">
-                Love hiking &amp; <span className="text-amber-400">exploring nature?</span>
+                Love hiking &amp;{" "}
+                <span className="text-amber-400">exploring nature?</span>
               </h2>
               <p className="max-w-md text-sm text-emerald-100/70 sm:text-base">
-                Read this blog about hiking and exploring nature around The Himalayan Shire.
+                Read this blog about hiking and exploring nature around The
+                Himalayan Shire.
               </p>
               <BlogCta />
             </motion.div>
           </div>
         </section>
 
+        {/* ── Gallery Section ── */}
         <section className="relative overflow-hidden border-t border-white/10 py-16 sm:py-20 lg:py-24">
-          <div aria-hidden className="pointer-events-none absolute inset-0 bg-[#04241c]/60" />
-
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 bg-[#04241c]/60"
+          />
           <div
             aria-hidden
             className="sun-drift-rev pointer-events-none absolute left-4 top-12 z-0 h-28 w-28 opacity-70 sm:left-10 sm:top-16 sm:h-40 sm:w-40 lg:left-[6%] lg:top-16 lg:h-52 lg:w-52"
@@ -352,11 +399,16 @@ export default function ActivitiesPage() {
                   Gallery
                 </span>
                 <h2 className="mt-3 font-display text-3xl font-black tracking-tight text-white sm:text-4xl">
-                  Moments From The <span className="text-amber-400">Shire</span>
+                  Moments From The{" "}
+                  <span className="text-amber-400">Shire</span>
                 </h2>
               </div>
               <span className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-emerald-100/60 sm:flex">
-                <Camera size={13} strokeWidth={2.2} className="text-amber-300" />
+                <Camera
+                  size={13}
+                  strokeWidth={2.2}
+                  className="text-amber-300"
+                />
                 Click any photo to expand
               </span>
             </motion.div>
@@ -371,6 +423,9 @@ export default function ActivitiesPage() {
   );
 }
 
+/* ================================================================== */
+/*  BlogCta                                                             */
+/* ================================================================== */
 function BlogCta() {
   return (
     <a
@@ -391,111 +446,133 @@ function BlogCta() {
 }
 
 /* ================================================================== */
-/*  ActivityGallery — Auto-toggle FIXED, badges removed                */
+/*  ActivityGallery                                                     */
+/*  Shows 5 images at a time, shifts by 1 every 4s, wraps around.      */
+/*  No buttons or dots below — fully automatic.                         */
 /* ================================================================== */
-const AUTO_INTERVAL = 6000; // 6 seconds
+const VISIBLE_COUNT = 5;
+const SHIFT_INTERVAL = 4000; // 4 seconds per shift
 
 function ActivityGallery({ images }: { images: string[] }) {
   const reduce = useReducedMotion();
-  const VISIBLE = 5;
-  const pages = Math.ceil(images.length / VISIBLE);
+  const total = images.length;
 
-  const [page, setPage] = useState(0);
+  // `offset` is the index of the first visible image
+  const [offset, setOffset] = useState(0);
   const [paused, setPaused] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  // Refs to read latest values inside the interval without recreating it
+  // Refs so the interval callback always reads the latest values
   const pausedRef = useRef(paused);
   const lightboxRef = useRef(lightboxIndex);
-
-  useEffect(() => { pausedRef.current = paused; }, [paused]);
-  useEffect(() => { lightboxRef.current = lightboxIndex; }, [lightboxIndex]);
-
-  // Single interval, stable — this is the fix
   useEffect(() => {
-    if (reduce || pages <= 1) return;
+    pausedRef.current = paused;
+  }, [paused]);
+  useEffect(() => {
+    lightboxRef.current = lightboxIndex;
+  }, [lightboxIndex]);
+
+  // Single stable interval — shifts by 1 each tick
+  useEffect(() => {
+    if (reduce || total <= VISIBLE_COUNT) return;
 
     const id = setInterval(() => {
       if (pausedRef.current || lightboxRef.current !== null) return;
-      setPage((p) => (p + 1) % pages);
-    }, AUTO_INTERVAL);
+      setOffset((prev) => (prev + 1) % total);
+    }, SHIFT_INTERVAL);
 
     return () => clearInterval(id);
-  }, [pages, reduce]);
+  }, [total, reduce]);
 
-  const currentStart = page * VISIBLE;
-  const currentImages = images.slice(currentStart, currentStart + VISIBLE);
+  // Build the visible window (wrapping around)
+  const visibleImages: { src: string; globalIndex: number }[] = [];
+  for (let i = 0; i < VISIBLE_COUNT; i++) {
+    const idx = (offset + i) % total;
+    visibleImages.push({ src: images[idx], globalIndex: idx });
+  }
 
+  // Lightbox navigation
   const closeLightbox = useCallback(() => setLightboxIndex(null), []);
   const showPrev = useCallback(
-    () => setLightboxIndex((i) => (i === null ? null : (i - 1 + images.length) % images.length)),
-    [images.length]
+    () =>
+      setLightboxIndex((i) =>
+        i === null ? null : (i - 1 + total) % total
+      ),
+    [total]
   );
   const showNext = useCallback(
-    () => setLightboxIndex((i) => (i === null ? null : (i + 1) % images.length)),
-    [images.length]
+    () => setLightboxIndex((i) => (i === null ? null : (i + 1) % total)),
+    [total]
   );
 
   useEffect(() => {
     if (lightboxIndex === null) return;
-    const onKeyDown = (e: KeyboardEvent) => {
+    const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") closeLightbox();
       if (e.key === "ArrowLeft") showPrev();
       if (e.key === "ArrowRight") showNext();
     };
-    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
     return () => {
-      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
     };
   }, [lightboxIndex, closeLightbox, showPrev, showNext]);
 
   return (
     <div
-      className="flex flex-col gap-7"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={page}
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -12 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5 lg:gap-5"
-        >
-          {currentImages.map((src, i) => {
-            const globalIndex = currentStart + i;
-            const label = ACTIVITY_LABELS[globalIndex % ACTIVITY_LABELS.length];
+      {/* Image grid — each slot independently animates when its image changes */}
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5 lg:gap-5">
+        {visibleImages.map(({ src, globalIndex }, slot) => {
+          const label =
+            ACTIVITY_LABELS[globalIndex % ACTIVITY_LABELS.length];
 
-            return (
-              <motion.button
-                type="button"
-                key={src}
-                onClick={() => setLightboxIndex(globalIndex)}
-                aria-label={`Expand photo: ${label}`}
-                initial={{ opacity: 0, scale: 0.94 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: i * 0.06 }}
-                whileHover={{ y: -4 }}
-                className="group relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/10 bg-emerald-900/40 p-1 text-left shadow-lg shadow-emerald-950/40 transition-all duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/70"
-              >
-                <span
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 z-10 rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                  style={{
-                    padding: 1.5,
-                    background: "linear-gradient(135deg, #fbbf24, #10b981 55%, transparent 85%)",
-                    WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                    WebkitMaskComposite: "xor",
-                    maskComposite: "exclude",
-                  }}
-                />
+          return (
+            <motion.button
+              type="button"
+              key={slot} // stable key per slot position
+              onClick={() => setLightboxIndex(globalIndex)}
+              aria-label={`Expand photo: ${label}`}
+              whileHover={{ y: -4 }}
+              className="group relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/10 bg-emerald-900/40 p-1 text-left shadow-lg shadow-emerald-950/40 transition-all duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/70"
+            >
+              {/* Hover gradient ring */}
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-0 z-10 rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                style={{
+                  padding: 1.5,
+                  background:
+                    "linear-gradient(135deg, #fbbf24, #10b981 55%, transparent 85%)",
+                  WebkitMask:
+                    "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                  WebkitMaskComposite: "xor",
+                  maskComposite: "exclude",
+                }}
+              />
 
-                <div className="relative h-full w-full overflow-hidden rounded-[0.9rem]">
-                  <div className={reduce ? "absolute inset-0" : "ken-burns absolute inset-0"}>
+              <div className="relative h-full w-full overflow-hidden rounded-[0.9rem]">
+                {/* AnimatePresence per slot — cross-fade when image changes */}
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={src}
+                    initial={{ opacity: 0, scale: 1.04 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.96 }}
+                    transition={{
+                      duration: 0.6,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                    className={
+                      reduce
+                        ? "absolute inset-0"
+                        : "ken-burns absolute inset-0"
+                    }
+                  >
                     <Image
                       src={src}
                       alt={`Activity at The Himalayan Shire — ${label}`}
@@ -503,62 +580,25 @@ function ActivityGallery({ images }: { images: string[] }) {
                       sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
                       className="object-cover transition-transform duration-700 group-hover:scale-110"
                     />
-                  </div>
+                  </motion.div>
+                </AnimatePresence>
 
-                  {/* Subtle base scrim only, no text badges */}
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-emerald-950/40 via-transparent to-transparent" />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                {/* Subtle base scrim */}
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-emerald-950/40 via-transparent to-transparent" />
 
-                  {/* Expand icon on hover — kept as a subtle interaction hint */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                    <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white shadow-lg backdrop-blur-md">
-                      <Expand size={15} strokeWidth={2.2} />
-                    </span>
-                  </div>
+                {/* Hover darken */}
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+
+                {/* Expand icon on hover */}
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white shadow-lg backdrop-blur-md">
+                    <Expand size={15} strokeWidth={2.2} />
+                  </span>
                 </div>
-              </motion.button>
-            );
-          })}
-        </motion.div>
-      </AnimatePresence>
-
-      {/* Controls */}
-      <div className="flex items-center justify-center gap-4">
-        <button
-          type="button"
-          onClick={() => setPaused((p) => !p)}
-          aria-label={paused ? "Resume auto-play" : "Pause auto-play"}
-          className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/5 text-emerald-100/70 transition-all hover:border-amber-300/40 hover:text-amber-300"
-        >
-          {paused ? <Play size={14} strokeWidth={2.4} /> : <Pause size={14} strokeWidth={2.4} />}
-        </button>
-
-        <div className="flex items-center gap-2">
-          {Array.from({ length: pages }).map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setPage(i)}
-              aria-label={`Go to page ${i + 1}`}
-              className={`h-2.5 overflow-hidden rounded-full bg-white/20 transition-all duration-500 ${
-                i === page ? "w-10" : "w-2.5"
-              }`}
-            >
-              {i === page && !paused && !reduce && (
-                <motion.div
-                  key={`bar-${page}`}
-                  className="h-full rounded-full bg-gradient-to-r from-amber-400 to-emerald-400"
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{ duration: AUTO_INTERVAL / 1000, ease: "linear" }}
-                  style={{ transformOrigin: "left" }}
-                />
-              )}
-              {i === page && paused && (
-                <span className="block h-full w-full bg-gradient-to-r from-amber-400 to-emerald-400" />
-              )}
-            </button>
-          ))}
-        </div>
+              </div>
+            </motion.button>
+          );
+        })}
       </div>
 
       {/* Lightbox */}
@@ -568,11 +608,13 @@ function ActivityGallery({ images }: { images: string[] }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
             className="fixed inset-0 z-[100] flex items-center justify-center bg-[#031a14]/95 backdrop-blur-md"
             onClick={closeLightbox}
           >
             <button
               type="button"
+              aria-label="Close gallery"
               onClick={closeLightbox}
               className="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-emerald-950/60 text-white/80 backdrop-blur-md transition-colors hover:border-amber-300/50 hover:text-amber-200 sm:right-6 sm:top-6"
             >
@@ -580,12 +622,16 @@ function ActivityGallery({ images }: { images: string[] }) {
             </button>
 
             <div className="absolute left-4 top-4 z-10 flex items-center gap-2 rounded-full border border-white/10 bg-emerald-950/60 px-3.5 py-1.5 text-xs font-bold text-amber-300 backdrop-blur-md sm:left-6 sm:top-6">
-              {lightboxIndex + 1} / {images.length}
+              {lightboxIndex + 1} / {total}
             </div>
 
             <button
               type="button"
-              onClick={(e) => { e.stopPropagation(); showPrev(); }}
+              aria-label="Previous photo"
+              onClick={(e) => {
+                e.stopPropagation();
+                showPrev();
+              }}
               className="absolute left-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-emerald-950/60 text-white/80 backdrop-blur-md transition-colors hover:border-amber-300/50 hover:text-amber-200 sm:left-6"
             >
               <ChevronLeft size={20} strokeWidth={2.2} />
@@ -593,7 +639,11 @@ function ActivityGallery({ images }: { images: string[] }) {
 
             <button
               type="button"
-              onClick={(e) => { e.stopPropagation(); showNext(); }}
+              aria-label="Next photo"
+              onClick={(e) => {
+                e.stopPropagation();
+                showNext();
+              }}
               className="absolute right-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-emerald-950/60 text-white/80 backdrop-blur-md transition-colors hover:border-amber-300/50 hover:text-amber-200 sm:right-6"
             >
               <ChevronRight size={20} strokeWidth={2.2} />
@@ -604,7 +654,10 @@ function ActivityGallery({ images }: { images: string[] }) {
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.96 }}
-              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] as const }}
+              transition={{
+                duration: 0.3,
+                ease: [0.22, 1, 0.36, 1] as const,
+              }}
               onClick={(e) => e.stopPropagation()}
               className="relative mx-4 h-[70vh] w-full max-w-4xl sm:h-[78vh]"
             >
@@ -624,6 +677,9 @@ function ActivityGallery({ images }: { images: string[] }) {
   );
 }
 
+/* ================================================================== */
+/*  SunMark                                                             */
+/* ================================================================== */
 function SunMark() {
   const gid = useId().replace(/:/g, "");
 
@@ -636,8 +692,12 @@ function SunMark() {
             "radial-gradient(circle, rgba(255,224,138,0.75) 0%, rgba(245,200,66,0.45) 45%, rgba(245,200,66,0) 72%)",
         }}
       />
-
-      <svg className="sun-spin absolute inset-0 h-full w-full" viewBox="0 0 200 200" fill="none" aria-hidden>
+      <svg
+        className="sun-spin absolute inset-0 h-full w-full"
+        viewBox="0 0 200 200"
+        fill="none"
+        aria-hidden
+      >
         {SUN_RAYS.map((r, i) => (
           <line
             key={i}
@@ -652,8 +712,11 @@ function SunMark() {
           />
         ))}
       </svg>
-
-      <svg className="sun-pulse absolute inset-0 h-full w-full" viewBox="0 0 200 200" aria-hidden>
+      <svg
+        className="sun-pulse absolute inset-0 h-full w-full"
+        viewBox="0 0 200 200"
+        aria-hidden
+      >
         <defs>
           <radialGradient id={gid} cx="42%" cy="38%" r="65%">
             <stop offset="0%" stopColor="#FFF1B8" />

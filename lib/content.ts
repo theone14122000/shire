@@ -45,7 +45,7 @@ export const hero = {
     { label: "Location", value: "Pagey, near Kalpa" },
     { label: "Capacity", value: "6 rooms · full shire" },
     { label: "Seasons", value: "Open year-round" },
-    { label: "Rating", value: "4.7 / 5" },
+    { label: "Rating", value: "5 / 5" },
   ],
   theme: { bg: "bg-emerald-50", text: "text-black" },
 } as const;
