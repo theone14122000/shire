@@ -60,11 +60,12 @@ const BLOCKS: Block[] = [
     title: "Space to Breathe",
     body: (
       <>
-        At The Himalayan Shire, we believe in giving you space to breathe. Beyond
-        your room, you&apos;ll discover plenty of cozy common areas and quiet
-        corners, each offering incredible panoramic views. Whether you want to read
-        a book in our cozy carpeted attic, unwind on the balcony swing, or stroll
-        across the lawn, there is always a perfect spot for some personal space.
+        At The Himalayan Shire, we believe in giving you space to breathe.
+        Beyond your room, you&apos;ll discover plenty of cozy common areas and
+        quiet corners, each offering incredible panoramic views. Whether you want
+        to read a book in our cozy carpeted attic, unwind on the balcony swing,
+        or stroll across the lawn, there is always a perfect spot for some
+        personal space.
       </>
     ),
   },
@@ -98,10 +99,10 @@ const BLOCKS: Block[] = [
     title: "The Lawn",
     body: (
       <>
-        Make use of our sprawling lawn area, with an amazing view of the Himalayan
-        range, to do some early morning Yoga or simply meditate. It&apos;s a space
-        for the whole family, complete with a small slide to keep the little ones
-        happily entertained.
+        Make use of our sprawling lawn area, with an amazing view of the
+        Himalayan range, to do some early morning Yoga or simply meditate.
+        It&apos;s a space for the whole family, complete with a small slide to
+        keep the little ones happily entertained.
       </>
     ),
   },
@@ -110,12 +111,12 @@ const BLOCKS: Block[] = [
     title: "Nature Trails & Orchard Walks",
     body: (
       <>
-        Nestled amidst lush apple orchards and dense deodar forests, the property
-        offers a deeply quiet and peaceful escape, completely free from traffic and
-        city noise. Step right outside to soak in the authentic Himalayan
-        countryside — stroll through the orchards, share a warm conversation with
-        friendly locals, or explore the beautiful, untouched jungle trails just
-        steps away from the property. We also offer{" "}
+        Nestled amidst lush apple orchards and dense deodar forests, the
+        property offers a deeply quiet and peaceful escape, completely free from
+        traffic and city noise. Step right outside to soak in the authentic
+        Himalayan countryside — stroll through the orchards, share a warm
+        conversation with friendly locals, or explore the beautiful, untouched
+        jungle trails just steps away from the property. We also offer{" "}
         <span className="font-bold text-amber-300">
           bonfire and live barbeque services
         </span>{" "}
@@ -159,9 +160,6 @@ const fadeUp: Variants = {
   },
 };
 
-/* ================================================================== */
-/*  Page                                                               */
-/* ================================================================== */
 export default function ActivitiesPage() {
   const pageRef = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
@@ -216,7 +214,7 @@ export default function ActivitiesPage() {
         className="pointer-events-none absolute inset-0 -z-10 opacity-[0.05] mix-blend-overlay"
         style={{
           backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+            'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'120\' height=\'120\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'2\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\'/%3E%3C/svg%3E")',
         }}
       />
 
@@ -269,28 +267,6 @@ export default function ActivitiesPage() {
               </h1>
             </motion.div>
 
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.2 }}
-              className="relative mb-14 rounded-2xl border border-white/10 bg-white/[0.03] p-6 text-base leading-relaxed text-emerald-100/80 backdrop-blur-sm sm:p-8 sm:text-lg"
-            >
-              <p>
-                We often get asked — what&apos;s there to do around the property?
-                And we like to say, while there are various things to do here, the
-                best thing to do at the Shire is to just{" "}
-                <span className="font-bold text-amber-300">
-                  sit back and enjoy the breathtaking views
-                </span>{" "}
-                from the property, take a moment from a hyperactive lifestyle,
-                relax and hear the birds chirping all day, or watch the colourful
-                butterflies as they hover around the garden going from flower to
-                flower. Bask in the sun in our beautiful lawn, feel the cool fresh
-                mountain breeze and fill your lungs with pollution-free air.
-              </p>
-            </motion.div>
-
             <motion.h2
               variants={fadeUp}
               initial="hidden"
@@ -332,6 +308,7 @@ export default function ActivitiesPage() {
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <span className="absolute left-0 top-0 h-full w-1 bg-amber-400 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
                     <div className="relative flex items-center gap-3">
                       <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 bg-emerald-800/40 text-amber-300 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
                         <Icon size={18} strokeWidth={2} aria-hidden />
@@ -378,6 +355,7 @@ export default function ActivitiesPage() {
             aria-hidden
             className="pointer-events-none absolute inset-0 bg-[#04241c]/60"
           />
+
           <div
             aria-hidden
             className="sun-drift-rev pointer-events-none absolute left-4 top-12 z-0 h-28 w-28 opacity-70 sm:left-10 sm:top-16 sm:h-40 sm:w-40 lg:left-[6%] lg:top-16 lg:h-52 lg:w-52"
@@ -423,9 +401,6 @@ export default function ActivitiesPage() {
   );
 }
 
-/* ================================================================== */
-/*  BlogCta                                                             */
-/* ================================================================== */
 function BlogCta() {
   return (
     <a
@@ -447,51 +422,59 @@ function BlogCta() {
 
 /* ================================================================== */
 /*  ActivityGallery                                                     */
-/*  Shows 5 images at a time, shifts by 1 every 4s, wraps around.      */
-/*  No buttons or dots below — fully automatic.                         */
+/*  Shows 5 images at a time. Every 3s one image swaps out for the     */
+/*  next unseen image, cycling 1→2→3→…→10→1→… automatically.           */
+/*  No buttons. No controls. Just smooth automatic rotation.           */
 /* ================================================================== */
-const VISIBLE_COUNT = 5;
-const SHIFT_INTERVAL = 4000; // 4 seconds per shift
+const VISIBLE = 5;
+const SWAP_INTERVAL = 3000; // 3 seconds per swap
 
 function ActivityGallery({ images }: { images: string[] }) {
   const reduce = useReducedMotion();
   const total = images.length;
 
-  // `offset` is the index of the first visible image
-  const [offset, setOffset] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  // `visible` holds the indices of the 5 currently displayed images
+  // Start with [0, 1, 2, 3, 4]
+  const [visible, setVisible] = useState<number[]>(() =>
+    Array.from({ length: VISIBLE }, (_, i) => i % total)
+  );
 
-  // Refs so the interval callback always reads the latest values
-  const pausedRef = useRef(paused);
+  // Which slot (0–4) to replace next
+  const slotRef = useRef(0);
+  // Which image index to bring in next
+  const nextImageRef = useRef(VISIBLE % total);
+
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const lightboxRef = useRef(lightboxIndex);
-  useEffect(() => {
-    pausedRef.current = paused;
-  }, [paused]);
   useEffect(() => {
     lightboxRef.current = lightboxIndex;
   }, [lightboxIndex]);
 
-  // Single stable interval — shifts by 1 each tick
+  // Auto-rotate: every SWAP_INTERVAL, replace one slot
   useEffect(() => {
-    if (reduce || total <= VISIBLE_COUNT) return;
+    if (reduce || total <= VISIBLE) return;
 
     const id = setInterval(() => {
-      if (pausedRef.current || lightboxRef.current !== null) return;
-      setOffset((prev) => (prev + 1) % total);
-    }, SHIFT_INTERVAL);
+      if (lightboxRef.current !== null) return;
+
+      const slot = slotRef.current;
+      const incoming = nextImageRef.current;
+
+      setVisible((prev) => {
+        const next = [...prev];
+        next[slot] = incoming;
+        return next;
+      });
+
+      // Advance to next slot and next image
+      slotRef.current = (slot + 1) % VISIBLE;
+      nextImageRef.current = (incoming + 1) % total;
+    }, SWAP_INTERVAL);
 
     return () => clearInterval(id);
   }, [total, reduce]);
 
-  // Build the visible window (wrapping around)
-  const visibleImages: { src: string; globalIndex: number }[] = [];
-  for (let i = 0; i < VISIBLE_COUNT; i++) {
-    const idx = (offset + i) % total;
-    visibleImages.push({ src: images[idx], globalIndex: idx });
-  }
-
-  // Lightbox navigation
+  // Lightbox
   const closeLightbox = useCallback(() => setLightboxIndex(null), []);
   const showPrev = useCallback(
     () =>
@@ -501,7 +484,8 @@ function ActivityGallery({ images }: { images: string[] }) {
     [total]
   );
   const showNext = useCallback(
-    () => setLightboxIndex((i) => (i === null ? null : (i + 1) % total)),
+    () =>
+      setLightboxIndex((i) => (i === null ? null : (i + 1) % total)),
     [total]
   );
 
@@ -521,52 +505,46 @@ function ActivityGallery({ images }: { images: string[] }) {
   }, [lightboxIndex, closeLightbox, showPrev, showNext]);
 
   return (
-    <div
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-    >
-      {/* Image grid — each slot independently animates when its image changes */}
+    <div className="flex flex-col gap-6">
+      {/* Grid — always 5 slots, images swap in/out with crossfade */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5 lg:gap-5">
-        {visibleImages.map(({ src, globalIndex }, slot) => {
-          const label =
-            ACTIVITY_LABELS[globalIndex % ACTIVITY_LABELS.length];
+        {visible.map((imgIndex, slot) => {
+          const src = images[imgIndex];
+          const label = ACTIVITY_LABELS[imgIndex % ACTIVITY_LABELS.length];
 
           return (
-            <motion.button
-              type="button"
-              key={slot} // stable key per slot position
-              onClick={() => setLightboxIndex(globalIndex)}
-              aria-label={`Expand photo: ${label}`}
-              whileHover={{ y: -4 }}
-              className="group relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/10 bg-emerald-900/40 p-1 text-left shadow-lg shadow-emerald-950/40 transition-all duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/70"
+            <div
+              key={slot}
+              className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/10 bg-emerald-900/40 p-1 shadow-lg shadow-emerald-950/40"
             >
-              {/* Hover gradient ring */}
-              <span
-                aria-hidden
-                className="pointer-events-none absolute inset-0 z-10 rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                style={{
-                  padding: 1.5,
-                  background:
-                    "linear-gradient(135deg, #fbbf24, #10b981 55%, transparent 85%)",
-                  WebkitMask:
-                    "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                  WebkitMaskComposite: "xor",
-                  maskComposite: "exclude",
-                }}
-              />
-
-              <div className="relative h-full w-full overflow-hidden rounded-[0.9rem]">
-                {/* AnimatePresence per slot — cross-fade when image changes */}
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={src}
-                    initial={{ opacity: 0, scale: 1.04 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.96 }}
-                    transition={{
-                      duration: 0.6,
-                      ease: [0.22, 1, 0.36, 1],
+              <AnimatePresence mode="wait">
+                <motion.button
+                  key={imgIndex}
+                  type="button"
+                  onClick={() => setLightboxIndex(imgIndex)}
+                  aria-label={`Expand photo: ${label}`}
+                  initial={{ opacity: 0, scale: 1.04 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.96 }}
+                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                  className="group relative h-full w-full overflow-hidden rounded-[0.9rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/70"
+                >
+                  {/* Hover gradient ring */}
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 z-10 rounded-[0.9rem] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                    style={{
+                      padding: 1.5,
+                      background:
+                        "linear-gradient(135deg, #fbbf24, #10b981 55%, transparent 85%)",
+                      WebkitMask:
+                        "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                      WebkitMaskComposite: "xor",
+                      maskComposite: "exclude",
                     }}
+                  />
+
+                  <div
                     className={
                       reduce
                         ? "absolute inset-0"
@@ -580,25 +558,37 @@ function ActivityGallery({ images }: { images: string[] }) {
                       sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
                       className="object-cover transition-transform duration-700 group-hover:scale-110"
                     />
-                  </motion.div>
-                </AnimatePresence>
+                  </div>
 
-                {/* Subtle base scrim */}
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-emerald-950/40 via-transparent to-transparent" />
+                  {/* Scrim */}
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-emerald-950/40 via-transparent to-transparent" />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
-                {/* Hover darken */}
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-
-                {/* Expand icon on hover */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white shadow-lg backdrop-blur-md">
-                    <Expand size={15} strokeWidth={2.2} />
-                  </span>
-                </div>
-              </div>
-            </motion.button>
+                  {/* Expand icon on hover */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white shadow-lg backdrop-blur-md">
+                      <Expand size={15} strokeWidth={2.2} />
+                    </span>
+                  </div>
+                </motion.button>
+              </AnimatePresence>
+            </div>
           );
         })}
+      </div>
+
+      {/* Minimal dot indicators — shows which images are currently visible */}
+      <div className="flex items-center justify-center gap-1.5">
+        {images.map((_, i) => (
+          <span
+            key={i}
+            className={`h-1.5 rounded-full transition-all duration-500 ${
+              visible.includes(i)
+                ? "w-4 bg-gradient-to-r from-amber-400 to-emerald-400"
+                : "w-1.5 bg-white/20"
+            }`}
+          />
+        ))}
       </div>
 
       {/* Lightbox */}
@@ -608,13 +598,11 @@ function ActivityGallery({ images }: { images: string[] }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
             className="fixed inset-0 z-[100] flex items-center justify-center bg-[#031a14]/95 backdrop-blur-md"
             onClick={closeLightbox}
           >
             <button
               type="button"
-              aria-label="Close gallery"
               onClick={closeLightbox}
               className="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-emerald-950/60 text-white/80 backdrop-blur-md transition-colors hover:border-amber-300/50 hover:text-amber-200 sm:right-6 sm:top-6"
             >
@@ -622,12 +610,11 @@ function ActivityGallery({ images }: { images: string[] }) {
             </button>
 
             <div className="absolute left-4 top-4 z-10 flex items-center gap-2 rounded-full border border-white/10 bg-emerald-950/60 px-3.5 py-1.5 text-xs font-bold text-amber-300 backdrop-blur-md sm:left-6 sm:top-6">
-              {lightboxIndex + 1} / {total}
+              {lightboxIndex + 1} / {images.length}
             </div>
 
             <button
               type="button"
-              aria-label="Previous photo"
               onClick={(e) => {
                 e.stopPropagation();
                 showPrev();
@@ -639,7 +626,6 @@ function ActivityGallery({ images }: { images: string[] }) {
 
             <button
               type="button"
-              aria-label="Next photo"
               onClick={(e) => {
                 e.stopPropagation();
                 showNext();
@@ -663,7 +649,9 @@ function ActivityGallery({ images }: { images: string[] }) {
             >
               <Image
                 src={images[lightboxIndex]}
-                alt={`Activity at The Himalayan Shire — ${ACTIVITY_LABELS[lightboxIndex % ACTIVITY_LABELS.length]}`}
+                alt={`Activity at The Himalayan Shire — ${
+                  ACTIVITY_LABELS[lightboxIndex % ACTIVITY_LABELS.length]
+                }`}
                 fill
                 sizes="100vw"
                 className="rounded-2xl object-contain"
@@ -677,9 +665,6 @@ function ActivityGallery({ images }: { images: string[] }) {
   );
 }
 
-/* ================================================================== */
-/*  SunMark                                                             */
-/* ================================================================== */
 function SunMark() {
   const gid = useId().replace(/:/g, "");
 
@@ -692,6 +677,7 @@ function SunMark() {
             "radial-gradient(circle, rgba(255,224,138,0.75) 0%, rgba(245,200,66,0.45) 45%, rgba(245,200,66,0) 72%)",
         }}
       />
+
       <svg
         className="sun-spin absolute inset-0 h-full w-full"
         viewBox="0 0 200 200"
@@ -712,6 +698,7 @@ function SunMark() {
           />
         ))}
       </svg>
+
       <svg
         className="sun-pulse absolute inset-0 h-full w-full"
         viewBox="0 0 200 200"
