@@ -138,6 +138,7 @@ const SUN_RAYS = Array.from({ length: 12 }, (_, i) => {
   const angle = (i * 30 * Math.PI) / 180;
   const inner = 60;
   const outer = i % 2 === 0 ? 92 : 76;
+
   return {
     x1: 100 + inner * Math.cos(angle),
     y1: 100 + inner * Math.sin(angle),
@@ -156,13 +157,13 @@ const fadeUp: Variants = {
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
+    transition: {
+      duration: 0.6,
+      ease: [0.22, 1, 0.36, 1] as const,
+    },
   },
 };
 
-/* ================================================================== */
-/*  Page                                                                */
-/* ================================================================== */
 export default function ActivitiesPage() {
   const pageRef = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
@@ -182,29 +183,41 @@ export default function ActivitiesPage() {
     >
       <style>{`
         @keyframes sunDrift {
-          0%   { transform: translate3d(0,0,0); }
-          20%  { transform: translate3d(24px,-28px,0); }
-          45%  { transform: translate3d(-20px,-10px,0); }
-          70%  { transform: translate3d(16px,22px,0); }
-          100% { transform: translate3d(0,0,0); }
+          0% { transform: translate3d(0, 0, 0); }
+          20% { transform: translate3d(24px, -28px, 0); }
+          45% { transform: translate3d(-20px, -10px, 0); }
+          70% { transform: translate3d(16px, 22px, 0); }
+          100% { transform: translate3d(0, 0, 0); }
         }
-        @keyframes sunSpin  { to { transform: rotate(360deg); } }
-        @keyframes sunPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.08); } }
-        @keyframes sunGlow  { 0%,100% { opacity:.8; transform:scale(1); } 50% { opacity:1; transform:scale(1.12); } }
+
+        @keyframes sunSpin {
+          to { transform: rotate(360deg); }
+        }
+
+        @keyframes sunPulse {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.08); }
+        }
+
+        @keyframes sunGlow {
+          0%, 100% { opacity: 0.8; transform: scale(1); }
+          50% { opacity: 1; transform: scale(1.12); }
+        }
+
         @keyframes kenBurns {
-          0%   { transform: scale(1) translate(0, 0); }
-          50%  { transform: scale(1.08) translate(-1%, -1%); }
+          0% { transform: scale(1) translate(0, 0); }
+          50% { transform: scale(1.08) translate(-1%, -1%); }
           100% { transform: scale(1) translate(0, 0); }
         }
-        .sun-drift     { animation: sunDrift 11s ease-in-out infinite; will-change: transform; }
-        .sun-drift-rev { animation: sunDrift 15s ease-in-out infinite reverse; will-change: transform; }
-        .sun-spin      { transform-origin: center; animation: sunSpin 38s linear infinite; }
-        .sun-pulse     { transform-origin: center; animation: sunPulse 3.6s ease-in-out infinite; }
-        .sun-glow      { transform-origin: center; animation: sunGlow 4.5s ease-in-out infinite; }
-        .ken-burns     { animation: kenBurns 14s ease-in-out infinite; }
+
+        .sun-drift { animation: sunDrift 11s ease-in-out infinite; }
+        .sun-drift-rev { animation: sunDrift 15s ease-in-out infinite reverse; }
+        .sun-spin { transform-origin: center; animation: sunSpin 38s linear infinite; }
+        .sun-pulse { transform-origin: center; animation: sunPulse 3.6s ease-in-out infinite; }
+        .sun-glow { transform-origin: center; animation: sunGlow 4.5s ease-in-out infinite; }
+        .ken-burns { animation: kenBurns 14s ease-in-out infinite; }
       `}</style>
 
-      {/* Background layers */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10"
@@ -213,19 +226,10 @@ export default function ActivitiesPage() {
             "radial-gradient(70% 50% at 85% 5%, rgba(251,191,36,0.14) 0%, transparent 55%), radial-gradient(55% 45% at 10% 20%, rgba(16,185,129,0.22) 0%, transparent 60%), radial-gradient(90% 70% at 50% 110%, rgba(4,120,87,0.28) 0%, transparent 65%)",
         }}
       />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.05] mix-blend-overlay"
-        style={{
-          backgroundImage:
-            'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'120\' height=\'120\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'2\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\'/%3E%3C/svg%3E")',
-        }}
-      />
 
       <MotionConfig reducedMotion="user">
         <SiteNav />
 
-        {/* Scroll progress bar */}
         <div className="pointer-events-none fixed inset-x-0 top-0 z-[60] h-[3px] bg-black/20">
           <motion.span
             className="block h-full origin-left bg-gradient-to-r from-amber-400 via-amber-300 to-emerald-400"
@@ -233,13 +237,13 @@ export default function ActivitiesPage() {
           />
         </div>
 
-        {/* ── Activities Section ── */}
         <section className="relative overflow-hidden py-16 sm:py-20 lg:py-24">
           <motion.div
             aria-hidden
             className="pointer-events-none absolute -left-24 top-10 h-80 w-80 rounded-full bg-amber-300/20 blur-[120px]"
             style={reduce ? undefined : { y: glowLeftY }}
           />
+
           <motion.div
             aria-hidden
             className="pointer-events-none absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-emerald-400/25 blur-[130px]"
@@ -254,7 +258,6 @@ export default function ActivitiesPage() {
           </div>
 
           <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-            {/* Header */}
             <motion.div
               variants={fadeUp}
               initial="hidden"
@@ -263,40 +266,17 @@ export default function ActivitiesPage() {
               className="mb-12 text-center sm:mb-16"
             >
               <span className="inline-flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-[0.22em] text-amber-300">
-                <span className="h-px w-6 bg-amber-400/70" aria-hidden />
+                <span className="h-px w-6 bg-amber-400/70" />
                 Activities
-                <span className="h-px w-6 bg-amber-400/70" aria-hidden />
+                <span className="h-px w-6 bg-amber-400/70" />
               </span>
+
               <h1 className="mt-4 font-display text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl">
                 Activities In &amp; Around{" "}
                 <span className="text-amber-400">The Property</span>
               </h1>
             </motion.div>
 
-            {/* Intro paragraph */}
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.2 }}
-              className="relative mb-14 rounded-2xl border border-white/10 bg-white/[0.03] p-6 text-base leading-relaxed text-emerald-100/80 backdrop-blur-sm sm:p-8 sm:text-lg"
-            >
-              <p>
-                We often get asked — what&apos;s there to do around the property?
-                And we like to say, while there are various things to do here, the
-                best thing to do at the Shire is to just{" "}
-                <span className="font-bold text-amber-300">
-                  sit back and enjoy the breathtaking views
-                </span>{" "}
-                from the property, take a moment from a hyperactive lifestyle,
-                relax and hear the birds chirping all day, or watch the colourful
-                butterflies as they hover around the garden going from flower to
-                flower. Bask in the sun in our beautiful lawn, feel the cool fresh
-                mountain breeze and fill your lungs with pollution-free air.
-              </p>
-            </motion.div>
-
-            {/* Blocks heading */}
             <motion.h2
               variants={fadeUp}
               initial="hidden"
@@ -308,7 +288,6 @@ export default function ActivitiesPage() {
               <span className="text-amber-400">Wellness</span>
             </motion.h2>
 
-            {/* Blocks grid */}
             <motion.div
               variants={stagger}
               initial="hidden"
@@ -319,6 +298,7 @@ export default function ActivitiesPage() {
               {BLOCKS.map((block, i) => {
                 const Icon = BLOCK_ICONS[block.icon];
                 const isLast = i === BLOCKS.length - 1;
+
                 return (
                   <motion.div
                     key={block.title}
@@ -328,26 +308,29 @@ export default function ActivitiesPage() {
                       duration: 0.35,
                       ease: [0.22, 1, 0.36, 1] as const,
                     }}
-                    className={`group relative flex flex-col gap-4 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-6 shadow-sm shadow-emerald-950/30 backdrop-blur-sm transition-colors duration-300 hover:border-amber-300/40 hover:bg-white/[0.07] hover:shadow-lg hover:shadow-emerald-950/50 ${
+                    className={`group relative flex flex-col gap-4 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-6 shadow-sm shadow-emerald-950/30 backdrop-blur-sm transition-colors duration-300 hover:border-amber-300/40 hover:bg-white/[0.07] ${
                       isLast ? "sm:col-span-2" : ""
                     }`}
                   >
                     <span
                       aria-hidden
-                      className="pointer-events-none absolute -right-2 -top-4 select-none font-display text-7xl font-black leading-none text-white/[0.05] transition-colors duration-300 group-hover:text-amber-300/[0.08]"
+                      className="pointer-events-none absolute -right-2 -top-4 select-none font-display text-7xl font-black leading-none text-white/[0.05]"
                     >
                       {String(i + 1).padStart(2, "0")}
                     </span>
+
                     <span className="absolute left-0 top-0 h-full w-1 bg-amber-400 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
                     <div className="relative flex items-center gap-3">
-                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 bg-emerald-800/40 text-amber-300 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
-                        <Icon size={18} strokeWidth={2} aria-hidden />
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 bg-emerald-800/40 text-amber-300">
+                        <Icon size={18} strokeWidth={2} />
                       </span>
+
                       <h3 className="font-display text-lg font-black text-white sm:text-xl">
                         {block.title}
                       </h3>
                     </div>
+
                     <p className="relative text-sm leading-relaxed text-emerald-100/75 sm:text-base">
                       {block.body}
                     </p>
@@ -356,7 +339,6 @@ export default function ActivitiesPage() {
               })}
             </motion.div>
 
-            {/* Blog CTA */}
             <motion.div
               variants={fadeUp}
               initial="hidden"
@@ -364,24 +346,23 @@ export default function ActivitiesPage() {
               viewport={{ once: true, amount: 0.3 }}
               className="relative mt-12 flex flex-col items-center gap-4 overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] p-8 text-center shadow-lg shadow-emerald-950/40 backdrop-blur-md"
             >
-              <span
-                aria-hidden
-                className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-amber-400 to-transparent"
-              />
+              <span className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-amber-400 to-transparent" />
+
               <h2 className="font-display text-xl font-black text-white sm:text-2xl">
                 Love hiking &amp;{" "}
                 <span className="text-amber-400">exploring nature?</span>
               </h2>
+
               <p className="max-w-md text-sm text-emerald-100/70 sm:text-base">
                 Read this blog about hiking and exploring nature around The
                 Himalayan Shire.
               </p>
+
               <BlogCta />
             </motion.div>
           </div>
         </section>
 
-        {/* ── Gallery Section ── */}
         <section className="relative overflow-hidden border-t border-white/10 py-16 sm:py-20 lg:py-24">
           <div
             aria-hidden
@@ -405,20 +386,18 @@ export default function ActivitiesPage() {
             >
               <div>
                 <span className="inline-flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-[0.22em] text-amber-300">
-                  <span className="h-px w-6 bg-amber-400/70" aria-hidden />
+                  <span className="h-px w-6 bg-amber-400/70" />
                   Gallery
                 </span>
+
                 <h2 className="mt-3 font-display text-3xl font-black tracking-tight text-white sm:text-4xl">
                   Moments From The{" "}
                   <span className="text-amber-400">Shire</span>
                 </h2>
               </div>
+
               <span className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-emerald-100/60 sm:flex">
-                <Camera
-                  size={13}
-                  strokeWidth={2.2}
-                  className="text-amber-300"
-                />
+                <Camera size={13} strokeWidth={2.2} className="text-amber-300" />
                 Click any photo to expand
               </span>
             </motion.div>
@@ -433,9 +412,6 @@ export default function ActivitiesPage() {
   );
 }
 
-/* ================================================================== */
-/*  BlogCta                                                             */
-/* ================================================================== */
 function BlogCta() {
   return (
     <a
@@ -446,98 +422,97 @@ function BlogCta() {
     >
       <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/50 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
       <span className="relative">Read the Blog</span>
-      <ArrowUpRight
-        size={15}
-        strokeWidth={2.4}
-        className="relative transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-      />
+      <ArrowUpRight size={15} strokeWidth={2.4} className="relative" />
     </a>
   );
 }
 
 /* ================================================================== */
-/*  ActivityGallery — auto-cycles every 2s, one image swaps at a time  */
+/*  Gallery: 5 cards visible. One image updates every 2 seconds.       */
+/*  Flow: 1 → 2 → 3 → ... → 10 → 1 continuously.                      */
 /* ================================================================== */
-const VISIBLE = 5;
-const SWAP_INTERVAL = 2000; // 2 seconds per swap
+const VISIBLE_IMAGES = 5;
+const SWAP_INTERVAL = 2000;
 
 function ActivityGallery({ images }: { images: string[] }) {
   const reduce = useReducedMotion();
   const total = images.length;
 
   const [visible, setVisible] = useState<number[]>(() =>
-    Array.from({ length: VISIBLE }, (_, i) => i % total)
+    Array.from({ length: Math.min(VISIBLE_IMAGES, total) }, (_, i) => i)
   );
 
-  const slotRef = useRef(0);
-  const nextImageRef = useRef(VISIBLE % total);
-
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-  const lightboxRef = useRef(lightboxIndex);
+
+  const nextSlotRef = useRef(0);
+  const nextImageRef = useRef(VISIBLE_IMAGES % total);
+  const lightboxRef = useRef<number | null>(null);
+
   useEffect(() => {
     lightboxRef.current = lightboxIndex;
   }, [lightboxIndex]);
 
-  // Auto-rotate: every 2s, replace one slot with the next image
   useEffect(() => {
-    if (reduce || total <= VISIBLE) return;
+    if (total <= VISIBLE_IMAGES) return;
 
-    const id = setInterval(() => {
+    const interval = window.setInterval(() => {
       if (lightboxRef.current !== null) return;
 
-      const slot = slotRef.current;
-      const incoming = nextImageRef.current;
+      const slotToReplace = nextSlotRef.current;
+      const nextImage = nextImageRef.current;
 
-      setVisible((prev) => {
-        const next = [...prev];
-        next[slot] = incoming;
-        return next;
+      setVisible((current) => {
+        const updated = [...current];
+        updated[slotToReplace] = nextImage;
+        return updated;
       });
 
-      slotRef.current = (slot + 1) % VISIBLE;
-      nextImageRef.current = (incoming + 1) % total;
+      nextSlotRef.current = (slotToReplace + 1) % VISIBLE_IMAGES;
+      nextImageRef.current = (nextImage + 1) % total;
     }, SWAP_INTERVAL);
 
-    return () => clearInterval(id);
-  }, [total, reduce]);
+    return () => window.clearInterval(interval);
+  }, [total]);
 
-  // Lightbox navigation
   const closeLightbox = useCallback(() => setLightboxIndex(null), []);
-  const showPrev = useCallback(
-    () =>
-      setLightboxIndex((i) =>
-        i === null ? null : (i - 1 + total) % total
-      ),
-    [total]
-  );
-  const showNext = useCallback(
-    () =>
-      setLightboxIndex((i) => (i === null ? null : (i + 1) % total)),
-    [total]
-  );
+
+  const showPrevious = useCallback(() => {
+    setLightboxIndex((current) =>
+      current === null ? null : (current - 1 + total) % total
+    );
+  }, [total]);
+
+  const showNext = useCallback(() => {
+    setLightboxIndex((current) =>
+      current === null ? null : (current + 1) % total
+    );
+  }, [total]);
 
   useEffect(() => {
     if (lightboxIndex === null) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") closeLightbox();
-      if (e.key === "ArrowLeft") showPrev();
-      if (e.key === "ArrowRight") showNext();
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") closeLightbox();
+      if (event.key === "ArrowLeft") showPrevious();
+      if (event.key === "ArrowRight") showNext();
     };
-    window.addEventListener("keydown", onKey);
+
+    window.addEventListener("keydown", onKeyDown);
     document.body.style.overflow = "hidden";
+
     return () => {
-      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("keydown", onKeyDown);
       document.body.style.overflow = "";
     };
-  }, [lightboxIndex, closeLightbox, showPrev, showNext]);
+  }, [lightboxIndex, closeLightbox, showPrevious, showNext]);
 
   return (
-    <div className="flex flex-col gap-6">
-      {/* Grid — always 5 slots, images swap in/out with crossfade */}
+    <>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5 lg:gap-5">
-        {visible.map((imgIndex, slot) => {
-          const src = images[imgIndex];
-          const label = ACTIVITY_LABELS[imgIndex % ACTIVITY_LABELS.length];
+        {visible.map((imageIndex, slot) => {
+          const src = images[imageIndex];
+          const label =
+            ACTIVITY_LABELS[imageIndex % ACTIVITY_LABELS.length];
 
           return (
             <div
@@ -546,31 +521,19 @@ function ActivityGallery({ images }: { images: string[] }) {
             >
               <AnimatePresence mode="wait">
                 <motion.button
-                  key={imgIndex}
+                  key={imageIndex}
                   type="button"
-                  onClick={() => setLightboxIndex(imgIndex)}
-                  aria-label={`Expand photo: ${label}`}
                   initial={{ opacity: 0, scale: 1.04 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.96 }}
-                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{
+                    duration: reduce ? 0 : 0.45,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  onClick={() => setLightboxIndex(imageIndex)}
+                  aria-label={`Expand photo: ${label}`}
                   className="group relative h-full w-full overflow-hidden rounded-[0.9rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/70"
                 >
-                  {/* Hover gradient ring */}
-                  <span
-                    aria-hidden
-                    className="pointer-events-none absolute inset-0 z-10 rounded-[0.9rem] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                    style={{
-                      padding: 1.5,
-                      background:
-                        "linear-gradient(135deg, #fbbf24, #10b981 55%, transparent 85%)",
-                      WebkitMask:
-                        "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                      WebkitMaskComposite: "xor",
-                      maskComposite: "exclude",
-                    }}
-                  />
-
                   <div
                     className={
                       reduce
@@ -587,11 +550,8 @@ function ActivityGallery({ images }: { images: string[] }) {
                     />
                   </div>
 
-                  {/* Scrim */}
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-emerald-950/40 via-transparent to-transparent" />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
-                  {/* Expand icon on hover */}
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                     <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white shadow-lg backdrop-blur-md">
                       <Expand size={15} strokeWidth={2.2} />
@@ -604,21 +564,6 @@ function ActivityGallery({ images }: { images: string[] }) {
         })}
       </div>
 
-      {/* Dot indicators */}
-      <div className="flex items-center justify-center gap-1.5">
-        {images.map((_, i) => (
-          <span
-            key={i}
-            className={`h-1.5 rounded-full transition-all duration-500 ${
-              visible.includes(i)
-                ? "w-4 bg-gradient-to-r from-amber-400 to-emerald-400"
-                : "w-1.5 bg-white/20"
-            }`}
-          />
-        ))}
-      </div>
-
-      {/* Lightbox */}
       <AnimatePresence>
         {lightboxIndex !== null && (
           <motion.div
@@ -630,34 +575,33 @@ function ActivityGallery({ images }: { images: string[] }) {
           >
             <button
               type="button"
+              aria-label="Close gallery"
               onClick={closeLightbox}
-              className="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-emerald-950/60 text-white/80 backdrop-blur-md transition-colors hover:border-amber-300/50 hover:text-amber-200 sm:right-6 sm:top-6"
+              className="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-emerald-950/60 text-white/80 backdrop-blur-md sm:right-6 sm:top-6"
             >
               <X size={18} strokeWidth={2.2} />
             </button>
 
-            <div className="absolute left-4 top-4 z-10 flex items-center gap-2 rounded-full border border-white/10 bg-emerald-950/60 px-3.5 py-1.5 text-xs font-bold text-amber-300 backdrop-blur-md sm:left-6 sm:top-6">
-              {lightboxIndex + 1} / {images.length}
-            </div>
-
             <button
               type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                showPrev();
+              aria-label="Previous photo"
+              onClick={(event) => {
+                event.stopPropagation();
+                showPrevious();
               }}
-              className="absolute left-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-emerald-950/60 text-white/80 backdrop-blur-md transition-colors hover:border-amber-300/50 hover:text-amber-200 sm:left-6"
+              className="absolute left-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-emerald-950/60 text-white/80 backdrop-blur-md sm:left-6"
             >
               <ChevronLeft size={20} strokeWidth={2.2} />
             </button>
 
             <button
               type="button"
-              onClick={(e) => {
-                e.stopPropagation();
+              aria-label="Next photo"
+              onClick={(event) => {
+                event.stopPropagation();
                 showNext();
               }}
-              className="absolute right-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-emerald-950/60 text-white/80 backdrop-blur-md transition-colors hover:border-amber-300/50 hover:text-amber-200 sm:right-6"
+              className="absolute right-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-emerald-950/60 text-white/80 backdrop-blur-md sm:right-6"
             >
               <ChevronRight size={20} strokeWidth={2.2} />
             </button>
@@ -667,34 +611,30 @@ function ActivityGallery({ images }: { images: string[] }) {
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.96 }}
-              transition={{
-                duration: 0.3,
-                ease: [0.22, 1, 0.36, 1] as const,
-              }}
-              onClick={(e) => e.stopPropagation()}
+              transition={{ duration: 0.3 }}
+              onClick={(event) => event.stopPropagation()}
               className="relative mx-4 h-[70vh] w-full max-w-4xl sm:h-[78vh]"
             >
               <Image
                 src={images[lightboxIndex]}
                 alt={`Activity at The Himalayan Shire — ${
-                  ACTIVITY_LABELS[lightboxIndex % ACTIVITY_LABELS.length]
+                  ACTIVITY_LABELS[
+                    lightboxIndex % ACTIVITY_LABELS.length
+                  ]
                 }`}
                 fill
+                priority
                 sizes="100vw"
                 className="rounded-2xl object-contain"
-                priority
               />
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </>
   );
 }
 
-/* ================================================================== */
-/*  SunMark                                                             */
-/* ================================================================== */
 function SunMark() {
   const gid = useId().replace(/:/g, "");
 
@@ -714,13 +654,13 @@ function SunMark() {
         fill="none"
         aria-hidden
       >
-        {SUN_RAYS.map((r, i) => (
+        {SUN_RAYS.map((ray, index) => (
           <line
-            key={i}
-            x1={r.x1}
-            y1={r.y1}
-            x2={r.x2}
-            y2={r.y2}
+            key={index}
+            x1={ray.x1}
+            y1={ray.y1}
+            x2={ray.x2}
+            y2={ray.y2}
             stroke="#E8A317"
             strokeWidth={6}
             strokeLinecap="round"
@@ -741,6 +681,7 @@ function SunMark() {
             <stop offset="100%" stopColor="#E8A317" />
           </radialGradient>
         </defs>
+
         <circle cx="100" cy="100" r="50" fill={`url(#${gid})`} />
         <circle cx="86" cy="84" r="16" fill="rgba(255,255,255,0.45)" />
       </svg>
