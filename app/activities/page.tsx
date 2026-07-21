@@ -24,6 +24,7 @@ import {
   Expand,
   Pause,
   Play,
+  Camera,
 } from "lucide-react";
 import { SiteNav } from "../components/SiteNav";
 import { SiteFooter } from "../components/SiteFooter";
@@ -31,6 +32,20 @@ import { SiteFooter } from "../components/SiteFooter";
 const BLOG_URL = "https://traveltalesfromindia.in/a-small-hike-with-the-himalayan-shire/#google_vignette";
 
 const ACTIVITY_IMAGES = Array.from({ length: 10 }, (_, i) => `/images/activity/activity-${i + 1}.jpg`);
+
+// Rotating caption labels — cycles if there are more photos than labels
+const ACTIVITY_LABELS = [
+  "Morning Lawn",
+  "Orchard Trail",
+  "Bonfire Nights",
+  "Mountain View",
+  "Quiet Corners",
+  "Common Room",
+  "Sunset Hour",
+  "Garden Walk",
+  "Forest Path",
+  "Golden Hour",
+];
 
 type Block = {
   icon: "home" | "games" | "tv" | "yoga" | "trail";
@@ -163,11 +178,17 @@ export default function ActivitiesPage() {
         @keyframes sunSpin  { to { transform: rotate(360deg); } }
         @keyframes sunPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.08); } }
         @keyframes sunGlow  { 0%,100% { opacity:.8; transform:scale(1); } 50% { opacity:1; transform:scale(1.12); } }
+        @keyframes kenBurns {
+          0%   { transform: scale(1) translate(0, 0); }
+          50%  { transform: scale(1.08) translate(-1%, -1%); }
+          100% { transform: scale(1) translate(0, 0); }
+        }
         .sun-drift     { animation: sunDrift 11s ease-in-out infinite; will-change: transform; }
         .sun-drift-rev { animation: sunDrift 15s ease-in-out infinite reverse; will-change: transform; }
         .sun-spin      { transform-origin: center; animation: sunSpin 38s linear infinite; }
         .sun-pulse     { transform-origin: center; animation: sunPulse 3.6s ease-in-out infinite; }
         .sun-glow      { transform-origin: center; animation: sunGlow 4.5s ease-in-out infinite; }
+        .ken-burns     { animation: kenBurns 14s ease-in-out infinite; }
       `}</style>
 
       <div
@@ -346,16 +367,21 @@ export default function ActivitiesPage() {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, amount: 0.3 }}
-              className="mb-10 text-center"
+              className="mb-10 flex flex-col items-center gap-3 text-center sm:flex-row sm:items-end sm:justify-between sm:text-left"
             >
-              <span className="inline-flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-[0.22em] text-amber-300">
-                <span className="h-px w-6 bg-amber-400/70" aria-hidden />
-                Gallery
-                <span className="h-px w-6 bg-amber-400/70" aria-hidden />
+              <div>
+                <span className="inline-flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-[0.22em] text-amber-300">
+                  <span className="h-px w-6 bg-amber-400/70" aria-hidden />
+                  Gallery
+                </span>
+                <h2 className="mt-3 font-display text-3xl font-black tracking-tight text-white sm:text-4xl">
+                  Moments From The <span className="text-amber-400">Shire</span>
+                </h2>
+              </div>
+              <span className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-emerald-100/60 sm:flex">
+                <Camera size={13} strokeWidth={2.2} className="text-amber-300" />
+                Click any photo to expand
               </span>
-              <h2 className="mt-4 font-display text-3xl font-black tracking-tight text-white sm:text-4xl">
-                Moments From The <span className="text-amber-400">Shire</span>
-              </h2>
             </motion.div>
 
             <ActivityGallery images={ACTIVITY_IMAGES} />
@@ -387,6 +413,9 @@ function BlogCta() {
   );
 }
 
+/* ================================================================== */
+/*  ActivityGallery — richer bento cards, Ken Burns drift, lightbox     */
+/* ================================================================== */
 function ActivityGallery({ images }: { images: string[] }) {
   const reduce = useReducedMotion();
   const VISIBLE = 5;
@@ -397,7 +426,7 @@ function ActivityGallery({ images }: { images: string[] }) {
 
   useEffect(() => {
     if (reduce || paused || lightboxIndex !== null) return;
-    const t = setInterval(() => setPage((p) => (p + 1) % pages), 4000);
+    const t = setInterval(() => setPage((p) => (p + 1) % pages), 4500);
     return () => clearInterval(t);
   }, [pages, reduce, paused, lightboxIndex]);
 
@@ -431,7 +460,7 @@ function ActivityGallery({ images }: { images: string[] }) {
 
   return (
     <div
-      className="flex flex-col gap-6"
+      className="flex flex-col gap-7"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
@@ -442,36 +471,79 @@ function ActivityGallery({ images }: { images: string[] }) {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] as const }}
-          className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5"
+          className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4 lg:grid-cols-6 lg:gap-5 lg:auto-rows-[13rem]"
         >
           {current.map((src, i) => {
             const globalIndex = start + i;
+            const label = ACTIVITY_LABELS[globalIndex % ACTIVITY_LABELS.length];
+            const isHero = i === 0;
+
             return (
               <motion.button
                 type="button"
                 key={src}
                 onClick={() => setLightboxIndex(globalIndex)}
-                aria-label={`Expand activity photo ${globalIndex + 1}`}
+                aria-label={`Expand photo: ${label}`}
                 initial={{ opacity: 0, scale: 0.94 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] as const }}
-                className={`group relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/10 bg-emerald-900/40 text-left shadow-lg shadow-emerald-950/40 transition-transform duration-300 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/70 ${i === 0 ? "col-span-2 sm:col-span-1" : ""}`}
+                transition={{ duration: 0.5, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] as const }}
+                whileHover={{ y: -4 }}
+                className={`group relative overflow-hidden rounded-2xl border border-white/10 bg-emerald-900/40 p-1 text-left shadow-lg shadow-emerald-950/40 transition-all duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/70 ${
+                  isHero
+                    ? "col-span-2 aspect-[16/11] sm:col-span-2 sm:row-span-2 sm:aspect-auto lg:col-span-3 lg:row-span-2"
+                    : "aspect-square sm:aspect-auto lg:col-span-1"
+                }`}
               >
-                <Image
-                  src={src}
-                  alt={`Activity at The Himalayan Shire ${globalIndex + 1}`}
-                  fill
-                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                {/* animated gradient ring, appears on hover */}
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 z-10 rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                  style={{
+                    padding: 1.5,
+                    background: "linear-gradient(135deg, #fbbf24, #10b981 55%, transparent 85%)",
+                    WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                    WebkitMaskComposite: "xor",
+                    maskComposite: "exclude",
+                  }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/70 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                <div className="absolute right-2.5 top-2.5 rounded-full bg-emerald-950/60 px-2.5 py-1 text-[10px] font-bold text-amber-300 backdrop-blur-md">
-                  {String(globalIndex + 1).padStart(2, "0")}
-                </div>
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-md">
-                    <Expand size={15} strokeWidth={2.2} />
-                  </span>
+
+                <div className="relative h-full w-full overflow-hidden rounded-[0.9rem]">
+                  <div className={reduce ? "absolute inset-0" : "ken-burns absolute inset-0"}>
+                    <Image
+                      src={src}
+                      alt={`Activity at The Himalayan Shire — ${label}`}
+                      fill
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                  </div>
+
+                  {/* base scrim always on, for label legibility */}
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-emerald-950/75 via-emerald-950/5 to-transparent" />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+
+                  {/* index counter */}
+                  <div className="absolute right-2.5 top-2.5 rounded-full bg-emerald-950/60 px-2.5 py-1 text-[10px] font-bold text-amber-300 backdrop-blur-md">
+                    {String(globalIndex + 1).padStart(2, "0")}
+                  </div>
+
+                  {/* caption label, always visible at base */}
+                  <div className="absolute inset-x-0 bottom-0 p-2.5 sm:p-3">
+                    <span
+                      className={`inline-block truncate rounded-full bg-white/10 px-2.5 py-1 font-bold uppercase tracking-wider text-beige-50 backdrop-blur-sm transition-colors duration-300 group-hover:bg-amber-400 group-hover:text-emerald-950 ${
+                        isHero ? "text-[11px] sm:text-xs" : "text-[9px] sm:text-[10px]"
+                      }`}
+                    >
+                      {label}
+                    </span>
+                  </div>
+
+                  {/* expand icon on hover */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white shadow-lg backdrop-blur-md">
+                      <Expand size={15} strokeWidth={2.2} />
+                    </span>
+                  </div>
                 </div>
               </motion.button>
             );
@@ -479,14 +551,15 @@ function ActivityGallery({ images }: { images: string[] }) {
         </motion.div>
       </AnimatePresence>
 
+      {/* Page dots + play/pause */}
       <div className="flex items-center justify-center gap-3">
         <button
           type="button"
           onClick={() => setPaused((p) => !p)}
           aria-label={paused ? "Resume auto-play" : "Pause auto-play"}
-          className="flex h-7 w-7 items-center justify-center rounded-full border border-white/15 bg-white/5 text-emerald-100/70 transition-colors hover:border-amber-300/40 hover:text-amber-300"
+          className="flex h-8 w-8 items-center justify-center rounded-full border border-white/15 bg-white/5 text-emerald-100/70 transition-colors hover:border-amber-300/40 hover:text-amber-300"
         >
-          {paused ? <Play size={11} strokeWidth={2.4} /> : <Pause size={11} strokeWidth={2.4} />}
+          {paused ? <Play size={12} strokeWidth={2.4} /> : <Pause size={12} strokeWidth={2.4} />}
         </button>
 
         <div className="flex items-center gap-2">
@@ -497,24 +570,27 @@ function ActivityGallery({ images }: { images: string[] }) {
               onClick={() => setPage(i)}
               aria-label={`Show image set ${i + 1}`}
               className="h-2 overflow-hidden rounded-full bg-white/20 transition-all duration-500"
-              style={{ width: i === page ? "2rem" : "0.75rem" }}
+              style={{ width: i === page ? "2.25rem" : "0.75rem" }}
             >
               {i === page && !paused && (
                 <motion.span
                   key={page}
-                  className="block h-full w-full bg-amber-400"
+                  className="block h-full w-full bg-gradient-to-r from-amber-400 to-emerald-400"
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: reduce ? 1 : [0, 1] }}
-                  transition={{ duration: reduce ? 0 : 4, ease: "linear" }}
+                  transition={{ duration: reduce ? 0 : 4.5, ease: "linear" }}
                   style={{ transformOrigin: "left" }}
                 />
               )}
-              {i === page && paused && <span className="block h-full w-full bg-amber-400" />}
+              {i === page && paused && (
+                <span className="block h-full w-full bg-gradient-to-r from-amber-400 to-emerald-400" />
+              )}
             </button>
           ))}
         </div>
       </div>
 
+      {/* LIGHTBOX */}
       <AnimatePresence>
         {lightboxIndex !== null ? (
           <motion.div
@@ -534,7 +610,7 @@ function ActivityGallery({ images }: { images: string[] }) {
               <X size={18} strokeWidth={2.2} />
             </button>
 
-            <div className="absolute left-4 top-4 z-10 rounded-full border border-white/10 bg-emerald-950/60 px-3.5 py-1.5 text-xs font-bold text-amber-300 backdrop-blur-md sm:left-6 sm:top-6">
+            <div className="absolute left-4 top-4 z-10 flex items-center gap-2 rounded-full border border-white/10 bg-emerald-950/60 px-3.5 py-1.5 text-xs font-bold text-amber-300 backdrop-blur-md sm:left-6 sm:top-6">
               {lightboxIndex + 1} / {images.length}
             </div>
 
@@ -573,12 +649,17 @@ function ActivityGallery({ images }: { images: string[] }) {
             >
               <Image
                 src={images[lightboxIndex]}
-                alt={`Activity at The Himalayan Shire ${lightboxIndex + 1}`}
+                alt={`Activity at The Himalayan Shire — ${ACTIVITY_LABELS[lightboxIndex % ACTIVITY_LABELS.length]}`}
                 fill
                 sizes="100vw"
                 className="rounded-2xl object-contain"
                 priority
               />
+              <div className="absolute -bottom-9 left-0 right-0 text-center">
+                <span className="inline-block rounded-full bg-amber-400 px-4 py-1.5 text-[11px] font-bold uppercase tracking-wider text-emerald-950 shadow-sm">
+                  {ACTIVITY_LABELS[lightboxIndex % ACTIVITY_LABELS.length]}
+                </span>
+              </div>
             </motion.div>
           </motion.div>
         ) : null}
