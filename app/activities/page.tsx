@@ -138,7 +138,6 @@ const SUN_RAYS = Array.from({ length: 12 }, (_, i) => {
   const angle = (i * 30 * Math.PI) / 180;
   const inner = 60;
   const outer = i % 2 === 0 ? 92 : 76;
-
   return {
     x1: 100 + inner * Math.cos(angle),
     y1: 100 + inner * Math.sin(angle),
@@ -157,13 +156,13 @@ const fadeUp: Variants = {
   show: {
     opacity: 1,
     y: 0,
-    transition: {
-      duration: 0.6,
-      ease: [0.22, 1, 0.36, 1] as const,
-    },
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
   },
 };
 
+/* ================================================================== */
+/*  Page                                                                */
+/* ================================================================== */
 export default function ActivitiesPage() {
   const pageRef = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
@@ -183,39 +182,43 @@ export default function ActivitiesPage() {
     >
       <style>{`
         @keyframes sunDrift {
-          0% { transform: translate3d(0, 0, 0); }
-          20% { transform: translate3d(24px, -28px, 0); }
-          45% { transform: translate3d(-20px, -10px, 0); }
-          70% { transform: translate3d(16px, 22px, 0); }
-          100% { transform: translate3d(0, 0, 0); }
+          0%   { transform: translate3d(0,0,0); }
+          20%  { transform: translate3d(24px,-28px,0); }
+          45%  { transform: translate3d(-20px,-10px,0); }
+          70%  { transform: translate3d(16px,22px,0); }
+          100% { transform: translate3d(0,0,0); }
         }
-
-        @keyframes sunSpin {
-          to { transform: rotate(360deg); }
-        }
-
-        @keyframes sunPulse {
-          0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.08); }
-        }
-
-        @keyframes sunGlow {
-          0%, 100% { opacity: 0.8; transform: scale(1); }
-          50% { opacity: 1; transform: scale(1.12); }
-        }
-
+        @keyframes sunSpin  { to { transform: rotate(360deg); } }
+        @keyframes sunPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+        @keyframes sunGlow  { 0%,100% { opacity:.8; transform:scale(1); } 50% { opacity:1; transform:scale(1.12); } }
         @keyframes kenBurns {
-          0% { transform: scale(1) translate(0, 0); }
-          50% { transform: scale(1.08) translate(-1%, -1%); }
-          100% { transform: scale(1) translate(0, 0); }
+          0%   { transform: scale(1) translate(0,0); }
+          50%  { transform: scale(1.08) translate(-1%,-1%); }
+          100% { transform: scale(1) translate(0,0); }
+        }
+        @keyframes marqueeLeft {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        @keyframes marqueeRight {
+          0%   { transform: translateX(-50%); }
+          100% { transform: translateX(0); }
         }
 
-        .sun-drift { animation: sunDrift 11s ease-in-out infinite; }
+        .sun-drift     { animation: sunDrift 11s ease-in-out infinite; }
         .sun-drift-rev { animation: sunDrift 15s ease-in-out infinite reverse; }
-        .sun-spin { transform-origin: center; animation: sunSpin 38s linear infinite; }
-        .sun-pulse { transform-origin: center; animation: sunPulse 3.6s ease-in-out infinite; }
-        .sun-glow { transform-origin: center; animation: sunGlow 4.5s ease-in-out infinite; }
-        .ken-burns { animation: kenBurns 14s ease-in-out infinite; }
+        .sun-spin      { transform-origin: center; animation: sunSpin 38s linear infinite; }
+        .sun-pulse     { transform-origin: center; animation: sunPulse 3.6s ease-in-out infinite; }
+        .sun-glow      { transform-origin: center; animation: sunGlow 4.5s ease-in-out infinite; }
+        .ken-burns     { animation: kenBurns 14s ease-in-out infinite; }
+
+        .marquee-left  { animation: marqueeLeft 30s linear infinite; }
+        .marquee-right { animation: marqueeRight 30s linear infinite; }
+
+        .marquee-track:hover .marquee-left,
+        .marquee-track:hover .marquee-right {
+          animation-play-state: paused;
+        }
       `}</style>
 
       <div
@@ -230,6 +233,7 @@ export default function ActivitiesPage() {
       <MotionConfig reducedMotion="user">
         <SiteNav />
 
+        {/* Scroll progress */}
         <div className="pointer-events-none fixed inset-x-0 top-0 z-[60] h-[3px] bg-black/20">
           <motion.span
             className="block h-full origin-left bg-gradient-to-r from-amber-400 via-amber-300 to-emerald-400"
@@ -237,13 +241,13 @@ export default function ActivitiesPage() {
           />
         </div>
 
+        {/* ── Activities ── */}
         <section className="relative overflow-hidden py-16 sm:py-20 lg:py-24">
           <motion.div
             aria-hidden
             className="pointer-events-none absolute -left-24 top-10 h-80 w-80 rounded-full bg-amber-300/20 blur-[120px]"
             style={reduce ? undefined : { y: glowLeftY }}
           />
-
           <motion.div
             aria-hidden
             className="pointer-events-none absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-emerald-400/25 blur-[130px]"
@@ -270,7 +274,6 @@ export default function ActivitiesPage() {
                 Activities
                 <span className="h-px w-6 bg-amber-400/70" />
               </span>
-
               <h1 className="mt-4 font-display text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl">
                 Activities In &amp; Around{" "}
                 <span className="text-amber-400">The Property</span>
@@ -298,7 +301,6 @@ export default function ActivitiesPage() {
               {BLOCKS.map((block, i) => {
                 const Icon = BLOCK_ICONS[block.icon];
                 const isLast = i === BLOCKS.length - 1;
-
                 return (
                   <motion.div
                     key={block.title}
@@ -318,19 +320,15 @@ export default function ActivitiesPage() {
                     >
                       {String(i + 1).padStart(2, "0")}
                     </span>
-
                     <span className="absolute left-0 top-0 h-full w-1 bg-amber-400 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-
                     <div className="relative flex items-center gap-3">
                       <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 bg-emerald-800/40 text-amber-300">
                         <Icon size={18} strokeWidth={2} />
                       </span>
-
                       <h3 className="font-display text-lg font-black text-white sm:text-xl">
                         {block.title}
                       </h3>
                     </div>
-
                     <p className="relative text-sm leading-relaxed text-emerald-100/75 sm:text-base">
                       {block.body}
                     </p>
@@ -347,28 +345,25 @@ export default function ActivitiesPage() {
               className="relative mt-12 flex flex-col items-center gap-4 overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] p-8 text-center shadow-lg shadow-emerald-950/40 backdrop-blur-md"
             >
               <span className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-amber-400 to-transparent" />
-
               <h2 className="font-display text-xl font-black text-white sm:text-2xl">
                 Love hiking &amp;{" "}
                 <span className="text-amber-400">exploring nature?</span>
               </h2>
-
               <p className="max-w-md text-sm text-emerald-100/70 sm:text-base">
                 Read this blog about hiking and exploring nature around The
                 Himalayan Shire.
               </p>
-
               <BlogCta />
             </motion.div>
           </div>
         </section>
 
+        {/* ── Gallery — Marquee ── */}
         <section className="relative overflow-hidden border-t border-white/10 py-16 sm:py-20 lg:py-24">
           <div
             aria-hidden
             className="pointer-events-none absolute inset-0 bg-[#04241c]/60"
           />
-
           <div
             aria-hidden
             className="sun-drift-rev pointer-events-none absolute left-4 top-12 z-0 h-28 w-28 opacity-70 sm:left-10 sm:top-16 sm:h-40 sm:w-40 lg:left-[6%] lg:top-16 lg:h-52 lg:w-52"
@@ -389,21 +384,24 @@ export default function ActivitiesPage() {
                   <span className="h-px w-6 bg-amber-400/70" />
                   Gallery
                 </span>
-
                 <h2 className="mt-3 font-display text-3xl font-black tracking-tight text-white sm:text-4xl">
                   Moments From The{" "}
                   <span className="text-amber-400">Shire</span>
                 </h2>
               </div>
-
               <span className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-emerald-100/60 sm:flex">
-                <Camera size={13} strokeWidth={2.2} className="text-amber-300" />
+                <Camera
+                  size={13}
+                  strokeWidth={2.2}
+                  className="text-amber-300"
+                />
                 Click any photo to expand
               </span>
             </motion.div>
-
-            <ActivityGallery images={ACTIVITY_IMAGES} />
           </div>
+
+          {/* Full-bleed marquee area */}
+          <MarqueeGallery images={ACTIVITY_IMAGES} />
         </section>
       </MotionConfig>
 
@@ -412,6 +410,9 @@ export default function ActivitiesPage() {
   );
 }
 
+/* ================================================================== */
+/*  BlogCta                                                             */
+/* ================================================================== */
 function BlogCta() {
   return (
     <a
@@ -428,142 +429,96 @@ function BlogCta() {
 }
 
 /* ================================================================== */
-/*  Gallery: 5 cards visible. One image updates every 2 seconds.       */
-/*  Flow: 1 → 2 → 3 → ... → 10 → 1 continuously.                      */
+/*  MarqueeGallery                                                      */
+/*  Two rows scrolling in opposite directions — infinite, CSS-driven.   */
+/*  Pauses on hover. Click any image → lightbox.                        */
 /* ================================================================== */
-const VISIBLE_IMAGES = 5;
-const SWAP_INTERVAL = 2000;
-
-function ActivityGallery({ images }: { images: string[] }) {
-  const reduce = useReducedMotion();
-  const total = images.length;
-
-  const [visible, setVisible] = useState<number[]>(() =>
-    Array.from({ length: Math.min(VISIBLE_IMAGES, total) }, (_, i) => i)
-  );
-
+function MarqueeGallery({ images }: { images: string[] }) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  const nextSlotRef = useRef(0);
-  const nextImageRef = useRef(VISIBLE_IMAGES % total);
-  const lightboxRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    lightboxRef.current = lightboxIndex;
-  }, [lightboxIndex]);
-
-  useEffect(() => {
-    if (total <= VISIBLE_IMAGES) return;
-
-    const interval = window.setInterval(() => {
-      if (lightboxRef.current !== null) return;
-
-      const slotToReplace = nextSlotRef.current;
-      const nextImage = nextImageRef.current;
-
-      setVisible((current) => {
-        const updated = [...current];
-        updated[slotToReplace] = nextImage;
-        return updated;
-      });
-
-      nextSlotRef.current = (slotToReplace + 1) % VISIBLE_IMAGES;
-      nextImageRef.current = (nextImage + 1) % total;
-    }, SWAP_INTERVAL);
-
-    return () => window.clearInterval(interval);
-  }, [total]);
-
   const closeLightbox = useCallback(() => setLightboxIndex(null), []);
-
-  const showPrevious = useCallback(() => {
-    setLightboxIndex((current) =>
-      current === null ? null : (current - 1 + total) % total
-    );
-  }, [total]);
-
-  const showNext = useCallback(() => {
-    setLightboxIndex((current) =>
-      current === null ? null : (current + 1) % total
-    );
-  }, [total]);
+  const showPrev = useCallback(
+    () =>
+      setLightboxIndex((i) =>
+        i === null ? null : (i - 1 + images.length) % images.length
+      ),
+    [images.length]
+  );
+  const showNext = useCallback(
+    () =>
+      setLightboxIndex((i) =>
+        i === null ? null : (i + 1) % images.length
+      ),
+    [images.length]
+  );
 
   useEffect(() => {
     if (lightboxIndex === null) return;
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") closeLightbox();
-      if (event.key === "ArrowLeft") showPrevious();
-      if (event.key === "ArrowRight") showNext();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowLeft") showPrev();
+      if (e.key === "ArrowRight") showNext();
     };
-
-    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
-
     return () => {
-      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
     };
-  }, [lightboxIndex, closeLightbox, showPrevious, showNext]);
+  }, [lightboxIndex, closeLightbox, showPrev, showNext]);
+
+  // Split images into two rows
+  const row1 = images.slice(0, Math.ceil(images.length / 2));
+  const row2 = images.slice(Math.ceil(images.length / 2));
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5 lg:gap-5">
-        {visible.map((imageIndex, slot) => {
-          const src = images[imageIndex];
-          const label =
-            ACTIVITY_LABELS[imageIndex % ACTIVITY_LABELS.length];
+      <div className="flex flex-col gap-4 sm:gap-5">
+        {/* Row 1 — scrolls left */}
+        <div className="marquee-track relative overflow-hidden">
+          {/* Edge fades */}
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[#04241c] to-transparent sm:w-24" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[#04241c] to-transparent sm:w-24" />
 
-          return (
-            <div
-              key={slot}
-              className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/10 bg-emerald-900/40 p-1 shadow-lg shadow-emerald-950/40"
-            >
-              <AnimatePresence mode="wait">
-                <motion.button
-                  key={imageIndex}
-                  type="button"
-                  initial={{ opacity: 0, scale: 1.04 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.96 }}
-                  transition={{
-                    duration: reduce ? 0 : 0.45,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                  onClick={() => setLightboxIndex(imageIndex)}
-                  aria-label={`Expand photo: ${label}`}
-                  className="group relative h-full w-full overflow-hidden rounded-[0.9rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/70"
-                >
-                  <div
-                    className={
-                      reduce
-                        ? "absolute inset-0"
-                        : "ken-burns absolute inset-0"
-                    }
-                  >
-                    <Image
-                      src={src}
-                      alt={`Activity at The Himalayan Shire — ${label}`}
-                      fill
-                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
-                      className="object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                  </div>
+          <div className="marquee-left flex w-max gap-4 sm:gap-5">
+            {[...row1, ...row1].map((src, i) => {
+              const realIndex = i % row1.length;
+              const globalIndex = realIndex;
+              return (
+                <MarqueeCard
+                  key={`r1-${i}`}
+                  src={src}
+                  index={globalIndex}
+                  onClick={() => setLightboxIndex(globalIndex)}
+                />
+              );
+            })}
+          </div>
+        </div>
 
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-emerald-950/40 via-transparent to-transparent" />
+        {/* Row 2 — scrolls right */}
+        <div className="marquee-track relative overflow-hidden">
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[#04241c] to-transparent sm:w-24" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[#04241c] to-transparent sm:w-24" />
 
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                    <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white shadow-lg backdrop-blur-md">
-                      <Expand size={15} strokeWidth={2.2} />
-                    </span>
-                  </div>
-                </motion.button>
-              </AnimatePresence>
-            </div>
-          );
-        })}
+          <div className="marquee-right flex w-max gap-4 sm:gap-5">
+            {[...row2, ...row2].map((src, i) => {
+              const realIndex = i % row2.length;
+              const globalIndex = Math.ceil(images.length / 2) + realIndex;
+              return (
+                <MarqueeCard
+                  key={`r2-${i}`}
+                  src={src}
+                  index={globalIndex}
+                  onClick={() => setLightboxIndex(globalIndex)}
+                />
+              );
+            })}
+          </div>
+        </div>
       </div>
 
+      {/* Lightbox */}
       <AnimatePresence>
         {lightboxIndex !== null && (
           <motion.div
@@ -575,33 +530,37 @@ function ActivityGallery({ images }: { images: string[] }) {
           >
             <button
               type="button"
-              aria-label="Close gallery"
+              aria-label="Close"
               onClick={closeLightbox}
-              className="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-emerald-950/60 text-white/80 backdrop-blur-md sm:right-6 sm:top-6"
+              className="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-emerald-950/60 text-white/80 backdrop-blur-md transition-colors hover:border-amber-300/50 hover:text-amber-200 sm:right-6 sm:top-6"
             >
               <X size={18} strokeWidth={2.2} />
             </button>
 
+            <div className="absolute left-4 top-4 z-10 flex items-center gap-2 rounded-full border border-white/10 bg-emerald-950/60 px-3.5 py-1.5 text-xs font-bold text-amber-300 backdrop-blur-md sm:left-6 sm:top-6">
+              {lightboxIndex + 1} / {images.length}
+            </div>
+
             <button
               type="button"
-              aria-label="Previous photo"
-              onClick={(event) => {
-                event.stopPropagation();
-                showPrevious();
+              aria-label="Previous"
+              onClick={(e) => {
+                e.stopPropagation();
+                showPrev();
               }}
-              className="absolute left-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-emerald-950/60 text-white/80 backdrop-blur-md sm:left-6"
+              className="absolute left-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-emerald-950/60 text-white/80 backdrop-blur-md transition-colors hover:border-amber-300/50 hover:text-amber-200 sm:left-6"
             >
               <ChevronLeft size={20} strokeWidth={2.2} />
             </button>
 
             <button
               type="button"
-              aria-label="Next photo"
-              onClick={(event) => {
-                event.stopPropagation();
+              aria-label="Next"
+              onClick={(e) => {
+                e.stopPropagation();
                 showNext();
               }}
-              className="absolute right-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-emerald-950/60 text-white/80 backdrop-blur-md sm:right-6"
+              className="absolute right-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-emerald-950/60 text-white/80 backdrop-blur-md transition-colors hover:border-amber-300/50 hover:text-amber-200 sm:right-6"
             >
               <ChevronRight size={20} strokeWidth={2.2} />
             </button>
@@ -612,15 +571,13 @@ function ActivityGallery({ images }: { images: string[] }) {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.96 }}
               transition={{ duration: 0.3 }}
-              onClick={(event) => event.stopPropagation()}
+              onClick={(e) => e.stopPropagation()}
               className="relative mx-4 h-[70vh] w-full max-w-4xl sm:h-[78vh]"
             >
               <Image
                 src={images[lightboxIndex]}
-                alt={`Activity at The Himalayan Shire — ${
-                  ACTIVITY_LABELS[
-                    lightboxIndex % ACTIVITY_LABELS.length
-                  ]
+                alt={`Activity — ${
+                  ACTIVITY_LABELS[lightboxIndex % ACTIVITY_LABELS.length]
                 }`}
                 fill
                 priority
@@ -635,6 +592,55 @@ function ActivityGallery({ images }: { images: string[] }) {
   );
 }
 
+/* ================================================================== */
+/*  MarqueeCard                                                         */
+/* ================================================================== */
+function MarqueeCard({
+  src,
+  index,
+  onClick,
+}: {
+  src: string;
+  index: number;
+  onClick: () => void;
+}) {
+  const label = ACTIVITY_LABELS[index % ACTIVITY_LABELS.length];
+
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={`Expand: ${label}`}
+      className="group relative h-48 w-72 flex-shrink-0 overflow-hidden rounded-2xl border border-white/10 bg-emerald-900/40 shadow-lg shadow-emerald-950/40 transition-all duration-500 hover:scale-[1.03] hover:border-amber-300/40 hover:shadow-xl hover:shadow-amber-900/20 sm:h-56 sm:w-80 lg:h-64 lg:w-96 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/70"
+    >
+      <Image
+        src={src}
+        alt={`Activity at The Himalayan Shire — ${label}`}
+        fill
+        sizes="(max-width: 640px) 72vw, (max-width: 1024px) 50vw, 30vw"
+        className="object-cover transition-transform duration-700 group-hover:scale-110"
+      />
+
+      {/* Scrim */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+
+      {/* Label */}
+      <div className="absolute inset-x-3 bottom-3 flex items-end justify-between">
+        <span className="rounded-full bg-black/40 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white/90 backdrop-blur-sm sm:text-xs">
+          {label}
+        </span>
+
+        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
+          <Expand size={13} strokeWidth={2.2} />
+        </span>
+      </div>
+    </button>
+  );
+}
+
+/* ================================================================== */
+/*  SunMark                                                             */
+/* ================================================================== */
 function SunMark() {
   const gid = useId().replace(/:/g, "");
 
@@ -654,9 +660,9 @@ function SunMark() {
         fill="none"
         aria-hidden
       >
-        {SUN_RAYS.map((ray, index) => (
+        {SUN_RAYS.map((ray, i) => (
           <line
-            key={index}
+            key={i}
             x1={ray.x1}
             y1={ray.y1}
             x2={ray.x2}
@@ -681,7 +687,6 @@ function SunMark() {
             <stop offset="100%" stopColor="#E8A317" />
           </radialGradient>
         </defs>
-
         <circle cx="100" cy="100" r="50" fill={`url(#${gid})`} />
         <circle cx="86" cy="84" r="16" fill="rgba(255,255,255,0.45)" />
       </svg>
