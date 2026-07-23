@@ -69,7 +69,7 @@ export function BrandIntro() {
               variants={fadeUp}
               className="mt-4 grid grid-cols-3 gap-px bg-accent-leaf/15 border-2 border-accent-leaf/30 rounded-[var(--radius-card)] overflow-hidden shadow-[var(--shadow-card)]"
             >
-              <Stat label="Rooms" value="6" />
+              <Stat label="Rooms" value="7" />
               <Stat label="Years hosting" value="10+" />
               <Stat label="Family-run" value="✓" />
             </motion.div>

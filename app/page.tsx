@@ -7,7 +7,6 @@ import { BrandIntro } from "./components/home/BrandIntro";
 import { FeaturedCollection } from "./components/home/FeaturedCollection";
 import { SpecialOffers } from "./components/home/SpecialOffers";
 import { WhyChooseUs } from "./components/home/WhyChooseUs";
-import { WellnessEssentials } from "./components/home/WellnessEssentials";
 import { TraditionalRemedies } from "./components/home/TraditionalRemedies";
 import { QualitySection } from "./components/home/QualitySection";
 import { TrustSection } from "./components/home/TrustSection";
@@ -16,10 +15,12 @@ import { FinalCTA } from "./components/home/FinalCTA";
 
 /**
  * Home page composition.
- * TopBar (emerald contact strip) → SiteNav → Hero (full-bleed) → sections.
- * Each section is a self-contained client component that reads from
- * `lib/content.ts`. When the MySQL backend lands, swap the data
- * source without changing the section components.
+ *
+ * Flow: Attention → Story → Product → Incentive → Value → Quality →
+ *       Emotion → Proof → Content → Action
+ *
+ * Each section reads from `lib/content.ts`. When the MySQL backend
+ * lands, swap the data source without changing the section components.
  */
 export default function Home() {
   return (
@@ -32,9 +33,8 @@ export default function Home() {
         <FeaturedCollection />
         <SpecialOffers />
         <WhyChooseUs />
-        <WellnessEssentials />
-        <TraditionalRemedies />
         <QualitySection />
+        <TraditionalRemedies />
         <TrustSection />
         <ProductShowcase />
         <FinalCTA />

@@ -1,21 +1,28 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Script from "next/script";
 import { Container } from "../ui/Container";
 import { SectionHeading } from "../ui/SectionHeading";
 import { trustSection } from "@/lib/content";
 import { fadeUp, stagger } from "../ui/Motion";
 
 /**
- * TrustSection — centered, elegant trust indicators.
- * Top: 4 large stats. Bottom: two short guest quotes in card form.
+ * TrustSection — stats, guest quotes, and Google Reviews widget.
+ * Elevated to the primary trust-building section on the home page.
  */
 export function TrustSection() {
   return (
     <section
       id="trust"
-      className="relative py-20 sm:py-24 lg:py-32 bg-beige-200/40"
+      className="relative py-20 sm:py-24 lg:py-32"
     >
+      {/* Subtle background glow */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -left-32 top-1/3 h-96 w-96 rounded-full bg-accent-leaf/8 blur-[130px]"
+      />
+
       <Container>
         <div className="text-center mx-auto max-w-3xl mb-14 lg:mb-20">
           <SectionHeading
@@ -26,7 +33,7 @@ export function TrustSection() {
           />
         </div>
 
-        {/* Stat row — each cell is a card with a strong shadow */}
+        {/* Stat row */}
         <motion.dl
           variants={stagger}
           initial="hidden"
@@ -56,7 +63,7 @@ export function TrustSection() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.25 }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 mb-14 lg:mb-20"
         >
           {trustSection.reviews.map((review) => (
             <motion.figure
@@ -79,7 +86,22 @@ export function TrustSection() {
             </motion.figure>
           ))}
         </motion.div>
+
+        {/* Google Reviews Widget */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.7 }}
+          className="mx-auto max-w-4xl"
+        >
+          <div className="rounded-2xl border border-ink-900/8 bg-sage-50 p-4 shadow-[var(--shadow-card)] sm:p-6">
+            <div className="elfsight-app-b9e7c232-8950-4e65-9497-1821a28950e6" data-elfsight-app-lazy />
+          </div>
+        </motion.div>
       </Container>
+
+      <Script src="https://elfsightcdn.com/platform.js" strategy="lazyOnload" />
     </section>
   );
 }

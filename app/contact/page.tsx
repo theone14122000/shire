@@ -186,7 +186,7 @@ export default function ContactPage() {
               <ContactCard
                 icon="phone"
                 label="Phone Number"
-                value="+91 81686 98066, +91 95184 18833"
+                value="+91 81698 98066, +91 95184 18833"
                 delay={0.2}
                 isPhone
               />

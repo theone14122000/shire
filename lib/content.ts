@@ -38,12 +38,12 @@ export const hero = {
   eyebrow: "A boutique mountain stay in the Kinnaur Himalayas",
   headline: "The Himalayan Shire — a quiet place to rest, breathe, and stay.",
   sub:
-    "A family-run retreat in Pagey, near Kalpa. Six warm rooms, an in-house kitchen, and the Kailash range at the end of the orchard road.",
+    "A family-run retreat in Pagey, near Kalpa. Seven warm rooms, an in-house kitchen, and the Kailash range at the end of the orchard road.",
   primaryCta: { label: "Book Your Stay", href: "#rooms" },
   secondaryCta: { label: "Take the Virtual Walkthrough", href: "#walkthrough" },
   meta: [
     { label: "Location", value: "Pagey, near Kalpa" },
-    { label: "Capacity", value: "6 rooms · full shire" },
+    { label: "Capacity", value: "7 rooms · full shire" },
     { label: "Seasons", value: "Open year-round" },
     { label: "Rating", value: "5 / 5" },
   ],
@@ -94,7 +94,7 @@ export const featuredCollection: {
   theme: { bg: string; text: string };
 } = {
   eyebrow: "Stay With Us",
-  heading: "Six rooms, each with its own view of the valley.",
+  heading: "Seven rooms, each with its own view of the valley.",
   intro:
     "From premium deluxe rooms with mountain-facing windows to warm, wood-floored standard rooms — every space is made for slow mornings and quiet evenings.",
   rooms: [
@@ -292,49 +292,6 @@ export const whyChooseUs: {
     },
   ],
   theme: { bg: "bg-emerald-50/70", text: "text-black" },
-};
-
-/* -------------------------------------------------------------------------- */
-/*  WELLNESS ESSENTIALS — daily living amenities                               */
-/* -------------------------------------------------------------------------- */
-export const wellnessEssentials: {
-  eyebrow: string;
-  heading: string;
-  intro: string;
-  items: { title: string; caption: string }[];
-  theme: { bg: string; text: string };
-} = {
-  eyebrow: "Daily Essentials",
-  heading: "Everything you might need, already in the room.",
-  intro:
-    "A short list of the small things that make a stay feel effortless — from electric heaters in winter to fast Wi-Fi for when you need to stay connected.",
-  items: [
-    {
-      title: "Electric Heaters & Hot Water",
-      caption: "Winter-ready rooms with reliable heating and 24-hour hot water.",
-    },
-    {
-      title: "High-Speed Wi-Fi",
-      caption: "Stay connected when you want to, disconnect when you don't.",
-    },
-    {
-      title: "In-Room Tea & Coffee",
-      caption: "Local chai, fresh-ground coffee, and a kettle in every room.",
-    },
-    {
-      title: "Sound System & TV",
-      caption: "Bluetooth speakers, cable TV, and a curated list of mountain films.",
-    },
-    {
-      title: "Free Private Parking",
-      caption: "Secure on-site parking for cars and small vehicles.",
-    },
-    {
-      title: "Lounge & Library",
-      caption: "A quiet television lounge with books, maps, and conversation.",
-    },
-  ],
-  theme: { bg: "bg-green-50/70", text: "text-black" },
 };
 
 /* -------------------------------------------------------------------------- */
