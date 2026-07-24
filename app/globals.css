@@ -1,32 +1,63 @@
 @import "tailwindcss";
 
-/* ---------- Tailwind v4 theme tokens (Deep Forest & Sage Green palette) ---------- */
 @theme {
-  /* Backgrounds: Crisp sages and pure whites for contrast */
-  --color-sage-50: #ffffff;   /* Pure white — for accent sections to pop */
-  --color-sage-100: #f4faf6; /* Ghost green — lightest card surfaces */
-  --color-sage-200: #e6f2eb; /* Light sage — subtle borders/hovers */
-  --color-sage-300: #dfeee5; /* MAIN PAGE BG — Noticeable green-accented sage */
-  --color-sage-400: #b9d9c5; /* Medium sage — prominent borders */
-  --color-sage-500: #8ec4a4; /* Deep muted sage — icons, subtle accents */
+  --color-emerald-50: #ecfdf5;
+  --color-emerald-100: #d1fae5;
+  --color-emerald-200: #a7f3d0;
+  --color-emerald-300: #6ee7b7;
+  --color-emerald-400: #34d399;
+  --color-emerald-500: #10b981;
+  --color-emerald-600: #059669;
+  --color-emerald-700: #047857;
+  --color-emerald-800: #065f46;
+  --color-emerald-900: #064e3b;
+  --color-emerald-950: #022c22;
 
-  /* Ink palette: Rich, deep forest greens for text */
-  --color-ink-50: #e3f0e9;    /* Very light green tint */
-  --color-ink-100: #b2d4c3;   /* Light green tint */
-  --color-ink-300: #5c9e7e;   /* Brighter medium green */
-  --color-ink-500: #448061;   /* PRIMARY DEEP GREEN — core brand text/accents */
-  --color-ink-700: #1e5a3e;   /* Rich dark green for body text */
-  --color-ink-900: #113526;   /* Deep unmistakable forest green for headings */
+  --color-ink-900: #064e3b;
+  --color-ink-800: #065f46;
+  --color-ink-700: #047857;
+  --color-ink-500: #059669;
+  --color-ink-300: #10b981;
+  --color-ink-100: #34d399;
+  --color-ink-50: #6ee7b7;
 
-  /* Accent colors */
-  --color-accent-gold: #84C77F;   /* Vibrant leaf green (replaces gold) */
-  --color-accent-emerald: #448061; /* Deep emerald/forest green */
-  --color-accent-leaf: #84C77F;    /* Vibrant spring leaf green */
-  --color-accent-mint: #c8e6d2;    /* Soft mint green for section breaks/backgrounds */
+  --color-accent-gold: #d4a017;
+  --color-accent-emerald: #065f46;
+  --color-accent-leaf: #059669;
+  --color-accent-mint: #d1fae5;
 
-  /* Fonts */
-  --font-sans: var(--font-raleway), ui-sans-serif, system-ui, -apple-system,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --color-sage-50: #faf8f5;
+  --color-sage-100: #f5f0eb;
+  --color-sage-200: #ede4d8;
+  --color-sage-300: #e2ddd5;
+  --color-sage-400: #c9c2b5;
+  --color-sage-500: #a99e8e;
+
+  --color-gold-50: #fffbeb;
+  --color-gold-100: #fef3c7;
+  --color-gold-200: #fde68a;
+  --color-gold-300: #fcd34d;
+  --color-gold-400: #fbbf24;
+  --color-gold-500: #d4a017;
+  --color-gold-600: #b8860b;
+  --color-gold-700: #8b6914;
+  --color-gold-800: #6b4f0a;
+
+  --color-cream-50: #faf8f5;
+  --color-cream-100: #f5f0eb;
+  --color-cream-200: #ede4d8;
+  --color-cream-300: #d4c9b8;
+  --color-cream-400: #a89888;
+  --color-cream-500: #8a7b6b;
+
+  --color-stone-50: #f8f7f5;
+  --color-stone-100: #f0ede8;
+  --color-stone-200: #e2ddd5;
+  --color-stone-300: #c9c2b5;
+  --color-stone-400: #a99e8e;
+  --color-stone-500: #8a7f6e;
+
+  --font-sans: var(--font-raleway), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
   --font-display: var(--font-raleway), ui-serif, Georgia, "Times New Roman", serif;
 
   --tracking-display: -0.025em;
@@ -36,20 +67,13 @@
   --radius-soft: 1.25rem;
   --radius-luxe: 1.75rem;
 
-  --shadow-soft: 0 1px 2px rgba(13, 34, 24, 0.05),
-    0 8px 24px rgba(13, 34, 24, 0.06);
-  --shadow-lift: 0 2px 4px rgba(13, 34, 24, 0.06),
-    0 24px 48px -12px rgba(13, 34, 24, 0.18);
-  --shadow-card: 0 1px 2px rgba(13, 34, 24, 0.07),
-    0 12px 28px -8px rgba(13, 34, 24, 0.14),
-    0 4px 10px rgba(13, 34, 24, 0.05);
-  --shadow-card-hover: 0 4px 8px rgba(13, 34, 24, 0.10),
-    0 32px 64px -16px rgba(13, 34, 24, 0.28),
-    0 8px 16px rgba(13, 34, 24, 0.08);
-  --shadow-nav: 0 4px 24px rgba(13, 34, 24, 0.08);
+  --shadow-soft: 0 1px 2px rgba(2, 44, 34, 0.05), 0 8px 24px rgba(2, 44, 34, 0.06);
+  --shadow-lift: 0 2px 4px rgba(2, 44, 34, 0.06), 0 24px 48px -12px rgba(2, 44, 34, 0.18);
+  --shadow-card: 0 1px 2px rgba(2, 44, 34, 0.07), 0 12px 28px -8px rgba(2, 44, 34, 0.14);
+  --shadow-card-hover: 0 4px 8px rgba(2, 44, 34, 0.10), 0 32px 64px -16px rgba(2, 44, 34, 0.28);
+  --shadow-nav: 0 4px 24px rgba(2, 44, 34, 0.08);
 }
 
-/* ---------- Base reset & defaults ---------- */
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -59,154 +83,103 @@
   }
 
   body {
-    background-color: var(--color-sage-300); /* Green-accented sage background */
-    color: var(--color-ink-700); /* Rich dark green text */
+    background-color: var(--color-cream-50);
+    color: var(--color-emerald-950);
     font-family: var(--font-sans);
-    font-weight: 500;
-    font-feature-settings: "ss01", "ss02", "cv11";
+    font-weight: 400;
   }
 
   ::selection {
-    background-color: var(--color-accent-leaf); 
-    color: var(--color-ink-900); 
+    background-color: var(--color-emerald-200);
+    color: var(--color-emerald-950);
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
     font-weight: 700;
     letter-spacing: var(--tracking-display);
-    color: var(--color-ink-900); /* Deepest forest green for headings */
-  }
-
-  strong, b {
-    font-weight: 700;
+    color: var(--color-emerald-950);
   }
 }
 
-/* ---------- Reusable component utilities ---------- */
 @layer components {
   .container-luxe {
     @apply mx-auto w-full max-w-[1400px] px-5 sm:px-8 lg:px-14;
   }
 
-  /* --- SECTION ALTERNATING UTILITIES --- */
-  .section-default {
-    @apply bg-sage-300; /* Green-accented Sage (matches body, but explicit) */
-  }
-
-  .section-accent {
-    @apply bg-sage-50; /* Pure White - Crisp contrast against the sage */
-  }
-
-  .section-break {
-    @apply h-2 w-full bg-gradient-to-r from-accent-mint via-accent-leaf to-accent-mint;
-  }
-
   .eyebrow {
-    @apply text-[11px] sm:text-xs uppercase tracking-[0.32em] text-ink-500 font-bold; 
+    @apply text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-emerald-700 font-bold;
   }
 
   .h-display {
-    @apply font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[6.5rem] leading-[1.02] tracking-[-0.025em] text-ink-900 font-bold;
+    @apply font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5rem] leading-[1.02] tracking-[-0.03em] text-emerald-950 font-black;
   }
 
   .h-section {
-    @apply font-display text-4xl sm:text-5xl md:text-6xl lg:text-[3.6rem] leading-[1.04] tracking-[-0.025em] text-ink-900 font-bold;
+    @apply font-display text-3xl sm:text-4xl md:text-5xl lg:text-[3.2rem] leading-[1.04] tracking-[-0.025em] text-emerald-950 font-black;
   }
 
   .h-card {
-    @apply font-display text-2xl sm:text-[1.6rem] leading-tight tracking-[-0.015em] text-ink-900 font-bold;
+    @apply font-display text-xl sm:text-[1.5rem] leading-tight tracking-[-0.015em] text-emerald-950 font-black;
   }
 
   .body-lg {
-    @apply text-base sm:text-lg leading-relaxed text-ink-700 font-medium; 
+    @apply text-base sm:text-lg leading-[1.8] text-emerald-900/70 font-normal;
   }
 
   .body-base {
-    @apply text-sm sm:text-base leading-relaxed text-ink-700 font-medium;
+    @apply text-sm sm:text-base leading-[1.75] text-emerald-900/70 font-normal;
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-ink-900 px-7 py-3.5 text-sm font-bold tracking-wide text-sage-50 transition-all duration-300 hover:bg-accent-leaf hover:text-ink-900 hover:-translate-y-0.5 hover:shadow-[var(--shadow-lift)] active:translate-y-0;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-emerald-800 px-7 py-3.5 text-sm font-bold tracking-wide text-cream-50 transition-all duration-300 hover:bg-emerald-700 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border-2 border-ink-500 bg-transparent px-7 py-3.5 text-sm font-bold tracking-wide text-ink-500 transition-all duration-300 hover:border-accent-leaf hover:bg-accent-leaf hover:text-ink-900; 
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-emerald-800/30 bg-transparent px-7 py-3.5 text-sm font-bold tracking-wide text-emerald-800 transition-all duration-300 hover:border-gold-500 hover:bg-gold-50 hover:text-gold-700;
   }
 
-  .btn-ghost {
-    @apply inline-flex items-center gap-2 text-sm font-bold tracking-wide text-ink-500 underline-offset-4 transition-all duration-300 hover:underline hover:text-accent-leaf;
-  }
-
-  .btn-light {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-sage-100 px-6 py-3 text-sm font-bold tracking-wide text-ink-900 transition-all duration-300 hover:bg-sage-50 hover:-translate-y-0.5 hover:shadow-[var(--shadow-lift)];
-  }
-
-  .placeholder-frame {
-    @apply relative w-full overflow-hidden rounded-[var(--radius-soft)] border-2 border-dashed border-accent-leaf/40 bg-ink-50/40; 
+  .btn-gold {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-gold-500 px-7 py-3.5 text-sm font-bold tracking-wide text-emerald-950 transition-all duration-300 hover:bg-gold-400 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0;
   }
 
   .card-luxe {
-    @apply relative overflow-hidden rounded-[var(--radius-card)] bg-sage-50 border border-ink-300/20 shadow-[var(--shadow-card)] transition-all duration-500 hover:-translate-y-1.5 hover:border-accent-leaf/50 hover:shadow-[var(--shadow-card-hover)]; 
+    @apply relative overflow-hidden rounded-[var(--radius-card)] bg-white border border-emerald-200/40 shadow-[var(--shadow-card)] transition-all duration-500 hover:-translate-y-1 hover:border-gold-300/50 hover:shadow-[var(--shadow-card-hover)];
   }
 
   .divider-thin {
-    @apply h-px w-full bg-gradient-to-r from-transparent via-accent-leaf/40 to-transparent; 
+    @apply h-px w-full bg-gradient-to-r from-transparent via-emerald-200 to-transparent;
+  }
+
+  .divider-gold {
+    @apply h-px w-full bg-gradient-to-r from-transparent via-gold-300/50 to-transparent;
   }
 }
 
-/* ---------- Subtle ambient background ---------- */
 .ambient {
-  background-image: radial-gradient(
-      1100px 600px at 80% -10%,
-      rgba(132, 199, 127, 0.15),
-      transparent 60%
-    ),
-    radial-gradient(
-      900px 500px at 0% 30%,
-      rgba(68, 128, 97, 0.10),
-      transparent 60%
-    );
+  background-image:
+    radial-gradient(800px 400px at 80% -5%, rgba(16, 185, 129, 0.08), transparent 60%),
+    radial-gradient(600px 400px at 0% 20%, rgba(251, 191, 36, 0.06), transparent 60%);
 }
 
-/* ---------- Hero cinematic gradient overlay ---------- */
 .hero-overlay {
   background-image: linear-gradient(
-      to bottom,
-      rgba(13, 34, 24, 0.35) 0%,     
-      rgba(13, 34, 24, 0.10) 35%,
-      rgba(13, 34, 24, 0.30) 70%,
-      rgba(13, 34, 24, 0.65) 100%
-    );
+    to bottom,
+    rgba(2, 44, 34, 0.35) 0%,
+    rgba(2, 44, 34, 0.10) 35%,
+    rgba(2, 44, 34, 0.30) 70%,
+    rgba(2, 44, 34, 0.65) 100%
+  );
 }
 
-/* ---------- Image hover zoom container ---------- */
-.zoom-on-hover {
-  @apply overflow-hidden;
-}
-.zoom-on-hover > img,
-.zoom-on-hover > .zoom-target {
-  @apply transition-transform duration-700 ease-out;
-}
-.zoom-on-hover:hover > img,
-.zoom-on-hover:hover > .zoom-target {
-  @apply scale-[1.06];
-}
-
-/* ---------- Pulsing "live" dot ---------- */
-@keyframes live-pulse {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(132, 199, 127, 0.7); 
-  }
-  50% {
-    box-shadow: 0 0 0 6px rgba(132, 199, 127, 0);
-  }
+@keyframes pulse-gold {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212, 160, 23, 0.5); }
+  50% { box-shadow: 0 0 0 8px rgba(212, 160, 23, 0); }
 }
 .live-dot {
-  animation: live-pulse 1.8s ease-in-out infinite;
+  animation: pulse-gold 1.8s ease-in-out infinite;
 }
 
-/* ---------- Marquee for ticker ---------- */
 @keyframes marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
@@ -215,11 +188,5 @@
   animation: marquee 30s linear infinite;
 }
 
-/* ---------- Hide scrollbar utility ---------- */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

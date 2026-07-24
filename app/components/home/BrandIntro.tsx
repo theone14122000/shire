@@ -1,34 +1,25 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
+import { useRef } from "react";
 import { Container } from "../ui/Container";
-import { SectionHeading } from "../ui/SectionHeading";
-import { Button } from "../ui/Button";
 import { brandIntro } from "@/lib/content";
-import { fadeUp, fadeUpSlow, stagger } from "../ui/Motion";
+import { fadeUp, stagger } from "../ui/Motion";
 
-// Image paths pointing to your public folder
-const BRAND_IMAGES = {
-  lifestyle: "/images/brand-lifestyle.jpg",
-  detail: "/images/brand-detail.jpg",
-};
-
-/**
- * BrandIntro — two-column editorial with a small stack of layered
- * images on the right. Cards here have their own shadows so the 
- * section feels visually substantial.
- */
 export function BrandIntro() {
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const imgY = useTransform(scrollYProgress, [0, 1], ["5%", "-5%"]);
+
   return (
     <section
       id="story"
-      // Added section-accent to make this section pure white, contrasting the sage body
-      className="section-accent relative py-20 sm:py-24 lg:py-32"
+      ref={ref}
+      className="relative overflow-hidden bg-white py-24 sm:py-32 lg:py-40"
     >
       <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-20 items-start">
-          {/* Copy column */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
           <motion.div
             variants={stagger}
             initial="hidden"
@@ -37,108 +28,73 @@ export function BrandIntro() {
             className="lg:col-span-6 flex flex-col gap-6"
           >
             <motion.div variants={fadeUp}>
-              <SectionHeading
-                eyebrow={brandIntro.eyebrow}
-                heading={brandIntro.heading}
-              />
+              <span className="eyebrow inline-flex items-center gap-3">
+                <span className="h-px w-8 bg-emerald-300" />
+                {brandIntro.eyebrow}
+              </span>
             </motion.div>
 
-            <motion.div
-              variants={fadeUp}
-              className="space-y-4 text-ink-700 body-base mt-2"
-            >
+            <motion.h2 variants={fadeUp} className="h-section">
+              {brandIntro.heading}
+            </motion.h2>
+
+            <motion.div variants={fadeUp} className="space-y-4 text-base leading-[1.8] text-emerald-900/65">
               {brandIntro.body.split("\n\n").map((p, i) => (
                 <p key={i}>{p}</p>
               ))}
             </motion.div>
 
-            <motion.div
-              variants={fadeUpSlow}
-              className="mt-6 pt-6 border-t-2 border-ink-500/20 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6"
-            >
-              <span className="font-display italic text-ink-900 text-lg font-bold">
+            <motion.div variants={fadeUp} className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 pt-6 border-t border-emerald-200">
+              <span className="font-display italic text-emerald-800 text-lg font-bold">
                 {brandIntro.signature}
               </span>
-              <Button as="link" href="#rooms" variant="secondary">
+              <a
+                href="/#rooms"
+                className="inline-flex items-center gap-2 rounded-full border border-emerald-800/30 px-6 py-3 text-sm font-bold text-emerald-800 transition-all duration-300 hover:border-gold-500 hover:bg-gold-50 hover:text-gold-700"
+              >
                 See the rooms
-              </Button>
+              </a>
             </motion.div>
 
-            {/* Mini stat strip — adds visual density and rhythm */}
-            <motion.div
-              variants={fadeUp}
-              className="mt-4 grid grid-cols-3 gap-px bg-accent-leaf/15 border-2 border-accent-leaf/30 rounded-[var(--radius-card)] overflow-hidden shadow-[var(--shadow-card)]"
-            >
-              <Stat label="Rooms" value="7" />
-              <Stat label="Years hosting" value="10+" />
-              <Stat label="Family-run" value="✓" />
+            <motion.div variants={fadeUp} className="grid grid-cols-3 gap-4 pt-4">
+              {[
+                { label: "Rooms", value: "7" },
+                { label: "Years hosting", value: "10+" },
+                { label: "Family-run", value: "✓" },
+              ].map((s) => (
+                <div key={s.label} className="rounded-xl bg-emerald-50/60 border border-emerald-200/40 px-4 py-4 text-center">
+                  <span className="block font-display text-2xl sm:text-3xl font-bold text-emerald-900 leading-none">{s.value}</span>
+                  <span className="block text-[10px] uppercase tracking-[0.2em] text-emerald-600 font-bold mt-1">{s.label}</span>
+                </div>
+              ))}
             </motion.div>
           </motion.div>
 
-          {/* Image column — layered images with shadows */}
           <motion.div
-            initial={{ opacity: 0, y: 32 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.25 }}
-            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] as const }}
-            className="lg:col-span-6 grid grid-cols-5 gap-4 lg:gap-6"
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-6 relative"
           >
-            <div className="col-span-3">
-              <div className="card-luxe">
-                <div className="relative aspect-[3/4] w-full rounded-[var(--radius-card)] border-2 border-transparent shadow-none overflow-hidden">
-                  <Image
-                    src={BRAND_IMAGES.lifestyle}
-                    alt="Lifestyle editorial frame of the property"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 1024px) 60vw, 40vw"
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="col-span-2 flex flex-col gap-4 lg:gap-6 pt-12 lg:pt-20">
-              <div className="card-luxe">
-                <div className="relative aspect-[4/5] w-full rounded-[var(--radius-card)] border-2 border-transparent shadow-none overflow-hidden">
-                  <Image
-                    src={BRAND_IMAGES.detail}
-                    alt="Detail shot of the property interior"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 1024px) 40vw, 25vw"
-                  />
-                </div>
-              </div>
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.7, delay: 0.2 }}
-                className="rounded-[var(--radius-card)] border-2 border-ink-900 bg-ink-900 p-5 flex flex-col gap-2 shadow-[var(--shadow-card)]"
-              >
-                <span className="eyebrow text-accent-leaf">A note</span>
-                <p className="text-sm text-beige-50 leading-relaxed font-semibold">
-                  The shire was built slowly, with the people of Pagey.
-                  Every carpenter, every cook, every wool blanket is from
-                  the village.
-                </p>
-              </motion.div>
+            <motion.div style={{ y: imgY }} className="relative aspect-[4/5] rounded-[2rem] overflow-hidden shadow-2xl">
+              <Image
+                src="/images/brand-lifestyle.jpg"
+                alt="The Himalayan Shire property"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/30 via-transparent to-transparent" />
+            </motion.div>
+            <div className="absolute -bottom-6 -left-6 w-48 sm:w-64 rounded-xl border border-emerald-200/50 bg-white/95 backdrop-blur-sm p-5 shadow-lg">
+              <p className="text-xs leading-relaxed text-emerald-900/70">
+                &ldquo;Built slowly, with the people of Pagey — every carpenter, every cook, every wool blanket is from the village.&rdquo;
+              </p>
             </div>
           </motion.div>
         </div>
       </Container>
     </section>
-  );
-}
-
-function Stat({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="bg-beige-50 px-4 py-4 flex flex-col gap-1">
-      <span className="font-display text-2xl sm:text-3xl font-bold text-ink-900 leading-none">
-        {value}
-      </span>
-      <span className="text-[10px] uppercase tracking-[0.2em] text-ink-500 font-bold">
-        {label}
-      </span>
-    </div>
   );
 }

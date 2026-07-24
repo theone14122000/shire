@@ -1,124 +1,87 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import Link from "next/link";
+import { useRef } from "react";
 import { Container } from "../ui/Container";
-import { Button } from "../ui/Button";
 import { finalCta } from "@/lib/content";
 
-/**
- * FinalCTA — strong conversion-focused closer.
- */
 export function FinalCTA() {
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const bgY = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
+  const overlayY = useTransform(scrollYProgress, [0, 1], ["20%", "-20%"]);
+
   return (
     <section
       id="book"
-      className="relative py-24 sm:py-32 lg:py-40 overflow-hidden"
+      ref={ref}
+      className="relative scroll-mt-24 overflow-hidden bg-emerald-950 py-28 sm:py-36 lg:py-48"
     >
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage:
-            "radial-gradient(700px 380px at 50% 0%, rgba(176,138,74,0.14), transparent 60%)",
-        }}
+      <motion.div
         aria-hidden
+        className="pointer-events-none absolute -left-1/4 -top-1/4 h-[40rem] w-[40rem] rounded-full bg-emerald-800/50 blur-[140px]"
+        style={{ y: bgY }}
+      />
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute -bottom-1/4 -right-1/4 h-[35rem] w-[35rem] rounded-full bg-gold-500/10 blur-[140px]"
+        style={{ y: overlayY }}
       />
 
-      <Container className="relative">
+      <Container>
         <motion.div
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.3 }}
-          variants={{
-            hidden: {},
-            show: { transition: { staggerChildren: 0.1 } },
-          }}
-          className="mx-auto max-w-4xl text-center flex flex-col items-center gap-6 sm:gap-8"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.25 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="relative mx-auto max-w-3xl text-center"
         >
-          <motion.span
-            variants={itemV}
-            className="eyebrow inline-flex items-center gap-3"
-          >
-            <span className="h-px w-8 bg-ink-900/40" aria-hidden />
+          <span className="inline-flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.3em] text-cream-200/50">
+            <span aria-hidden className="h-px w-8 bg-cream-200/30" />
             {finalCta.eyebrow}
-            <span className="h-px w-8 bg-ink-900/40" aria-hidden />
-          </motion.span>
+            <span aria-hidden className="h-px w-8 bg-cream-200/30" />
+          </span>
 
-          <motion.h2
-            variants={itemV}
-            className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.02] tracking-[-0.025em] text-ink-900 max-w-[20ch] font-bold"
-          >
+          <h2 className="mt-8 font-display text-4xl font-black leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-6xl">
             {finalCta.heading}
-          </motion.h2>
+          </h2>
 
-          <motion.p
-            variants={itemV}
-            className="body-lg max-w-[60ch] text-ink-700 font-semibold"
-          >
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-cream-200/60 sm:text-lg">
             {finalCta.body}
-          </motion.p>
+          </p>
 
-          <motion.div
-            variants={itemV}
-            className="mt-4 flex flex-col sm:flex-row items-center gap-3 sm:gap-5"
-          >
-            <Button as="link" href={finalCta.primary.href} variant="primary">
+          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
+            <Link
+              href={finalCta.primary.href}
+              className="group inline-flex items-center gap-3 rounded-full bg-gold-500 px-10 py-4 text-sm font-bold text-emerald-950 shadow-xl transition-all duration-300 hover:-translate-y-0.5 hover:bg-gold-400 hover:shadow-2xl"
+            >
               {finalCta.primary.label}
-              <Arrow />
-            </Button>
-            <Button
-              as="link"
-              href={finalCta.secondary.href}
-              variant="secondary"
-            >
-              {finalCta.secondary.label}
-            </Button>
-          </motion.div>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover:translate-x-1">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </Link>
 
-          <motion.div
-            variants={itemV}
-            className="mt-10 pt-8 border-t-2 border-ink-900/15 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-8 text-sm text-ink-700 font-semibold"
-          >
-            <a
-              href="mailto:reservations@thehimalayanshire.com"
-              className="hover:text-ink-900 transition-colors"
+            <Link
+              href={finalCta.secondary.href}
+              className="group inline-flex items-center gap-2.5 rounded-full border border-white/25 px-8 py-4 text-sm font-bold text-cream-100 transition-all duration-300 hover:border-gold-500/60 hover:text-gold-400"
             >
-              reservations@thehimalayanshire.com
-            </a>
-            <span className="hidden sm:inline text-ink-500/40">·</span>
-            <a
-              href="tel:+918169898066"
-              className="hover:text-ink-900 transition-colors"
-            >
-              +91 81698 98066
-            </a>
-          </motion.div>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="5 3 19 12 5 21 5 3" />
+              </svg>
+              {finalCta.secondary.label}
+            </Link>
+          </div>
+
+          <div className="mt-16 flex items-center justify-center gap-6 text-[10px] font-bold uppercase tracking-[0.2em] text-cream-200/30">
+            <span>No booking fee</span>
+            <span aria-hidden className="h-3 w-px bg-cream-200/20" />
+            <span>Free cancellation</span>
+            <span aria-hidden className="h-3 w-px bg-cream-200/20" />
+            <span>Instant confirmation</span>
+          </div>
         </motion.div>
       </Container>
     </section>
-  );
-}
-
-const itemV = {
-  hidden: { opacity: 0, y: 18 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const } },
-};
-
-function Arrow() {
-  return (
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 14 14"
-      fill="none"
-      aria-hidden
-    >
-      <path
-        d="M1 7H13M13 7L7.5 1.5M13 7L7.5 12.5"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
   );
 }

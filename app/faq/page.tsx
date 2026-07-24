@@ -1,26 +1,21 @@
 "use client";
 
-import {
-  motion,
-  AnimatePresence,
-  type Variants,
-} from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useId, useState } from "react";
 import { SiteNav } from "../components/SiteNav";
 import { SiteFooter } from "../components/SiteFooter";
-import { ChevronDown, MessageCircle } from "lucide-react";
 
 const MAPS_URL =
   "https://www.google.com/maps?ll=31.066671,77.309332&z=13&t=m&hl=en&gl=IN&mapclient=embed&cid=4674173627328913394";
+
+const linkClass =
+  "font-bold text-emerald-800 underline decoration-emerald-400/50 underline-offset-2 transition-colors hover:text-gold-600";
 
 type Faq = {
   question: string;
   answer: React.ReactNode;
 };
-
-const linkClass =
-  "font-bold text-amber-300 underline decoration-amber-400/50 underline-offset-2 transition-colors hover:text-amber-200";
 
 const FAQS: Faq[] = [
   {
@@ -30,10 +25,7 @@ const FAQS: Faq[] = [
         We have a total of seven bedrooms — all with attached washrooms. You
         can book any number of rooms, from just one room to all seven rooms.
         All the information about the seven rooms is mentioned in the{" "}
-        <Link href="/#rooms" className={linkClass}>
-          rooms section
-        </Link>{" "}
-        of the website.
+        <Link href="/#rooms" className={linkClass}>rooms section</Link> of the website.
       </>
     ),
   },
@@ -58,8 +50,7 @@ const FAQS: Faq[] = [
         on the link road from Fagu.{" "}
         <a href={MAPS_URL} target="_blank" rel="noopener noreferrer" className={linkClass}>
           See the exact location on Google Maps
-        </a>
-        .
+        </a>.
       </>
     ),
   },
@@ -91,15 +82,9 @@ const FAQS: Faq[] = [
     answer: (
       <>
         Please read{" "}
-        <a
-          href="https://www.thehimalayanshire.com/activities/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className={linkClass}
-        >
+        <a href="https://www.thehimalayanshire.com/activities/" target="_blank" rel="noopener noreferrer" className={linkClass}>
           this blog
-        </a>{" "}
-        about activities in and around The Himalayan Shire.
+        </a> about activities in and around The Himalayan Shire.
       </>
     ),
   },
@@ -141,51 +126,32 @@ const FAQS: Faq[] = [
   },
 ];
 
-const stagger: Variants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.06, delayChildren: 0.1 } },
-};
-
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
-};
-
 export default function FaqPage() {
   return (
-    <main className="relative min-h-screen bg-[#052e23] font-sans text-white selection:bg-amber-300/30 selection:text-amber-100">
-      {/* Ambient depth */}
-      <div aria-hidden className="pointer-events-none absolute inset-0" style={{
-        background:
-          "radial-gradient(70% 50% at 85% 5%, rgba(251,191,36,0.10) 0%, transparent 55%), radial-gradient(55% 45% at 10% 20%, rgba(16,185,129,0.18) 0%, transparent 60%)",
-      }} />
-      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-[0.04] mix-blend-overlay" style={{
-        backgroundImage:
-          "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+    <main className="relative min-h-screen bg-white font-sans text-emerald-950 selection:bg-gold-200/30">
+      <div aria-hidden className="pointer-events-none fixed inset-0" style={{
+        background: "radial-gradient(55% 40% at 15% 0%, rgba(16,185,129,0.06) 0%, transparent 55%), radial-gradient(50% 35% at 80% 10%, rgba(251,191,36,0.05) 0%, transparent 50%)",
       }} />
 
       <SiteNav />
 
-      {/* ══════════════════════════════════════════════════════════════ */}
-      {/*  HERO — editorial heading                                     */}
-      {/* ══════════════════════════════════════════════════════════════ */}
       <section className="relative overflow-hidden py-24 sm:py-32 lg:py-40">
+        <div aria-hidden className="pointer-events-none absolute -left-32 -top-32 h-96 w-96 rounded-full bg-emerald-100/30 blur-[140px]" />
         <div className="mx-auto max-w-4xl px-6 sm:px-8 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            className="text-center"
           >
-            <span className="inline-flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.3em] text-amber-400/60">
-              <span className="h-px w-8 bg-amber-400/30" />
+            <span className="inline-flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.3em] text-gold-600">
+              <span className="h-px w-8 bg-gold-400" />
               FAQs
             </span>
-            <h1 className="mt-6 font-display text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl">
+            <h1 className="mt-6 font-display text-5xl font-black tracking-tight text-emerald-950 sm:text-6xl lg:text-7xl">
               Frequently Asked{" "}
-              <span className="text-amber-400">Questions</span>
+              <span className="text-gold-600">Questions</span>
             </h1>
-            <p className="mx-auto mt-5 max-w-2xl text-base font-medium leading-relaxed text-emerald-100/50 sm:text-lg">
+            <p className="mx-auto mt-5 max-w-2xl text-base font-medium leading-relaxed text-emerald-800/60 sm:text-lg">
               Everything guests usually ask before booking a stay at The
               Himalayan Shire, Fagu.
             </p>
@@ -193,26 +159,15 @@ export default function FaqPage() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════════ */}
-      {/*  FAQ ACCORDION                                               */}
-      {/* ══════════════════════════════════════════════════════════════ */}
-      <section className="border-t border-white/[0.05] pb-24 sm:pb-32 lg:pb-40">
+      <section className="relative pb-24 sm:pb-32 lg:pb-40">
+        <div aria-hidden className="pointer-events-none absolute -right-32 bottom-10 h-96 w-96 rounded-full bg-gold-200/15 blur-[130px]" />
         <div className="mx-auto max-w-4xl px-6 sm:px-8 lg:px-12">
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.05 }}
-            className="flex flex-col gap-3"
-          >
+          <div className="flex flex-col gap-3">
             {FAQS.map((faq, idx) => (
-              <motion.div key={faq.question} variants={fadeUp}>
-                <FaqItem index={idx} faq={faq} />
-              </motion.div>
+              <FaqItem key={faq.question} index={idx} faq={faq} />
             ))}
-          </motion.div>
+          </div>
 
-          {/* Still have questions CTA */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -220,25 +175,23 @@ export default function FaqPage() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="mt-14 text-center"
           >
-            <div className="relative overflow-hidden rounded-[2rem] border border-white/[0.06] bg-white/[0.02] p-8 sm:p-10">
-              <span
-                aria-hidden
-                className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-400/50 to-transparent"
-              />
-              <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-white/[0.06] bg-white/[0.03] text-amber-400/60">
-                <MessageCircle size={20} strokeWidth={1.4} />
+            <div className="relative overflow-hidden rounded-[2rem] border border-emerald-200/50 bg-cream-50 p-8 sm:p-10">
+              <span aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold-400 to-transparent" />
+              <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-emerald-200 bg-white text-emerald-700">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
               </span>
-              <h2 className="mt-5 font-display text-xl font-black text-white sm:text-2xl">
-                Still have a{" "}
-                <span className="text-amber-400">question?</span>
+              <h2 className="mt-5 font-display text-xl font-black text-emerald-950 sm:text-2xl">
+                Still have a <span className="text-gold-600">question?</span>
               </h2>
-              <p className="mx-auto mt-3 max-w-md text-sm text-emerald-100/50">
+              <p className="mx-auto mt-3 max-w-md text-sm text-emerald-800/50">
                 Reach out and we will get back to you with everything you need
                 to plan your stay.
               </p>
               <Link
                 href="/contact"
-                className="group mt-6 inline-flex items-center gap-2 rounded-full bg-amber-400 px-7 py-3.5 text-sm font-bold text-[#052e23] transition-all duration-300 hover:-translate-y-0.5 hover:bg-amber-300"
+                className="group mt-6 inline-flex items-center gap-2 rounded-full bg-gold-500 px-7 py-3.5 text-sm font-bold text-emerald-950 transition-all duration-300 hover:-translate-y-0.5 hover:bg-gold-400"
               >
                 Get in Touch
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="transition-transform group-hover:translate-x-1">
@@ -255,9 +208,6 @@ export default function FaqPage() {
   );
 }
 
-/* ================================================================== */
-/*  FaqItem — accordion component                                       */
-/* ================================================================== */
 function FaqItem({ index, faq }: { index: number; faq: Faq }) {
   const [open, setOpen] = useState(false);
   const panelId = useId();
@@ -266,8 +216,8 @@ function FaqItem({ index, faq }: { index: number; faq: Faq }) {
     <div
       className={`overflow-hidden rounded-2xl border transition-all duration-300 ${
         open
-          ? "border-amber-400/20 bg-white/[0.04]"
-          : "border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04]"
+          ? "border-gold-300/50 bg-gold-50/30"
+          : "border-emerald-200/50 bg-cream-50 hover:bg-cream-100/50"
       }`}
     >
       <button
@@ -281,13 +231,13 @@ function FaqItem({ index, faq }: { index: number; faq: Faq }) {
           <span
             className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-black transition-all duration-300 ${
               open
-                ? "bg-amber-400 text-[#052e23]"
-                : "border border-white/10 bg-white/[0.03] text-amber-400/60"
+                ? "bg-gold-500 text-white"
+                : "border border-emerald-200 bg-white text-emerald-700"
             }`}
           >
             {String(index + 1).padStart(2, "0")}
           </span>
-          <span className="font-display text-base font-bold leading-snug text-white/90 sm:text-lg">
+          <span className="font-display text-base font-bold leading-snug text-emerald-950 sm:text-lg">
             {faq.question}
           </span>
         </span>
@@ -295,10 +245,12 @@ function FaqItem({ index, faq }: { index: number; faq: Faq }) {
         <motion.span
           animate={{ rotate: open ? 180 : 0 }}
           transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-          className="shrink-0 text-amber-400/60"
+          className="shrink-0 text-emerald-600"
           aria-hidden
         >
-          <ChevronDown size={16} strokeWidth={2} />
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
         </motion.span>
       </button>
 
@@ -313,7 +265,7 @@ function FaqItem({ index, faq }: { index: number; faq: Faq }) {
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             className="overflow-hidden"
           >
-            <div className="border-t border-white/[0.04] px-5 pb-5 pt-4 text-sm leading-[1.8] text-emerald-100/60 sm:px-6 sm:pb-6 sm:pt-5 sm:text-base">
+            <div className="border-t border-emerald-200/30 px-5 pb-5 pt-4 text-sm leading-[1.8] text-emerald-800/70 sm:px-6 sm:pb-6 sm:pt-5 sm:text-base">
               {faq.answer}
             </div>
           </motion.div>

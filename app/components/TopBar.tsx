@@ -10,19 +10,17 @@ export function TopBar() {
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="relative z-50 w-full bg-[#0a2c25] text-sm font-medium border-b border-white/10"
+      className="relative z-50 w-full bg-emerald-950 text-sm border-b border-emerald-800/50"
     >
-      <div className="container-luxe flex h-11 items-center justify-center gap-6 px-5 sm:justify-end sm:gap-8 overflow-hidden whitespace-nowrap">
-        
-        {/* Phone Section */}
-        <div className="flex items-center gap-2 text-white">
-          <Phone size={15} strokeWidth={2.5} className="text-emerald-300" />
-          <span className="text-[13px] font-medium">
+      <div className="container-luxe flex h-10 items-center justify-center gap-6 sm:justify-end sm:gap-8">
+        <div className="flex items-center gap-2 text-cream-200/80">
+          <Phone size={13} strokeWidth={2} className="text-gold-400" />
+          <span className="text-[12px] font-medium">
             {brand.phoneDisplay.map((phone, i) => (
               <a
                 key={phone}
                 href={brand.phoneHref[i]}
-                className="hover:text-amber-300 transition-colors"
+                className="hover:text-gold-300 transition-colors"
               >
                 {phone.replace(/ /g, "\u00A0")}
                 {i < brand.phoneDisplay.length - 1 && ",\u00A0"}
@@ -30,13 +28,11 @@ export function TopBar() {
             ))}
           </span>
         </div>
-
-        {/* Email Section */}
-        <div className="flex items-center gap-2 text-white">
-          <Mail size={15} strokeWidth={2.5} className="text-emerald-300" />
+        <div className="flex items-center gap-2 text-cream-200/80">
+          <Mail size={13} strokeWidth={2} className="text-gold-400" />
           <a
             href={`mailto:${brand.email}`}
-            className="text-[13px] font-medium hover:text-amber-300 transition-colors"
+            className="text-[12px] font-medium hover:text-gold-300 transition-colors"
           >
             {brand.email}
           </a>

@@ -60,15 +60,23 @@ export default function AdminDashboardPage() {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
-      {/* Header */}
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="font-display text-2xl font-black tracking-tight text-neutral-900">
-            Blog Manager
-          </h1>
-          <p className="mt-1 text-sm text-neutral-500">
-            {published.length} published · {drafts.length} drafts
-          </p>
+          <div className="flex items-center gap-3">
+            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-700 text-white">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+            </span>
+            <div>
+              <h1 className="font-display text-2xl font-black tracking-tight text-emerald-950">
+                Blog Manager
+              </h1>
+              <p className="mt-0.5 text-sm text-emerald-800/50">
+                {published.length} published · {drafts.length} drafts
+              </p>
+            </div>
+          </div>
         </div>
         <div className="flex items-center gap-3">
           <Link
@@ -79,21 +87,20 @@ export default function AdminDashboardPage() {
           </Link>
           <button
             onClick={handleLogout}
-            className="rounded-xl border border-neutral-200 px-4 py-2.5 text-sm font-medium text-neutral-600 transition-colors hover:bg-neutral-100"
+            className="rounded-xl border border-emerald-200 px-4 py-2.5 text-sm font-medium text-emerald-700 transition-colors hover:bg-emerald-50"
           >
             Sign Out
           </button>
         </div>
       </div>
 
-      {/* Blog List */}
       {loading ? (
-        <div className="py-20 text-center text-sm text-neutral-400">
+        <div className="py-20 text-center text-sm text-emerald-800/40">
           Loading...
         </div>
       ) : blogs.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-neutral-300 py-20 text-center">
-          <p className="text-sm text-neutral-500">No blog posts yet.</p>
+        <div className="rounded-2xl border border-dashed border-emerald-300 bg-white py-20 text-center">
+          <p className="text-sm text-emerald-800/50">No blog posts yet.</p>
           <Link
             href="/admin/posts/new"
             className="mt-4 inline-flex items-center gap-2 rounded-xl bg-emerald-700 px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-emerald-800"
@@ -106,15 +113,15 @@ export default function AdminDashboardPage() {
           {blogs.map((blog) => (
             <div
               key={blog.slug}
-              className="flex items-center justify-between rounded-2xl border border-neutral-200 bg-white px-5 py-4 shadow-sm transition-shadow hover:shadow-md"
+              className="flex items-center justify-between rounded-2xl border border-emerald-200/50 bg-white px-5 py-4 shadow-sm transition-shadow hover:shadow-md"
             >
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-3">
-                  <h3 className="truncate text-sm font-bold text-neutral-900">
+                  <h3 className="truncate text-sm font-bold text-emerald-950">
                     {blog.title}
                   </h3>
                   {blog.status === "draft" && (
-                    <span className="shrink-0 rounded-full bg-amber-100 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-amber-700">
+                    <span className="shrink-0 rounded-full bg-gold-100 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-gold-700">
                       Draft
                     </span>
                   )}
@@ -124,7 +131,7 @@ export default function AdminDashboardPage() {
                     </span>
                   )}
                 </div>
-                <div className="mt-1 flex items-center gap-3 text-xs text-neutral-500">
+                <div className="mt-1 flex items-center gap-3 text-xs text-emerald-800/50">
                   <span>{blog.tag}</span>
                   <span>·</span>
                   <span>{blog.date}</span>
@@ -136,7 +143,7 @@ export default function AdminDashboardPage() {
               <div className="ml-4 flex items-center gap-2">
                 <Link
                   href={`/admin/posts/${blog.slug}`}
-                  className="rounded-lg border border-neutral-200 px-3 py-1.5 text-xs font-bold text-neutral-700 transition-colors hover:bg-neutral-50"
+                  className="rounded-lg border border-emerald-200 px-3 py-1.5 text-xs font-bold text-emerald-700 transition-colors hover:bg-emerald-50"
                 >
                   Edit
                 </Link>
@@ -144,7 +151,7 @@ export default function AdminDashboardPage() {
                   href={`/blog/${blog.slug}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-lg border border-neutral-200 px-3 py-1.5 text-xs font-bold text-neutral-500 transition-colors hover:bg-neutral-50"
+                  className="rounded-lg border border-emerald-200 px-3 py-1.5 text-xs font-bold text-emerald-600 transition-colors hover:bg-emerald-50"
                 >
                   View
                 </a>
