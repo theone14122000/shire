@@ -6,7 +6,7 @@ import {
   type Variants,
 } from "framer-motion";
 import Image from "next/image";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import {
   Home,
   Gamepad2,
@@ -19,6 +19,8 @@ import {
   ChevronLeft,
   ChevronRight,
   Expand,
+  Pause,
+  Play,
 } from "lucide-react";
 import { SiteNav } from "../components/SiteNav";
 import { SiteFooter } from "../components/SiteFooter";
@@ -122,7 +124,6 @@ export default function ActivitiesPage() {
 
       {/* ════════════════ HERO ════════════════ */}
       <section className="relative h-[70vh] min-h-[480px] overflow-hidden">
-        {/* Background image */}
         <Image
           src="/images/activity/activity-3.jpg"
           alt="The Himalayan Shire property surrounded by pine forests"
@@ -131,11 +132,9 @@ export default function ActivitiesPage() {
           sizes="100vw"
           className="object-cover"
         />
-        {/* Gradient overlays */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#052e23] via-[#052e23]/40 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#052e23]/60 to-transparent" />
 
-        {/* Content at bottom */}
         <div className="absolute inset-x-0 bottom-0 z-10 pb-12 sm:pb-16 lg:pb-20">
           <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
             <motion.div
@@ -160,7 +159,7 @@ export default function ActivitiesPage() {
         </div>
       </section>
 
-      {/* ════════════════ ON-PROPERTY ACTIVITIES ════════════════ */}
+      {/* ════════════════ AT THE PROPERTY ════════════════ */}
       <section className="py-14 sm:py-18 lg:py-22">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -168,7 +167,7 @@ export default function ActivitiesPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.5 }}
-            className="mb-10"
+            className="mb-8"
           >
             <h2 className="font-display text-2xl font-black tracking-tight text-white sm:text-3xl">
               At the Property
@@ -178,40 +177,73 @@ export default function ActivitiesPage() {
             </p>
           </motion.div>
 
+          {/* Stats strip */}
           <motion.div
             variants={stagger}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, amount: 0.05 }}
-            className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:gap-5"
+            viewport={{ once: true, amount: 0.3 }}
+            className="mb-8 grid grid-cols-3 gap-3"
           >
-            {ACTIVITIES.map((activity) => {
-              const Icon = ICONS[activity.icon];
-              return (
-                <motion.div
-                  key={activity.title}
-                  variants={fadeUp}
-                  whileHover={{ y: -3 }}
-                  transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] as const }}
-                  className="group rounded-2xl border border-white/[0.08] bg-white/[0.04] p-6 transition-colors duration-300 hover:border-white/[0.14] hover:bg-white/[0.07] sm:p-7"
-                >
-                  <div className="flex items-start gap-4">
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/[0.06] text-amber-400/80 transition-colors duration-300 group-hover:bg-white/[0.1] group-hover:text-amber-300">
-                      <Icon size={17} strokeWidth={1.8} aria-hidden />
-                    </span>
-                    <div className="min-w-0">
-                      <h3 className="text-base font-bold text-white sm:text-lg">
-                        {activity.title}
-                      </h3>
-                      <p className="mt-1.5 text-sm leading-relaxed text-emerald-100/55">
-                        {activity.body}
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
+            {[
+              { value: "5", label: "Activities" },
+              { value: "65\"", label: "Smart TV" },
+              { value: "∞", label: "Mountain Views" },
+            ].map((stat) => (
+              <motion.div
+                key={stat.label}
+                variants={fadeUp}
+                className="rounded-xl border border-white/[0.06] bg-white/[0.03] px-4 py-4 text-center"
+              >
+                <span className="block font-display text-2xl font-black text-amber-400 sm:text-3xl">
+                  {stat.value}
+                </span>
+                <span className="mt-1 block text-[10px] font-bold uppercase tracking-wider text-emerald-100/40 sm:text-[11px]">
+                  {stat.label}
+                </span>
+              </motion.div>
+            ))}
           </motion.div>
+
+          {/* Activity cards — horizontal scroll on mobile, grid on desktop */}
+          <div className="-mx-4 px-4 sm:mx-0 sm:px-0">
+            <motion.div
+              variants={stagger}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.05 }}
+              className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-3 lg:gap-5"
+            >
+              {ACTIVITIES.map((activity, i) => {
+                const Icon = ICONS[activity.icon];
+                return (
+                  <motion.div
+                    key={activity.title}
+                    variants={fadeUp}
+                    whileHover={{ y: -3 }}
+                    transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] as const }}
+                    className={`group flex-shrink-0 snap-start rounded-2xl border border-white/[0.08] bg-white/[0.04] p-5 transition-colors duration-300 hover:border-white/[0.14] hover:bg-white/[0.07] sm:p-6 ${
+                      i === 0 ? "col-span-2 sm:col-span-2 lg:col-span-2" : ""
+                    }`}
+                  >
+                    <div className="flex items-start gap-4">
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/[0.06] text-amber-400/80 transition-colors duration-300 group-hover:bg-white/[0.1] group-hover:text-amber-300">
+                        <Icon size={18} strokeWidth={1.8} aria-hidden />
+                      </span>
+                      <div className="min-w-0">
+                        <h3 className="text-base font-bold text-white sm:text-lg">
+                          {activity.title}
+                        </h3>
+                        <p className="mt-1.5 text-sm leading-relaxed text-emerald-100/55">
+                          {activity.body}
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -248,7 +280,6 @@ export default function ActivitiesPage() {
                 transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] as const }}
                 className="group relative overflow-hidden rounded-2xl bg-white/[0.04]"
               >
-                {/* Image */}
                 <div className="relative aspect-[16/10] overflow-hidden">
                   <Image
                     src={place.image}
@@ -258,13 +289,9 @@ export default function ActivitiesPage() {
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-
-                  {/* Distance badge — top right */}
                   <span className="absolute right-3 top-3 rounded-full bg-white/15 px-3 py-1 text-[10px] font-bold text-white backdrop-blur-md">
                     {place.distance}
                   </span>
-
-                  {/* Title + note — bottom */}
                   <div className="absolute inset-x-0 bottom-0 p-4">
                     <h3 className="text-sm font-bold text-white sm:text-base">
                       {place.name}
@@ -330,7 +357,7 @@ export default function ActivitiesPage() {
             </p>
           </motion.div>
 
-          <GalleryGrid images={GALLERY_IMAGES} />
+          <AutoGallery images={GALLERY_IMAGES} />
         </div>
       </section>
 
@@ -340,17 +367,48 @@ export default function ActivitiesPage() {
 }
 
 /* ================================================================== */
-/*  Gallery Grid + Lightbox                                             */
+/*  AutoGallery — auto-cycling carousel (1→10→1 ping-pong)             */
 /* ================================================================== */
-function GalleryGrid({ images }: { images: string[] }) {
+function AutoGallery({ images }: { images: string[] }) {
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [direction, setDirection] = useState(1); // 1 = forward, -1 = backward
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const visibleCount = useVisibleCount();
 
-  const close = useCallback(() => setLightboxIndex(null), []);
-  const prev = useCallback(
+  const total = images.length;
+
+  // Auto-advance with ping-pong
+  useEffect(() => {
+    if (paused || lightboxIndex !== null) return;
+
+    intervalRef.current = setInterval(() => {
+      setActive((prev) => {
+        const next = prev + direction;
+        if (next >= total - 1) {
+          setDirection(-1);
+          return total - 1;
+        }
+        if (next <= 0) {
+          setDirection(1);
+          return 0;
+        }
+        return next;
+      });
+    }, 4000);
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [paused, direction, total, lightboxIndex]);
+
+  const closeLB = useCallback(() => setLightboxIndex(null), []);
+  const prevLB = useCallback(
     () => setLightboxIndex((i) => (i === null ? null : (i - 1 + images.length) % images.length)),
     [images.length]
   );
-  const next = useCallback(
+  const nextLB = useCallback(
     () => setLightboxIndex((i) => (i === null ? null : (i + 1) % images.length)),
     [images.length]
   );
@@ -358,9 +416,9 @@ function GalleryGrid({ images }: { images: string[] }) {
   useEffect(() => {
     if (lightboxIndex === null) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close();
-      if (e.key === "ArrowLeft") prev();
-      if (e.key === "ArrowRight") next();
+      if (e.key === "Escape") closeLB();
+      if (e.key === "ArrowLeft") prevLB();
+      if (e.key === "ArrowRight") nextLB();
     };
     window.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
@@ -368,43 +426,135 @@ function GalleryGrid({ images }: { images: string[] }) {
       window.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
     };
-  }, [lightboxIndex, close, prev, next]);
+  }, [lightboxIndex, closeLB, prevLB, nextLB]);
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
-        {images.map((src, i) => {
-          const label = GALLERY_LABELS[i % GALLERY_LABELS.length];
-          return (
-            <button
-              key={i}
-              type="button"
-              onClick={() => setLightboxIndex(i)}
-              aria-label={`Expand photo: ${label}`}
-              className="group relative aspect-[4/3] overflow-hidden rounded-xl bg-white/[0.04] transition-all duration-300 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/50"
-            >
-              <Image
-                src={src}
-                alt={`${label} at The Himalayan Shire`}
-                fill
-                sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
+      {/* ── Main carousel ── */}
+      <div
+        className="relative"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+      >
+        {/* Stage — show 1 on mobile, 2 on sm, 3 on lg */}
+        <div className="overflow-hidden rounded-2xl">
+          <motion.div
+            className="flex gap-3 sm:gap-4"
+            animate={{ x: `-${active * (100 / visibleCount)}%` }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {images.map((src, i) => {
+              const label = GALLERY_LABELS[i % GALLERY_LABELS.length];
+              return (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => setLightboxIndex(i)}
+                  aria-label={`View ${label}`}
+                  className="group relative aspect-[4/3] flex-shrink-0 overflow-hidden rounded-xl transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/50"
+                  style={{ width: `calc(${100 / visibleCount}% - ${(visibleCount - 1) * 12 / visibleCount}px)` }}
+                >
+                  <Image
+                    src={src}
+                    alt={`${label} at The Himalayan Shire`}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-md">
+                      <Expand size={15} strokeWidth={2.2} />
+                    </span>
+                  </div>
+                  <span className="absolute bottom-2.5 left-3 text-[10px] font-bold uppercase tracking-wider text-white/80 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    {label}
+                  </span>
+                </button>
+              );
+            })}
+          </motion.div>
+        </div>
+
+        {/* Controls — below carousel */}
+        <div className="mt-5 flex items-center justify-between">
+          {/* Dots */}
+          <div className="flex items-center gap-1.5">
+            {images.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => {
+                  setActive(i);
+                  setDirection(i > active ? 1 : -1);
+                }}
+                aria-label={`Go to image ${i + 1}`}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  i === active
+                    ? "w-6 bg-amber-400"
+                    : "w-1.5 bg-white/20 hover:bg-white/40"
+                }`}
               />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-md">
-                  <Expand size={15} strokeWidth={2.2} />
-                </span>
-              </div>
-              <span className="absolute bottom-2 left-2.5 text-[10px] font-bold uppercase tracking-wider text-white/70 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                {label}
-              </span>
-            </button>
-          );
-        })}
+            ))}
+          </div>
+
+          {/* Play/Pause */}
+          <button
+            type="button"
+            onClick={() => setPaused(!paused)}
+            aria-label={paused ? "Play slideshow" : "Pause slideshow"}
+            className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-emerald-100/50 transition-colors hover:border-white/20 hover:text-white"
+          >
+            {paused ? <Play size={13} strokeWidth={2.5} /> : <Pause size={13} strokeWidth={2.5} />}
+          </button>
+        </div>
+
+        {/* Progress bar */}
+        <div className="mt-3 h-[2px] w-full overflow-hidden rounded-full bg-white/[0.06]">
+          <motion.div
+            className="h-full bg-amber-400/60"
+            initial={{ width: "0%" }}
+            animate={{
+              width: paused ? undefined : "100%",
+            }}
+            transition={{
+              duration: 4,
+              ease: "linear",
+              repeat: paused ? 0 : Infinity,
+            }}
+            key={`${active}-${paused}`}
+          />
+        </div>
       </div>
 
-      {/* Lightbox */}
+      {/* ── Thumbnails strip ── */}
+      <div className="mt-6 grid grid-cols-5 gap-2 sm:grid-cols-10">
+        {images.map((src, i) => (
+          <button
+            key={i}
+            type="button"
+            onClick={() => {
+              setActive(i);
+              setDirection(i > active ? 1 : -1);
+            }}
+            className={`group relative aspect-[4/3] overflow-hidden rounded-lg transition-all duration-300 ${
+              i === active
+                ? "ring-2 ring-amber-400 ring-offset-2 ring-offset-[#052e23]"
+                : "opacity-50 hover:opacity-80"
+            }`}
+          >
+            <Image
+              src={src}
+              alt={GALLERY_LABELS[i % GALLERY_LABELS.length]}
+              fill
+              sizes="80px"
+              className="object-cover"
+            />
+          </button>
+        ))}
+      </div>
+
+      {/* ── Lightbox ── */}
       <AnimatePresence>
         {lightboxIndex !== null && (
           <motion.div
@@ -412,11 +562,11 @@ function GalleryGrid({ images }: { images: string[] }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-lg"
-            onClick={close}
+            onClick={closeLB}
           >
             <button
               type="button"
-              onClick={close}
+              onClick={closeLB}
               className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md transition-colors hover:bg-white/20 sm:right-6 sm:top-6"
             >
               <X size={18} strokeWidth={2} />
@@ -428,7 +578,7 @@ function GalleryGrid({ images }: { images: string[] }) {
 
             <button
               type="button"
-              onClick={(e) => { e.stopPropagation(); prev(); }}
+              onClick={(e) => { e.stopPropagation(); prevLB(); }}
               className="absolute left-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md transition-colors hover:bg-white/20 sm:left-6"
             >
               <ChevronLeft size={20} strokeWidth={2} />
@@ -436,7 +586,7 @@ function GalleryGrid({ images }: { images: string[] }) {
 
             <button
               type="button"
-              onClick={(e) => { e.stopPropagation(); next(); }}
+              onClick={(e) => { e.stopPropagation(); nextLB(); }}
               className="absolute right-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md transition-colors hover:bg-white/20 sm:right-6"
             >
               <ChevronRight size={20} strokeWidth={2} />
@@ -465,4 +615,25 @@ function GalleryGrid({ images }: { images: string[] }) {
       </AnimatePresence>
     </>
   );
+}
+
+/* ------------------------------------------------------------------ */
+/*  useVisibleCount — reactive visible slide count                      */
+/* ------------------------------------------------------------------ */
+function useVisibleCount() {
+  const [count, setCount] = useState(1);
+
+  useEffect(() => {
+    function update() {
+      const w = window.innerWidth;
+      if (w >= 1024) setCount(3);
+      else if (w >= 640) setCount(2);
+      else setCount(1);
+    }
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  return count;
 }
