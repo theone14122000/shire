@@ -5,8 +5,6 @@ import {
   AnimatePresence,
   useScroll,
   useTransform,
-  useMotionValue,
-  useSpring,
   type Variants,
 } from "framer-motion";
 import Image from "next/image";
@@ -16,11 +14,6 @@ import type { rooms } from "@/lib/rooms";
 
 type Room = (typeof rooms)[number];
 
-/* ------------------------------------------------------------------ */
-/*  Two-shade emerald system — used everywhere, at varying opacity     */
-/*  DEEP  = #052e23  (grounding / background)                          */
-/*  BRIGHT = #34d399 (accent / icons / CTAs / highlights)              */
-/* ------------------------------------------------------------------ */
 const DEEP = "#052e23";
 const BRIGHT = "#34d399";
 
@@ -32,210 +25,111 @@ const GALLERY_LABELS = [
   "Details",
 ];
 
-const stagger: Variants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } },
-};
-
 const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 28 },
+  hidden: { opacity: 0, y: 24 },
   show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
 };
 
-const wordUp: Variants = {
-  hidden: { opacity: 0, y: "0.5em", rotateX: -40 },
-  show: {
-    opacity: 1,
-    y: 0,
-    rotateX: 0,
-    transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] },
-  },
+const stagger: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
 };
 
-const modalBackdrop: Variants = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { duration: 0.3 } },
-  exit: { opacity: 0, transition: { duration: 0.2 } },
-};
-
-const modalImage: Variants = {
-  hidden: { opacity: 0, scale: 0.92 },
-  show: { opacity: 1, scale: 1, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] } },
-  exit: { opacity: 0, scale: 0.95, transition: { duration: 0.2 } },
-};
-
-export function RoomPageContent({ room }: { room: Room }) {
-  const heroRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
-
-  const heroImageY = useTransform(scrollYProgress, [0, 1], ["0%", "22%"]);
-  const heroImageScale = useTransform(scrollYProgress, [0, 1], [1.05, 1.18]);
-  const ghostTitleY = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
-  const ghostTitleX = useTransform(scrollYProgress, [0, 1], ["0%", "8%"]);
-  const heroContentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
-  const heroContentY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
-
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const springX = useSpring(mouseX, { stiffness: 40, damping: 20 });
-  const springY = useSpring(mouseY, { stiffness: 40, damping: 20 });
-  const orbX = useSpring(useMotionValue(0), { stiffness: 30, damping: 22 });
-  const orbY = useSpring(useMotionValue(0), { stiffness: 30, damping: 22 });
-
-  function handleMouseMove(e: React.MouseEvent<HTMLElement>) {
-    const rect = heroRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    mouseX.set(x * 30);
-    mouseY.set(y * 30);
-    orbX.set(x * -50);
-    orbY.set(y * -50);
-  }
-
-  /* ---------------- Sticky mobile "Book Now" bar ---------------- */
-  const { scrollY } = useScroll();
-  const floatingCtaOpacity = useTransform(scrollY, [300, 600], [0, 1]);
-  const floatingCtaY = useTransform(scrollY, [300, 600], [24, 0]);
-  const floatingCtaPointerEvents = useTransform(floatingCtaOpacity, (v) =>
-    v > 0.05 ? "auto" : "none"
-  );
-
-  /* ---------------- Lightbox ---------------- */
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-
-  const openLightbox = (i: number) => setLightboxIndex(i);
-  const closeLightbox = () => setLightboxIndex(null);
-  const nextImage = () =>
-    setLightboxIndex((prev) =>
-      prev === null ? null : (prev + 1) % room.images.length
-    );
-  const prevImage = () =>
-    setLightboxIndex((prev) =>
-      prev === null ? null : (prev - 1 + room.images.length) % room.images.length
-    );
-
+function useLightbox(length: number) {
+  const [index, setIndex] = useState<number | null>(null);
+  const open = (i: number) => setIndex(i);
+  const close = () => setIndex(null);
+  const next = () => setIndex((p) => (p === null ? null : (p + 1) % length));
+  const prev = () => setIndex((p) => (p === null ? null : (p - 1 + length) % length));
   useEffect(() => {
-    if (lightboxIndex === null) return;
+    if (index === null) return;
     document.body.style.overflow = "hidden";
-    function handleKey(e: KeyboardEvent) {
-      if (e.key === "Escape") closeLightbox();
-      if (e.key === "ArrowRight") nextImage();
-      if (e.key === "ArrowLeft") prevImage();
-    }
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+      if (e.key === "ArrowRight") next();
+      if (e.key === "ArrowLeft") prev();
+    };
     window.addEventListener("keydown", handleKey);
     return () => {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", handleKey);
     };
-  }, [lightboxIndex]);
+  }, [index]);
+  return { index, open, close, next, prev };
+}
 
-  const bgImage = `/images/${room.slug}.jpg`;
+export function RoomPageContent({ room }: { room: Room }) {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const { scrollY } = useScroll();
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+  const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
 
-  const specs = [
-    { label: "Size", value: room.size, icon: "ruler" as const },
-    { label: "View", value: room.view, icon: "mountain" as const },
-    { label: "Floor", value: room.floor, icon: "layers" as const },
-  ];
+  const { index, open, close, next, prev } = useLightbox(room.images.length);
 
-  const titleWords = room.name.split(" ");
+  const ctaOpacity = useTransform(scrollY, [300, 600], [0, 1]);
+  const ctaY = useTransform(scrollY, [300, 600], [16, 0]);
+  const ctaPointer = useTransform(ctaOpacity, (v) => (v > 0.05 ? "auto" : "none"));
 
   return (
     <>
-      {/* HERO — dynamic layered cinematic background */}
+      {/* ============ HERO ============ */}
       <section
         ref={heroRef}
-        onMouseMove={handleMouseMove}
-        className="relative flex h-[85vh] min-h-[560px] w-full items-end overflow-hidden bg-ink-900 sm:h-[90vh] sm:min-h-[600px]"
+        className="relative flex h-[90vh] min-h-[580px] w-full items-end overflow-hidden bg-[#052e23] sm:min-h-[640px]"
       >
-        <motion.div style={{ y: heroImageY, scale: heroImageScale }} className="absolute inset-0">
-          <motion.div
-            initial={{ scale: 1.12, opacity: 0 }}
-            animate={{ scale: 1.05, opacity: 1 }}
-            transition={{
-              opacity: { duration: 1.4, ease: [0.22, 1, 0.36, 1] },
-              scale: { duration: 22, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" },
-            }}
-            className="absolute inset-0"
-          >
+        <motion.div style={{ scale: heroScale }} className="absolute inset-0">
+          <div className="absolute inset-0">
             <Image
-              src={bgImage}
-              alt={`${room.name} — ${room.category}`}
+              src={room.images[0]}
+              alt={room.name}
               fill
               priority
               className="object-cover"
               sizes="100vw"
             />
-          </motion.div>
+          </div>
         </motion.div>
 
-        <motion.div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 mix-blend-soft-light"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: [0.4, 0.7, 0.4] }}
-          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+        <div
+          className="absolute inset-0"
           style={{
-            background: `linear-gradient(120deg, ${DEEP}cc 0%, transparent 45%, ${BRIGHT}40 100%)`,
+            background: `linear-gradient(to top, ${DEEP} 0%, ${DEEP}cc 35%, ${DEEP}33 65%, transparent 100%)`,
           }}
         />
-
-        <motion.div
-          style={{ x: springX, y: springY, backgroundColor: `${BRIGHT}33` }}
-          className="pointer-events-none absolute right-1/4 top-1/4 h-[24rem] w-[24rem] rounded-full blur-[120px] mix-blend-screen"
-          aria-hidden
-        />
-        <motion.div
-          style={{ x: orbX, y: orbY, backgroundColor: `${BRIGHT}1f` }}
-          className="pointer-events-none absolute bottom-1/4 left-1/4 h-[22rem] w-[22rem] rounded-full blur-[110px] mix-blend-screen"
-          aria-hidden
-        />
-
-        <motion.div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-[0.12]"
-          animate={{ backgroundPosition: ["0px 0px", "40px 40px"] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-          style={{
-            backgroundImage: `linear-gradient(${BRIGHT}59 1px, transparent 1px), linear-gradient(90deg, ${BRIGHT}59 1px, transparent 1px)`,
-            backgroundSize: "40px 40px",
-          }}
-        />
-
-        <motion.span
-          aria-hidden
-          style={{ y: ghostTitleY, x: ghostTitleX }}
-          className="pointer-events-none absolute -bottom-4 left-0 z-[5] select-none whitespace-nowrap font-display text-[26vw] font-black uppercase leading-none tracking-tighter text-white/[0.06] sm:text-[22vw] lg:text-[18vw]"
-        >
-          {room.category}
-        </motion.span>
 
         <div
-          className="absolute inset-0 z-[6] pointer-events-none"
-          style={{
-            background: `linear-gradient(to top, ${DEEP} 0%, ${DEEP}8c 42%, ${DEEP}1f 66%, ${DEEP}66 100%)`,
-          }}
           aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-[0.03] mix-blend-overlay"
+          style={{
+            backgroundImage:
+              "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+          }}
         />
 
-        {/* Top bar — back button (left) + live badge (right), stacked cleanly on mobile */}
+        <span
+          aria-hidden
+          className="pointer-events-none absolute bottom-4 right-6 select-none font-display text-[28vw] font-black uppercase leading-none tracking-tighter text-white/[0.04] sm:text-[22vw] lg:text-[16vw]"
+        >
+          {room.slug}
+        </span>
+
         <motion.div
-          initial={{ opacity: 0, y: -14 }}
+          initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="absolute inset-x-0 top-4 z-20 flex items-center justify-between gap-2 px-4 sm:top-6 sm:px-6"
+          transition={{ duration: 0.5, delay: 0.15 }}
+          className="absolute left-4 top-4 z-20 sm:left-6 sm:top-6"
         >
           <Link
             href="/#rooms"
-            aria-label="Back to all rooms"
-            className="group inline-flex items-center gap-2 rounded-full border px-3.5 py-2.5 text-xs font-bold backdrop-blur-md transition-colors sm:px-4"
+            aria-label="Back to rooms"
+            className="group inline-flex items-center gap-1.5 rounded-full border px-3 py-2 text-xs font-bold backdrop-blur-md transition-colors"
             style={{
               borderColor: `${BRIGHT}33`,
               backgroundColor: `${DEEP}80`,
-              color: "rgba(255,255,255,0.85)",
+              color: "rgba(255,255,255,0.8)",
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.borderColor = `${BRIGHT}99`;
@@ -243,406 +137,396 @@ export function RoomPageContent({ room }: { room: Room }) {
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.borderColor = `${BRIGHT}33`;
-              e.currentTarget.style.color = "rgba(255,255,255,0.85)";
+              e.currentTarget.style.color = "rgba(255,255,255,0.8)";
             }}
           >
-            <svg width="12" height="12" viewBox="0 0 14 14" fill="none" className="transition-transform group-hover:-translate-x-1">
+            <svg width="10" height="10" viewBox="0 0 14 14" fill="none" className="transition-transform group-hover:-translate-x-0.5">
               <path d="M13 7H1M1 7L6.5 1.5M1 7L6.5 12.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-            <span className="hidden sm:inline">Back to All Rooms</span>
+            <span className="hidden sm:inline">Back</span>
           </Link>
+        </motion.div>
 
-          <div
-            className="inline-flex items-center gap-2 rounded-full border px-3 py-2.5 text-[10px] font-bold uppercase tracking-[0.14em] backdrop-blur-md sm:px-4 sm:text-[11px] sm:tracking-[0.16em]"
-            style={{
-              borderColor: `${BRIGHT}33`,
-              backgroundColor: `${DEEP}66`,
-              color: "rgba(255,255,255,0.85)",
-            }}
-          >
-            <motion.span
-              animate={{ opacity: [1, 0.3, 1], scale: [1, 1.4, 1] }}
-              transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-              className="h-1.5 w-1.5 rounded-full"
-              style={{ backgroundColor: BRIGHT, boxShadow: `0 0 8px 2px ${BRIGHT}99` }}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="relative z-10 mx-auto w-full max-w-7xl px-4 pb-12 sm:px-6 sm:pb-16 lg:px-8"
+        >
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-2.5">
+              <span
+                className="inline-block rounded-full border px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] backdrop-blur-sm"
+                style={{ borderColor: `${BRIGHT}66`, backgroundColor: `${DEEP}66`, color: BRIGHT }}
+              >
+                {room.category}
+              </span>
+              <span className="text-[10px] font-medium uppercase tracking-[0.12em] text-white/50">
+                {room.floor}
+              </span>
+            </div>
+
+            <h1 className="font-display text-5xl font-black leading-[0.92] tracking-tight text-white sm:text-7xl lg:text-8xl">
+              {room.name}
+            </h1>
+
+            <div
+              className="h-[3px] w-16 rounded-full"
+              style={{ backgroundColor: BRIGHT }}
             />
-            <span className="hidden sm:inline">4 guests viewing</span>
-            <span className="sm:hidden">4 viewing</span>
-            <span style={{ color: BRIGHT }} className="hidden sm:inline">{room.name}</span>
+
+            <p className="max-w-xl text-sm leading-relaxed text-white/60 sm:text-base">
+              {room.size} &middot; {room.view}
+            </p>
           </div>
         </motion.div>
 
         <motion.div
-          style={{ opacity: heroContentOpacity, y: heroContentY }}
-          className="relative z-10 mx-auto w-full max-w-7xl px-4 pb-14 sm:px-6 sm:pb-16 lg:px-8"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2, duration: 0.8 }}
+          className="absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 sm:flex"
         >
+          <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/40">
+            Scroll
+          </span>
           <motion.div
-            variants={stagger}
-            initial="hidden"
-            animate="show"
-            className="flex flex-col gap-5"
-          >
-            <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-2.5">
-              <span
-                className="inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] backdrop-blur-sm"
-                style={{ borderColor: `${BRIGHT}66`, backgroundColor: `${DEEP}4d`, color: BRIGHT }}
-              >
-                <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: BRIGHT }} />
-                {room.category}
-              </span>
-              <span
-                className="inline-flex items-center gap-1.5 rounded-full border px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.16em] backdrop-blur-sm"
-                style={{ borderColor: `${BRIGHT}33`, backgroundColor: `${DEEP}33`, color: "rgba(255,255,255,0.85)" }}
-              >
-                <svg width="12" height="12" viewBox="0 0 24 24" fill={BRIGHT} stroke="none">
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                </svg>
-                Guest Favourite
-              </span>
-            </motion.div>
-
-            <motion.h1
-              variants={stagger}
-              className="font-display text-4xl font-black leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-7xl [transform-style:preserve-3d] [transform-perspective:1000px]"
-            >
-              {titleWords.map((word, i) => {
-                const isLast = i === titleWords.length - 1 && titleWords.length > 1;
-                return (
-                  <motion.span
-                    key={`${word}-${i}`}
-                    variants={wordUp}
-                    className="mr-[0.25em] inline-block"
-                    style={isLast ? { color: BRIGHT } : undefined}
-                  >
-                    {word}
-                  </motion.span>
-                );
-              })}
-            </motion.h1>
-
-            <motion.p
-              variants={fadeUp}
-              className="max-w-2xl text-sm leading-relaxed text-white/70 sm:text-base lg:text-lg"
-            >
-              {room.description}
-            </motion.p>
-
-            <motion.div variants={fadeUp} className="mt-2 flex flex-wrap items-center gap-3 sm:gap-4">
-              <a
-                href="#book"
-                className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full px-7 py-3.5 text-sm font-bold shadow-xl transition-all duration-300 hover:-translate-y-0.5"
-                style={{
-                  backgroundColor: BRIGHT,
-                  color: DEEP,
-                  boxShadow: `0 10px 30px ${BRIGHT}66`,
-                }}
-              >
-                <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/50 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
-                <span className="relative">Book This Room</span>
-                <svg className="relative" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M1 7H13M13 7L7.5 1.5M13 7L7.5 12.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </a>
-              <a
-                href="#gallery"
-                className="inline-flex items-center gap-2 rounded-full border-2 px-7 py-3.5 text-sm font-bold backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5"
-                style={{ borderColor: `${BRIGHT}4d`, backgroundColor: `${DEEP}33`, color: "rgba(255,255,255,0.85)" }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = `${BRIGHT}99`;
-                  e.currentTarget.style.color = BRIGHT;
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = `${BRIGHT}4d`;
-                  e.currentTarget.style.color = "rgba(255,255,255,0.85)";
-                }}
-              >
-                View Gallery
-              </a>
-            </motion.div>
-          </motion.div>
+            animate={{ y: [0, 6, 0] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+            className="h-6 w-px rounded-full"
+            style={{ backgroundColor: `${BRIGHT}66` }}
+          />
         </motion.div>
       </section>
 
-      {/* PREMIUM EMERALD CANVAS */}
+      {/* ============ DARK CANVAS ============ */}
       <div className="relative isolate overflow-hidden text-white" style={{ backgroundColor: DEEP }}>
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-90"
+          className="pointer-events-none absolute inset-0"
           style={{
-            background: `radial-gradient(60% 45% at 15% 0%, ${BRIGHT}33 0%, transparent 60%), radial-gradient(55% 45% at 95% 20%, ${BRIGHT}1f 0%, transparent 55%), radial-gradient(80% 60% at 50% 100%, ${DEEP} 0%, transparent 65%)`,
+            background: `radial-gradient(55% 40% at 20% 10%, ${BRIGHT}1f 0%, transparent 50%), radial-gradient(50% 40% at 80% 25%, ${BRIGHT}14 0%, transparent 50%)`,
           }}
         />
+
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-[0.04] mix-blend-overlay"
-          style={{
-            backgroundImage:
-              "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
-          }}
-        />
-        <motion.div
-          aria-hidden
-          className="relative z-10 h-px w-full"
+          className="relative h-px w-full"
           style={{
             background: `linear-gradient(90deg, transparent, ${BRIGHT}aa, transparent)`,
-            backgroundSize: "200% auto",
           }}
-          animate={{ backgroundPosition: ["0% center", "200% center"] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
         />
 
-        <div className="relative z-10">
-          {/* SPECS STRIP */}
-          <section className="border-b border-white/10">
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* ============ THE SPACE ============ */}
+        <section className="py-16 sm:py-20 lg:py-24">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="grid gap-10 lg:grid-cols-5 lg:gap-16">
               <motion.div
                 variants={stagger}
                 initial="hidden"
                 whileInView="show"
-                viewport={{ once: true, amount: 0.4 }}
-                className="grid grid-cols-3 divide-x divide-white/10"
+                viewport={{ once: true, amount: 0.3 }}
+                className="lg:col-span-3"
               >
-                {specs.map((spec) => (
-                  <motion.div
-                    key={spec.label}
-                    variants={fadeUp}
-                    className="group relative flex flex-col items-center gap-1.5 px-2 py-6 text-center transition-colors duration-300 hover:bg-white/5 sm:gap-2 sm:py-9"
-                  >
-                    <span
-                      className="absolute inset-x-0 bottom-0 mx-auto h-[3px] w-0 rounded-full transition-all duration-500 group-hover:w-2/3"
-                      style={{ backgroundColor: BRIGHT }}
-                    />
-                    <span
-                      className="flex h-9 w-9 items-center justify-center rounded-full border shadow-inner transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6 sm:h-11 sm:w-11"
-                      style={{ borderColor: "rgba(255,255,255,0.1)", backgroundColor: `${BRIGHT}14`, color: BRIGHT }}
-                    >
-                      <SpecIcon name={spec.icon} />
-                    </span>
-                    <span className="text-[9px] font-bold uppercase tracking-[0.16em] text-white/60 sm:text-[11px] sm:tracking-[0.18em]">
-                      {spec.label}
-                    </span>
-                    <span className="font-display text-xs font-black text-white sm:text-base">
-                      {spec.value}
-                    </span>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </div>
-          </section>
-
-          {/* FACILITIES */}
-          <section className="relative overflow-hidden py-16 sm:py-20 lg:py-24">
-            <span
-              aria-hidden
-              className="pointer-events-none absolute -right-10 top-6 select-none font-display text-[16vw] font-black uppercase leading-none tracking-tighter text-white/[0.03]"
-            >
-              Comfort
-            </span>
-            <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.5 }}
-                transition={{ duration: 0.6 }}
-                className="mb-10 flex flex-col gap-3 border-l-4 pl-5 sm:mb-14"
-                style={{ borderColor: BRIGHT }}
-              >
-                <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.22em]" style={{ color: BRIGHT }}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M11 20A7 7 0 019 6c3 0 6 2 8 6 1.5 3 1 6-1 8-2 2-5 2-5 0z" />
-                  </svg>
-                  Room Highlights
-                </span>
-                <h2 className="font-display text-3xl font-black tracking-tight text-white sm:text-4xl">
-                  Amenities &amp; <span style={{ color: BRIGHT }}>Comforts</span>
-                </h2>
-              </motion.div>
-
-              <motion.div
-                variants={stagger}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, amount: 0.15 }}
-                className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
-              >
-                {room.facilities.map((facility) => (
-                  <motion.div
-                    key={facility}
-                    variants={fadeUp}
-                    className="group relative flex items-center gap-4 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-5 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:bg-white/[0.07] hover:shadow-lg"
-                    onMouseEnter={(e) => (e.currentTarget.style.borderColor = `${BRIGHT}66`)}
-                    onMouseLeave={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)")}
-                  >
-                    <span
-                      className="absolute left-0 top-0 h-full w-1 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                      style={{ backgroundColor: BRIGHT }}
-                    />
-                    <span
-                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6"
-                      style={{ borderColor: "rgba(255,255,255,0.1)", backgroundColor: `${BRIGHT}14`, color: BRIGHT }}
-                    >
-                      <FacilityIcon label={facility} />
-                    </span>
-                    <span className="text-sm font-bold text-white/90">{facility}</span>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </div>
-          </section>
-
-          {/* GALLERY */}
-          <section id="gallery" className="relative scroll-mt-24 overflow-hidden pb-16 sm:pb-20 lg:pb-24">
-            <span
-              aria-hidden
-              className="pointer-events-none absolute -left-10 top-0 select-none font-display text-[16vw] font-black uppercase leading-none tracking-tighter text-white/[0.03]"
-            >
-              Gallery
-            </span>
-            <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.5 }}
-                transition={{ duration: 0.6 }}
-                className="mb-10 flex flex-col gap-4 sm:mb-14 sm:flex-row sm:items-end sm:justify-between"
-              >
-                <div className="border-l-4 pl-5" style={{ borderColor: BRIGHT }}>
-                  <span className="text-[11px] font-bold uppercase tracking-[0.22em]" style={{ color: BRIGHT }}>
-                    {room.images.length} Photos
+                <motion.span
+                  variants={fadeUp}
+                  className="mb-6 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em]"
+                  style={{ color: BRIGHT }}
+                >
+                  <span className="h-px w-6 bg-current" />
+                  The Space
+                </motion.span>
+                <motion.p
+                  variants={fadeUp}
+                  className="text-base leading-[1.8] text-white/75 sm:text-lg"
+                >
+                  <span className="float-left mr-2 mt-1 font-display text-5xl font-black leading-none text-white">
+                    {room.description.charAt(0)}
                   </span>
-                  <h2 className="mt-1 font-display text-3xl font-black tracking-tight text-white sm:text-4xl">
-                    Visual Tour <span style={{ color: BRIGHT }}>Gallery</span>
-                  </h2>
-                </div>
+                  {room.description.slice(1)}
+                </motion.p>
               </motion.div>
 
               <motion.div
-                variants={stagger}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, amount: 0.05 }}
-                className="grid auto-rows-[160px] grid-cols-2 gap-3 sm:auto-rows-[220px] sm:gap-4 md:auto-rows-[250px] md:grid-cols-4 md:gap-6"
-              >
-                {room.images.map((img, i) => {
-                  const isHero = i === 0;
-                  const isWide = i === 1;
-                  const label = GALLERY_LABELS[i] ?? `Detail ${i + 1}`;
-
-                  return (
-                    <motion.div
-                      key={img}
-                      variants={fadeUp}
-                      onClick={() => openLightbox(i)}
-                      className={`group relative cursor-zoom-in overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-2 shadow-sm backdrop-blur-sm transition-all duration-500 hover:-translate-y-1.5 hover:shadow-2xl sm:rounded-3xl sm:p-2.5 ${
-                        isHero ? "col-span-2 row-span-2" : isWide ? "col-span-2" : "col-span-1"
-                      }`}
-                      onMouseEnter={(e) => (e.currentTarget.style.borderColor = `${BRIGHT}66`)}
-                      onMouseLeave={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)")}
-                    >
-                      <div className="relative h-full w-full overflow-hidden rounded-[1rem] sm:rounded-[1.25rem]" style={{ backgroundColor: `${DEEP}99` }}>
-                        <Image
-                          src={img}
-                          alt={`${room.name} — ${label}`}
-                          fill
-                          priority={isHero}
-                          sizes="(max-width: 768px) 50vw, 25vw"
-                          className="object-cover transition-transform duration-700 group-hover:scale-110"
-                        />
-                        <div
-                          className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                          style={{ background: `linear-gradient(to top, ${DEEP}cc, transparent)` }}
-                        />
-
-                        {/* Zoom hint icon */}
-                        <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                          <span
-                            className="flex h-9 w-9 items-center justify-center rounded-full backdrop-blur-md sm:h-10 sm:w-10"
-                            style={{ backgroundColor: `${BRIGHT}e6`, color: DEEP }}
-                          >
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                              <circle cx="11" cy="11" r="8" />
-                              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                              <line x1="11" y1="8" x2="11" y2="14" />
-                              <line x1="8" y1="11" x2="14" y2="11" />
-                            </svg>
-                          </span>
-                        </div>
-
-                        <div className="absolute bottom-0 left-0 right-0 translate-y-4 p-2.5 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 sm:p-3.5">
-                          <span
-                            className="inline-block truncate rounded-full px-3 py-1 text-[9px] font-bold uppercase tracking-wider shadow-sm sm:px-3.5 sm:py-1.5 sm:text-[10px]"
-                            style={{ backgroundColor: BRIGHT, color: DEEP }}
-                          >
-                            {label}
-                          </span>
-                        </div>
-                        <div
-                          className="absolute right-2 top-2 flex items-center gap-1.5 rounded-full px-2 py-1 text-[9px] font-bold backdrop-blur-md sm:right-3 sm:top-3 sm:px-2.5 sm:text-[10px]"
-                          style={{ backgroundColor: `${DEEP}99`, color: BRIGHT }}
-                        >
-                          {i + 1} / {room.images.length}
-                        </div>
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </motion.div>
-
-              {/* Gallery Footer CTA */}
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.5 }}
-                transition={{ duration: 0.6 }}
-                className="relative mt-10 overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] p-5 shadow-lg backdrop-blur-md sm:p-6"
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="lg:col-span-2"
               >
-                <span
-                  aria-hidden
-                  className="pointer-events-none absolute inset-x-0 top-0 h-[2px]"
-                  style={{ backgroundColor: BRIGHT }}
-                />
-                <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-                  <div className="flex items-center gap-4">
-                    <div
-                      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border sm:h-12 sm:w-12"
-                      style={{ borderColor: "rgba(255,255,255,0.1)", backgroundColor: `${BRIGHT}14` }}
-                    >
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={BRIGHT} strokeWidth="2">
-                        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
-                        <polyline points="14 2 14 8 20 8" />
-                        <line x1="16" y1="13" x2="8" y2="13" />
-                        <line x1="16" y1="17" x2="8" y2="17" />
-                      </svg>
-                    </div>
-                    <div>
-                      <p className="text-sm font-bold text-white">Want the full experience?</p>
-                      <p className="mt-0.5 text-xs text-white/60">
-                        Download our detailed room brochure with floor plans &amp; specs
-                      </p>
-                    </div>
+                <div
+                  className="relative overflow-hidden rounded-2xl border p-6 backdrop-blur-sm"
+                  style={{
+                    borderColor: `${BRIGHT}33`,
+                    backgroundColor: `${BRIGHT}08`,
+                  }}
+                >
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute -right-6 -top-6 h-20 w-20 rounded-full opacity-20 blur-2xl"
+                    style={{ backgroundColor: BRIGHT }}
+                  />
+                  <h3 className="mb-5 font-display text-lg font-black text-white">
+                    At a Glance
+                  </h3>
+                  <div className="flex flex-col gap-4">
+                    <SpecRow icon="ruler" label="Size" value={room.size} />
+                    <div className="h-px w-full bg-white/10" />
+                    <SpecRow icon="mountain" label="View" value={room.view} />
+                    <div className="h-px w-full bg-white/10" />
+                    <SpecRow icon="layers" label="Floor" value={room.floor} />
                   </div>
-                  <a
-                    href="#brochure"
-                    className="inline-flex w-full items-center justify-center gap-2 rounded-full px-6 py-3 text-xs font-bold shadow-xl transition-all duration-300 hover:-translate-y-0.5 sm:w-auto"
-                    style={{ backgroundColor: BRIGHT, color: DEEP, boxShadow: `0 8px 24px ${BRIGHT}59` }}
-                  >
-                    Download Brochure
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
-                      <polyline points="7 10 12 15 17 10" />
-                      <line x1="12" y1="15" x2="12" y2="3" />
-                    </svg>
-                  </a>
                 </div>
               </motion.div>
             </div>
-          </section>
-        </div>
+          </div>
+        </section>
+
+        {/* ============ APPOINTMENTS ============ */}
+        <section className="relative overflow-hidden border-t border-white/10 py-16 sm:py-20 lg:py-24">
+          <span
+            aria-hidden
+            className="pointer-events-none absolute -right-6 top-4 select-none font-display text-[18vw] font-black uppercase leading-none tracking-tighter text-white/[0.03]"
+          >
+            Comfort
+          </span>
+
+          <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.6 }}
+              className="mb-10 flex flex-col gap-3"
+            >
+              <span
+                className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em]"
+                style={{ color: BRIGHT }}
+              >
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M11 20A7 7 0 019 6c3 0 6 2 8 6 1.5 3 1 6-1 8-2 2-5 2-5 0z" />
+                </svg>
+                Appointments
+              </span>
+              <h2 className="font-display text-3xl font-black tracking-tight text-white sm:text-4xl">
+                What&rsquo;s Inside
+              </h2>
+            </motion.div>
+
+            <motion.div
+              variants={stagger}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.1 }}
+              className="flex flex-wrap gap-3"
+            >
+              {room.facilities.map((facility) => (
+                <motion.span
+                  key={facility}
+                  variants={fadeUp}
+                  className="inline-flex items-center gap-2 rounded-full border px-4 py-2.5 text-sm font-medium backdrop-blur-sm transition-all duration-300"
+                  style={{
+                    borderColor: `${BRIGHT}33`,
+                    backgroundColor: `${BRIGHT}0a`,
+                    color: "rgba(255,255,255,0.85)",
+                  }}
+                  whileHover={{
+                    borderColor: `${BRIGHT}99`,
+                    backgroundColor: `${BRIGHT}1a`,
+                    y: -2,
+                  }}
+                >
+                  <span className="shrink-0" style={{ color: BRIGHT }}>
+                    <FacilityIcon label={facility} />
+                  </span>
+                  {facility}
+                </motion.span>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+
+        {/* ============ IMPRESSIONS ============ */}
+        <section className="relative overflow-hidden border-t border-white/10 py-16 sm:py-20 lg:py-24">
+          <span
+            aria-hidden
+            className="pointer-events-none absolute -left-8 top-6 select-none font-display text-[18vw] font-black uppercase leading-none tracking-tighter text-white/[0.03]"
+          >
+            Frames
+          </span>
+
+          <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.6 }}
+              className="mb-10 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between"
+            >
+              <div>
+                <span
+                  className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em]"
+                  style={{ color: BRIGHT }}
+                >
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <rect x="3" y="3" width="18" height="18" rx="2" />
+                    <circle cx="8.5" cy="8.5" r="1.5" />
+                    <polyline points="21 15 16 10 5 21" />
+                  </svg>
+                  Impressions
+                </span>
+                <h2 className="mt-1 font-display text-3xl font-black tracking-tight text-white sm:text-4xl">
+                  Visual <span style={{ color: BRIGHT }}>Journey</span>
+                </h2>
+              </div>
+              <span className="text-sm font-medium text-white/40">
+                {room.images.length} photos
+              </span>
+            </motion.div>
+
+            <motion.div
+              variants={stagger}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.05 }}
+              className="grid gap-4 sm:grid-cols-2 sm:gap-6"
+            >
+              {room.images.map((img, i) => {
+                const isFirst = i === 0;
+                const label = GALLERY_LABELS[i] ?? `Detail ${i + 1}`;
+                return (
+                  <motion.div
+                    key={img}
+                    variants={fadeUp}
+                    onClick={() => open(i)}
+                    className={`group relative cursor-zoom-in overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl ${
+                      isFirst ? "sm:col-span-2 sm:row-span-2" : "sm:col-span-1"
+                    }`}
+                    style={{ aspectRatio: isFirst ? "16/9" : "4/3" }}
+                    onMouseEnter={(e) => (e.currentTarget.style.borderColor = `${BRIGHT}66`)}
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)")
+                    }
+                  >
+                    <Image
+                      src={img}
+                      alt={`${room.name} — ${label}`}
+                      fill
+                      priority={i < 2}
+                      sizes={
+                        isFirst
+                          ? "(max-width: 768px) 100vw, 66vw"
+                          : "(max-width: 768px) 100vw, 33vw"
+                      }
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div
+                      className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                      style={{ background: `linear-gradient(to top, ${DEEP}cc, transparent)` }}
+                    />
+                    <div className="absolute bottom-0 left-0 right-0 translate-y-4 p-3 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 sm:p-4">
+                      <span
+                        className="inline-block truncate rounded-full px-3 py-1 text-[9px] font-bold uppercase tracking-wider shadow-sm"
+                        style={{ backgroundColor: BRIGHT, color: DEEP }}
+                      >
+                        {label}
+                      </span>
+                    </div>
+                    <div
+                      className="absolute right-2 top-2 flex items-center gap-1.5 rounded-full px-2 py-1 text-[9px] font-bold backdrop-blur-md sm:right-3 sm:top-3"
+                      style={{ backgroundColor: `${DEEP}99`, color: BRIGHT }}
+                    >
+                      {i + 1} / {room.images.length}
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+          </div>
+        </section>
+
+        {/* ============ RESERVE ============ */}
+        <section className="relative border-t border-white/10 py-16 sm:py-20 lg:py-24">
+          <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.6 }}
+            >
+              <div
+                className="mx-auto mb-6 h-px w-12"
+                style={{ backgroundColor: BRIGHT }}
+              />
+              <h2 className="font-display text-3xl font-black tracking-tight text-white sm:text-4xl lg:text-5xl">
+                Ready to <span style={{ color: BRIGHT }}>Unwind</span>?
+              </h2>
+              <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-white/60 sm:text-base">
+                Reserve your stay at The Himalayan Shire and experience the
+                warmth of handpicked comfort amidst the mountains.
+              </p>
+              <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                <a
+                  href="#book"
+                  className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full px-8 py-4 text-sm font-bold shadow-xl transition-all duration-300 hover:-translate-y-0.5"
+                  style={{
+                    backgroundColor: BRIGHT,
+                    color: DEEP,
+                    boxShadow: `0 10px 30px ${BRIGHT}66`,
+                  }}
+                >
+                  <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/50 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+                  <span className="relative">Book This Room</span>
+                  <svg className="relative" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path d="M1 7H13M13 7L7.5 1.5M13 7L7.5 12.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </a>
+                <a
+                  href="/contact"
+                  className="inline-flex items-center gap-2 rounded-full border-2 px-8 py-4 text-sm font-bold backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5"
+                  style={{
+                    borderColor: `${BRIGHT}4d`,
+                    backgroundColor: `${DEEP}33`,
+                    color: "rgba(255,255,255,0.85)",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = `${BRIGHT}99`;
+                    e.currentTarget.style.color = BRIGHT;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = `${BRIGHT}4d`;
+                    e.currentTarget.style.color = "rgba(255,255,255,0.85)";
+                  }}
+                >
+                  Enquire
+                </a>
+              </div>
+            </motion.div>
+          </div>
+        </section>
       </div>
 
-      {/* STICKY MOBILE BOOK BAR */}
+      {/* ============ STICKY MOBILE BOOK BAR ============ */}
       <motion.div
-        style={{ opacity: floatingCtaOpacity, y: floatingCtaY, pointerEvents: floatingCtaPointerEvents }}
+        style={{ opacity: ctaOpacity, y: ctaY, pointerEvents: ctaPointer }}
         className="fixed inset-x-4 bottom-4 z-50 lg:hidden"
       >
         <div
@@ -651,7 +535,9 @@ export function RoomPageContent({ room }: { room: Room }) {
         >
           <div className="min-w-0">
             <p className="truncate text-xs font-bold text-white">{room.name}</p>
-            <p className="text-[10px] font-semibold" style={{ color: BRIGHT }}>{room.category}</p>
+            <p className="text-[10px] font-semibold" style={{ color: BRIGHT }}>
+              {room.category}
+            </p>
           </div>
           <a
             href="#book"
@@ -666,22 +552,22 @@ export function RoomPageContent({ room }: { room: Room }) {
         </div>
       </motion.div>
 
-      {/* LIGHTBOX */}
+      {/* ============ LIGHTBOX ============ */}
       <AnimatePresence>
-        {lightboxIndex !== null && (
+        {index !== null && (
           <motion.div
-            variants={modalBackdrop}
-            initial="hidden"
-            animate="show"
-            exit="exit"
-            onClick={closeLightbox}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            onClick={close}
             role="dialog"
             aria-modal="true"
             aria-label="Room image viewer"
             className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm sm:p-8"
           >
             <button
-              onClick={closeLightbox}
+              onClick={close}
               aria-label="Close image viewer"
               className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white backdrop-blur-md transition-colors hover:bg-white/15 sm:right-6 sm:top-6"
             >
@@ -694,7 +580,7 @@ export function RoomPageContent({ room }: { room: Room }) {
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                prevImage();
+                prev();
               }}
               aria-label="Previous image"
               className="absolute left-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white backdrop-blur-md transition-colors hover:bg-white/15 sm:left-6"
@@ -706,7 +592,7 @@ export function RoomPageContent({ room }: { room: Room }) {
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                nextImage();
+                next();
               }}
               aria-label="Next image"
               className="absolute right-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white backdrop-blur-md transition-colors hover:bg-white/15 sm:right-6"
@@ -717,17 +603,17 @@ export function RoomPageContent({ room }: { room: Room }) {
             </button>
 
             <motion.div
-              key={lightboxIndex}
-              variants={modalImage}
-              initial="hidden"
-              animate="show"
-              exit="exit"
+              key={index}
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
               onClick={(e) => e.stopPropagation()}
               className="relative h-[60vh] w-full max-w-5xl sm:h-[75vh]"
             >
               <Image
-                src={room.images[lightboxIndex]}
-                alt={`${room.name} — ${GALLERY_LABELS[lightboxIndex] ?? "Detail"}`}
+                src={room.images[index]}
+                alt={`${room.name} — ${GALLERY_LABELS[index] ?? "Detail"}`}
                 fill
                 className="object-contain"
                 sizes="90vw"
@@ -736,7 +622,8 @@ export function RoomPageContent({ room }: { room: Room }) {
                 className="absolute -bottom-10 left-1/2 -translate-x-1/2 rounded-full border px-4 py-1.5 text-xs font-bold backdrop-blur-md"
                 style={{ borderColor: `${BRIGHT}33`, backgroundColor: `${DEEP}b3`, color: BRIGHT }}
               >
-                {lightboxIndex + 1} / {room.images.length} — {GALLERY_LABELS[lightboxIndex] ?? "Detail"}
+                {index + 1} / {room.images.length} &mdash;{" "}
+                {GALLERY_LABELS[index] ?? "Detail"}
               </div>
             </motion.div>
           </motion.div>
@@ -747,12 +634,42 @@ export function RoomPageContent({ room }: { room: Room }) {
 }
 
 /* ================================================================== */
+/*  SpecRow — single spec line for the At-a-Glance card                */
+/* ================================================================== */
+function SpecRow({
+  icon,
+  label,
+  value,
+}: {
+  icon: "ruler" | "mountain" | "layers";
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="flex items-center gap-3">
+      <span
+        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border"
+        style={{ borderColor: "rgba(255,255,255,0.1)", backgroundColor: `${BRIGHT}14`, color: BRIGHT }}
+      >
+        <SpecIcon name={icon} />
+      </span>
+      <div className="flex flex-col">
+        <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-white/50">
+          {label}
+        </span>
+        <span className="font-display text-sm font-black text-white">{value}</span>
+      </div>
+    </div>
+  );
+}
+
+/* ================================================================== */
 /*  SpecIcon — Size / View / Floor                                     */
 /* ================================================================== */
 function SpecIcon({ name }: { name: "ruler" | "mountain" | "layers" }) {
   const common = {
-    width: 16,
-    height: 16,
+    width: 14,
+    height: 14,
     viewBox: "0 0 24 24",
     fill: "none",
     stroke: "currentColor",
@@ -827,8 +744,8 @@ function getFacilityIconType(label: string): FacilityIconType {
 function FacilityIcon({ label }: { label: string }) {
   const type = getFacilityIconType(label);
   const common = {
-    width: 16,
-    height: 16,
+    width: 14,
+    height: 14,
     viewBox: "0 0 24 24",
     fill: "none",
     stroke: "currentColor",
