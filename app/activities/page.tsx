@@ -68,15 +68,15 @@ const ICONS: Record<(typeof ACTIVITIES)[number]["icon"], typeof Home> = {
 };
 
 const SIGHTSEEING = [
-  { name: "Tungesh Peak Hike", distance: "6 km", note: "Cheog, Shimla", image: "/images/sightseeing/tungesh-peak.jfif" },
-  { name: "Deshu Peak / Fagu Top", distance: "3 km", note: null, image: "/images/sightseeing/deshu-peak.jfif" },
-  { name: "Kufri Adventure Park", distance: "5.6 km", note: null, image: "/images/sightseeing/kufri-park.jfif" },
-  { name: "Mahasu Peak, Kufri", distance: "6 km", note: null, image: "/images/sightseeing/mahasu-peak.jfif" },
-  { name: "Rashtrapati Niwas, Mashobra", distance: "12 km", note: null, image: "/images/sightseeing/rashtrapati-niwas.jfif" },
-  { name: "Jakhu Temple", distance: "20 km", note: "Shimla", image: "/images/sightseeing/jakhu-temple.jfif" },
-  { name: "Shimla Mall Road", distance: "20 km", note: null, image: "/images/sightseeing/mall-road.jfif" },
-  { name: "Narkanda — Hatu Peak", distance: "45 km", note: null, image: "/images/sightseeing/hatu-peak.jfif" },
-  { name: "Tata Pani", distance: "62 km", note: null, image: "/images/sightseeing/tata-pani.jfif" },
+  { name: "Tungesh Peak Hike", distance: "6 km", note: "Cheog, Shimla", image: "/images/sightseeing/tungesh-peak.jpg" },
+  { name: "Deshu Peak / Fagu Top", distance: "3 km", note: null, image: "/images/sightseeing/deshu-peak.jpg" },
+  { name: "Kufri Adventure Park", distance: "5.6 km", note: null, image: "/images/sightseeing/kufri-park.jpg" },
+  { name: "Mahasu Peak, Kufri", distance: "6 km", note: null, image: "/images/sightseeing/mahasu-peak.jpg" },
+  { name: "Rashtrapati Niwas, Mashobra", distance: "12 km", note: null, image: "/images/sightseeing/rashtrapati-niwas.jpg" },
+  { name: "Jakhu Temple", distance: "20 km", note: "Shimla", image: "/images/sightseeing/jakhu-temple.jpg" },
+  { name: "Shimla Mall Road", distance: "20 km", note: null, image: "/images/sightseeing/mall-road.jpg" },
+  { name: "Narkanda — Hatu Peak", distance: "45 km", note: null, image: "/images/sightseeing/hatu-peak.jpg" },
+  { name: "Tata Pani", distance: "62 km", note: null, image: "/images/sightseeing/tata-pani.jpg" },
 ];
 
 const GALLERY_IMAGES = Array.from(
@@ -285,7 +285,6 @@ export default function ActivitiesPage() {
                     src={place.image}
                     alt={place.name}
                     fill
-                    unoptimized
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
