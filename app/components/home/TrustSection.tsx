@@ -9,7 +9,7 @@ import { fadeUp, stagger } from "../ui/Motion";
 
 export function TrustSection() {
   return (
-    <section id="trust" className="relative bg-white py-24 sm:py-32 lg:py-40">
+    <section id="trust" className="relative bg-pine-100/50 py-24 sm:py-32 lg:py-40">
       <div aria-hidden className="pointer-events-none absolute -left-32 top-1/3 h-96 w-96 rounded-full bg-emerald-200/15 blur-[130px]" />
 
       <Container>

@@ -16,7 +16,7 @@ export function BrandIntro() {
     <section
       id="story"
       ref={ref}
-      className="relative overflow-hidden bg-white py-24 sm:py-32 lg:py-40"
+      className="relative overflow-hidden bg-pine-50 py-24 sm:py-32 lg:py-40"
     >
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">

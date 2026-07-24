@@ -15,7 +15,7 @@ const policies = [
 
 export default function PetPolicyPage() {
   return (
-    <main className="min-h-screen bg-white font-sans text-emerald-950 selection:bg-gold-200/30">
+    <main className="min-h-screen bg-pine-50 font-sans text-pine-950 selection:bg-gold-200/30">
       <SiteNav />
 
       <section className="relative overflow-hidden pt-24 sm:pt-28 lg:pt-32 pb-16 sm:pb-20 lg:pb-24">

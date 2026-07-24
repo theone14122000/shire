@@ -11,7 +11,7 @@ const MAPS_URL =
 
 export default function ContactPage() {
   return (
-    <main className="relative min-h-screen bg-white font-sans text-emerald-950 selection:bg-gold-200/30">
+    <main className="relative min-h-screen bg-pine-50 font-sans text-pine-950 selection:bg-gold-200/30">
       <div aria-hidden className="pointer-events-none fixed inset-0" style={{
         background: "radial-gradient(60% 40% at 85% 5%, rgba(251,191,36,0.06) 0%, transparent 55%), radial-gradient(50% 40% at 10% 15%, rgba(16,185,129,0.08) 0%, transparent 60%)",
       }} />

@@ -30,7 +30,7 @@ const HIGHLIGHTS = [
 
 export default function KitchenPage() {
   return (
-    <main className="min-h-screen bg-white font-sans text-emerald-950 selection:bg-gold-200/30">
+    <main className="min-h-screen bg-pine-50 font-sans text-pine-950 selection:bg-gold-200/30">
       <SiteNav />
 
       <section className="relative h-[65vh] min-h-[460px] overflow-hidden sm:h-[70vh] lg:h-[75vh]">

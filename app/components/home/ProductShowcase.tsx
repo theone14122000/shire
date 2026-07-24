@@ -10,7 +10,7 @@ export function ProductShowcase() {
   return (
     <section
       id="stories"
-      className="relative bg-emerald-50/50 py-24 sm:py-32 lg:py-40"
+      className="relative bg-pine-100 py-24 sm:py-32 lg:py-40"
     >
       <div aria-hidden className="pointer-events-none absolute -right-32 top-10 h-96 w-96 rounded-full bg-gold-200/25 blur-[140px]" />
 

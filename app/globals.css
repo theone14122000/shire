@@ -1,38 +1,39 @@
 @import "tailwindcss";
 
 @theme {
-  --color-emerald-50: #ecfdf5;
-  --color-emerald-100: #d1fae5;
-  --color-emerald-200: #a7f3d0;
-  --color-emerald-300: #6ee7b7;
-  --color-emerald-400: #34d399;
-  --color-emerald-500: #10b981;
-  --color-emerald-600: #059669;
-  --color-emerald-700: #047857;
-  --color-emerald-800: #065f46;
-  --color-emerald-900: #064e3b;
-  --color-emerald-950: #022c22;
+  /* ── Deep Forest Green (Pine) — primary palette ── */
+  --color-pine-50: #f0f7f0;
+  --color-pine-100: #dce9dc;
+  --color-pine-200: #b8d4b8;
+  --color-pine-300: #7fb87f;
+  --color-pine-400: #4a9e4a;
+  --color-pine-500: #2d7a2d;
+  --color-pine-600: #1a5c1a;
+  --color-pine-700: #0f3d0f;
+  --color-pine-800: #082808;
+  --color-pine-900: #041404;
+  --color-pine-950: #020a02;
 
-  --color-ink-900: #064e3b;
-  --color-ink-800: #065f46;
-  --color-ink-700: #047857;
-  --color-ink-500: #059669;
-  --color-ink-300: #10b981;
-  --color-ink-100: #34d399;
-  --color-ink-50: #6ee7b7;
+  /* ── Mountain Clay — earthy trail tones ── */
+  --color-clay-50: #faf6f0;
+  --color-clay-100: #f0e8dc;
+  --color-clay-200: #e0d0be;
+  --color-clay-300: #c0a88a;
+  --color-clay-400: #a08060;
+  --color-clay-500: #806040;
 
-  --color-accent-gold: #d4a017;
-  --color-accent-emerald: #065f46;
-  --color-accent-leaf: #059669;
-  --color-accent-mint: #d1fae5;
+  /* ── Highland Mist — slate grey, mountain fog ── */
+  --color-mist-50: #f5f7f8;
+  --color-mist-100: #e8ecef;
+  --color-mist-200: #d0d6dc;
+  --color-mist-300: #aab3bd;
+  --color-mist-400: #848f9c;
+  --color-mist-500: #5f6b78;
 
-  --color-sage-50: #faf8f5;
-  --color-sage-100: #f5f0eb;
-  --color-sage-200: #ede4d8;
-  --color-sage-300: #e2ddd5;
-  --color-sage-400: #c9c2b5;
-  --color-sage-500: #a99e8e;
+  /* ── Mountain Sky ── */
+  --color-sky-400: #7eb8da;
 
+  /* ── Warm Gold — sunlight through the canopy ── */
   --color-gold-50: #fffbeb;
   --color-gold-100: #fef3c7;
   --color-gold-200: #fde68a;
@@ -43,35 +44,72 @@
   --color-gold-700: #8b6914;
   --color-gold-800: #6b4f0a;
 
-  --color-cream-50: #faf8f5;
-  --color-cream-100: #f5f0eb;
-  --color-cream-200: #ede4d8;
-  --color-cream-300: #d4c9b8;
-  --color-cream-400: #a89888;
-  --color-cream-500: #8a7b6b;
+  /* ── Cream & Stone — warm neutrals ── */
+  --color-cream-50: #faf6f0;
+  --color-cream-100: #f0e8dc;
+  --color-cream-200: #e0d0be;
+  --color-cream-300: #c0a88a;
+  --color-cream-400: #a08060;
+  --color-cream-500: #806040;
 
-  --color-stone-50: #f8f7f5;
-  --color-stone-100: #f0ede8;
-  --color-stone-200: #e2ddd5;
-  --color-stone-300: #c9c2b5;
-  --color-stone-400: #a99e8e;
-  --color-stone-500: #8a7f6e;
+  --color-stone-50: #f5f7f8;
+  --color-stone-100: #e8ecef;
+  --color-stone-200: #d0d6dc;
+  --color-stone-300: #aab3bd;
+  --color-stone-400: #848f9c;
+  --color-stone-500: #5f6b78;
 
+  /* ── Backward-compatible aliases (so Hero + old refs keep working) ── */
+  --color-emerald-50: #f0f7f0;
+  --color-emerald-100: #dce9dc;
+  --color-emerald-200: #b8d4b8;
+  --color-emerald-300: #7fb87f;
+  --color-emerald-400: #4a9e4a;
+  --color-emerald-500: #2d7a2d;
+  --color-emerald-600: #1a5c1a;
+  --color-emerald-700: #0f3d0f;
+  --color-emerald-800: #082808;
+  --color-emerald-900: #041404;
+  --color-emerald-950: #020a02;
+
+  --color-ink-900: #082808;
+  --color-ink-800: #0f3d0f;
+  --color-ink-700: #1a5c1a;
+  --color-ink-500: #2d7a2d;
+  --color-ink-300: #4a9e4a;
+  --color-ink-100: #7fb87f;
+  --color-ink-50: #b8d4b8;
+
+  --color-sage-50: #f0f7f0;
+  --color-sage-100: #dce9dc;
+  --color-sage-200: #b8d4b8;
+  --color-sage-300: #7fb87f;
+  --color-sage-400: #4a9e4a;
+  --color-sage-500: #2d7a2d;
+
+  --color-accent-gold: #d4a017;
+  --color-accent-emerald: #0f3d0f;
+  --color-accent-leaf: #2d7a2d;
+  --color-accent-mint: #dce9dc;
+
+  /* ── Typography ── */
   --font-sans: var(--font-raleway), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
   --font-display: var(--font-raleway), ui-serif, Georgia, "Times New Roman", serif;
 
   --tracking-display: -0.025em;
   --tracking-eyebrow: 0.32em;
 
+  /* ── Radii ── */
   --radius-card: 0.85rem;
   --radius-soft: 1.25rem;
   --radius-luxe: 1.75rem;
 
-  --shadow-soft: 0 1px 2px rgba(2, 44, 34, 0.05), 0 8px 24px rgba(2, 44, 34, 0.06);
-  --shadow-lift: 0 2px 4px rgba(2, 44, 34, 0.06), 0 24px 48px -12px rgba(2, 44, 34, 0.18);
-  --shadow-card: 0 1px 2px rgba(2, 44, 34, 0.07), 0 12px 28px -8px rgba(2, 44, 34, 0.14);
-  --shadow-card-hover: 0 4px 8px rgba(2, 44, 34, 0.10), 0 32px 64px -16px rgba(2, 44, 34, 0.28);
-  --shadow-nav: 0 4px 24px rgba(2, 44, 34, 0.08);
+  /* ── Shadows ── */
+  --shadow-soft: 0 1px 2px rgba(2, 10, 2, 0.05), 0 8px 24px rgba(2, 10, 2, 0.06);
+  --shadow-lift: 0 2px 4px rgba(2, 10, 2, 0.06), 0 24px 48px -12px rgba(2, 10, 2, 0.18);
+  --shadow-card: 0 1px 2px rgba(2, 10, 2, 0.07), 0 12px 28px -8px rgba(2, 10, 2, 0.14);
+  --shadow-card-hover: 0 4px 8px rgba(2, 10, 2, 0.10), 0 32px 64px -16px rgba(2, 10, 2, 0.28);
+  --shadow-nav: 0 4px 24px rgba(2, 10, 2, 0.08);
 }
 
 @layer base {
@@ -83,22 +121,22 @@
   }
 
   body {
-    background-color: var(--color-cream-50);
-    color: var(--color-emerald-950);
+    background-color: var(--color-pine-800);
+    color: var(--color-pine-50);
     font-family: var(--font-sans);
     font-weight: 400;
   }
 
   ::selection {
-    background-color: var(--color-emerald-200);
-    color: var(--color-emerald-950);
+    background-color: var(--color-gold-300);
+    color: var(--color-pine-950);
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
     font-weight: 700;
     letter-spacing: var(--tracking-display);
-    color: var(--color-emerald-950);
+    color: var(--color-pine-50);
   }
 }
 
@@ -108,47 +146,47 @@
   }
 
   .eyebrow {
-    @apply text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-emerald-700 font-bold;
+    @apply text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-pine-400 font-bold;
   }
 
   .h-display {
-    @apply font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5rem] leading-[1.02] tracking-[-0.03em] text-emerald-950 font-black;
+    @apply font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5rem] leading-[1.02] tracking-[-0.03em] text-pine-50 font-black;
   }
 
   .h-section {
-    @apply font-display text-3xl sm:text-4xl md:text-5xl lg:text-[3.2rem] leading-[1.04] tracking-[-0.025em] text-emerald-950 font-black;
+    @apply font-display text-3xl sm:text-4xl md:text-5xl lg:text-[3.2rem] leading-[1.04] tracking-[-0.025em] text-pine-950 font-black;
   }
 
   .h-card {
-    @apply font-display text-xl sm:text-[1.5rem] leading-tight tracking-[-0.015em] text-emerald-950 font-black;
+    @apply font-display text-xl sm:text-[1.5rem] leading-tight tracking-[-0.015em] text-pine-950 font-black;
   }
 
   .body-lg {
-    @apply text-base sm:text-lg leading-[1.8] text-emerald-900/70 font-normal;
+    @apply text-base sm:text-lg leading-[1.8] text-pine-900/80 font-normal;
   }
 
   .body-base {
-    @apply text-sm sm:text-base leading-[1.75] text-emerald-900/70 font-normal;
+    @apply text-sm sm:text-base leading-[1.75] text-pine-900/80 font-normal;
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-emerald-800 px-7 py-3.5 text-sm font-bold tracking-wide text-cream-50 transition-all duration-300 hover:bg-emerald-700 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-pine-700 px-7 py-3.5 text-sm font-bold tracking-wide text-pine-50 transition-all duration-300 hover:bg-pine-600 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-emerald-800/30 bg-transparent px-7 py-3.5 text-sm font-bold tracking-wide text-emerald-800 transition-all duration-300 hover:border-gold-500 hover:bg-gold-50 hover:text-gold-700;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-pine-700/30 bg-transparent px-7 py-3.5 text-sm font-bold tracking-wide text-pine-700 transition-all duration-300 hover:border-gold-500 hover:bg-gold-50 hover:text-gold-700;
   }
 
   .btn-gold {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-gold-500 px-7 py-3.5 text-sm font-bold tracking-wide text-emerald-950 transition-all duration-300 hover:bg-gold-400 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-gold-500 px-7 py-3.5 text-sm font-bold tracking-wide text-pine-950 transition-all duration-300 hover:bg-gold-400 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0;
   }
 
   .card-luxe {
-    @apply relative overflow-hidden rounded-[var(--radius-card)] bg-white border border-emerald-200/40 shadow-[var(--shadow-card)] transition-all duration-500 hover:-translate-y-1 hover:border-gold-300/50 hover:shadow-[var(--shadow-card-hover)];
+    @apply relative overflow-hidden rounded-[var(--radius-card)] bg-white border border-pine-200/40 shadow-[var(--shadow-card)] transition-all duration-500 hover:-translate-y-1 hover:border-gold-300/50 hover:shadow-[var(--shadow-card-hover)];
   }
 
   .divider-thin {
-    @apply h-px w-full bg-gradient-to-r from-transparent via-emerald-200 to-transparent;
+    @apply h-px w-full bg-gradient-to-r from-transparent via-pine-200 to-transparent;
   }
 
   .divider-gold {
@@ -158,17 +196,17 @@
 
 .ambient {
   background-image:
-    radial-gradient(800px 400px at 80% -5%, rgba(16, 185, 129, 0.08), transparent 60%),
-    radial-gradient(600px 400px at 0% 20%, rgba(251, 191, 36, 0.06), transparent 60%);
+    radial-gradient(800px 400px at 80% -5%, rgba(45, 122, 45, 0.10), transparent 60%),
+    radial-gradient(600px 400px at 0% 20%, rgba(212, 160, 23, 0.06), transparent 60%);
 }
 
 .hero-overlay {
   background-image: linear-gradient(
     to bottom,
-    rgba(2, 44, 34, 0.35) 0%,
-    rgba(2, 44, 34, 0.10) 35%,
-    rgba(2, 44, 34, 0.30) 70%,
-    rgba(2, 44, 34, 0.65) 100%
+    rgba(2, 10, 2, 0.35) 0%,
+    rgba(2, 10, 2, 0.10) 35%,
+    rgba(2, 10, 2, 0.30) 70%,
+    rgba(2, 10, 2, 0.65) 100%
   );
 }
 

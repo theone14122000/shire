@@ -60,7 +60,7 @@ export default function BlogListingClient({
   return (
     <main
       ref={pageRef}
-      className="min-h-screen bg-white font-sans text-emerald-950 selection:bg-gold-200/30"
+      className="min-h-screen bg-pine-50 font-sans text-pine-950 selection:bg-gold-200/30"
     >
       <MotionConfig reducedMotion="user">
         <SiteNav />

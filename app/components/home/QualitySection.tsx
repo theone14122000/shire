@@ -8,7 +8,7 @@ import { fadeUp, stagger } from "../ui/Motion";
 
 export function QualitySection() {
   return (
-    <section id="quality" className="relative bg-emerald-50/50 py-24 sm:py-32 lg:py-40">
+    <section id="quality" className="relative bg-pine-50 py-24 sm:py-32 lg:py-40">
       <Container>
         <div className="max-w-3xl mb-14 lg:mb-20">
           <SectionHeading

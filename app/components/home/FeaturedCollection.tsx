@@ -20,7 +20,7 @@ export function FeaturedCollection() {
     <section
       id="rooms"
       ref={ref}
-      className="relative overflow-hidden bg-cream-50 py-24 sm:py-32 lg:py-40"
+      className="relative overflow-hidden bg-pine-100 py-24 sm:py-32 lg:py-40"
     >
       <span aria-hidden className="pointer-events-none absolute -right-6 top-10 select-none font-display text-[18vw] font-black uppercase leading-none tracking-tighter text-emerald-950/[0.03]">
         Rooms
