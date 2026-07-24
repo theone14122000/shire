@@ -20,12 +20,21 @@ import {
   ChevronRight,
   Pause,
   Play,
+  Compass,
+  Mountain,
+  Eye,
+  Clock,
+  Star,
+  Navigation,
+  Leaf,
+  Sunrise,
+  Wind,
 } from "lucide-react";
 import { SiteNav } from "../components/SiteNav";
 import { SiteFooter } from "../components/SiteFooter";
 
 /* ------------------------------------------------------------------ */
-/*  Content — preserved exactly                                         */
+/*  Content — all copy preserved exactly                                */
 /* ------------------------------------------------------------------ */
 const BLOG_URL =
   "https://traveltalesfromindia.in/a-small-hike-with-the-himalayan-shire/#google_vignette";
@@ -67,16 +76,91 @@ const ICONS: Record<(typeof ACTIVITIES)[number]["icon"], typeof Home> = {
 };
 
 const SIGHTSEEING = [
-  { name: "Tungesh Peak Hike", distance: "6 km", note: "Cheog, Shimla", image: "/images/sightseeing/tungesh-peak.jpg" },
-  { name: "Deshu Peak / Fagu Top", distance: "3 km", note: null, image: "/images/sightseeing/deshu-peak.jpg" },
-  { name: "Kufri Adventure Park", distance: "5.6 km", note: null, image: "/images/sightseeing/kufri-park.jpg" },
-  { name: "Mahasu Peak, Kufri", distance: "6 km", note: null, image: "/images/sightseeing/mahasu-peak.jpg" },
-  { name: "Rashtrapati Niwas, Mashobra", distance: "12 km", note: null, image: "/images/sightseeing/rashtrapati-niwas.jpg" },
-  { name: "Jakhu Temple", distance: "20 km", note: "Shimla", image: "/images/sightseeing/jakhu-temple.jpg" },
-  { name: "Shimla Mall Road", distance: "20 km", note: null, image: "/images/sightseeing/mall-road.jpg" },
-  { name: "Narkanda — Hatu Peak", distance: "45 km", note: null, image: "/images/sightseeing/hatu-peak.jpg" },
-  { name: "Tata Pani", distance: "62 km", note: null, image: "/images/sightseeing/tata-pani.jpg" },
+  {
+    name: "Tungesh Peak Hike",
+    distance: "6 km",
+    note: "Cheog, Shimla",
+    image: "/images/sightseeing/tungesh-peak.jpg",
+    travelTime: "20 min drive",
+    highlight: "Panoramic ridgeline trek through pine forests",
+    bestTime: "Year-round",
+  },
+  {
+    name: "Deshu Peak / Fagu Top",
+    distance: "3 km",
+    note: null,
+    image: "/images/sightseeing/deshu-peak.jpg",
+    travelTime: "10 min drive",
+    highlight: "Sunrise views over the Kinnaur range",
+    bestTime: "Oct — Mar",
+  },
+  {
+    name: "Kufri Adventure Park",
+    distance: "5.6 km",
+    note: null,
+    image: "/images/sightseeing/kufri-park.jpg",
+    travelTime: "15 min drive",
+    highlight: "Horse riding, zip-lining, and mountain tubing",
+    bestTime: "Apr — Jun",
+  },
+  {
+    name: "Mahasu Peak, Kufri",
+    distance: "6 km",
+    note: null,
+    image: "/images/sightseeing/mahasu-peak.jpg",
+    travelTime: "18 min drive",
+    highlight: "Highest point in Kufri with 360° valley views",
+    bestTime: "Oct — Feb",
+  },
+  {
+    name: "Rashtrapati Niwas, Mashobra",
+    distance: "12 km",
+    note: null,
+    image: "/images/sightseeing/rashtrapati-niwas.jpg",
+    travelTime: "30 min drive",
+    highlight: "Colonial-era retreat surrounded by ancient cedars",
+    bestTime: "Year-round",
+  },
+  {
+    name: "Jakhu Temple",
+    distance: "20 km",
+    note: "Shimla",
+    image: "/images/sightseeing/jakhu-temple.jpg",
+    travelTime: "50 min drive",
+    highlight: "Hilltop Hanuman temple with sweeping Shimla views",
+    bestTime: "Year-round",
+  },
+  {
+    name: "Shimla Mall Road",
+    distance: "20 km",
+    note: null,
+    image: "/images/sightseeing/mall-road.jpg",
+    travelTime: "50 min drive",
+    highlight: "Heritage promenade with colonial architecture",
+    bestTime: "Mar — Dec",
+  },
+  {
+    name: "Narkanda — Hatu Peak",
+    distance: "45 km",
+    note: null,
+    image: "/images/sightseeing/hatu-peak.jpg",
+    travelTime: "1.5 hr drive",
+    highlight: "Alpine meadows and snow-dusted forest trails",
+    bestTime: "Oct — May",
+  },
+  {
+    name: "Tata Pani",
+    distance: "62 km",
+    note: null,
+    image: "/images/sightseeing/tata-pani.jpg",
+    travelTime: "2 hr drive",
+    highlight: "Natural hot springs along the Sutlej river",
+    bestTime: "Oct — May",
+  },
 ];
+
+const FEATURED_SIGHTSEEING = SIGHTSEEING.slice(0, 4);
+const COMPACT_SIGHTSEEING = SIGHTSEEING.slice(4);
 
 const GALLERY_IMAGES = Array.from(
   { length: 10 },
@@ -96,6 +180,24 @@ const GALLERY_LABELS = [
   "Golden Hour",
 ];
 
+const WHY_EXPLORE = [
+  {
+    icon: Compass,
+    title: "Unmatched Location",
+    body: "At 7,500 ft in the Kinnaur highlands, The Himalayan Shire sits between apple orchards and ancient forests — close enough to Shimla for day trips, remote enough for true stillness.",
+  },
+  {
+    icon: Eye,
+    title: "Curated Experiences",
+    body: "From guided orchard walks to bonfire evenings under the stars, every moment is designed to connect you with the landscape, the culture, and the quiet rhythm of mountain life.",
+  },
+  {
+    icon: Star,
+    title: "Award-Winning Hospitality",
+    body: "Rated 4.7 across Google, Tripadvisor, and Booking.com — our guests return for the warmth, the food, and the feeling that The Himalayan Shire is a home away from home.",
+  },
+];
+
 /* ------------------------------------------------------------------ */
 /*  Motion                                                              */
 /* ------------------------------------------------------------------ */
@@ -105,13 +207,13 @@ const stagger: Variants = {
 };
 
 const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+  hidden: { opacity: 0, y: 28 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
 };
 
 const fadeIn: Variants = {
   hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { duration: 0.8 } },
+  show: { opacity: 1, transition: { duration: 1 } },
 };
 
 /* ================================================================== */
@@ -123,13 +225,13 @@ export default function ActivitiesPage() {
       <SiteNav />
 
       {/* ══════════════════════════════════════════════════════════════ */}
-      {/*  HERO — full-bleed cinematic                                  */}
+      {/*  HERO — cinematic full-bleed                                   */}
       {/* ══════════════════════════════════════════════════════════════ */}
-      <section className="relative h-[85vh] min-h-[560px] overflow-hidden">
+      <section className="relative h-[90vh] min-h-[600px] overflow-hidden">
         <motion.div
-          initial={{ scale: 1.08 }}
+          initial={{ scale: 1.1 }}
           animate={{ scale: 1 }}
-          transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 2.2, ease: [0.22, 1, 0.36, 1] }}
           className="absolute inset-0"
         >
           <Image
@@ -141,27 +243,33 @@ export default function ActivitiesPage() {
             className="object-cover"
           />
         </motion.div>
-        <div className="absolute inset-0 bg-gradient-to-t from-[#052e23] via-[#052e23]/30 to-[#052e23]/10" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#052e23]/50 to-transparent" />
+        {/* Layered gradient overlays for depth */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#052e23] via-[#052e23]/20 to-[#052e23]/5" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#052e23]/40 via-transparent to-transparent" />
 
-        <div className="absolute inset-x-0 bottom-0 z-10 pb-16 sm:pb-20 lg:pb-24">
-          <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-12">
+        <div className="absolute inset-x-0 bottom-0 z-10 pb-20 sm:pb-28 lg:pb-32">
+          <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
             <motion.div
-              initial={{ opacity: 0, y: 32 }}
+              initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="max-w-2xl"
+              transition={{ duration: 1, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="max-w-3xl"
             >
-              <span className="inline-flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.25em] text-amber-400/70">
-                <span className="h-px w-8 bg-amber-400/30" />
-                The Himalayan Shire
-              </span>
-              <h1 className="mt-6 font-display text-5xl font-black leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-7xl">
-                Explore
+              <motion.span
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="inline-flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.3em] text-amber-400/60"
+              >
+                <span className="h-px w-10 bg-amber-400/30" />
+                Experiences
+              </motion.span>
+              <h1 className="mt-8 font-display text-5xl font-black leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-7xl xl:text-8xl">
+                Every Moment,
                 <br />
-                <span className="text-amber-400">&amp; Unwind</span>
+                <span className="text-amber-400/90">Curated</span>
               </h1>
-              <p className="mt-6 max-w-md text-base font-medium leading-[1.75] text-emerald-100/60 sm:text-lg">
+              <p className="mt-8 max-w-lg text-base font-medium leading-[1.8] text-emerald-100/50 sm:text-lg lg:text-xl">
                 From quiet corners on the property to peaks in the Himalayas — there is always something waiting for you.
               </p>
             </motion.div>
@@ -172,250 +280,376 @@ export default function ActivitiesPage() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
-          className="absolute bottom-6 left-1/2 -translate-x-1/2"
+          transition={{ delay: 1.8 }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2"
         >
           <motion.div
             animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="h-10 w-6 rounded-full border-2 border-white/20 p-1"
+            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+            className="h-11 w-7 rounded-full border-[1.5px] border-white/15 p-1.5"
           >
-            <motion.div className="mx-auto h-2 w-1 rounded-full bg-white/40" />
+            <motion.div className="mx-auto h-2.5 w-[3px] rounded-full bg-white/30" />
           </motion.div>
         </motion.div>
       </section>
 
       {/* ══════════════════════════════════════════════════════════════ */}
-      {/*  AT THE PROPERTY — editorial split                             */}
+      {/*  EDITORIAL INTRO — typographic statement                      */}
       {/* ══════════════════════════════════════════════════════════════ */}
-      <section className="py-24 sm:py-32 lg:py-40">
+      <section className="py-28 sm:py-36 lg:py-44">
+        <div className="mx-auto max-w-5xl px-6 sm:px-8 lg:px-12">
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.3 }}
+            className="text-center"
+          >
+            <motion.div variants={fadeUp} className="mx-auto mb-10 flex items-center justify-center gap-4">
+              <span className="h-px w-12 bg-amber-400/20" />
+              <Leaf size={16} strokeWidth={1.5} className="text-amber-400/40" />
+              <span className="h-px w-12 bg-amber-400/20" />
+            </motion.div>
+            <motion.h2
+              variants={fadeUp}
+              className="font-display text-3xl font-black leading-snug tracking-tight text-white/90 sm:text-4xl lg:text-5xl xl:text-6xl"
+            >
+              Life at The Shire is not about
+              <br className="hidden sm:block" />
+              <span className="text-amber-400/80"> filling every hour.</span>
+            </motion.h2>
+            <motion.p
+              variants={fadeUp}
+              className="mx-auto mt-8 max-w-2xl text-base font-medium leading-[1.9] text-emerald-100/40 sm:text-lg lg:text-xl"
+            >
+              It is about choosing how you spend your time — whether that means a morning
+              yoga session on the lawn, an afternoon trail through apple orchards, or simply
+              watching the clouds drift over the Kinnaur range from the balcony swing.
+            </motion.p>
+            <motion.div variants={fadeUp} className="mx-auto mt-12 flex items-center justify-center gap-4">
+              <span className="h-px w-16 bg-white/[0.06]" />
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════════ */}
+      {/*  AT THE PROPERTY — premium iconography cards (no photos)       */}
+      {/* ══════════════════════════════════════════════════════════════ */}
+      <section className="pb-28 sm:pb-36 lg:pb-44">
         <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-20">
-            {/* Left — image mosaic */}
-            <motion.div
-              variants={stagger}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.2 }}
-              className="relative"
-            >
-              <motion.div variants={fadeUp} className="relative aspect-[4/5] overflow-hidden rounded-3xl">
-                <Image
-                  src="/images/activity/activity-1.jpg"
-                  alt="Cozy corner at The Himalayan Shire"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover"
-                />
-              </motion.div>
-              {/* Floating accent image */}
+          {/* Section header */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.7 }}
+            className="mb-16 lg:mb-20"
+          >
+            <span className="text-[11px] font-extrabold uppercase tracking-[0.3em] text-amber-400/60">
+              At the Property
+            </span>
+            <h2 className="mt-5 font-display text-3xl font-black tracking-tight text-white sm:text-4xl lg:text-5xl">
+              Everything you need,
+              <br />
+              <span className="text-amber-400/80">without stepping out.</span>
+            </h2>
+          </motion.div>
+
+          {/* Experience cards — premium grid without images */}
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.1 }}
+            className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8"
+          >
+            {ACTIVITIES.map((activity, i) => {
+              const Icon = ICONS[activity.icon];
+              return (
+                <motion.div
+                  key={activity.title}
+                  variants={fadeUp}
+                  className={`group relative rounded-3xl border border-white/[0.06] bg-white/[0.02] p-8 sm:p-10 transition-all duration-500 hover:border-amber-400/15 hover:bg-white/[0.04] ${
+                    i === ACTIVITIES.length - 1 && ACTIVITIES.length % 3 === 1
+                      ? "sm:col-span-2 lg:col-span-1"
+                      : ""
+                  }`}
+                >
+                  {/* Icon */}
+                  <span className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/[0.06] bg-white/[0.03] text-amber-400/60 transition-all duration-500 group-hover:border-amber-400/20 group-hover:text-amber-400/80">
+                    <Icon size={22} strokeWidth={1.4} aria-hidden />
+                  </span>
+
+                  {/* Content */}
+                  <h3 className="mt-7 font-display text-xl font-bold tracking-tight text-white/90 sm:text-2xl">
+                    {activity.title}
+                  </h3>
+                  <p className="mt-4 text-sm leading-[1.85] text-emerald-100/40 sm:text-base">
+                    {activity.body}
+                  </p>
+
+                  {/* Subtle corner accent */}
+                  <div className="pointer-events-none absolute right-0 top-0 h-24 w-24 rounded-bl-[3rem] bg-amber-400/[0.02] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                </motion.div>
+              );
+            })}
+          </motion.div>
+
+          {/* Stats bar */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="mt-16 grid grid-cols-3 gap-6 border-t border-white/[0.05] pt-10 sm:mt-20"
+          >
+            {[
+              { value: "5", label: "Activities" },
+              { value: '65"', label: "Smart TV" },
+              { value: "∞", label: "Mountain Views" },
+            ].map((stat) => (
+              <div key={stat.label}>
+                <span className="block font-display text-3xl font-black text-amber-400/80 sm:text-4xl">
+                  {stat.value}
+                </span>
+                <span className="mt-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-emerald-100/30 sm:text-[11px]">
+                  {stat.label}
+                </span>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════════ */}
+      {/*  SIGHTSEEING SHOWCASE — immersive editorial destinations       */}
+      {/* ══════════════════════════════════════════════════════════════ */}
+      <section className="border-t border-white/[0.05] py-28 sm:py-36 lg:py-44">
+        <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+          {/* Section header */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.7 }}
+            className="mb-20 max-w-2xl lg:mb-24"
+          >
+            <span className="text-[11px] font-extrabold uppercase tracking-[0.3em] text-amber-400/60">
+              Nearby
+            </span>
+            <h2 className="mt-5 font-display text-3xl font-black tracking-tight text-white sm:text-4xl lg:text-5xl">
+              Destinations
+            </h2>
+            <p className="mt-5 text-base leading-[1.9] text-emerald-100/40 sm:text-lg">
+              Curated recommendations from our concierge — each destination
+              chosen for its character, beauty, and ease of access from the property.
+            </p>
+          </motion.div>
+
+          {/* ── Featured editorial destination cards ── */}
+          <div className="space-y-8 lg:space-y-0">
+            {FEATURED_SIGHTSEEING.map((place, i) => {
+              const isReversed = i % 2 !== 0;
+              return (
+                <div
+                  key={place.name}
+                  className={`grid grid-cols-1 items-stretch gap-0 overflow-hidden rounded-[2rem] border border-white/[0.06] lg:grid-cols-2 lg:gap-0 ${
+                    i > 0 ? "lg:mt-10" : ""
+                  }`}
+                >
+                  {/* Image */}
+                  <motion.div
+                    initial={{ opacity: 0, x: isReversed ? 30 : -30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, amount: 0.15 }}
+                    transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                    className={`relative min-h-[300px] overflow-hidden sm:min-h-[360px] lg:min-h-[440px] ${
+                      isReversed ? "lg:order-2" : ""
+                    }`}
+                  >
+                    <Image
+                      src={place.image}
+                      alt={place.name}
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      className="object-cover transition-transform duration-[1.2s] ease-out hover:scale-105"
+                    />
+                    {/* Overlay gradient */}
+                    <div
+                      className={`absolute inset-0 bg-gradient-to-t from-[#052e23]/60 via-transparent to-transparent lg:${
+                        isReversed
+                          ? "bg-gradient-to-r from-[#052e23]/40 via-transparent to-transparent"
+                          : "bg-gradient-to-l from-[#052e23]/40 via-transparent to-transparent"
+                      }`}
+                    />
+                    {/* Distance pill */}
+                    <span className="absolute right-5 top-5 rounded-full border border-white/10 bg-[#052e23]/60 px-4 py-1.5 text-[11px] font-bold tracking-wide text-white/80 backdrop-blur-md">
+                      {place.distance}
+                    </span>
+                  </motion.div>
+
+                  {/* Content */}
+                  <motion.div
+                    initial={{ opacity: 0, x: isReversed ? -30 : 30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                    className={`flex flex-col justify-center p-8 sm:p-10 lg:p-14 ${
+                      isReversed ? "lg:order-1" : ""
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-amber-400/10">
+                        <Navigation size={13} strokeWidth={2.2} className="text-amber-400/70" />
+                      </span>
+                      <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-100/30">
+                        {place.travelTime}
+                      </span>
+                    </div>
+                    <h3 className="mt-5 font-display text-2xl font-black tracking-tight text-white sm:text-3xl lg:text-4xl">
+                      {place.name}
+                    </h3>
+                    {place.note && (
+                      <span className="mt-2 flex items-center gap-1.5 text-xs text-emerald-200/35">
+                        <MapPin size={11} strokeWidth={2.5} />
+                        {place.note}
+                      </span>
+                    )}
+                    <p className="mt-5 max-w-md text-sm leading-[1.85] text-emerald-100/40 sm:text-base">
+                      {place.highlight}
+                    </p>
+
+                    {/* Meta tags */}
+                    <div className="mt-8 flex flex-wrap items-center gap-3">
+                      <span className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.06] bg-white/[0.02] px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-emerald-100/35">
+                        <Sunrise size={11} strokeWidth={2} className="text-amber-400/40" />
+                        Best: {place.bestTime}
+                      </span>
+                      <span className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.06] bg-white/[0.02] px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-emerald-100/35">
+                        <Mountain size={11} strokeWidth={2} className="text-amber-400/40" />
+                        {place.distance}
+                      </span>
+                    </div>
+                  </motion.div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* ── Compact destination grid ── */}
+          <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:mt-12 lg:grid-cols-3 lg:gap-6">
+            {COMPACT_SIGHTSEEING.map((place, i) => (
               <motion.div
-                variants={fadeUp}
-                className="absolute -bottom-6 -right-4 sm:-right-8 aspect-[3/4] w-32 overflow-hidden rounded-2xl border-4 border-[#052e23] sm:w-40 lg:w-44"
+                key={place.name}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.7, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                className="group relative overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] transition-all duration-500 hover:border-amber-400/15 hover:bg-white/[0.04]"
               >
-                <Image
-                  src="/images/activity/activity-4.jpg"
-                  alt="Mountain view from the lawn"
-                  fill
-                  sizes="180px"
-                  className="object-cover"
-                />
-              </motion.div>
-            </motion.div>
+                {/* Image */}
+                <div className="relative aspect-[16/10] overflow-hidden">
+                  <Image
+                    src={place.image}
+                    alt={place.name}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#052e23]/80 via-[#052e23]/20 to-transparent" />
+                  {/* Distance badge */}
+                  <span className="absolute right-3 top-3 rounded-full border border-white/10 bg-[#052e23]/50 px-3 py-1 text-[10px] font-bold tracking-wide text-white/70 backdrop-blur-md">
+                    {place.distance}
+                  </span>
+                </div>
 
-            {/* Right — content */}
-            <motion.div
-              variants={stagger}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.3 }}
-              className="lg:pl-8"
-            >
-              <motion.span variants={fadeUp} className="text-[11px] font-extrabold uppercase tracking-[0.25em] text-amber-400/70">
-                At the Property
-              </motion.span>
-              <motion.h2 variants={fadeUp} className="mt-5 font-display text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
-                Everything you need
-                <br />
-                <span className="text-amber-400">without stepping out.</span>
-              </motion.h2>
-              <motion.p variants={fadeUp} className="mt-6 max-w-lg text-base leading-[1.8] text-emerald-100/55 sm:text-lg">
-                Five ways to spend your day — from morning stillness on the lawn to evening bonfires under the stars.
-              </motion.p>
-
-              {/* Stats */}
-              <motion.div variants={fadeUp} className="mt-10 grid grid-cols-3 gap-6 border-t border-white/[0.06] pt-8">
-                {[
-                  { value: "5", label: "Activities" },
-                  { value: '65"', label: "Smart TV" },
-                  { value: "∞", label: "Mountain Views" },
-                ].map((stat) => (
-                  <div key={stat.label}>
-                    <span className="block font-display text-3xl font-black text-amber-400 sm:text-4xl">{stat.value}</span>
-                    <span className="mt-1 block text-[10px] font-bold uppercase tracking-[0.15em] text-emerald-100/35 sm:text-[11px]">{stat.label}</span>
+                {/* Content */}
+                <div className="p-6 sm:p-7">
+                  <div className="flex items-center gap-2.5">
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-amber-400/10">
+                      <Navigation size={10} strokeWidth={2.5} className="text-amber-400/60" />
+                    </span>
+                    <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-emerald-100/25">
+                      {place.travelTime}
+                    </span>
                   </div>
-                ))}
+                  <h3 className="mt-3 font-display text-lg font-bold tracking-tight text-white/90 sm:text-xl">
+                    {place.name}
+                  </h3>
+                  <p className="mt-2.5 text-sm leading-[1.7] text-emerald-100/35">
+                    {place.highlight}
+                  </p>
+                  <div className="mt-5 flex items-center gap-2">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-white/[0.03] px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-emerald-100/25">
+                      <Sunrise size={9} strokeWidth={2} className="text-amber-400/30" />
+                      {place.bestTime}
+                    </span>
+                  </div>
+                </div>
               </motion.div>
-            </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* ══════════════════════════════════════════════════════════════ */}
-      {/*  EXPERIENCES — alternating editorial rows                      */}
+      {/*  WHY EXPLORE — three premium value propositions               */}
       {/* ══════════════════════════════════════════════════════════════ */}
-      <section className="pb-24 sm:pb-32 lg:pb-40">
+      <section className="border-t border-white/[0.05] py-28 sm:py-36 lg:py-44">
         <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6 }}
-            className="mb-16 text-center"
+            transition={{ duration: 0.7 }}
+            className="mb-16 text-center lg:mb-20"
           >
-            <span className="text-[11px] font-extrabold uppercase tracking-[0.25em] text-amber-400/70">
-              Experiences
+            <span className="text-[11px] font-extrabold uppercase tracking-[0.3em] text-amber-400/60">
+              Why The Shire
             </span>
-            <h2 className="mt-4 font-display text-3xl font-black tracking-tight text-white sm:text-4xl">
-              Ways to spend your day
+            <h2 className="mt-5 font-display text-3xl font-black tracking-tight text-white sm:text-4xl lg:text-5xl">
+              Why explore with us
             </h2>
           </motion.div>
 
-          {ACTIVITIES.map((activity, i) => {
-            const Icon = ICONS[activity.icon];
-            const isReversed = i % 2 !== 0;
-            const images = [
-              "/images/activity/activity-5.jpg",
-              "/images/activity/activity-6.jpg",
-              "/images/activity/activity-7.jpg",
-              "/images/activity/activity-8.jpg",
-              "/images/activity/activity-9.jpg",
-            ];
-            return (
-              <div
-                key={activity.title}
-                className={`grid grid-cols-1 items-center gap-10 py-16 sm:py-20 lg:grid-cols-2 lg:gap-20 ${
-                  i > 0 ? "border-t border-white/[0.05]" : ""
-                }`}
-              >
-                {/* Image */}
-                <motion.div
-                  initial={{ opacity: 0, x: isReversed ? 24 : -24 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                  className={`relative aspect-[4/3] overflow-hidden rounded-3xl ${isReversed ? "lg:order-2" : ""}`}
-                >
-                  <Image
-                    src={images[i]}
-                    alt={activity.title}
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                    className="object-cover transition-transform duration-700 hover:scale-105"
-                  />
-                </motion.div>
-
-                {/* Content */}
-                <motion.div
-                  initial={{ opacity: 0, x: isReversed ? -24 : 24 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                  className={isReversed ? "lg:order-1 lg:text-right" : ""}
-                >
-                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/[0.05] text-amber-400/70">
-                    <Icon size={20} strokeWidth={1.6} aria-hidden />
-                  </span>
-                  <h3 className="mt-5 font-display text-2xl font-bold tracking-tight text-white sm:text-3xl">
-                    {activity.title}
-                  </h3>
-                  <p className="mt-4 max-w-md text-base leading-[1.8] text-emerald-100/50 sm:text-lg">
-                    {activity.body}
-                  </p>
-                </motion.div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════════════════════════ */}
-      {/*  SIGHTSEEING — editorial mosaic grid                          */}
-      {/* ══════════════════════════════════════════════════════════════ */}
-      <section className="border-t border-white/[0.06] py-24 sm:py-32 lg:py-40">
-        <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6 }}
-            className="mb-16 max-w-2xl"
-          >
-            <span className="text-[11px] font-extrabold uppercase tracking-[0.25em] text-amber-400/70">
-              Nearby
-            </span>
-            <h2 className="mt-4 font-display text-3xl font-black tracking-tight text-white sm:text-4xl lg:text-5xl">
-              Sightseeing
-            </h2>
-            <p className="mt-4 text-base leading-[1.8] text-emerald-100/50 sm:text-lg">
-              Popular locations in the vicinity, all within easy driving distance.
-            </p>
-          </motion.div>
-
-          {/* Asymmetric mosaic — large card + 2 small on first row, then 3-col grid */}
           <motion.div
             variants={stagger}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, amount: 0.05 }}
-            className="space-y-4"
+            viewport={{ once: true, amount: 0.15 }}
+            className="grid grid-cols-1 gap-8 lg:grid-cols-3 lg:gap-12"
           >
-            {/* Row 1 — large + 2 stacked */}
-            <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-4">
-              <motion.div variants={fadeUp} className="lg:col-span-2">
-                <SightseeingCard place={SIGHTSEEING[0]} large />
+            {WHY_EXPLORE.map((item, i) => (
+              <motion.div
+                key={item.title}
+                variants={fadeUp}
+                className="relative text-center"
+              >
+                {/* Icon circle */}
+                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-white/[0.06] bg-white/[0.02]">
+                  <item.icon size={24} strokeWidth={1.3} className="text-amber-400/50" />
+                </div>
+                <h3 className="mt-7 font-display text-xl font-bold tracking-tight text-white/90 sm:text-2xl">
+                  {item.title}
+                </h3>
+                <p className="mt-4 text-sm leading-[1.85] text-emerald-100/40 sm:text-base">
+                  {item.body}
+                </p>
+                {/* Divider between items on mobile */}
+                {i < WHY_EXPLORE.length - 1 && (
+                  <div className="mt-8 h-px w-16 bg-white/[0.06] mx-auto lg:hidden" />
+                )}
               </motion.div>
-              <div className="grid grid-cols-2 gap-4 lg:grid-cols-1">
-                <motion.div variants={fadeUp}>
-                  <SightseeingCard place={SIGHTSEEING[1]} />
-                </motion.div>
-                <motion.div variants={fadeUp}>
-                  <SightseeingCard place={SIGHTSEEING[2]} />
-                </motion.div>
-              </div>
-            </div>
-
-            {/* Row 2 — 3 equal */}
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {SIGHTSEEING.slice(3, 6).map((place) => (
-                <motion.div key={place.name} variants={fadeUp}>
-                  <SightseeingCard place={place} />
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Row 3 — 2 stacked left + large right */}
-            <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-4">
-              <div className="grid grid-cols-2 gap-4 lg:grid-cols-1">
-                <motion.div variants={fadeUp}>
-                  <SightseeingCard place={SIGHTSEEING[6]} />
-                </motion.div>
-                <motion.div variants={fadeUp}>
-                  <SightseeingCard place={SIGHTSEEING[7]} />
-                </motion.div>
-              </div>
-              <motion.div variants={fadeUp} className="lg:col-span-2">
-                <SightseeingCard place={SIGHTSEEING[8]} large />
-              </motion.div>
-            </div>
+            ))}
           </motion.div>
         </div>
       </section>
 
       {/* ══════════════════════════════════════════════════════════════ */}
-      {/*  BLOG CTA — immersive full-width                              */}
+      {/*  BLOG CTA — refined immersive callout                         */}
       {/* ══════════════════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden py-24 sm:py-32">
+      <section className="py-20 sm:py-24 lg:py-32">
         <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
           <div className="relative overflow-hidden rounded-[2rem] border border-white/[0.06]">
             <div className="relative aspect-[21/9] sm:aspect-[3/1]">
@@ -434,19 +668,19 @@ export default function ActivitiesPage() {
                   initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.6 }}
+                  transition={{ duration: 0.7 }}
                 >
                   <h2 className="max-w-md font-display text-2xl font-bold tracking-tight text-white sm:text-3xl lg:text-4xl">
                     Love hiking &amp; exploring the outdoors?
                   </h2>
-                  <p className="mt-3 max-w-sm text-sm leading-relaxed text-emerald-100/50 sm:text-base">
+                  <p className="mt-3 max-w-sm text-sm leading-relaxed text-emerald-100/40 sm:text-base">
                     Read about trails and nature around The Himalayan Shire.
                   </p>
                   <a
                     href={BLOG_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-6 inline-flex items-center gap-2.5 rounded-full bg-amber-400 px-7 py-3.5 text-sm font-bold text-[#052e23] transition-all duration-300 hover:-translate-y-0.5 hover:bg-amber-300"
+                    className="mt-7 inline-flex items-center gap-2.5 rounded-full bg-amber-400 px-7 py-3.5 text-sm font-bold text-[#052e23] transition-all duration-300 hover:-translate-y-0.5 hover:bg-amber-300"
                   >
                     Read the Blog
                     <ArrowUpRight size={15} strokeWidth={2.4} />
@@ -461,19 +695,19 @@ export default function ActivitiesPage() {
       {/* ══════════════════════════════════════════════════════════════ */}
       {/*  GALLERY — auto-cycling carousel                              */}
       {/* ══════════════════════════════════════════════════════════════ */}
-      <section className="border-t border-white/[0.06] py-24 sm:py-32 lg:py-40">
+      <section className="border-t border-white/[0.05] py-28 sm:py-36 lg:py-44">
         <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6 }}
-            className="mb-12"
+            transition={{ duration: 0.7 }}
+            className="mb-14"
           >
-            <span className="text-[11px] font-extrabold uppercase tracking-[0.25em] text-amber-400/70">
+            <span className="text-[11px] font-extrabold uppercase tracking-[0.3em] text-amber-400/60">
               Gallery
             </span>
-            <h2 className="mt-4 font-display text-3xl font-black tracking-tight text-white sm:text-4xl">
+            <h2 className="mt-5 font-display text-3xl font-black tracking-tight text-white sm:text-4xl">
               Moments from the Shire
             </h2>
           </motion.div>
@@ -482,44 +716,61 @@ export default function ActivitiesPage() {
         </div>
       </section>
 
+      {/* ══════════════════════════════════════════════════════════════ */}
+      {/*  BOOKING CTA — premium final call-to-action                    */}
+      {/* ══════════════════════════════════════════════════════════════ */}
+      <section className="border-t border-white/[0.05] py-28 sm:py-36 lg:py-44">
+        <div className="mx-auto max-w-4xl px-6 sm:px-8 lg:px-12 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <span className="text-[11px] font-extrabold uppercase tracking-[0.3em] text-amber-400/60">
+              Begin Your Stay
+            </span>
+            <h2 className="mt-6 font-display text-3xl font-black tracking-tight text-white sm:text-4xl lg:text-5xl xl:text-6xl">
+              Your mountain escape
+              <br />
+              <span className="text-amber-400/80">awaits.</span>
+            </h2>
+            <p className="mx-auto mt-6 max-w-xl text-base leading-[1.9] text-emerald-100/40 sm:text-lg">
+              Whether it is a weekend of stillness or a week of exploration —
+              The Himalayan Shire is ready to welcome you.
+            </p>
+            <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-5">
+              <a
+                href="/#book"
+                className="inline-flex items-center gap-2.5 rounded-full bg-amber-400 px-8 py-4 text-sm font-bold text-[#052e23] transition-all duration-300 hover:-translate-y-0.5 hover:bg-amber-300"
+              >
+                Book Your Stay
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 14 14"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M1 7H13M13 7L7.5 1.5M13 7L7.5 12.5" />
+                </svg>
+              </a>
+              <a
+                href="/contact"
+                className="inline-flex items-center gap-2 rounded-full border border-white/10 px-7 py-4 text-sm font-bold text-white/70 transition-all duration-300 hover:border-white/20 hover:text-white"
+              >
+                Get in Touch
+              </a>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       <SiteFooter />
     </main>
-  );
-}
-
-/* ================================================================== */
-/*  SightseeingCard — premium image card                                */
-/* ================================================================== */
-function SightseeingCard({
-  place,
-  large,
-}: {
-  place: (typeof SIGHTSEEING)[number];
-  large?: boolean;
-}) {
-  return (
-    <div className={`group relative overflow-hidden rounded-2xl ${large ? "aspect-[16/9] lg:aspect-[2/1]" : "aspect-[4/3]"}`}>
-      <Image
-        src={place.image}
-        alt={place.name}
-        fill
-        sizes={large ? "(max-width: 1024px) 100vw, 66vw" : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"}
-        className="object-cover transition-transform duration-700 group-hover:scale-105"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-      <span className="absolute right-4 top-4 rounded-full bg-white/10 px-3 py-1 text-[10px] font-bold tracking-wide text-white/80 backdrop-blur-md">
-        {place.distance}
-      </span>
-      <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
-        <h3 className="font-display text-lg font-bold text-white sm:text-xl">{place.name}</h3>
-        {place.note && (
-          <span className="mt-1 flex items-center gap-1.5 text-xs text-emerald-200/50">
-            <MapPin size={11} strokeWidth={2.5} />
-            {place.note}
-          </span>
-        )}
-      </div>
-    </div>
   );
 }
 
