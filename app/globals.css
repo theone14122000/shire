@@ -33,6 +33,14 @@
   /* ── Mountain Sky ── */
   --color-sky-400: #7eb8da;
 
+  /* ── Frost Green — icy mountain mist tones ── */
+  --color-frost-50: #eaf3ea;
+  --color-frost-100: #d5e7d5;
+  --color-frost-200: #b8d4b8;
+  --color-frost-300: #8ab88a;
+  --color-frost-400: #5c9e5c;
+  --color-frost-500: #3a7d3a;
+
   /* ── Warm Gold — sunlight through the canopy ── */
   --color-gold-50: #fffbeb;
   --color-gold-100: #fef3c7;
@@ -216,6 +224,22 @@
 }
 .live-dot {
   animation: pulse-gold 1.8s ease-in-out infinite;
+}
+
+@keyframes blink-border {
+  0%, 100% { border-color: rgba(212, 160, 23, 0.3); box-shadow: 0 0 0 0 rgba(212, 160, 23, 0.1); }
+  50% { border-color: rgba(212, 160, 23, 0.8); box-shadow: 0 0 12px 2px rgba(212, 160, 23, 0.25); }
+}
+.animate-blink-border {
+  animation: blink-border 1.6s ease-in-out infinite;
+}
+
+@keyframes blink-bg {
+  0%, 100% { background-color: rgba(255, 251, 235, 0.5); }
+  50% { background-color: rgba(254, 243, 199, 0.9); }
+}
+.animate-blink-bg {
+  animation: blink-bg 1.6s ease-in-out infinite;
 }
 
 @keyframes marquee {

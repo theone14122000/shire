@@ -1,11 +1,16 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import Script from "next/script";
 import { Container } from "../ui/Container";
 import { SectionHeading } from "../ui/SectionHeading";
 import { trustSection } from "@/lib/content";
 import { fadeUp, stagger } from "../ui/Motion";
+
+const statHover: Variants = {
+  rest: { y: 0, borderColor: "rgba(5,150,105,0.15)" },
+  hover: { y: -4, borderColor: "rgba(212,160,23,0.4)", transition: { duration: 0.25, ease: "easeOut" } },
+};
 
 export function TrustSection() {
   return (
@@ -33,7 +38,8 @@ export function TrustSection() {
             <motion.div
               key={stat.label}
               variants={fadeUp}
-              className="rounded-xl border border-emerald-200/40 bg-cream-50 p-8 sm:p-10 flex flex-col items-center text-center gap-3"
+              whileHover={{ y: -4, borderColor: "rgba(212,160,23,0.4)", transition: { duration: 0.25, ease: "easeOut" } }}
+              className="rounded-xl border border-emerald-200/40 bg-cream-50 p-8 sm:p-10 flex flex-col items-center text-center gap-3 hover:shadow-lg transition-shadow duration-300"
             >
               <dt className="text-[10px] uppercase tracking-[0.2em] text-emerald-600 font-bold order-2">
                 {stat.label}
@@ -56,7 +62,8 @@ export function TrustSection() {
             <motion.figure
               key={review.author}
               variants={fadeUp}
-              className="relative rounded-2xl border border-emerald-200/40 bg-cream-50 p-8 sm:p-10"
+              whileHover={{ y: -3, borderColor: "rgba(212,160,23,0.3)", transition: { duration: 0.25, ease: "easeOut" } }}
+              className="relative rounded-2xl border border-emerald-200/40 bg-cream-50 p-8 sm:p-10 hover:shadow-lg transition-shadow duration-300"
             >
               <Stars />
               <blockquote className="mt-4 font-display text-xl sm:text-2xl leading-snug text-emerald-950 font-bold">

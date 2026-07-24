@@ -25,7 +25,7 @@ export default async function RoomPage({
   }
 
   return (
-    <main className="min-h-screen flex flex-col bg-pine-50 font-sans text-pine-950 selection:bg-gold-200/30">
+    <main className="min-h-screen flex flex-col bg-frost-50 font-sans text-pine-950 selection:bg-gold-200/30">
       <SiteNav />
       <div className="flex-1">
         <RoomPageContent room={room} />

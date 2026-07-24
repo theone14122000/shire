@@ -113,7 +113,7 @@ export default async function BlogPostPage({
   if (!post || post.status !== "published") notFound();
 
   return (
-    <main className="min-h-screen bg-pine-50 font-sans text-pine-950 selection:bg-gold-200/30">
+    <main className="min-h-screen bg-frost-50 font-sans text-pine-950 selection:bg-gold-200/30">
       <SiteNav />
 
       <section className="relative">

@@ -128,7 +128,7 @@ const FAQS: Faq[] = [
 
 export default function FaqPage() {
   return (
-    <main className="relative min-h-screen bg-pine-50 font-sans text-pine-950 selection:bg-gold-200/30">
+    <main className="relative min-h-screen bg-frost-50 font-sans text-pine-950 selection:bg-gold-200/30">
       <div aria-hidden className="pointer-events-none fixed inset-0" style={{
         background: "radial-gradient(55% 40% at 15% 0%, rgba(16,185,129,0.06) 0%, transparent 55%), radial-gradient(50% 35% at 80% 10%, rgba(251,191,36,0.05) 0%, transparent 50%)",
       }} />

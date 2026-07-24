@@ -29,7 +29,7 @@ export function QualitySection() {
             <motion.article
               key={pillar.title}
               variants={fadeUp}
-              className="relative overflow-hidden rounded-2xl border border-emerald-200/40 bg-white p-8 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-gold-300/50 hover:shadow-lg"
+              className="group relative overflow-hidden rounded-2xl border border-emerald-200/40 bg-white p-8 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-gold-300/50 hover:shadow-lg"
             >
               <span className="font-display text-[11px] tracking-[0.18em] text-emerald-300 font-bold">
                 0{idx + 1}
