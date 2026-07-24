@@ -66,15 +66,15 @@ const ICONS: Record<(typeof ACTIVITIES)[number]["icon"], typeof Home> = {
 };
 
 const SIGHTSEEING = [
-  { name: "Tungesh Peak Hike", distance: "6 km", note: "Cheog, Shimla" },
-  { name: "Deshu Peak / Fagu Top", distance: "3 km", note: null },
-  { name: "Kufri Adventure Park", distance: "5.6 km", note: null },
-  { name: "Mahasu Peak, Kufri", distance: "6 km", note: null },
-  { name: "Rashtrapati Niwas, Mashobra", distance: "12 km", note: null },
-  { name: "Jakhu Temple", distance: "20 km", note: "Shimla" },
-  { name: "Shimla Mall Road", distance: "20 km", note: null },
-  { name: "Narkanda — Hatu Peak", distance: "45 km", note: null },
-  { name: "Tata Pani", distance: "62 km", note: null },
+  { name: "Tungesh Peak Hike", distance: "6 km", note: "Cheog, Shimla", image: "/images/sightseeing/tungesh-peak.jpg" },
+  { name: "Deshu Peak / Fagu Top", distance: "3 km", note: null, image: "/images/sightseeing/deshu-peak.jpg" },
+  { name: "Kufri Adventure Park", distance: "5.6 km", note: null, image: "/images/sightseeing/kufri-park.jpg" },
+  { name: "Mahasu Peak, Kufri", distance: "6 km", note: null, image: "/images/sightseeing/mahasu-peak.jpg" },
+  { name: "Rashtrapati Niwas, Mashobra", distance: "12 km", note: null, image: "/images/sightseeing/rashtrapati-niwas.jpg" },
+  { name: "Jakhu Temple", distance: "20 km", note: "Shimla", image: "/images/sightseeing/jakhu-temple.jpg" },
+  { name: "Shimla Mall Road", distance: "20 km", note: null, image: "/images/sightseeing/mall-road.jpg" },
+  { name: "Narkanda — Hatu Peak", distance: "45 km", note: null, image: "/images/sightseeing/hatu-peak.jpg" },
+  { name: "Tata Pani", distance: "62 km", note: null, image: "/images/sightseeing/tata-pani.jpg" },
 ];
 
 const GALLERY_IMAGES = Array.from(
@@ -121,25 +121,42 @@ export default function ActivitiesPage() {
       <SiteNav />
 
       {/* ════════════════ HERO ════════════════ */}
-      <section className="relative overflow-hidden border-b border-white/[0.06] py-16 sm:py-20 lg:py-28">
-        <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <span className="inline-flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-[0.22em] text-amber-400/80">
-              <span className="h-px w-5 bg-amber-400/40" />
-              The Himalayan Shire
-              <span className="h-px w-5 bg-amber-400/40" />
-            </span>
-            <h1 className="mt-5 font-display text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl">
-              Things to Do
-            </h1>
-            <p className="mx-auto mt-5 max-w-xl text-base font-medium leading-relaxed text-emerald-100/60 sm:text-lg">
-              On the property, and in the hills around you.
-            </p>
-          </motion.div>
+      <section className="relative h-[70vh] min-h-[480px] overflow-hidden">
+        {/* Background image */}
+        <Image
+          src="/images/activity/activity-3.jpg"
+          alt="The Himalayan Shire property surrounded by pine forests"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
+        {/* Gradient overlays */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#052e23] via-[#052e23]/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#052e23]/60 to-transparent" />
+
+        {/* Content at bottom */}
+        <div className="absolute inset-x-0 bottom-0 z-10 pb-12 sm:pb-16 lg:pb-20">
+          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <span className="inline-flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-[0.22em] text-amber-400/80">
+                <span className="h-px w-5 bg-amber-400/40" />
+                The Himalayan Shire
+                <span className="h-px w-5 bg-amber-400/40" />
+              </span>
+              <h1 className="mt-4 font-display text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl">
+                Explore &amp;{" "}
+                <span className="text-amber-400">Unwind</span>
+              </h1>
+              <p className="mt-4 max-w-lg text-base font-medium leading-relaxed text-emerald-100/65 sm:text-lg">
+                From quiet corners on the property to peaks in the Himalayas — there is always something waiting for you.
+              </p>
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -200,7 +217,7 @@ export default function ActivitiesPage() {
 
       {/* ════════════════ SIGHTSEEING ════════════════ */}
       <section className="border-t border-white/[0.06] py-14 sm:py-18 lg:py-22">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -220,35 +237,46 @@ export default function ActivitiesPage() {
             variants={stagger}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, amount: 0.1 }}
-            className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3"
+            viewport={{ once: true, amount: 0.05 }}
+            className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
           >
             {SIGHTSEEING.map((place) => (
               <motion.div
                 key={place.name}
                 variants={fadeUp}
-                className="group flex items-center justify-between gap-4 rounded-xl border border-white/[0.08] bg-white/[0.03] px-5 py-4 transition-colors duration-300 hover:border-white/[0.14] hover:bg-white/[0.06]"
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] as const }}
+                className="group relative overflow-hidden rounded-2xl bg-white/[0.04]"
               >
-                <div className="flex items-center gap-3 min-w-0">
-                  <MapPin
-                    size={14}
-                    strokeWidth={2}
-                    className="shrink-0 text-amber-400/60"
+                {/* Image */}
+                <div className="relative aspect-[16/10] overflow-hidden">
+                  <Image
+                    src={place.image}
+                    alt={place.name}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="min-w-0">
-                    <span className="block truncate text-sm font-semibold text-white">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+
+                  {/* Distance badge — top right */}
+                  <span className="absolute right-3 top-3 rounded-full bg-white/15 px-3 py-1 text-[10px] font-bold text-white backdrop-blur-md">
+                    {place.distance}
+                  </span>
+
+                  {/* Title + note — bottom */}
+                  <div className="absolute inset-x-0 bottom-0 p-4">
+                    <h3 className="text-sm font-bold text-white sm:text-base">
                       {place.name}
-                    </span>
+                    </h3>
                     {place.note && (
-                      <span className="block text-[11px] text-emerald-100/40">
+                      <span className="mt-0.5 flex items-center gap-1 text-[11px] text-emerald-200/60">
+                        <MapPin size={10} strokeWidth={2.5} />
                         {place.note}
                       </span>
                     )}
                   </div>
                 </div>
-                <span className="shrink-0 whitespace-nowrap rounded-full bg-white/[0.06] px-3 py-1 text-[11px] font-bold text-emerald-100/60">
-                  {place.distance}
-                </span>
               </motion.div>
             ))}
           </motion.div>
