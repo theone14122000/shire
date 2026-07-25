@@ -16,7 +16,7 @@ export function FinalCTA() {
     <section
       id="book"
       ref={ref}
-      className="relative scroll-mt-24 overflow-hidden bg-emerald-950 py-28 sm:py-36 lg:py-48"
+      className="relative scroll-mt-24 overflow-hidden bg-forest-950 py-28 sm:py-36 lg:py-48"
     >
       <motion.div
         aria-hidden

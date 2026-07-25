@@ -33,6 +33,29 @@
   /* ── Mountain Sky ── */
   --color-sky-400: #7eb8da;
 
+  /* ── Forest — deep mountain woodland base ── */
+  --color-forest-950: #0B1F15;
+  --color-forest-900: #0C2A1A;
+  --color-forest-800: #12301F;
+  --color-forest-600: #1F4A31;
+  --color-forest-400: #2D6648;
+
+  /* ── Parchment — warm light text / surface ── */
+  --color-parchment: #F1EDE2;
+  --color-parchment-50: #F9F7F2;
+  --color-parchment-100: #F1EDE2;
+  --color-parchment-200: #E4DDC9;
+
+  /* ── Pine-Mist — muted secondary on dark ── */
+  --color-pine-mist: #8FA99A;
+  --color-pine-mist-100: #B3C7BD;
+  --color-pine-mist-200: #8FA99A;
+
+  /* ── Amber-Ember — firelight accent ── */
+  --color-amber-ember: #E3A857;
+  --color-amber-ember-100: #F0C884;
+  --color-amber-ember-200: #E3A857;
+
   /* ── Frost Green — icy mountain mist tones ── */
   --color-frost-50: #eaf3ea;
   --color-frost-100: #d5e7d5;
@@ -227,8 +250,12 @@
   }
 
   .editorial-surface {
-    @apply bg-[#f7f1e6] text-emerald-950;
+    @apply text-parchment/90;
   }
+}
+
+p {
+  font-weight: 500;
 }
 
 .ambient {

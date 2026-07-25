@@ -90,7 +90,7 @@ export function GalleryPageContent() {
   }, [lightboxIndex, filteredItems.length]);
 
   return (
-    <section className="editorial-surface overflow-hidden">
+    <section className="overflow-hidden">
       <div className="relative min-h-[76vh] overflow-hidden">
         <Image
           src="/gallery/enchanting-winter-views.jpg"

@@ -27,7 +27,7 @@ export function TraditionalRemedies() {
     <section
       id="setting"
       ref={ref}
-      className="relative scroll-mt-24 overflow-hidden py-24 sm:py-32 lg:py-40 bg-emerald-900"
+      className="relative scroll-mt-24 overflow-hidden bg-forest-800 py-24 sm:py-32 lg:py-40"
     >
       <motion.div aria-hidden className="pointer-events-none absolute -left-24 -top-24 h-[28rem] w-[28rem] rounded-full blur-[120px] bg-white/[0.06]" style={{ y: y1 }} />
       <motion.div aria-hidden className="pointer-events-none absolute -bottom-24 -right-24 h-[28rem] w-[28rem] rounded-full blur-[120px] bg-gold-500/10" style={{ y: y2 }} />

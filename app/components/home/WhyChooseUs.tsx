@@ -104,7 +104,7 @@ function FeatureSvg({ icon }: { icon: string }) {
 
 export function WhyChooseUs() {
   return (
-    <section className="relative overflow-hidden bg-frost-50 py-20 sm:py-24 lg:py-32">
+    <section className="relative overflow-hidden bg-pine-100 py-20 sm:py-24 lg:py-32">
       <div aria-hidden className="pointer-events-none absolute -right-32 top-10 h-80 w-80 rounded-full bg-pine-200/30 blur-[110px]" />
       <div aria-hidden className="pointer-events-none absolute -left-32 bottom-0 h-80 w-80 rounded-full bg-gold-200/15 blur-[120px]" />
 

@@ -43,7 +43,7 @@ export default function RootLayout({
         font-sans: applies the Raleway font via our Tailwind theme
         antialiased: smooths font rendering
       */}
-      <body className="ambient min-h-screen font-sans antialiased">
+      <body className="bg-forest-900 text-parchment/90 min-h-screen font-sans antialiased">
         {children}
       </body>
     </html>
