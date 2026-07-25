@@ -104,7 +104,7 @@
   --font-sans: var(--font-raleway), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
   --font-display: var(--font-raleway), ui-serif, Georgia, "Times New Roman", serif;
 
-  --tracking-display: -0.025em;
+  --tracking-display: 0em;
   --tracking-eyebrow: 0.32em;
 
   /* ── Radii ── */
@@ -129,7 +129,7 @@
   }
 
   body {
-    background-color: var(--color-pine-800);
+    background-color: #f7f1e6;
     color: var(--color-pine-50);
     font-family: var(--font-sans);
     font-weight: 400;
@@ -200,12 +200,42 @@
   .divider-gold {
     @apply h-px w-full bg-gradient-to-r from-transparent via-gold-300/50 to-transparent;
   }
+
+  .luxe-kicker {
+    @apply inline-flex items-center gap-3 text-[10px] font-extrabold uppercase tracking-[0.26em];
+  }
+
+  .luxe-kicker::before {
+    content: "";
+    @apply h-px w-8 bg-current opacity-45;
+  }
+
+  .luxe-link {
+    @apply inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.18em] text-emerald-900 transition-colors duration-300 hover:text-gold-700;
+  }
+
+  .luxe-button {
+    @apply inline-flex items-center justify-center rounded-full bg-gold-500 px-8 py-3.5 text-sm font-extrabold text-emerald-950 transition-all duration-300 hover:-translate-y-0.5 hover:bg-gold-400;
+  }
+
+  .luxe-button-ghost {
+    @apply border border-emerald-900/20 bg-transparent text-emerald-950 hover:border-gold-500 hover:bg-gold-50;
+  }
+
+  .luxe-button-dark {
+    @apply border border-cream-100/20 bg-transparent text-cream-50 hover:border-gold-400 hover:bg-transparent hover:text-gold-300;
+  }
+
+  .editorial-surface {
+    @apply bg-[#f7f1e6] text-emerald-950;
+  }
 }
 
 .ambient {
   background-image:
-    radial-gradient(800px 400px at 80% -5%, rgba(45, 122, 45, 0.10), transparent 60%),
-    radial-gradient(600px 400px at 0% 20%, rgba(212, 160, 23, 0.06), transparent 60%);
+    linear-gradient(180deg, rgba(247, 241, 230, 0.96), rgba(255, 250, 240, 0.98)),
+    radial-gradient(900px 420px at 78% -10%, rgba(15, 61, 15, 0.08), transparent 62%),
+    radial-gradient(620px 400px at 0% 22%, rgba(212, 160, 23, 0.05), transparent 60%);
 }
 
 .hero-overlay {

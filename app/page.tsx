@@ -3,15 +3,7 @@ import { SiteNav } from "./components/SiteNav";
 import { SiteFooter } from "./components/SiteFooter";
 import { FloatingActions } from "./components/FloatingActions";
 import { Hero } from "./components/home/Hero";
-import { BrandIntro } from "./components/home/BrandIntro";
-import { FeaturedCollection } from "./components/home/FeaturedCollection";
-import { SpecialOffers } from "./components/home/SpecialOffers";
-import { WhyChooseUs } from "./components/home/WhyChooseUs";
-import { TraditionalRemedies } from "./components/home/TraditionalRemedies";
-import { QualitySection } from "./components/home/QualitySection";
-import { TrustSection } from "./components/home/TrustSection";
-import { ProductShowcase } from "./components/home/ProductShowcase";
-import { FinalCTA } from "./components/home/FinalCTA";
+import { HomeEditorial } from "./components/home/HomeEditorial";
 
 /**
  * Home page composition.
@@ -29,15 +21,7 @@ export default function Home() {
       <SiteNav />
       <main id="main" className="relative">
         <Hero />
-        <BrandIntro />
-        <FeaturedCollection />
-        <SpecialOffers />
-        <WhyChooseUs />
-        <QualitySection />
-        <TraditionalRemedies />
-        <TrustSection />
-        <ProductShowcase />
-        <FinalCTA />
+        <HomeEditorial />
       </main>
       <SiteFooter />
       <FloatingActions />

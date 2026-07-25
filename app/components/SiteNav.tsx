@@ -199,7 +199,7 @@ export function SiteNav() {
           </motion.nav>
 
           <motion.a
-            href="#book"
+            href="/#book"
             variants={itemVariants}
             className="inline-flex items-center gap-2 rounded-full bg-emerald-800 px-6 py-2.5 text-xs sm:text-sm font-bold text-cream-50 transition-all duration-300 hover:bg-emerald-700 hover:-translate-y-0.5 shadow-md whitespace-nowrap"
           >
@@ -212,7 +212,7 @@ export function SiteNav() {
 
         <div className="flex items-center gap-3 lg:hidden">
           <a
-            href="#book"
+            href="/#book"
             className="inline-flex items-center gap-2 rounded-full bg-emerald-800 px-4 py-2 text-xs font-bold text-cream-50 transition-all duration-300 hover:bg-emerald-700 shadow-md whitespace-nowrap"
           >
             Book
