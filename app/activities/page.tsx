@@ -223,16 +223,25 @@ export default function ActivitiesPage() {
             ))}
           </div>
 
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
             {SIGHTSEEING.slice(4).map((place) => (
-              <article key={place.name} className="border-t border-emerald-900/15 pt-5">
-                <h3 className="font-display text-xl font-semibold text-emerald-950">
+              <article key={place.name} className="group border-t border-emerald-900/15 pt-5">
+                <div className="relative mb-4 aspect-[16/10] overflow-hidden">
+                  <Image
+                    src={place.image}
+                    alt={place.name}
+                    fill
+                    sizes="(max-width: 640px) 100vw, 20vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                </div>
+                <h3 className="font-display text-lg font-semibold text-emerald-950">
                   {place.name}
                 </h3>
-                <p className="mt-3 text-sm leading-[1.7] text-emerald-950/62">
+                <p className="mt-2 text-sm leading-[1.7] text-emerald-950/62">
                   {place.highlight}
                 </p>
-                <p className="mt-4 text-[10px] font-bold uppercase tracking-[0.18em] text-gold-700">
+                <p className="mt-3 text-[10px] font-bold uppercase tracking-[0.18em] text-gold-700">
                   {place.travelTime} / {place.distance}
                 </p>
               </article>
