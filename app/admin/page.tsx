@@ -69,7 +69,7 @@ export default function AdminDashboardPage() {
               </svg>
             </span>
             <div>
-              <h1 className="font-display text-2xl font-black tracking-tight text-emerald-950">
+              <h1 className="font-display text-2xl font-black tracking-tight text-parchment">
                 Blog Manager
               </h1>
               <p className="mt-0.5 text-sm text-emerald-800/50">
@@ -117,7 +117,7 @@ export default function AdminDashboardPage() {
             >
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-3">
-                  <h3 className="truncate text-sm font-bold text-emerald-950">
+                  <h3 className="truncate text-sm font-bold text-parchment">
                     {blog.title}
                   </h3>
                   {blog.status === "draft" && (

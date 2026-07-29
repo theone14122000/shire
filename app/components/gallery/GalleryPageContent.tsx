@@ -124,7 +124,7 @@ export function GalleryPageContent() {
           <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
             <div>
               <span className="luxe-kicker text-gold-700">Browse By Space</span>
-              <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.06] text-emerald-950 sm:text-5xl">
+              <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.06] text-parchment sm:text-5xl">
                 Every corner, captured.
               </h2>
             </div>
@@ -140,7 +140,7 @@ export function GalleryPageContent() {
                     className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] transition-all duration-300 ${
                       active
                         ? "border-emerald-900 bg-emerald-950 text-cream-50"
-                        : "border-emerald-900/15 bg-transparent text-emerald-950/62 hover:border-gold-600 hover:text-gold-700"
+                        : "border-emerald-900/15 bg-transparent text-parchment/62 hover:border-gold-600 hover:text-gold-700"
                     }`}
                   >
                     <Icon size={13} strokeWidth={1.8} />

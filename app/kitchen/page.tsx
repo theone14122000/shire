@@ -73,7 +73,7 @@ export default function KitchenPage() {
         <div className="mx-auto grid max-w-[1400px] gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-start lg:gap-20">
           <div className="lg:sticky lg:top-28">
             <span className="luxe-kicker text-gold-700">Chef&apos;s Philosophy</span>
-            <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.08] text-emerald-950 sm:text-5xl">
+            <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.08] text-parchment sm:text-5xl">
               Every meal at The Himalayan Shire is cooked in-house, from scratch.
             </h2>
           </div>
@@ -84,10 +84,10 @@ export default function KitchenPage() {
             viewport={{ once: true, amount: 0.22 }}
             className="space-y-8"
           >
-            <motion.p variants={fadeUp} className="font-display text-2xl font-semibold leading-[1.45] text-emerald-950 sm:text-3xl">
+            <motion.p variants={fadeUp} className="font-display text-2xl font-semibold leading-[1.45] text-parchment sm:text-3xl">
               Every meal at The Himalayan Shire is cooked in-house, from scratch, by a small kitchen team who treat guests the way they would treat family visiting for the weekend.
             </motion.p>
-            <motion.p variants={fadeUp} className="max-w-[70ch] text-base leading-[1.9] text-emerald-950/66 sm:text-lg">
+            <motion.p variants={fadeUp} className="max-w-[70ch] text-base leading-[1.9] text-parchment/66 sm:text-lg">
               Nothing is trucked in pre-made - what you are served is what was cooking in the kitchen an hour before it reached your table.
             </motion.p>
           </motion.div>
@@ -99,7 +99,7 @@ export default function KitchenPage() {
           <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr]">
             <div>
               <span className="luxe-kicker text-gold-700">What Makes It Different</span>
-              <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.06] text-emerald-950 sm:text-5xl">
+              <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.06] text-parchment sm:text-5xl">
                 The kitchen works on trust, not a clock.
               </h2>
             </div>
@@ -115,10 +115,10 @@ export default function KitchenPage() {
                   <span className="font-display text-sm font-semibold text-gold-700">
                     {String(index + 1).padStart(2, "0")}
                   </span>
-                  <h3 className="mt-4 font-display text-2xl font-semibold text-emerald-950">
+                  <h3 className="mt-4 font-display text-2xl font-semibold text-parchment">
                     {item.title}
                   </h3>
-                  <p className="mt-4 text-base leading-[1.8] text-emerald-950/66">
+                  <p className="mt-4 text-base leading-[1.8] text-parchment/66">
                     {item.body}
                   </p>
                 </motion.article>

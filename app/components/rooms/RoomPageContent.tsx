@@ -102,7 +102,7 @@ export function RoomPageContent({ room }: { room: Room }) {
               <motion.span variants={fadeUp} className="luxe-kicker text-gold-700">
                 The Space
               </motion.span>
-              <motion.p variants={fadeUp} className="mt-7 max-w-[72ch] font-display text-2xl font-semibold leading-[1.42] text-emerald-950 sm:text-3xl">
+              <motion.p variants={fadeUp} className="mt-7 max-w-[72ch] font-display text-2xl font-semibold leading-[1.42] text-parchment sm:text-3xl">
                 {room.description}
               </motion.p>
             </motion.div>
@@ -114,7 +114,7 @@ export function RoomPageContent({ room }: { room: Room }) {
               transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
               className="border-y border-emerald-900/15 py-7"
             >
-              <h2 className="font-display text-2xl font-semibold text-emerald-950">
+              <h2 className="font-display text-2xl font-semibold text-parchment">
                 At a glance
               </h2>
               <dl className="mt-7 space-y-6">
@@ -134,7 +134,7 @@ export function RoomPageContent({ room }: { room: Room }) {
             <div className="grid gap-8 lg:grid-cols-[0.7fr_1.3fr] lg:items-start">
               <div>
                 <span className="luxe-kicker text-gold-700">Details</span>
-                <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.06] text-emerald-950 sm:text-5xl">
+                <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.06] text-parchment sm:text-5xl">
                   What is inside.
                 </h2>
               </div>
@@ -148,7 +148,7 @@ export function RoomPageContent({ room }: { room: Room }) {
                 {room.facilities.map((facility) => (
                   <motion.div key={facility} variants={fadeUp} className="flex gap-4 border-t border-emerald-900/15 pt-5">
                     <Bath className="mt-1 shrink-0 text-gold-700" size={17} strokeWidth={1.6} />
-                    <p className="text-base leading-[1.65] text-emerald-950/70">{facility}</p>
+                    <p className="text-base leading-[1.65] text-parchment/70">{facility}</p>
                   </motion.div>
                 ))}
               </motion.div>
@@ -161,11 +161,11 @@ export function RoomPageContent({ room }: { room: Room }) {
             <div className="mb-12 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <span className="luxe-kicker text-gold-700">Gallery</span>
-                <h2 className="mt-5 font-display text-4xl font-semibold text-emerald-950 sm:text-5xl">
+                <h2 className="mt-5 font-display text-4xl font-semibold text-parchment sm:text-5xl">
                   Room impressions.
                 </h2>
               </div>
-              <p className="text-sm font-bold uppercase tracking-[0.18em] text-emerald-950/45">
+              <p className="text-sm font-bold uppercase tracking-[0.18em] text-parchment/45">
                 {room.images.length} photos
               </p>
             </div>
@@ -271,8 +271,8 @@ function Spec({
     <div className="flex items-start gap-4">
       <Icon className="mt-1 shrink-0 text-gold-700" size={18} strokeWidth={1.6} />
       <div>
-        <dt className="text-[10px] font-bold uppercase tracking-[0.22em] text-emerald-950/45">{label}</dt>
-        <dd className="mt-1 font-display text-xl font-semibold text-emerald-950">{value}</dd>
+        <dt className="text-[10px] font-bold uppercase tracking-[0.22em] text-parchment/45">{label}</dt>
+        <dd className="mt-1 font-display text-xl font-semibold text-parchment">{value}</dd>
       </div>
     </div>
   );

@@ -37,11 +37,11 @@ export default function BlogListingClient({ blogs }: { blogs: BlogListItem[] }) 
             <motion.span variants={fadeUp} className="luxe-kicker text-gold-700">
               Blog
             </motion.span>
-            <motion.h1 variants={fadeUp} className="mt-6 max-w-4xl font-display text-5xl font-semibold leading-[1.02] text-emerald-950 sm:text-6xl lg:text-7xl">
+            <motion.h1 variants={fadeUp} className="mt-6 max-w-4xl font-display text-5xl font-semibold leading-[1.02] text-parchment sm:text-6xl lg:text-7xl">
               Stories From The Shire
             </motion.h1>
           </div>
-          <motion.p variants={fadeUp} className="max-w-2xl text-base leading-[1.9] text-emerald-950/66 sm:text-lg">
+          <motion.p variants={fadeUp} className="max-w-2xl text-base leading-[1.9] text-parchment/66 sm:text-lg">
             Travel guides, behind-the-scenes stories, and practical tips for your Himalayan getaway near Shimla.
           </motion.p>
         </motion.div>
@@ -70,10 +70,10 @@ export default function BlogListingClient({ blogs }: { blogs: BlogListItem[] }) 
                 <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-gold-700">
                   {featured.tag} / {featured.readTime}
                 </span>
-                <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.08] text-emerald-950 sm:text-5xl">
+                <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.08] text-parchment sm:text-5xl">
                   {featured.title}
                 </h2>
-                <p className="mt-6 max-w-[58ch] text-base leading-[1.85] text-emerald-950/66">
+                <p className="mt-6 max-w-[58ch] text-base leading-[1.85] text-parchment/66">
                   {featured.excerpt}
                 </p>
                 <span className="luxe-link mt-8">
@@ -109,10 +109,10 @@ export default function BlogListingClient({ blogs }: { blogs: BlogListItem[] }) 
                 <span className="mt-6 block text-[10px] font-bold uppercase tracking-[0.2em] text-gold-700">
                   {post.tag} / {post.readTime}
                 </span>
-                <h2 className="mt-3 font-display text-2xl font-semibold leading-[1.18] text-emerald-950">
+                <h2 className="mt-3 font-display text-2xl font-semibold leading-[1.18] text-parchment">
                   {post.title}
                 </h2>
-                <p className="mt-4 text-sm leading-[1.8] text-emerald-950/64">
+                <p className="mt-4 text-sm leading-[1.8] text-parchment/64">
                   {post.excerpt}
                 </p>
                 <span className="luxe-link mt-6">

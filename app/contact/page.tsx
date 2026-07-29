@@ -36,11 +36,11 @@ export default function ContactPage() {
             <motion.span variants={fadeUp} className="luxe-kicker text-gold-700">
               Connect
             </motion.span>
-            <motion.h1 variants={fadeUp} className="mt-6 max-w-4xl font-display text-5xl font-semibold leading-[1.02] text-emerald-950 sm:text-6xl lg:text-7xl">
+            <motion.h1 variants={fadeUp} className="mt-6 max-w-4xl font-display text-5xl font-semibold leading-[1.02] text-parchment sm:text-6xl lg:text-7xl">
               Get in touch.
             </motion.h1>
           </div>
-          <motion.p variants={fadeUp} className="max-w-2xl text-base leading-[1.9] text-emerald-950/66 sm:text-lg">
+          <motion.p variants={fadeUp} className="max-w-2xl text-base leading-[1.9] text-parchment/66 sm:text-lg">
             Planning your Himalayan escape? We are here to help you craft a stay that feels exactly like home in the mountains.
           </motion.p>
         </motion.div>
@@ -62,12 +62,12 @@ export default function ContactPage() {
           />
           <div className="border-y border-emerald-900/15 py-8">
             <Phone className="text-gold-700" size={22} strokeWidth={1.5} />
-            <p className="mt-5 text-[10px] font-bold uppercase tracking-[0.22em] text-emerald-950/45">
+            <p className="mt-5 text-[10px] font-bold uppercase tracking-[0.22em] text-parchment/45">
               Phone
             </p>
             <div className="mt-4 space-y-3">
               {brand.phoneHref.map((href, index) => (
-                <a key={href} href={href} className="block font-display text-2xl font-semibold text-emerald-950 transition-colors hover:text-gold-700">
+                <a key={href} href={href} className="block font-display text-2xl font-semibold text-parchment transition-colors hover:text-gold-700">
                   {brand.phoneDisplay[index]}
                 </a>
               ))}
@@ -86,11 +86,11 @@ export default function ContactPage() {
               <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-gold-700">
                 Find Us on Google Maps
               </p>
-              <h2 className="mt-3 font-display text-3xl font-semibold text-emerald-950">
+              <h2 className="mt-3 font-display text-3xl font-semibold text-parchment">
                 Dehna Road, near Talayi Village, Fagu, Himachal Pradesh
               </h2>
             </div>
-            <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-emerald-950 text-cream-50 transition-colors group-hover:bg-gold-500 group-hover:text-emerald-950">
+            <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-emerald-950 text-cream-50 transition-colors group-hover:bg-gold-500 group-hover:text-parchment">
               <Send size={17} strokeWidth={1.8} />
             </span>
           </a>
@@ -142,10 +142,10 @@ function ContactBlock({
   return (
     <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noopener noreferrer" : undefined} className="group border-y border-emerald-900/15 py-8">
       <Icon className="text-gold-700" size={22} strokeWidth={1.5} />
-      <p className="mt-5 text-[10px] font-bold uppercase tracking-[0.22em] text-emerald-950/45">
+      <p className="mt-5 text-[10px] font-bold uppercase tracking-[0.22em] text-parchment/45">
         {label}
       </p>
-      <h2 className="mt-4 font-display text-2xl font-semibold leading-[1.25] text-emerald-950 transition-colors group-hover:text-gold-700">
+      <h2 className="mt-4 font-display text-2xl font-semibold leading-[1.25] text-parchment transition-colors group-hover:text-gold-700">
         {title}
       </h2>
     </a>
