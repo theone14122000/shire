@@ -1,17 +1,25 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { CMS_SECTIONS, CMS_DEFAULTS } from "@/lib/cms-sections";
+
+interface SectionStatus {
+  state: "idle" | "saving" | "saved" | "error";
+  message?: string;
+  savedAt?: string;
+}
 
 export default function AdminHomepagePage() {
   const [content, setContent] = useState<Record<string, Record<string, string>>>({});
+  const [statuses, setStatuses] = useState<Record<string, SectionStatus>>({});
   const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
   const [authenticated, setAuthenticated] = useState(true);
-  const [message, setMessage] = useState("");
-  const [messageType, setMessageType] = useState<"ok" | "error">("ok");
+  const [globalSaving, setGlobalSaving] = useState(false);
   const router = useRouter();
+
+  const saveTimers = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
 
   const fetchContent = useCallback(async () => {
     try {
@@ -40,34 +48,61 @@ export default function AdminHomepagePage() {
     fetchContent();
   }, [fetchContent]);
 
+  useEffect(() => {
+    return () => {
+      for (const timer of Object.values(saveTimers.current)) {
+        clearTimeout(timer);
+      }
+    };
+  }, []);
+
   if (!authenticated) {
     router.push("/admin/login");
     return null;
   }
 
-  async function handleSave() {
-    setSaving(true);
-    setMessage("");
+  async function saveSection(sectionKey: string) {
+    const sectionData = content[sectionKey];
+    if (!sectionData) return;
+
+    setStatuses((prev) => ({ ...prev, [sectionKey]: { state: "saving" } }));
+
     try {
       const res = await fetch("/api/homepage", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(content),
+        body: JSON.stringify({ [sectionKey]: sectionData }),
       });
 
       if (res.ok) {
-        setMessageType("ok");
-        setMessage("All sections saved successfully.");
+        setStatuses((prev) => ({
+          ...prev,
+          [sectionKey]: {
+            state: "saved",
+            savedAt: new Date().toLocaleTimeString(),
+          },
+        }));
       } else {
-        setMessageType("error");
-        setMessage("Failed to save.");
+        setStatuses((prev) => ({
+          ...prev,
+          [sectionKey]: { state: "error", message: "Failed to save" },
+        }));
       }
     } catch {
-      setMessageType("error");
-      setMessage("Connection failed.");
-    } finally {
-      setSaving(false);
+      setStatuses((prev) => ({
+        ...prev,
+        [sectionKey]: { state: "error", message: "Connection failed" },
+      }));
     }
+  }
+
+  function scheduleSave(sectionKey: string) {
+    if (saveTimers.current[sectionKey]) {
+      clearTimeout(saveTimers.current[sectionKey]);
+    }
+    saveTimers.current[sectionKey] = setTimeout(() => {
+      saveSection(sectionKey);
+    }, 1200);
   }
 
   function updateField(section: string, field: string, value: string) {
@@ -78,39 +113,102 @@ export default function AdminHomepagePage() {
         [field]: value,
       },
     }));
+    setStatuses((prev) => ({ ...prev, [section]: { state: "idle" } }));
+    scheduleSave(section);
+  }
+
+  async function handleSaveAll() {
+    setGlobalSaving(true);
+    try {
+      const res = await fetch("/api/homepage", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(content),
+      });
+      if (res.ok) {
+        const time = new Date().toLocaleTimeString();
+        const allSaved: Record<string, SectionStatus> = {};
+        for (const section of CMS_SECTIONS) {
+          allSaved[section.key] = { state: "saved", savedAt: time };
+        }
+        setStatuses(allSaved);
+      }
+    } catch {
+      // ignore
+    } finally {
+      setGlobalSaving(false);
+    }
+  }
+
+  function StatusBadge({
+    sectionKey,
+    status,
+  }: {
+    sectionKey: string;
+    status?: SectionStatus;
+  }) {
+    if (!status || status.state === "idle") {
+      return (
+        <span className="rounded-full bg-emerald-50 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-emerald-600">
+          Edit to update
+        </span>
+      );
+    }
+    if (status.state === "saving") {
+      return (
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-amber-700">
+          <svg className="animate-spin" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+            <path d="M21 12a9 9 0 1 1-6.2-8.56" />
+          </svg>
+          Saving
+        </span>
+      );
+    }
+    if (status.state === "saved") {
+      return (
+        <span className="rounded-full bg-emerald-50 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-emerald-700">
+          Saved {status.savedAt}
+        </span>
+      );
+    }
+    return (
+      <button
+        onClick={() => saveSection(sectionKey)}
+        className="rounded-full bg-red-50 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-red-600 hover:bg-red-100"
+      >
+        {status.message ?? "Error"} — Retry
+      </button>
+    );
   }
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
-      <div className="mb-8 flex items-center justify-between">
+      <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="font-display text-2xl font-black tracking-tight text-black">
             Homepage Content
           </h1>
           <p className="mt-0.5 text-sm text-emerald-800/50">
-            Edit the text of every homepage section
+            Changes auto-save to the database and appear on the homepage
           </p>
         </div>
-        <button
-          onClick={handleSave}
-          disabled={saving || loading}
-          className="rounded-xl bg-emerald-700 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-emerald-800 disabled:opacity-50"
-        >
-          {saving ? "Saving..." : "Save All"}
-        </button>
-      </div>
-
-      {message && (
-        <div
-          className={`mb-4 rounded-xl px-4 py-3 text-sm font-medium ${
-            messageType === "ok"
-              ? "bg-emerald-50 text-emerald-700"
-              : "bg-red-50 text-red-700"
-          }`}
-        >
-          {message}
+        <div className="flex items-center gap-3">
+          <Link
+            href="/"
+            target="_blank"
+            className="rounded-xl border border-emerald-300 px-5 py-2.5 text-sm font-bold text-emerald-700 transition-colors hover:bg-emerald-50"
+          >
+            View Homepage
+          </Link>
+          <button
+            onClick={handleSaveAll}
+            disabled={globalSaving || loading}
+            className="rounded-xl bg-emerald-700 px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-emerald-800 disabled:opacity-50"
+          >
+            {globalSaving ? "Saving..." : "Save All"}
+          </button>
         </div>
-      )}
+      </div>
 
       {loading ? (
         <div className="py-20 text-center text-sm text-emerald-800/40">
@@ -120,14 +218,18 @@ export default function AdminHomepagePage() {
         <div className="space-y-6">
           {CMS_SECTIONS.map((section) => {
             const values = content[section.key] ?? {};
+            const status = statuses[section.key];
             return (
               <div
                 key={section.key}
                 className="rounded-2xl border border-emerald-200/50 bg-white p-6 shadow-sm"
               >
-                <h2 className="mb-4 font-display text-lg font-bold text-black">
-                  {section.label}
-                </h2>
+                <div className="mb-4 flex items-center justify-between">
+                  <h2 className="font-display text-lg font-bold text-black">
+                    {section.label}
+                  </h2>
+                  <StatusBadge sectionKey={section.key} status={status} />
+                </div>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   {section.fields.map((field) => {
                     const value = values[field.key] ?? "";
@@ -173,11 +275,11 @@ export default function AdminHomepagePage() {
 
           <div className="flex justify-end">
             <button
-              onClick={handleSave}
-              disabled={saving}
+              onClick={handleSaveAll}
+              disabled={globalSaving}
               className="rounded-xl bg-emerald-700 px-8 py-3 text-sm font-bold text-white transition-colors hover:bg-emerald-800 disabled:opacity-50"
             >
-              {saving ? "Saving..." : "Save All"}
+              {globalSaving ? "Saving..." : "Save All"}
             </button>
           </div>
         </div>
