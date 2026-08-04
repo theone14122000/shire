@@ -2,21 +2,27 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { verifyToken, COOKIE_NAME } from "@/lib/auth";
 
+export const maxDuration = 60;
+
 export async function GET() {
-  const sections = await prisma.homepageContent.findMany({
-    orderBy: { section: "asc" },
-  });
+  try {
+    const sections = await prisma.homepageContent.findMany({
+      orderBy: { section: "asc" },
+    });
 
-  const data: Record<string, any> = {};
-  for (const section of sections) {
-    try {
-      data[section.section] = JSON.parse(section.data);
-    } catch {
-      data[section.section] = {};
+    const data: Record<string, any> = {};
+    for (const section of sections) {
+      try {
+        data[section.section] = JSON.parse(section.data);
+      } catch {
+        data[section.section] = {};
+      }
     }
-  }
 
-  return NextResponse.json(data);
+    return NextResponse.json(data);
+  } catch {
+    return NextResponse.json({});
+  }
 }
 
 export async function PUT(req: NextRequest) {

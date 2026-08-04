@@ -5,11 +5,13 @@ import { Hero } from "./components/home/Hero";
 import { HomeEditorial } from "./components/home/HomeEditorial";
 
 async function getHomepageContent() {
-  const res = await fetch(`${process.env.NEXTAUTH_URL || "http://localhost:3000"}/api/homepage`, {
-    cache: "no-store",
-  });
-  if (!res.ok) return null;
-  return res.json();
+  try {
+    const res = await fetch("/api/homepage", { cache: "no-store" });
+    if (!res.ok) return null;
+    return res.json();
+  } catch {
+    return null;
+  }
 }
 
 export default async function Home() {

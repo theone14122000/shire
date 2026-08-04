@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { authenticateAdmin, COOKIE_NAME } from "@/lib/auth";
 
+export const maxDuration = 60;
+
 export async function POST(req: NextRequest) {
   try {
     const { email, password } = await req.json();
@@ -31,10 +33,11 @@ export async function POST(req: NextRequest) {
     });
 
     return response;
-  } catch {
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
+  } catch (err) {
+    const message =
+      err instanceof Error && err.message.includes("P1001")
+        ? "Database unavailable. Please try again in a moment."
+        : "Internal server error";
+    return NextResponse.json({ error: message }, { status: 503 });
   }
 }
