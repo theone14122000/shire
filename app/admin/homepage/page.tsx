@@ -17,6 +17,9 @@ export default function AdminHomepagePage() {
   const [loading, setLoading] = useState(true);
   const [authenticated, setAuthenticated] = useState(true);
   const [globalSaving, setGlobalSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState("");
+  const videoInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
   const saveTimers = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
@@ -140,6 +143,34 @@ export default function AdminHomepagePage() {
     }
   }
 
+  async function handleUploadVideo(file: File) {
+    setUploading(true);
+    setUploadError("");
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const res = await fetch("/api/upload/video", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        updateField("hero", "videoUrl", data.url);
+        if (videoInputRef.current) videoInputRef.current.value = "";
+      } else {
+        const data = await res.json().catch(() => ({}));
+        setUploadError(data.error || "Upload failed");
+      }
+    } catch {
+      setUploadError("Upload failed. Please try again.");
+    } finally {
+      setUploading(false);
+    }
+  }
+
   function StatusBadge({
     sectionKey,
     status,
@@ -230,6 +261,54 @@ export default function AdminHomepagePage() {
                   </h2>
                   <StatusBadge sectionKey={section.key} status={status} />
                 </div>
+
+                {section.key === "hero" && (
+                  <div className="mb-5 rounded-xl border border-emerald-200 bg-cream-50 p-4">
+                    <p className="mb-3 text-xs font-bold uppercase tracking-wider text-emerald-700">
+                      Current Video
+                    </p>
+                    <video
+                      src={values.videoUrl}
+                      muted
+                      playsInline
+                      controls
+                      className="mb-4 w-full rounded-lg bg-black"
+                    />
+                    <p className="mb-2 text-xs font-bold uppercase tracking-wider text-emerald-700">
+                      Upload New Video (MP4 / WebM, max 50MB)
+                    </p>
+                    <div className="flex flex-col gap-2 sm:flex-row">
+                      <input
+                        ref={videoInputRef}
+                        type="file"
+                        accept="video/mp4,video/webm,video/ogg,video/quicktime"
+                        disabled={uploading}
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) handleUploadVideo(file);
+                        }}
+                        className="flex-1 rounded-xl border border-emerald-200 bg-white px-4 py-2.5 text-sm text-black file:mr-3 file:rounded-lg file:border-0 file:bg-emerald-700 file:px-3 file:py-1.5 file:text-xs file:font-bold file:text-white"
+                      />
+                      {uploading && (
+                        <span className="inline-flex items-center justify-center gap-2 rounded-xl bg-amber-50 px-4 py-2.5 text-sm font-bold text-amber-700">
+                          <svg className="animate-spin" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+                            <path d="M21 12a9 9 0 1 1-6.2-8.56" />
+                          </svg>
+                          Uploading...
+                        </span>
+                      )}
+                    </div>
+                    {uploadError && (
+                      <p className="mt-2 text-sm font-medium text-red-600">
+                        {uploadError}
+                      </p>
+                    )}
+                    <p className="mt-3 text-xs text-emerald-800/50">
+                      Tip: on Vercel the upload limit is small — for large videos,
+                      host the file elsewhere and paste its URL in the Video URL field below.
+                    </p>
+                  </div>
+                )}
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   {section.fields.map((field) => {
                     const value = values[field.key] ?? "";

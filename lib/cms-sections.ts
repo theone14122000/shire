@@ -14,15 +14,10 @@ export interface CmsSection {
 export const CMS_SECTIONS: CmsSection[] = [
   {
     key: "hero",
-    label: "Hero",
+    label: "Hero Video",
     fields: [
-      { key: "eyebrow", label: "Eyebrow" },
-      { key: "headline", label: "Headline" },
-      { key: "sub", label: "Description", textarea: true },
-      { key: "primaryCtaLabel", label: "Primary CTA Label" },
-      { key: "primaryCtaHref", label: "Primary CTA URL" },
-      { key: "secondaryCtaLabel", label: "Secondary CTA Label" },
-      { key: "secondaryCtaHref", label: "Secondary CTA URL" },
+      { key: "videoUrl", label: "Video URL (mp4)" },
+      { key: "poster", label: "Poster Image URL" },
     ],
   },
   {
@@ -94,13 +89,8 @@ export const BOOKING_URL =
 
 export const CMS_DEFAULTS: Record<string, Record<string, string>> = {
   hero: {
-    eyebrow: "A boutique mountain stay in the Kinnaur Himalayas",
-    headline: "The Himalayan Shire — a quiet place to rest, breathe, and stay.",
-    sub: "A family-run retreat in Pagey, near Kalpa. Seven warm rooms, an in-house kitchen, and the Kailash range at the end of the orchard road.",
-    primaryCtaLabel: "Book Your Stay",
-    primaryCtaHref: BOOKING_URL,
-    secondaryCtaLabel: "Take the Virtual Walkthrough",
-    secondaryCtaHref: "#walkthrough",
+    videoUrl: "/hero/hero.mp4",
+    poster: "/images/hero-1.jpg",
   },
   editorial: {
     kicker: "Our Story",

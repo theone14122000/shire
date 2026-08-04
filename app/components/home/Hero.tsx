@@ -12,6 +12,12 @@ const MAPS_URL =
 export function Hero({ content }: { content?: any }) {
   const ref = useRef<HTMLElement>(null);
   const data = { ...hero, ...(content?.hero ?? {}) };
+  const videoUrl = typeof data.videoUrl === "string" && data.videoUrl.trim()
+    ? data.videoUrl
+    : hero.videoUrl;
+  const poster = typeof data.poster === "string" && data.poster.trim()
+    ? data.poster
+    : hero.poster;
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -59,15 +65,13 @@ export function Hero({ content }: { content?: any }) {
       className="relative h-[70vh] min-h-[480px] w-full overflow-hidden bg-ink-900 sm:h-[80vh] sm:min-h-[560px] lg:h-[92vh]"
     >
       {/*
-        Cinematic video frame — full-bleed on mobile for max screen real
-        estate; on lg+ it pulls in with a letterboxed, rounded, gold-edged
-        frame so the hero reads as a curated visual rather than a plain
-        full-bleed clip. This is the "unique" treatment vs a flat rectangle.
+        Full-bleed cinematic video frame — edge to edge on every screen
+        size, no frame, no rounding, no border.
       */}
-      <div className="absolute inset-0 lg:inset-6">
+      <div className="absolute inset-0">
         <motion.div
           style={{ y }}
-          className="absolute inset-0 overflow-hidden lg:rounded-[1.75rem] lg:border lg:border-amber-400/20 lg:shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]"
+          className="absolute inset-0 overflow-hidden"
         >
           <motion.div
             initial={{ scale: 1.15, opacity: 0 }}
@@ -89,11 +93,11 @@ export function Hero({ content }: { content?: any }) {
               muted
               playsInline
               preload="auto"
-              poster="/images/hero-1.jpg"
+              poster={poster}
               className="absolute inset-0 h-full w-full object-cover object-[center_38%] sm:object-center"
               aria-hidden="true"
             >
-              <source src="/hero/hero.mp4" type="video/mp4" />
+              <source src={videoUrl} type="video/mp4" />
             </video>
           </motion.div>
 
@@ -203,13 +207,14 @@ export function Hero({ content }: { content?: any }) {
 /* ------------------------------------------------------------------ */
 /*  Small icon set for the stats strip                                 */
 /* ------------------------------------------------------------------ */
-function iconFor(label: string): "bed" | "calendar" | "leaf" {
+function iconFor(label: string): "bed" | "calendar" | "mountain" | "leaf" {
   if (/room|capacit|bed/i.test(label)) return "bed";
   if (/check|date|night/i.test(label)) return "calendar";
+  if (/altitude|elevat|sea|height/i.test(label)) return "mountain";
   return "leaf";
 }
 
-function StatIcon({ name }: { name: "pin" | "bed" | "calendar" | "leaf" }) {
+function StatIcon({ name }: { name: "pin" | "bed" | "calendar" | "mountain" | "leaf" }) {
   const common = {
     width: 11,
     height: 11,
@@ -242,6 +247,13 @@ function StatIcon({ name }: { name: "pin" | "bed" | "calendar" | "leaf" }) {
         <svg {...common} className="shrink-0">
           <rect x="3" y="5" width="18" height="16" rx="2" />
           <path d="M16 3v4M8 3v4M3 10h18" />
+        </svg>
+      );
+    case "mountain":
+      return (
+        <svg {...common} className="shrink-0">
+          <path d="M3 20h18L14.5 6l-4 8-2-3L3 20z" />
+          <path d="M13 20l-2.5-4.5" />
         </svg>
       );
     default:

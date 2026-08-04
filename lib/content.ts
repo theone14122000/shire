@@ -38,19 +38,14 @@ export const brand = {
 /*  HERO                                                                      */
 /* -------------------------------------------------------------------------- */
 export const hero = {
-  eyebrow: "A boutique mountain stay in the Kinnaur Himalayas",
-  headline: "The Himalayan Shire — a quiet place to rest, breathe, and stay.",
-  sub:
-    "A family-run retreat in Pagey, near Kalpa. Seven warm rooms, an in-house kitchen, and the Kailash range at the end of the orchard road.",
-  primaryCta: { label: "Book Your Stay", href: BOOKING_URL },
-  secondaryCta: { label: "Take the Virtual Walkthrough", href: "#walkthrough" },
+  videoUrl: "/hero/hero.mp4",
+  poster: "/images/hero-1.jpg",
   meta: [
     { label: "Location", value: "Pagey, near Kalpa" },
     { label: "Capacity", value: "7 rooms · full shire" },
     { label: "Seasons", value: "Open year-round" },
-    { label: "Rating", value: "5 / 5" },
+    { label: "Altitude", value: "7500 ft" },
   ],
-  theme: { bg: "bg-emerald-50", text: "text-black" },
 } as const;
 
 /* -------------------------------------------------------------------------- */
