@@ -60,7 +60,7 @@ export default function AdminLoginPage() {
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
             </svg>
           </div>
-          <h1 className="font-display text-2xl font-black tracking-tight text-parchment">
+          <h1 className="font-display text-2xl font-black tracking-tight text-black">
             The Himalayan Shire
           </h1>
           <p className="mt-1 text-sm text-emerald-800/50">Admin Panel</p>
@@ -82,7 +82,7 @@ export default function AdminLoginPage() {
               autoComplete="email"
               autoFocus
               required
-              className="w-full rounded-xl border border-emerald-200 bg-cream-50 px-4 py-3 text-sm text-parchment placeholder:text-emerald-400/50 focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20"
+              className="w-full rounded-xl border border-emerald-200 bg-cream-50 px-4 py-3 text-sm text-black placeholder:text-emerald-400/50 focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20"
             />
           </label>
 
@@ -98,7 +98,7 @@ export default function AdminLoginPage() {
                 placeholder="Enter admin password"
                 autoComplete="current-password"
                 required
-                className="w-full rounded-xl border border-emerald-200 bg-cream-50 px-4 py-3 pr-12 text-sm text-parchment placeholder:text-emerald-400/50 focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20"
+                className="w-full rounded-xl border border-emerald-200 bg-cream-50 px-4 py-3 pr-12 text-sm text-black placeholder:text-emerald-400/50 focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20"
               />
               <button
                 type="button"
