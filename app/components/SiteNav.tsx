@@ -113,7 +113,7 @@ export function SiteNav() {
                   <motion.button
                     variants={itemVariants}
                     onFocus={() => setHoveredLabel(item.label)}
-                    className="relative z-10 text-sm font-bold tracking-wide text-emerald-900 transition-colors duration-300 inline-flex items-center gap-1 px-3 py-2 rounded-full"
+                    className="relative z-10 text-base font-bold tracking-wide text-emerald-900 transition-colors duration-300 inline-flex items-center gap-1 px-3 py-2 rounded-full"
                   >
                     {highlighted && (
                       <motion.span
@@ -169,7 +169,7 @@ export function SiteNav() {
                 <motion.div key={item.label} variants={itemVariants} className="relative">
                   <NavLink
                     href={item.href}
-                    className="relative z-10 text-sm font-bold tracking-wide text-emerald-900 transition-colors duration-300 inline-flex items-center gap-1 px-3 py-2 rounded-full"
+                    className="relative z-10 text-base font-bold tracking-wide text-emerald-900 transition-colors duration-300 inline-flex items-center gap-1 px-3 py-2 rounded-full"
                   >
                     <span
                       onMouseEnter={() => setHoveredLabel(item.label)}
