@@ -108,13 +108,6 @@ export function HomeEditorial({ content }: { content?: Record<string, any> }) {
       ? content[section][field].toString()
       : fallback;
 
-  const editorial = content?.editorial ?? {};
-  const roomsIntro = content?.rooms ?? {};
-  const amenities = content?.amenities ?? {};
-  const setting = content?.setting ?? {};
-  const galleryIntro = content?.gallery ?? {};
-  const bookCta = content?.bookCta ?? {};
-
   return (
     <div className="relative overflow-hidden bg-[#f7f1e6] text-emerald-950">
       <section

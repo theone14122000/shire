@@ -1,28 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { verifyToken, COOKIE_NAME } from "@/lib/auth";
+import { getHomepageSections } from "@/lib/homepage-content";
 
 export const maxDuration = 60;
 
 export async function GET() {
-  try {
-    const sections = await prisma.homepageContent.findMany({
-      orderBy: { section: "asc" },
-    });
-
-    const data: Record<string, any> = {};
-    for (const section of sections) {
-      try {
-        data[section.section] = JSON.parse(section.data);
-      } catch {
-        data[section.section] = {};
-      }
-    }
-
-    return NextResponse.json(data);
-  } catch {
-    return NextResponse.json({});
-  }
+  const data = await getHomepageSections();
+  return NextResponse.json(data);
 }
 
 export async function PUT(req: NextRequest) {
