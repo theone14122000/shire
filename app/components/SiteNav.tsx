@@ -66,7 +66,7 @@ export function SiteNav() {
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className={`sticky top-0 z-50 transition-all duration-500 bg-white/95 backdrop-blur-lg ${
+      className={`sticky top-0 z-50 transition-all duration-500 bg-white ${
         scrolled
           ? "border-b border-emerald-200/40 shadow-sm h-16 sm:h-20"
           : "border-b border-transparent h-20 sm:h-24"
@@ -88,6 +88,14 @@ export function SiteNav() {
             }`}
             priority
           />
+          <div className="flex flex-col ml-2 leading-tight">
+            <span className="font-display font-bold text-emerald-900 text-sm sm:text-base tracking-wide">
+              The Himalayan Shire
+            </span>
+            <span className="font-bold text-emerald-800 text-[10px] sm:text-xs tracking-wider">
+              Fagu(Shimla)
+            </span>
+          </div>
         </Link>
 
         <div className="hidden lg:flex items-center gap-6 xl:gap-8">
@@ -242,7 +250,7 @@ export function SiteNav() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:hidden border-t border-emerald-200/40 bg-white/95 backdrop-blur-xl overflow-hidden"
+            className="lg:hidden border-t border-emerald-200/40 bg-white overflow-hidden"
           >
             <nav aria-label="Mobile" className="mx-auto w-full max-w-[1400px] py-4 px-5 sm:px-8 flex flex-col gap-1">
               {NAV_ITEMS.map((item) => {
