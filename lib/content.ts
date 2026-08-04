@@ -13,6 +13,9 @@
  *   Components should consume: section.theme.bg, section.theme.text, section.theme.accent
  */
 
+export const BOOKING_URL =
+  "https://letsbook.me/booking/thehimalayanshire?checkin=2026-08-04&checkout=2026-08-05&adults=2&children=0";
+
 export const brand = {
   name: "The Himalayan Shire",
   parent: "A PageyBySaj Brand",
@@ -39,7 +42,7 @@ export const hero = {
   headline: "The Himalayan Shire — a quiet place to rest, breathe, and stay.",
   sub:
     "A family-run retreat in Pagey, near Kalpa. Seven warm rooms, an in-house kitchen, and the Kailash range at the end of the orchard road.",
-  primaryCta: { label: "Book Your Stay", href: "#rooms" },
+  primaryCta: { label: "Book Your Stay", href: BOOKING_URL },
   secondaryCta: { label: "Take the Virtual Walkthrough", href: "#walkthrough" },
   meta: [
     { label: "Location", value: "Pagey, near Kalpa" },
@@ -232,7 +235,7 @@ export const specialOffers: {
       validUntil: "Valid until 28 Feb",
       imageLabel: "Winter Weekend — snow and bonfire",
       cta: "Book this offer",
-      ctaHref: "#book",
+      ctaHref: BOOKING_URL,
     },
     {
       id: "anniversary",
@@ -244,7 +247,7 @@ export const specialOffers: {
       validUntil: "Year-round",
       imageLabel: "Anniversary — candlelit dinner on the lawn",
       cta: "Plan a stay",
-      ctaHref: "#book",
+      ctaHref: BOOKING_URL,
     },
     {
       id: "shire-takes-all",
@@ -256,7 +259,7 @@ export const specialOffers: {
       validUntil: "Subject to availability",
       imageLabel: "Whole Shire — exterior at dusk",
       cta: "Enquire",
-      ctaHref: "#book",
+      ctaHref: BOOKING_URL,
     },
   ],
   theme: { bg: "bg-green-100/40", text: "text-black" },
@@ -428,7 +431,7 @@ export const finalCta = {
   eyebrow: "Plan Your Stay",
   heading: "A quiet room, a warm meal, and a view worth the journey.",
   body: "Tell us when you are coming and how many of you there are. We will reply within a few hours with availability and a simple plan for your stay.",
-  primary: { label: "Check Availability & Tariff", href: "#book" },
+  primary: { label: "Check Availability & Tariff", href: BOOKING_URL },
   secondary: { label: "Take the Virtual Walkthrough", href: "#walkthrough" },
   theme: { bg: "bg-green-50/50", text: "text-black" },
 } as const;

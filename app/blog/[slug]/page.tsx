@@ -171,7 +171,7 @@ export default async function BlogPostPage({
               Enjoyed this story? Plan your stay at Fagu.
             </p>
             <Link
-              href="/#book"
+              href="https://letsbook.me/booking/thehimalayanshire?checkin=2026-08-04&checkout=2026-08-05&adults=2&children=0"
               className="group mt-5 inline-flex items-center gap-2.5 rounded-full bg-gold-500 px-8 py-4 text-sm font-bold text-parchment shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-gold-400 hover:shadow-xl"
             >
               Book Your Stay

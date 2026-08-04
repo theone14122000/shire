@@ -122,7 +122,7 @@ export function RoomPageContent({ room }: { room: Room }) {
                 <Spec icon={Mountain} label="View" value={room.view} />
                 <Spec icon={Layers} label="Floor" value={room.floor} />
               </dl>
-              <Link href="/#book" className="luxe-button mt-9 w-full">
+              <Link href="https://letsbook.me/booking/thehimalayanshire?checkin=2026-08-04&checkout=2026-08-05&adults=2&children=0" className="luxe-button mt-9 w-full">
                 Book This Room
               </Link>
             </motion.aside>
@@ -201,7 +201,7 @@ export function RoomPageContent({ room }: { room: Room }) {
               {room.name}, ready when you are.
             </h2>
             <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Link href="/#book" className="luxe-button">
+              <Link href="https://letsbook.me/booking/thehimalayanshire?checkin=2026-08-04&checkout=2026-08-05&adults=2&children=0" className="luxe-button">
                 Book This Room
               </Link>
               <Link href="/contact" className="luxe-button luxe-button-dark">

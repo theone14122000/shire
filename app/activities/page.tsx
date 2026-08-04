@@ -284,7 +284,7 @@ export default function ActivitiesPage() {
             Your mountain escape awaits.
           </h2>
           <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link href="/#book" className="luxe-button">
+            <Link href="https://letsbook.me/booking/thehimalayanshire?checkin=2026-08-04&checkout=2026-08-05&adults=2&children=0" className="luxe-button">
               Book Your Stay
             </Link>
             <Link href="/gallery" className="luxe-button luxe-button-ghost">

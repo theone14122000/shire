@@ -147,7 +147,7 @@ export default function KitchenPage() {
             <p className="mt-6 text-base leading-[1.85] text-cream-100/66 sm:text-lg">
               The kind of cooking that fits a quiet mountain stay rather than a hotel banquet hall. Meals are included as part of your stay - come hungry after a day on the trails around Fagu and Kufri.
             </p>
-            <Link href="/#rooms" className="luxe-button mt-9">
+            <Link             href="https://letsbook.me/booking/thehimalayanshire?checkin=2026-08-04&checkout=2026-08-05&adults=2&children=0" className="luxe-button mt-9">
               Check Rooms & Book
               <ArrowUpRight size={15} strokeWidth={1.8} />
             </Link>

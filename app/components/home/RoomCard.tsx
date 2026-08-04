@@ -326,7 +326,7 @@ export function RoomCard({ room }: { room: Room }) {
 
           {/* magnetic-style CTA: ring expands + icon rotates on hover */}
           <motion.a
-            href="#book"
+            href="https://letsbook.me/booking/thehimalayanshire?checkin=2026-08-04&checkout=2026-08-05&adults=2&children=0"
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.96 }}
             className="group/cta relative inline-flex h-12 items-center gap-2 overflow-hidden whitespace-nowrap rounded-full bg-ink-900 pl-5 pr-4 text-xs font-bold text-beige-100 shadow-[var(--shadow-soft)] transition-colors duration-300 hover:bg-gradient-to-r hover:from-emerald-700 hover:to-emerald-600"

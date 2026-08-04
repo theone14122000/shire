@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { TopBar } from "../components/TopBar";
 import { SiteNav } from "../components/SiteNav";
 import { SiteFooter } from "../components/SiteFooter";
 import { FloatingActions } from "../components/FloatingActions";
@@ -14,7 +13,6 @@ export const metadata: Metadata = {
 export default function GalleryPage() {
   return (
     <>
-      <TopBar />
       <SiteNav />
       <main id="main" className="relative">
         <GalleryPageContent />

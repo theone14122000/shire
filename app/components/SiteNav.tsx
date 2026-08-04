@@ -113,7 +113,7 @@ export function SiteNav() {
                   <motion.button
                     variants={itemVariants}
                     onFocus={() => setHoveredLabel(item.label)}
-                    className="relative z-10 text-[13px] font-bold tracking-wide text-emerald-900 transition-colors duration-300 inline-flex items-center gap-1 px-3 py-2 rounded-full"
+                    className="relative z-10 text-sm font-bold tracking-wide text-emerald-900 transition-colors duration-300 inline-flex items-center gap-1 px-3 py-2 rounded-full"
                   >
                     {highlighted && (
                       <motion.span
@@ -169,7 +169,7 @@ export function SiteNav() {
                 <motion.div key={item.label} variants={itemVariants} className="relative">
                   <NavLink
                     href={item.href}
-                    className="relative z-10 text-[13px] font-bold tracking-wide text-emerald-900 transition-colors duration-300 inline-flex items-center gap-1 px-3 py-2 rounded-full"
+                    className="relative z-10 text-sm font-bold tracking-wide text-emerald-900 transition-colors duration-300 inline-flex items-center gap-1 px-3 py-2 rounded-full"
                   >
                     <span
                       onMouseEnter={() => setHoveredLabel(item.label)}
@@ -199,9 +199,9 @@ export function SiteNav() {
           </motion.nav>
 
           <motion.a
-            href="/#book"
+            href="https://letsbook.me/booking/thehimalayanshire?checkin=2026-08-04&checkout=2026-08-05&adults=2&children=0"
             variants={itemVariants}
-            className="inline-flex items-center gap-2 rounded-full bg-emerald-800 px-6 py-2.5 text-xs sm:text-sm font-bold text-cream-50 transition-all duration-300 hover:bg-emerald-700 hover:-translate-y-0.5 shadow-md whitespace-nowrap"
+            className="inline-flex items-center gap-2 rounded-full bg-emerald-800 px-6 py-2.5 text-sm sm:text-base font-bold text-cream-50 transition-all duration-300 hover:bg-emerald-700 hover:-translate-y-0.5 shadow-md whitespace-nowrap"
           >
             Book Now
             <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden>
@@ -212,8 +212,8 @@ export function SiteNav() {
 
         <div className="flex items-center gap-3 lg:hidden">
           <a
-            href="/#book"
-            className="inline-flex items-center gap-2 rounded-full bg-emerald-800 px-4 py-2 text-xs font-bold text-cream-50 transition-all duration-300 hover:bg-emerald-700 shadow-md whitespace-nowrap"
+            href="https://letsbook.me/booking/thehimalayanshire?checkin=2026-08-04&checkout=2026-08-05&adults=2&children=0"
+            className="inline-flex items-center gap-2 rounded-full bg-emerald-800 px-4 py-2 text-sm font-bold text-cream-50 transition-all duration-300 hover:bg-emerald-700 shadow-md whitespace-nowrap"
           >
             Book
           </a>

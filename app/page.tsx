@@ -1,4 +1,3 @@
-import { TopBar } from "./components/TopBar";
 import { SiteNav } from "./components/SiteNav";
 import { SiteFooter } from "./components/SiteFooter";
 import { FloatingActions } from "./components/FloatingActions";
@@ -17,7 +16,6 @@ import { HomeEditorial } from "./components/home/HomeEditorial";
 export default function Home() {
   return (
     <>
-      <TopBar />
       <SiteNav />
       <main id="main" className="relative">
         <Hero />

@@ -95,10 +95,10 @@ export default function PetPolicyPage() {
           <h2 className="mt-5 font-display text-5xl font-semibold text-cream-50 sm:text-6xl">
             Rs. 500
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-base leading-[1.85] text-cream-100/62 sm:text-lg">
+           <p className="mx-auto mt-4 max-w-xl text-base leading-[1.85] text-cream-100/62 sm:text-lg">
             per day, per pet.
           </p>
-          <Link href="/#book" className="luxe-button mt-9">
+          <Link href="https://letsbook.me/booking/thehimalayanshire?checkin=2026-08-04&checkout=2026-08-05&adults=2&children=0" className="luxe-button mt-9">
             Book Your Stay
           </Link>
         </div>
