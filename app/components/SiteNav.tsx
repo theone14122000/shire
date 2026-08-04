@@ -88,11 +88,11 @@ export function SiteNav() {
             }`}
             priority
           />
-          <div className="flex flex-col ml-2 leading-tight">
-            <span className="font-display font-bold text-emerald-900 text-sm sm:text-base tracking-wide">
+          <div className="flex flex-col ml-3 leading-tight">
+            <span className="font-display font-extrabold text-emerald-900 text-sm sm:text-lg tracking-wide">
               The Himalayan Shire
             </span>
-            <span className="font-bold text-emerald-800 text-[10px] sm:text-xs tracking-wider">
+            <span className="font-bold text-emerald-800 text-[11px] sm:text-sm tracking-wider">
               Fagu(Shimla)
             </span>
           </div>
