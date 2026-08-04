@@ -95,13 +95,25 @@ const GALLERY_FRAMES = [
   { title: "Mesmerizing Views", src: "/gallery/mesmerizing-views.jpg" },
 ] as const;
 
-export function HomeEditorial() {
+export function HomeEditorial({ content }: { content?: Record<string, any> }) {
   const storyRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: storyRef,
     offset: ["start end", "end start"],
   });
   const imageY = useTransform(scrollYProgress, [0, 1], ["6%", "-6%"]);
+
+  const t = (section: string, field: string, fallback: string) =>
+    content?.[section]?.[field]?.toString().trim()
+      ? content[section][field].toString()
+      : fallback;
+
+  const editorial = content?.editorial ?? {};
+  const roomsIntro = content?.rooms ?? {};
+  const amenities = content?.amenities ?? {};
+  const setting = content?.setting ?? {};
+  const galleryIntro = content?.gallery ?? {};
+  const bookCta = content?.bookCta ?? {};
 
   return (
     <div className="relative overflow-hidden bg-[#f7f1e6] text-emerald-950">
@@ -118,19 +130,19 @@ export function HomeEditorial() {
             viewport={{ once: true, amount: 0.25 }}
           >
             <motion.span variants={fadeUp} className="luxe-kicker text-gold-700">
-              Our Story
+              {t("editorial", "kicker", "Our Story")}
             </motion.span>
             <motion.h2 variants={fadeUp} className="mt-5 max-w-4xl font-display text-4xl font-semibold leading-[1.05] text-emerald-950 sm:text-5xl lg:text-6xl">
-              {brandIntro.heading}
+              {t("editorial", "heading", brandIntro.heading)}
             </motion.h2>
             <motion.div variants={fadeUp} className="mt-8 max-w-[68ch] space-y-5 text-base leading-[1.9] text-emerald-950/68 sm:text-lg">
-              {brandIntro.body.split("\n\n").map((paragraph) => (
+              {t("editorial", "body", brandIntro.body).split("\n\n").map((paragraph: string) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
             </motion.div>
             <motion.div variants={fadeUp} className="mt-10 flex flex-col gap-4 border-t border-emerald-900/15 pt-7 sm:flex-row sm:items-center sm:justify-between">
               <p className="font-display text-xl font-semibold italic text-emerald-900">
-                {brandIntro.signature}
+                {t("editorial", "signature", brandIntro.signature)}
               </p>
               <Link href="/gallery" className="luxe-link">
                 View the property
@@ -161,7 +173,7 @@ export function HomeEditorial() {
                 {brand.parent}
               </p>
               <p className="mt-3 text-sm leading-[1.7] text-emerald-950/70">
-                {brand.shortPitch}
+                {t("editorial", "shortPitch", brand.shortPitch)}
               </p>
             </div>
           </motion.div>
@@ -179,14 +191,14 @@ export function HomeEditorial() {
           >
             <div>
               <motion.span variants={fadeUp} className="luxe-kicker text-gold-700">
-                Accommodations
+                {t("rooms", "kicker", "Accommodations")}
               </motion.span>
               <motion.h2 variants={fadeUp} className="mt-5 max-w-3xl font-display text-4xl font-semibold leading-[1.05] text-emerald-950 sm:text-5xl lg:text-6xl">
-                Rooms named after the trees around the property.
+                {t("rooms", "heading", "Rooms named after the trees around the property.")}
               </motion.h2>
             </div>
             <motion.p variants={fadeUp} className="max-w-2xl text-base leading-[1.9] text-emerald-950/65 sm:text-lg lg:justify-self-end">
-              We have lovingly prepared seven rooms, each with its own uniqueness - named after the tree species that surround our property.
+              {t("rooms", "description", "We have lovingly prepared seven rooms, each with its own uniqueness - named after the tree species that surround our property.")}
             </motion.p>
           </motion.div>
 
@@ -260,12 +272,12 @@ export function HomeEditorial() {
               transition={{ duration: 0.75 }}
               className="lg:sticky lg:top-28"
             >
-              <span className="luxe-kicker text-gold-400">Amenities</span>
+              <span className="luxe-kicker text-gold-400">{t("amenities", "kicker", "Amenities")}</span>
               <h2 className="mt-5 max-w-xl font-display text-4xl font-semibold leading-[1.05] text-cream-50 sm:text-5xl lg:text-6xl">
-                Comforts arranged as part of the stay.
+                {t("amenities", "heading", "Comforts arranged as part of the stay.")}
               </h2>
               <p className="mt-7 max-w-[54ch] text-base leading-[1.9] text-cream-100/62 sm:text-lg">
-                The property is built for slow days: warmth, food, quiet corners, common spaces, and practical comforts that make mountain travel feel easy.
+                {t("amenities", "description", "The property is built for slow days: warmth, food, quiet corners, common spaces, and practical comforts that make mountain travel feel easy.")}
               </p>
             </motion.div>
 
@@ -330,20 +342,20 @@ export function HomeEditorial() {
             className="max-w-2xl"
           >
             <motion.span variants={fadeUp} className="luxe-kicker text-gold-700">
-              The Setting
+              {t("setting", "kicker", "The Setting")}
             </motion.span>
             <motion.h2 variants={fadeUp} className="mt-5 font-display text-4xl font-semibold leading-[1.08] text-emerald-950 sm:text-5xl">
-              A serene, beautiful countryside surrounded by apple orchards.
+              {t("setting", "heading", "A serene, beautiful countryside surrounded by apple orchards.")}
             </motion.h2>
             <motion.p variants={fadeUp} className="mt-7 text-base leading-[1.9] text-emerald-950/66 sm:text-lg">
-              A serene, beautiful countryside location - surrounded by apple orchards and tall pine trees, with an unparallelled view of the Kinnaur Kailash range.
+              {t("setting", "description", "A serene, beautiful countryside location - surrounded by apple orchards and tall pine trees, with an unparallelled view of the Kinnaur Kailash range.")}
             </motion.p>
             <motion.div variants={fadeUp} className="mt-9 flex flex-col gap-4 sm:flex-row">
-              <Link href="/activities" className="luxe-button">
-                Explore activities
+              <Link href={t("setting", "ctaHref", "/activities")} className="luxe-button">
+                {t("setting", "ctaLabel", "Explore activities")}
               </Link>
-              <Link href="/kitchen" className="luxe-button luxe-button-ghost">
-                Our kitchen
+              <Link href={t("setting", "cta2Href", "/kitchen")} className="luxe-button luxe-button-ghost">
+                {t("setting", "cta2Label", "Our kitchen")}
               </Link>
             </motion.div>
           </motion.div>
@@ -354,9 +366,9 @@ export function HomeEditorial() {
         <div className="mx-auto max-w-[1400px]">
           <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
             <div>
-              <span className="luxe-kicker text-gold-700">Gallery</span>
+              <span className="luxe-kicker text-gold-700">{t("gallery", "kicker", "Gallery")}</span>
               <h2 className="mt-5 max-w-2xl font-display text-4xl font-semibold leading-[1.06] text-emerald-950 sm:text-5xl">
-                A visual walk through the property.
+                {t("gallery", "heading", "A visual walk through the property.")}
               </h2>
             </div>
             <Link href="/gallery" className="luxe-link lg:justify-self-end">
@@ -393,17 +405,17 @@ export function HomeEditorial() {
         <div className="mx-auto max-w-4xl">
           <Mountain className="mx-auto text-gold-400" size={26} strokeWidth={1.4} />
           <h2 className="mt-7 font-display text-4xl font-semibold leading-[1.08] text-cream-50 sm:text-5xl lg:text-6xl">
-            A quiet room, a warm meal, and a view worth the journey.
+            {t("bookCta", "heading", "A quiet room, a warm meal, and a view worth the journey.")}
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-[1.85] text-cream-100/62 sm:text-lg">
-            Tell us when you are coming and how many of you there are. We will reply with availability and a simple plan for your stay.
+            {t("bookCta", "description", "Tell us when you are coming and how many of you there are. We will reply with availability and a simple plan for your stay.")}
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <a href={brand.whatsapp} target="_blank" rel="noreferrer" className="luxe-button">
-              Check availability
+            <a href={t("bookCta", "ctaHref", brand.whatsapp)} target="_blank" rel="noreferrer" className="luxe-button">
+              {t("bookCta", "ctaLabel", "Check availability")}
             </a>
-            <Link href="/contact" className="luxe-button luxe-button-dark">
-              Contact the shire
+            <Link href={t("bookCta", "cta2Href", "/contact")} className="luxe-button luxe-button-dark">
+              {t("bookCta", "cta2Label", "Contact the shire")}
             </Link>
           </div>
         </div>

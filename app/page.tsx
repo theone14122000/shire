@@ -22,7 +22,7 @@ export default async function Home() {
       <SiteNav />
       <main id="main" className="relative">
         <Hero content={content} />
-        <HomeEditorial />
+        <HomeEditorial content={content} />
       </main>
       <SiteFooter />
       <FloatingActions />
