@@ -33,3 +33,13 @@ export type SectionProps = {
   id?: string;
   className?: string;
 };
+
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  active: boolean;
+  createdAt: string;
+  updatedAt: string;
+};

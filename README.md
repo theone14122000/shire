@@ -1,125 +1,233 @@
-# The Himalayan Shire — Premium Homepage Redesign
+# The Himalayan Shire — CMS-Enabled Website
 
-A complete reimagining of the homepage built from scratch on
-**Next.js 16 (App Router)**, **TypeScript**, **Tailwind CSS v4**, and
-**Framer Motion**. Beige-and-black luxury palette, Raleway typography,
-generous whitespace, and image placeholders ready to drop real assets into.
+A production-ready Next.js 16 website with a fully manageable CMS and secure admin panel.
 
-> Content is sourced entirely from the supplied screenshot. No new
-> information has been invented — everything has been reorganised and
-> reframed into a modern information architecture.
+## Features
 
----
+- **Full CMS**: Homepage content, blogs, settings, media, users
+- **Secure Admin Panel**: JWT authentication, role-based access (MASTER_ADMIN, ADMIN, EDITOR, USER)
+- **Database**: MySQL via Prisma ORM
+- **Blog System**: Rich text editor, categories, tags, SEO, draft/publish workflow
+- **Media Manager**: Image upload with Cloudinary/local storage support
+- **Settings**: Site config, SEO, social links, contact info
+- **Modern Stack**: Next.js 16, React 19, Tailwind CSS 4, TypeScript, Framer Motion
 
-## Quick start
+## Tech Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **Database**: MySQL (Prisma ORM)
+- **Auth**: Custom JWT with jose, bcryptjs
+- **Styling**: Tailwind CSS 4
+- **Animations**: Framer Motion
+- **Icons**: Lucide React
+- **Validation**: Zod (planned)
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 20+
+- MySQL database (connection string in `.env`)
+- npm or yarn
+
+### Installation
 
 ```bash
+# Clone and install dependencies
 npm install
-npm run dev      # http://localhost:3000
-npm run build    # production build (also type-checks)
-npm run typecheck
+
+# Set up environment variables
+cp .env.example .env.local
+# Edit .env.local with your database URL and secrets
+
+# Initialize database
+npx prisma migrate dev --name init
+npm run seed
+
+# Start development server
+npm run dev
 ```
 
-## Project structure
+### Environment Variables
 
-```
-app/
-├── layout.tsx                       # Root layout, Raleway font, metadata
-├── page.tsx                         # Home page composition
-├── globals.css                      # Tailwind v4 theme + design tokens
-└── components/
-    ├── SiteNav.tsx                  # Sticky top nav (scroll-aware)
-    ├── SiteFooter.tsx               # Editorial footer + newsletter
-    ├── home/
-    │   ├── Hero.tsx                 # Asymmetric hero, headline + image
-    │   ├── BrandIntro.tsx           # Story, two-column editorial
-    │   ├── FeaturedCollection.tsx   # 6 premium room cards
-    │   ├── WhyChooseUs.tsx          # 4 feature cards, simple icon marks
-    │   ├── WellnessEssentials.tsx   # 6 horizontal amenity cards
-    │   ├── TraditionalRemedies.tsx  # Editorial split, dark accent section
-    │   ├── QualitySection.tsx       # 4 monochrome quality pillars
-    │   ├── TrustSection.tsx         # Stats + guest quotes
-    │   ├── ProductShowcase.tsx      # 3 alternating editorial blocks
-    │   └── FinalCTA.tsx             # Centered conversion closer
-    └── ui/
-        ├── ImagePlaceholder.tsx     # Dashed-frame image slot
-        ├── SectionHeading.tsx       # Eyebrow + heading + intro
-        ├── Button.tsx               # <button | link | a>, 3 variants
-        ├── Container.tsx            # Max-width shell
-        └── Motion.tsx               # Shared Framer Motion presets
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `DATABASE_URL` | MySQL connection string | Yes |
+| `ADMIN_PASSWORD` | Fallback admin password | Yes |
+| `JWT_SECRET` | JWT signing secret (32+ chars) | Yes |
+| `NEXTAUTH_SECRET` | NextAuth secret (32+ chars) | Yes |
+| `NEXTAUTH_URL` | App URL (e.g., http://localhost:3000) | Yes |
+| `CLOUDINARY_CLOUD_NAME` | Cloudinary cloud name | No |
+| `CLOUDINARY_API_KEY` | Cloudinary API key | No |
+| `CLOUDINARY_API_SECRET` | Cloudinary API secret | No |
+| `SMTP_HOST` | SMTP server host | No |
+| `SMTP_PORT` | SMTP server port | No |
+| `SMTP_USER` | SMTP username | No |
+| `SMTP_PASSWORD` | SMTP password | No |
+| `ADMIN_EMAIL` | Master admin email | Yes |
+| `ADMIN_PASSWORD` | Master admin password | Yes |
 
-lib/
-├── content.ts                       # All copy, single source of truth
-└── types.ts                         # Shared TypeScript types
-```
+### Database Setup
 
-## Design system
+```bash
+# Generate Prisma client
+npx prisma generate
 
-| Token            | Value           | Use                                |
-| ---------------- | --------------- | ---------------------------------- |
-| `bg-beige-100`   | `#F5EFE6`       | Default page background            |
-| `bg-beige-50`    | `#FBF8F3`       | Card / placeholder inner surface   |
-| `text-ink-900`   | `#111111`       | Default text color                 |
-| `text-ink-500`   | `#2C2C2C`       | Supporting text                    |
-| `accent-gold`    | `#B08A4A`       | Reserved, used only in ambient FX  |
-| `font-sans`      | Raleway         | All type                           |
-| `radius-soft`    | `1.25rem`       | Image placeholders, large cards    |
-| `radius-card`    | `0.75rem`       | Default card radius                |
-| `shadow-lift`    | custom          | Hover elevation on cards           |
+# Run migrations
+npx prisma migrate dev --name init
 
-All tokens live in `app/globals.css` under the Tailwind v4 `@theme`
-block — change them there and the whole site updates.
-
-## Replacing image placeholders
-
-Every image slot is a `<ImagePlaceholder />` from
-`app/components/ui/ImagePlaceholder.tsx`. To replace a placeholder with
-a real image, swap its children for a Next `<Image />`:
-
-```tsx
-import Image from "next/image";
-import heroImg from "@/public/hero.jpg";
-
-<ImagePlaceholder kind="hero" label="Hero" aspect="3/4">
-  <Image src={heroImg} alt="The shire at dawn" fill className="object-cover" />
-</ImagePlaceholder>
+# Seed database with Master Admin
+npm run seed
 ```
 
-Available `kind` values: `hero`, `lifestyle`, `product`, `gallery`,
-`editorial`, `feature`, `ambience`. Available `aspect` values: `1/1`,
-`16/9`, `4/5`, `3/4`, `5/4`, `2/3`, `21/9`, `3/2`.
+### Default Admin Credentials
 
-## Backend integration (future)
+After seeding:
+- **Email**: admin@example.com
+- **Password**: Admin@123
 
-All page copy lives in `lib/content.ts` as plain TypeScript objects.
-When the MySQL backend is ready, swap that file for an API client — every
-section reads from it via a typed contract, so no UI changes are
-required.
+## Project Structure
 
-## Animation system
+```
+├── app/
+│   ├── admin/           # Admin panel pages
+│   │   ├── components/  # Admin UI components
+│   │   ├── users/       # User management
+│   │   ├── settings/    # Site settings
+│   │   ├── media/       # Media library
+│   │   ├── homepage/    # Homepage editor
+│   │   ├── posts/       # Blog management
+│   │   └── profile/     # User profile
+│   ├── api/             # API routes
+│   │   ├── admin/       # Admin API
+│   │   ├── auth/        # Authentication
+│   │   ├── blogs/       # Blog CRUD
+│   │   ├── homepage/    # Homepage CMS
+│   │   └── upload/      # File upload
+│   ├── blog/            # Blog frontend
+│   ├── components/      # React components
+│   │   ├── home/        # Homepage sections
+│   │   ├── rooms/       # Room components
+│   │   └── ui/          # UI primitives
+│   ├── layout.tsx       # Root layout
+│   └── page.tsx         # Homepage (CMS-driven)
+├── lib/
+│   ├── auth.ts          # JWT authentication
+│   ├── blogs.ts         # Blog operations (Prisma)
+│   ├── content.ts       # Default content (fallback)
+│   ├── prisma.ts        # Prisma client singleton
+│   └── rooms.ts         # Room data
+├── prisma/
+│   ├── schema.prisma    # Database schema
+│   ├── seed.ts          # Database seed script
+│   └── migrations/      # Migration files
+├── public/              # Static assets
+└── scripts/             # Utility scripts
+```
 
-- **Scroll fade-up** via `whileInView` (Framer Motion) — 700–900ms,
-  custom ease `[0.22, 1, 0.36, 1]`.
-- **Stagger** between siblings for editorial sections.
-- **Hover lift** on cards via Tailwind `transition-transform` +
-  `hover:-translate-y-1` and the soft shadow token.
-- **No heavy gradients, no glassmorphism** — type, whitespace, and
-  layout do the work.
+## CMS Usage
 
-## Accessibility
+### Homepage Editing
+1. Go to `/admin/homepage`
+2. Edit hero section content
+3. Click "Save All"
 
-- Semantic HTML throughout (`<header>`, `<main>`, `<section>`, `<article>`,
-  `<figure>`, `<nav>`, `<footer>`).
-- Visible focus states inherit from the design system.
-- Decorative SVGs are `aria-hidden`; meaningful SVGs use `role="img"`.
-- All interactive elements are real `<a>` or `<button>` — no
-  click-handler divs.
+### Blog Management
+1. Go to `/admin/posts`
+2. Click "+ New Post" to create
+3. Edit existing posts from the list
+4. Use JSON format for content sections
 
-## Notes
+### Settings
+1. Go to `/admin/settings`
+2. Update site name, contact info, SEO, social links
+2. Click "Save Settings"
 
-- Uses Turbopack (Next 16 default). First build takes ~20s, subsequent
-  builds are near-instant.
-- Tested with `npm run typecheck` and `npm run build` — both pass clean.
-- The ambient background (`.ambient` on `<body>`) is a very subtle
-  radial wash in gold and ink. Remove it from `app/layout.tsx` if you
-  want a perfectly flat beige canvas.
+### Media Library
+1. Go to `/admin/media`
+2. Upload images (JPEG, PNG, WebP, AVIF, GIF)
+3. Files stored in `/public/images/uploads/`
+
+### User Management
+1. Go to `/admin/users`
+2. Create/edit/suspend users
+3. Assign roles: MASTER_ADMIN, ADMIN, EDITOR, USER
+
+## Available Scripts
+
+```bash
+npm run dev          # Start dev server
+npm run build        # Production build
+npm run start        # Start production server
+npm run lint         # Run ESLint
+npm run typecheck    # TypeScript type checking
+npm run seed         # Seed database
+npm run seed:blogs   # Seed blog posts
+```
+
+## Admin Panel Routes
+
+| Route | Description |
+|-------|-------------|
+| `/admin` | Dashboard |
+| `/admin/users` | User management |
+| `/admin/posts` | Blog management |
+| `/admin/posts/new` | Create new post |
+| `/admin/homepage` | Homepage editor |
+| `/admin/settings` | Site settings |
+| `/admin/media` | Media library |
+| `/admin/profile` | User profile |
+| `/admin/login` | Admin login |
+
+## API Endpoints
+
+| Endpoint | Methods | Description |
+|----------|---------|-------------|
+| `/api/auth/login` | POST | Admin login |
+| `/api/auth` | GET, POST | Auth status / logout |
+| `/api/blogs` | GET, POST | List/create blogs |
+| `/api/blogs/[slug]` | GET, PUT, DELETE | Blog CRUD |
+| `/api/homepage` | GET, PUT | Homepage CMS |
+| `/api/admin/users` | GET, POST | User management |
+| `/api/admin/settings` | GET, PUT | Settings management |
+| `/api/admin/media` | GET | Media listing |
+| `/api/admin/profile` | GET, PUT | User profile |
+| `/api/upload` | POST | File upload |
+
+## Deployment
+
+### Production Build
+
+```bash
+npm run build
+npm run start
+```
+
+### Environment
+
+Ensure all production environment variables are set:
+- `NODE_ENV=production`
+- Secure `JWT_SECRET`, `NEXTAUTH_SECRET`
+- Production database URL
+- `NEXTAUTH_URL` = production domain
+
+### Database
+
+Run migrations on production:
+```bash
+npx prisma migrate deploy
+```
+
+## Security Features
+
+- JWT-based authentication with HttpOnly cookies
+- Role-based access control (RBAC)
+- Password hashing with bcrypt (12 rounds)
+- CSRF protection via SameSite cookies
+- Input validation with Zod (planned)
+- Rate limiting (planned)
+- Helmet headers (planned)
+
+## License
+
+MIT License - The Himalayan Shire
