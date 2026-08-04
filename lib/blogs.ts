@@ -1,37 +1,5 @@
-import { readFile, writeFile, mkdir } from "fs/promises";
-import { existsSync } from "fs";
-import path from "path";
+import { prisma } from "./prisma";
 import type { BlogPost, BlogPostInput, BlogListItem } from "./blog-types";
-
-const DATA_DIR = path.join(process.cwd(), "data");
-const BLOGS_FILE = path.join(DATA_DIR, "blogs.json");
-
-/* ------------------------------------------------------------------ */
-/*  Ensure data directory exists                                        */
-/* ------------------------------------------------------------------ */
-async function ensureDataDir() {
-  if (!existsSync(DATA_DIR)) {
-    await mkdir(DATA_DIR, { recursive: true });
-  }
-}
-
-/* ------------------------------------------------------------------ */
-/*  Read / Write                                                       */
-/* ------------------------------------------------------------------ */
-async function readBlogs(): Promise<BlogPost[]> {
-  await ensureDataDir();
-  try {
-    const raw = await readFile(BLOGS_FILE, "utf-8");
-    return JSON.parse(raw);
-  } catch {
-    return [];
-  }
-}
-
-async function writeBlogs(blogs: BlogPost[]): Promise<void> {
-  await ensureDataDir();
-  await writeFile(BLOGS_FILE, JSON.stringify(blogs, null, 2), "utf-8");
-}
 
 /* ------------------------------------------------------------------ */
 /*  CRUD operations                                                    */
@@ -41,47 +9,100 @@ async function writeBlogs(blogs: BlogPost[]): Promise<void> {
 export async function getAllBlogs(
   includeDrafts = false
 ): Promise<BlogListItem[]> {
-  const blogs = await readBlogs();
-  return blogs
-    .filter((b) => includeDrafts || b.status === "published")
-    .map(({ content: _content, ...rest }) => rest)
-    .sort(
-      (a, b) =>
-        new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
-    );
+  const blogs = await prisma.blog.findMany({
+    where: includeDrafts ? undefined : { status: "PUBLISHED" },
+    select: {
+      id: true,
+      slug: true,
+      title: true,
+      author: true,
+      date: true,
+      readTime: true,
+      excerpt: true,
+      image: true,
+      tag: true,
+      featured: true,
+      status: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+    orderBy: { updatedAt: "desc" },
+  });
+
+  return blogs.map((b) => ({
+    ...b,
+    status: b.status as "draft" | "published",
+    date: b.date ?? "",
+    readTime: b.readTime ?? "",
+    excerpt: b.excerpt ?? "",
+    image: b.image ?? "",
+    tag: b.tag ?? "",
+    createdAt: b.createdAt.toISOString(),
+    updatedAt: b.updatedAt.toISOString(),
+  }));
 }
 
 /** Get a single blog post by slug */
 export async function getBlogBySlug(
   slug: string
 ): Promise<BlogPost | null> {
-  const blogs = await readBlogs();
-  return blogs.find((b) => b.slug === slug) || null;
+  const blog = await prisma.blog.findUnique({
+    where: { slug },
+  });
+
+  if (!blog) return null;
+
+  return {
+    ...blog,
+    content: JSON.parse(blog.content),
+    status: blog.status as "draft" | "published",
+    date: blog.date ?? "",
+    readTime: blog.readTime ?? "",
+    excerpt: blog.excerpt ?? "",
+    image: blog.image ?? "",
+    tag: blog.tag ?? "",
+    createdAt: blog.createdAt.toISOString(),
+    updatedAt: blog.updatedAt.toISOString(),
+  };
 }
 
 /** Create a new blog post */
 export async function createBlog(
   input: BlogPostInput
 ): Promise<BlogPost> {
-  const blogs = await readBlogs();
-
-  // Check slug uniqueness
   const slug = input.slug || generateSlug(input.title);
-  if (blogs.some((b) => b.slug === slug)) {
+
+  const existing = await prisma.blog.findUnique({
+    where: { slug },
+  });
+  if (existing) {
     throw new Error(`A blog with slug "${slug}" already exists`);
   }
 
   const now = new Date().toISOString();
-  const post: BlogPost = {
-    ...input,
-    slug,
-    createdAt: now,
-    updatedAt: now,
-  };
+  const post = await prisma.blog.create({
+    data: {
+      ...input,
+      slug,
+      content: JSON.stringify(input.content || []),
+      status: (input.status || "DRAFT") as any,
+      createdAt: now,
+      updatedAt: now,
+    },
+  });
 
-  blogs.push(post);
-  await writeBlogs(blogs);
-  return post;
+  return {
+    ...post,
+    content: JSON.parse(post.content),
+    status: post.status as "draft" | "published",
+    date: post.date ?? "",
+    readTime: post.readTime ?? "",
+    excerpt: post.excerpt ?? "",
+    image: post.image ?? "",
+    tag: post.tag ?? "",
+    createdAt: post.createdAt.toISOString(),
+    updatedAt: post.updatedAt.toISOString(),
+  };
 }
 
 /** Update an existing blog post */
@@ -89,37 +110,55 @@ export async function updateBlog(
   slug: string,
   input: Partial<BlogPostInput>
 ): Promise<BlogPost | null> {
-  const blogs = await readBlogs();
-  const idx = blogs.findIndex((b) => b.slug === slug);
-  if (idx === -1) return null;
+  const existing = await prisma.blog.findUnique({
+    where: { slug },
+  });
+  if (!existing) return null;
 
-  // If slug is changing, check uniqueness
   if (input.slug && input.slug !== slug) {
-    if (blogs.some((b) => b.slug === input.slug)) {
+    const slugExists = await prisma.blog.findUnique({
+      where: { slug: input.slug },
+    });
+    if (slugExists) {
       throw new Error(`A blog with slug "${input.slug}" already exists`);
     }
   }
 
-  const updated: BlogPost = {
-    ...blogs[idx],
-    ...input,
-    slug: input.slug || slug,
-    updatedAt: new Date().toISOString(),
-  };
+  const updated = await prisma.blog.update({
+    where: { slug },
+    data: {
+      ...input,
+      slug: input.slug || slug,
+      content: input.content
+        ? JSON.stringify(input.content)
+        : undefined,
+      status: input.status ? (input.status as any) : undefined,
+      updatedAt: new Date().toISOString(),
+    },
+  });
 
-  blogs[idx] = updated;
-  await writeBlogs(blogs);
-  return updated;
+  return {
+    ...updated,
+    content: JSON.parse(updated.content),
+    status: updated.status as "draft" | "published",
+    date: updated.date ?? "",
+    readTime: updated.readTime ?? "",
+    excerpt: updated.excerpt ?? "",
+    image: updated.image ?? "",
+    tag: updated.tag ?? "",
+    createdAt: updated.createdAt.toISOString(),
+    updatedAt: updated.updatedAt.toISOString(),
+  };
 }
 
 /** Delete a blog post */
 export async function deleteBlog(slug: string): Promise<boolean> {
-  const blogs = await readBlogs();
-  const idx = blogs.findIndex((b) => b.slug === slug);
-  if (idx === -1) return false;
+  const blog = await prisma.blog.findUnique({
+    where: { slug },
+  });
+  if (!blog) return false;
 
-  blogs.splice(idx, 1);
-  await writeBlogs(blogs);
+  await prisma.blog.delete({ where: { slug } });
   return true;
 }
 

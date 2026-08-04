@@ -3,20 +3,20 @@ import { authenticateAdmin, COOKIE_NAME } from "@/lib/auth";
 
 export async function POST(req: NextRequest) {
   try {
-    const { password } = await req.json();
+    const { email, password } = await req.json();
 
-    if (!password) {
+    if (!email || !password) {
       return NextResponse.json(
-        { error: "Password is required" },
+        { error: "Email and password are required" },
         { status: 400 }
       );
     }
 
-    const token = await authenticateAdmin(password);
+    const token = await authenticateAdmin(email, password);
 
     if (!token) {
       return NextResponse.json(
-        { error: "Invalid password" },
+        { error: "Invalid credentials" },
         { status: 401 }
       );
     }
@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
-      maxAge: 60 * 60 * 24, // 24 hours
+      maxAge: 60 * 60 * 24,
       path: "/",
     });
 

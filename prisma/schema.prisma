@@ -1,0 +1,159 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  MASTER_ADMIN
+  ADMIN
+  EDITOR
+  USER
+}
+
+enum BlogStatus {
+  DRAFT
+  PUBLISHED
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(USER)
+  avatar    String?
+  bio       String?
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Blog {
+  id             String     @id @default(cuid())
+  title          String
+  slug           String     @unique
+  description    String?
+  content        String     @default("[]")
+  image          String?
+  status         BlogStatus @default(DRAFT)
+  publishedAt    DateTime?
+  seoTitle       String?
+  seoDescription String?
+  author         String
+  category       String?
+  tags           String     @default("[]")
+  tag            String?
+  date           String?
+  readTime       String?
+  excerpt        String?
+  featured       Boolean    @default(false)
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  @@map("blogs")
+  @@index([slug])
+  @@index([status])
+  @@index([category])
+}
+
+model HomepageContent {
+  id          String   @id @default(cuid())
+  section     String   @unique
+  data        String   @db.Text
+  updatedAt   DateTime @updatedAt
+
+  @@map("homepage_content")
+}
+
+model Setting {
+  id         String @id @default(cuid())
+  key        String @unique
+  value      String @default("")
+  type       String @default("string")
+  group      String @default("general")
+  updatedAt  DateTime @updatedAt
+
+  @@map("settings")
+  @@index([key])
+  @@index([group])
+}
+
+model Media {
+  id          String   @id @default(cuid())
+  url         String
+  publicId    String?
+  alt         String?
+  category    String?
+  width       Int?
+  height      Int?
+  size        Int?
+  mimeType    String?
+  createdAt   DateTime @default(now())
+
+  @@map("media")
+}
+
+model ContactMessage {
+  id         String   @id @default(cuid())
+  name       String
+  email      String
+  subject    String?
+  message    String
+  read       Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  @@map("contact_messages")
+}
+
+model NewsletterSubscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  @@map("newsletter_subscribers")
+}
+
+model Testimonial {
+  id        String   @id @default(cuid())
+  name      String
+  role      String?
+  content   String
+  image     String?
+  rating    Int      @default(5)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("testimonials")
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  icon        String?
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("services")
+}
+
+model Feature {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  icon        String?
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("features")
+}

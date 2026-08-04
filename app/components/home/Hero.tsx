@@ -4,22 +4,22 @@ import { motion, useScroll, useTransform, useMotionValue, useSpring } from "fram
 import { useRef } from "react";
 import { Container } from "../ui/Container";
 import { hero } from "@/lib/content";
+import type { ReactNode } from "react";
 
 const MAPS_URL =
   "https://www.google.com/maps?ll=31.066671,77.309332&z=13&t=m&hl=en&gl=IN&mapclient=embed&cid=4674173627328913394";
 
-export function Hero() {
+export function Hero({ content }: { content?: any }) {
   const ref = useRef<HTMLElement>(null);
+  const data = content?.hero ?? hero;
 
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
 
-  // Parallax for the video layer only
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "14%"]);
 
-  // Subtle cursor-reactive parallax for the floating glow orb
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const springX = useSpring(mouseX, { stiffness: 40, damping: 20 });
@@ -34,12 +34,9 @@ export function Hero() {
     mouseY.set(yPos * 40);
   }
 
-  // Stats: Location first (live dot, redirects to Google Maps), then the
-  // original meta items — duplicate "location / near Kalpa" entries are
-  // filtered out, and capacity is forced to "7 Rooms".
-  const restMeta = hero.meta
-    .filter((m) => !/location/i.test(m.label) && !/kalpa/i.test(m.value))
-    .map((m) =>
+  const restMeta = data.meta
+    .filter((m: any) => !/location/i.test(m.label) && !/kalpa/i.test(m.value))
+    .map((m: any) =>
       /capacit|room/i.test(m.label) ? { ...m, value: "7 Rooms" } : m
     );
 
@@ -51,7 +48,7 @@ export function Hero() {
       live: true,
       icon: "pin" as const,
     },
-    ...restMeta.map((m) => ({ ...m, icon: iconFor(m.label) })),
+    ...restMeta.map((m: any) => ({ ...m, icon: iconFor(m.label) })),
   ];
 
   return (
