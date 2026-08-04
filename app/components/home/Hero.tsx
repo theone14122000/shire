@@ -11,7 +11,7 @@ const MAPS_URL =
 
 export function Hero({ content }: { content?: any }) {
   const ref = useRef<HTMLElement>(null);
-  const data = content?.hero ?? hero;
+  const data = { ...hero, ...(content?.hero ?? {}) };
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -34,7 +34,7 @@ export function Hero({ content }: { content?: any }) {
     mouseY.set(yPos * 40);
   }
 
-  const restMeta = data.meta
+  const restMeta = (Array.isArray(data.meta) ? data.meta : [])
     .filter((m: any) => !/location/i.test(m.label) && !/kalpa/i.test(m.value))
     .map((m: any) =>
       /capacit|room/i.test(m.label) ? { ...m, value: "7 Rooms" } : m
