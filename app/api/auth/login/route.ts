@@ -35,9 +35,7 @@ export async function POST(req: NextRequest) {
     return response;
   } catch (err) {
     const message =
-      err instanceof Error && err.message.includes("P1001")
-        ? "Database unavailable. Please try again in a moment."
-        : "Internal server error";
+      err instanceof Error ? err.message : "Internal server error";
     return NextResponse.json({ error: message }, { status: 503 });
   }
 }
