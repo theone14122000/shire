@@ -12,6 +12,7 @@ const NAV_ITEMS = [
   { label: "Rooms", href: "/#rooms", hasMenu: true },
   { label: "Activities", href: "/activities" },
   { label: "Gallery", href: "/gallery" },
+  { label: "FAQ", href: "/faq" },
   { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
 ];

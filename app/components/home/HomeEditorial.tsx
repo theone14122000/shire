@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform, type Variants } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import Script from "next/script";
 import { useRef } from "react";
 import {
   ArrowUpRight,
@@ -16,7 +17,7 @@ import {
   Tv,
   Wifi,
 } from "lucide-react";
-import { brand, brandIntro } from "@/lib/content";
+import { brand, brandIntro, ELFSIGHT_GOOGLE_REVIEWS_ID, ELFSIGHT_INSTAGRAM_ID } from "@/lib/content";
 import { RoomsCarousel } from "./RoomsCarousel";
 
 const fadeUp: Variants = {
@@ -137,8 +138,8 @@ export function HomeEditorial({ content }: { content?: Record<string, any> }) {
               <p className="font-display text-xl font-semibold italic text-emerald-900">
                 {t("editorial", "signature", brandIntro.signature)}
               </p>
-              <Link href="/gallery" className="luxe-link">
-                View the property
+              <Link href="/faq" className="luxe-link">
+                Know more about the property
                 <ArrowUpRight size={15} strokeWidth={1.8} />
               </Link>
             </motion.div>
@@ -196,6 +197,37 @@ export function HomeEditorial({ content }: { content?: Record<string, any> }) {
           </motion.div>
 
           <RoomsCarousel />
+        </div>
+      </section>
+
+      <section id="instagram" className="relative px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
+        <div className="mx-auto max-w-[1400px]">
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.25 }}
+            className="mx-auto max-w-3xl text-center"
+          >
+            <motion.span variants={fadeUp} className="luxe-kicker text-gold-700">
+              Instagram
+            </motion.span>
+            <motion.h2 variants={fadeUp} className="mt-5 font-display text-4xl font-semibold leading-[1.05] text-emerald-950 sm:text-5xl lg:text-6xl">
+              Moments from the shire.
+            </motion.h2>
+            <motion.p variants={fadeUp} className="mx-auto mt-6 max-w-2xl text-base leading-[1.9] text-emerald-950/65 sm:text-lg">
+              Follow @thehimalayanshire for quiet corners, snowy mornings, and the view that never gets old.
+            </motion.p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="mx-auto mt-12 max-w-[1100px] rounded-[1.75rem] border border-emerald-900/10 bg-white/60 p-3 sm:p-5"
+          >
+            <div className={`elfsight-app-${ELFSIGHT_INSTAGRAM_ID}`} data-elfsight-app-lazy />
+          </motion.div>
         </div>
       </section>
 
@@ -357,6 +389,39 @@ export function HomeEditorial({ content }: { content?: Record<string, any> }) {
           </div>
         </div>
       </section>
+
+      <section id="reviews" className="px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
+        <div className="mx-auto max-w-[1400px]">
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.25 }}
+            className="mx-auto max-w-3xl text-center"
+          >
+            <motion.span variants={fadeUp} className="luxe-kicker text-gold-700">
+              Guest Reviews
+            </motion.span>
+            <motion.h2 variants={fadeUp} className="mt-5 font-display text-4xl font-semibold leading-[1.05] text-emerald-950 sm:text-5xl lg:text-6xl">
+              What our guests remember most.
+            </motion.h2>
+            <motion.p variants={fadeUp} className="mx-auto mt-6 max-w-2xl text-base leading-[1.9] text-emerald-950/65 sm:text-lg">
+              Genuine experiences from people who have stayed at The Himalayan Shire.
+            </motion.p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="mx-auto mt-12 max-w-[1100px] rounded-[1.75rem] border border-emerald-900/10 bg-white/60 p-3 sm:p-5"
+          >
+            <div className={`elfsight-app-${ELFSIGHT_GOOGLE_REVIEWS_ID}`} data-elfsight-app-lazy />
+          </motion.div>
+        </div>
+      </section>
+
+      <Script src="https://elfsightcdn.com/platform.js" strategy="lazyOnload" />
     </div>
   );
 }

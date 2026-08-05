@@ -11,7 +11,7 @@ const MAPS_URL =
   "https://www.google.com/maps?ll=31.066671,77.309332&z=13&t=m&hl=en&gl=IN&mapclient=embed&cid=4674173627328913394";
 
 const linkClass =
-  "font-bold text-parchment underline decoration-gold-500/50 underline-offset-4 transition-colors hover:text-gold-700";
+  "font-bold text-emerald-800 underline decoration-gold-500/50 underline-offset-4 transition-colors hover:text-gold-700";
 
 type Faq = {
   question: string;
@@ -76,7 +76,7 @@ const fadeUp: Variants = {
 
 export default function FaqPage() {
   return (
-    <main className="editorial-surface min-h-screen font-sans selection:bg-gold-200/30">
+    <main className="min-h-screen bg-[#f7f1e6] font-sans text-emerald-950 selection:bg-gold-200/30">
       <SiteNav />
 
       <section className="px-5 py-24 sm:px-8 sm:py-32 lg:px-14 lg:py-40">
@@ -87,10 +87,10 @@ export default function FaqPage() {
           className="mx-auto max-w-4xl"
         >
           <span className="luxe-kicker text-gold-700">FAQs</span>
-          <h1 className="mt-6 font-display text-5xl font-semibold leading-[1.02] text-parchment sm:text-6xl lg:text-7xl">
+          <h1 className="mt-6 font-display text-4xl font-semibold leading-[1.05] text-emerald-950 sm:text-5xl lg:text-6xl">
             Frequently asked questions.
           </h1>
-          <p className="mt-6 max-w-2xl text-base leading-[1.9] text-parchment/66 sm:text-lg">
+          <p className="mt-6 max-w-2xl text-base leading-[1.9] text-emerald-950/65 sm:text-lg">
             Everything guests usually ask before booking a stay at The Himalayan Shire, Fagu.
           </p>
         </motion.div>
@@ -143,18 +143,18 @@ function FaqItem({ index, faq }: { index: number; faq: Faq }) {
         aria-controls={panelId}
         className="flex w-full items-start justify-between gap-6 py-7 text-left"
       >
-        <span className="flex gap-5">
+        <span className="flex gap-4 sm:gap-5">
           <span className="mt-1 font-display text-sm font-semibold text-gold-700">
             {String(index + 1).padStart(2, "0")}
           </span>
-          <span className="font-display text-xl font-semibold leading-snug text-parchment sm:text-2xl">
+          <span className="font-display text-lg font-semibold leading-snug text-emerald-950 sm:text-xl lg:text-2xl">
             {faq.question}
           </span>
         </span>
         <motion.span
           animate={{ rotate: open ? 180 : 0 }}
           transition={{ duration: 0.25 }}
-          className="mt-1 shrink-0 text-parchment/50"
+          className="mt-1 shrink-0 text-emerald-950/50"
         >
           <ChevronDown size={20} strokeWidth={1.8} />
         </motion.span>
@@ -170,7 +170,7 @@ function FaqItem({ index, faq }: { index: number; faq: Faq }) {
             transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
             className="overflow-hidden"
           >
-            <div className="max-w-[72ch] pb-7 pl-12 text-base leading-[1.85] text-parchment/66 sm:pl-14">
+            <div className="max-w-[72ch] pb-7 pl-10 text-base leading-[1.85] text-emerald-950/66 sm:pl-14">
               {faq.answer}
             </div>
           </motion.div>
