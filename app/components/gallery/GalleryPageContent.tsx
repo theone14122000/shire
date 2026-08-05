@@ -81,6 +81,8 @@ const stagger: Variants = {
   show: { transition: { staggerChildren: 0.05, delayChildren: 0.1 } },
 };
 
+const POLAROID_ROTATIONS = [-2.5, 2, -1.8, 2.8, -2, 1.5];
+
 export function GalleryPageContent() {
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>("All");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
@@ -193,7 +195,7 @@ export function GalleryPageContent() {
             variants={stagger}
             initial="hidden"
             animate="show"
-            className="mt-12 columns-1 gap-4 sm:columns-2 lg:columns-3"
+            className="mt-12 columns-1 gap-6 sm:columns-2 lg:columns-3"
           >
             <AnimatePresence mode="popLayout">
               {filteredItems.map((item, index) => (
@@ -286,31 +288,32 @@ function GalleryTile({
       initial="hidden"
       animate="show"
       exit={{ opacity: 0, scale: 0.96 }}
-      className="mb-4 break-inside-avoid"
+      style={{ rotate: POLAROID_ROTATIONS[index % POLAROID_ROTATIONS.length] }}
+      whileHover={{ rotate: 0, scale: 1.04, zIndex: 20 }}
+      className="mb-7 break-inside-avoid"
     >
       <button
         type="button"
         onClick={onClick}
-        className="group relative block w-full overflow-hidden rounded-[1.25rem] bg-emerald-950 text-left shadow-[var(--shadow-soft)] transition-shadow duration-300 hover:shadow-[0_24px_60px_-16px_rgba(6,95,70,0.35)]"
+        className="group block w-full bg-cream-50 p-3 pb-4 text-left shadow-[0_18px_50px_-18px_rgba(6,40,25,0.4)] transition-shadow duration-500 hover:shadow-[0_32px_70px_-20px_rgba(6,40,25,0.5)]"
       >
-        <div className={`relative ${aspectFor(index)} overflow-hidden`}>
+        <div className={`relative ${aspectFor(index)} w-full overflow-hidden bg-emerald-950`}>
           <Image
             src={item.src}
             alt={item.title}
             fill
             priority={index < 4}
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className="object-cover transition-transform duration-[1.1s] group-hover:scale-105"
+            className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-110"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/85 via-emerald-950/10 to-transparent opacity-100 transition-opacity duration-500 lg:opacity-0 lg:group-hover:opacity-100" />
-          <div className="absolute inset-x-0 bottom-0 translate-y-0 p-5 opacity-100 transition-all duration-500 lg:translate-y-4 lg:opacity-0 lg:group-hover:translate-y-0 lg:group-hover:opacity-100">
-            <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-gold-300">
-              {item.category}
-            </span>
-            <h3 className="mt-1.5 font-display text-xl font-semibold leading-tight text-cream-50">
-              {item.title}
-            </h3>
-          </div>
+        </div>
+        <div className="px-1.5 pb-1 pt-4 text-center">
+          <p className="font-display text-lg font-semibold italic leading-snug text-emerald-950">
+            {item.title}
+          </p>
+          <p className="mt-1.5 text-[9px] font-bold uppercase tracking-[0.3em] text-gold-700">
+            {item.category}
+          </p>
         </div>
       </button>
     </motion.div>
