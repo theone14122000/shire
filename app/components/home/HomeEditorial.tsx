@@ -166,10 +166,7 @@ export function HomeEditorial({ content }: { content?: Record<string, any> }) {
               />
             </div>
             <div className="absolute -bottom-7 left-0 max-w-[18rem] border border-emerald-900/10 bg-[#fffaf0]/92 p-5 shadow-[0_22px_70px_rgba(3,45,32,0.16)] backdrop-blur">
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-gold-700">
-                {brand.parent}
-              </p>
-              <p className="mt-3 text-sm leading-[1.7] text-emerald-950/70">
+              <p className="text-sm leading-[1.7] text-emerald-950/70">
                 {t("editorial", "shortPitch", brand.shortPitch)}
               </p>
             </div>
