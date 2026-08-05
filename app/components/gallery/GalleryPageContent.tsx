@@ -307,11 +307,12 @@ function GalleryTile({
             className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-110"
           />
         </div>
-        <div className="px-1.5 pb-1 pt-4 text-center">
-          <p className="font-display text-lg font-semibold italic leading-snug text-emerald-950">
+        <div className="px-2 pb-1.5 pt-5 text-center">
+          <span className="mx-auto mb-3 block h-px w-10 bg-gold-600/60" />
+          <p className="font-display text-xl font-semibold leading-snug text-emerald-950 sm:text-[1.35rem]">
             {item.title}
           </p>
-          <p className="mt-1.5 text-[9px] font-bold uppercase tracking-[0.3em] text-gold-700">
+          <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.28em] text-gold-700">
             {item.category}
           </p>
         </div>
