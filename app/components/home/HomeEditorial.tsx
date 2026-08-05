@@ -17,7 +17,7 @@ import {
   Wifi,
 } from "lucide-react";
 import { brand, brandIntro } from "@/lib/content";
-import { rooms } from "@/lib/rooms";
+import { RoomsCarousel } from "./RoomsCarousel";
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 28 },
@@ -195,63 +195,7 @@ export function HomeEditorial({ content }: { content?: Record<string, any> }) {
             </motion.p>
           </motion.div>
 
-          <div className="mt-14 space-y-8 lg:mt-20">
-            {rooms.map((room, index) => (
-              <motion.article
-                key={room.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.18 }}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                className="group grid overflow-hidden border-y border-emerald-900/12 py-8 lg:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)] lg:gap-10 lg:py-10"
-              >
-                <Link href={`/rooms/${room.slug}`} className={`relative block min-h-[340px] overflow-hidden lg:min-h-[460px] ${index % 2 ? "lg:order-2" : ""}`}>
-                  <Image
-                    src={room.images[0]}
-                    alt={room.name}
-                    fill
-                    priority={index < 2}
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                    className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/55 via-transparent to-transparent" />
-                  <span className="absolute left-5 top-5 bg-emerald-950/75 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.22em] text-cream-100 backdrop-blur">
-                    {room.category}
-                  </span>
-                </Link>
-
-                <div className="flex flex-col justify-center py-8 lg:px-8">
-                  <span className="font-display text-sm text-gold-700">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <h3 className="mt-5 font-display text-4xl font-semibold text-emerald-950 sm:text-5xl">
-                    {room.name}
-                  </h3>
-                  <p className="mt-6 max-w-[58ch] text-base leading-[1.85] text-emerald-950/66">
-                    {room.description}
-                  </p>
-                  <dl className="mt-8 grid grid-cols-3 gap-4 border-y border-emerald-900/10 py-5">
-                    <div>
-                      <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-900/45">Size</dt>
-                      <dd className="mt-1 font-display text-base font-semibold text-emerald-950">{room.size}</dd>
-                    </div>
-                    <div>
-                      <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-900/45">View</dt>
-                      <dd className="mt-1 font-display text-base font-semibold text-emerald-950">{room.view}</dd>
-                    </div>
-                    <div>
-                      <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-900/45">Floor</dt>
-                      <dd className="mt-1 font-display text-base font-semibold text-emerald-950">{room.floor}</dd>
-                    </div>
-                  </dl>
-                  <Link href={`/rooms/${room.slug}`} className="luxe-link mt-8 w-fit">
-                    Explore room
-                    <ArrowUpRight size={15} strokeWidth={1.8} />
-                  </Link>
-                </div>
-              </motion.article>
-            ))}
-          </div>
+          <RoomsCarousel />
         </div>
       </section>
 
