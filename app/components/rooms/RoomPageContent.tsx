@@ -134,7 +134,7 @@ export function RoomPageContent({ room }: { room: Room }) {
             <div className="grid gap-8 lg:grid-cols-[0.7fr_1.3fr] lg:items-start">
               <div>
                 <span className="luxe-kicker text-gold-700">Details</span>
-                <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.06] text-parchment sm:text-5xl">
+                <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.06] text-emerald-950 sm:text-5xl">
                   What is inside.
                 </h2>
               </div>
@@ -148,7 +148,7 @@ export function RoomPageContent({ room }: { room: Room }) {
                 {room.facilities.map((facility) => (
                   <motion.div key={facility} variants={fadeUp} className="flex gap-4 border-t border-emerald-900/15 pt-5">
                     <Bath className="mt-1 shrink-0 text-gold-700" size={17} strokeWidth={1.6} />
-                    <p className="text-base leading-[1.65] text-parchment/70">{facility}</p>
+                    <p className="text-base leading-[1.65] text-emerald-950/70">{facility}</p>
                   </motion.div>
                 ))}
               </motion.div>
