@@ -49,9 +49,8 @@ export function Hero({ content }: { content?: any }) {
   const metaItems = [
     {
       label: "Location",
-      value: "View on Map",
+      value: "Fagu (Himachal Pradesh)",
       href: MAPS_URL,
-      live: true,
       icon: "pin" as const,
     },
     ...restMeta.map((m: any) => ({ ...m, icon: iconFor(m.label) })),
@@ -153,17 +152,6 @@ export function Hero({ content }: { content?: any }) {
                   <span className="relative flex items-center gap-1.5 text-[9px] sm:text-[10px] uppercase tracking-[0.18em] sm:tracking-[0.22em] text-amber-300/70 font-bold">
                     <StatIcon name={m.icon} />
                     <span className="truncate">{m.label}</span>
-                    {"live" in m && m.live && (
-                      <motion.span
-                        animate={{ opacity: [1, 0.2, 1], scale: [1, 1.3, 1] }}
-                        transition={{
-                          duration: 1.2,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                        }}
-                        className="ml-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-red-500 shadow-[0_0_8px_2px_rgba(239,68,68,0.7)]"
-                      />
-                    )}
                   </span>
                   <span className="relative text-sm sm:text-lg text-amber-300 font-black tracking-tight group-hover:text-amber-200 transition-colors">
                     {m.value}
