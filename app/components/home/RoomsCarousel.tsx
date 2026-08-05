@@ -42,10 +42,6 @@ export function RoomsCarousel() {
     <div className="mt-14 lg:mt-20">
       {/* TRACK */}
       <div className="relative">
-        {/* edge fades */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 hidden w-24 bg-gradient-to-r from-[#fffaf2] to-transparent lg:block" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 hidden w-24 bg-gradient-to-l from-[#fffaf2] to-transparent lg:block" />
-
         <div
           ref={trackRef}
           onScroll={handleScroll}
