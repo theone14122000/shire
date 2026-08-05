@@ -50,12 +50,12 @@ export function RoomsCarousel() {
           {rooms.map((room) => (
             <div
               key={room.id}
-              className="group relative block w-[84%] shrink-0 snap-start overflow-hidden bg-emerald-950 sm:w-[46%] lg:w-[31.4%]"
+              className="group relative block w-[84%] shrink-0 snap-start overflow-hidden bg-cream-50 shadow-[0_18px_50px_-18px_rgba(6,40,25,0.35)] transition-shadow duration-500 hover:shadow-[0_32px_70px_-20px_rgba(6,40,25,0.45)] sm:w-[46%] lg:w-[31.4%]"
             >
               <Link
                 href={`/rooms/${room.slug}`}
                 aria-label={room.name}
-                className="relative block aspect-[4/5] w-full overflow-hidden"
+                className="relative block aspect-[4/5] w-full overflow-hidden bg-emerald-950"
               >
                 <Image
                   src={room.images[0]}
@@ -64,16 +64,16 @@ export function RoomsCarousel() {
                   sizes="(max-width: 640px) 84vw, (max-width: 1024px) 46vw, 31.4vw"
                   className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/90 via-emerald-950/20 to-transparent" />
-                <span className="absolute left-5 top-5 bg-emerald-950/70 px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-cream-100 backdrop-blur">
+                <span className="absolute left-4 top-4 bg-emerald-950/75 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-cream-100 backdrop-blur">
                   {room.category}
                 </span>
               </Link>
 
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 p-5 text-center sm:p-6">
+              <div className="px-5 pb-6 pt-5 text-center">
+                <span className="mx-auto mb-3 block h-px w-10 bg-gold-600/60" />
                 <Link
                   href={`/rooms/${room.slug}`}
-                  className="pointer-events-auto mt-3.5 block font-display text-2xl font-semibold leading-tight text-cream-50 transition-colors duration-300 group-hover:text-gold-300 sm:text-3xl"
+                  className="block font-display text-xl font-semibold leading-snug text-emerald-950 transition-colors duration-300 group-hover:text-gold-700 sm:text-2xl"
                 >
                   {room.name}
                 </Link>
