@@ -47,7 +47,9 @@ export function RoomsCarousel() {
           onScroll={handleScroll}
           className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth"
         >
-          {rooms.map((room) => (
+          {rooms.map((room) => {
+            const isPremium = /premium/i.test(room.category);
+            return (
             <div
               key={room.id}
               className="group relative block w-[84%] shrink-0 snap-start overflow-hidden bg-cream-50 shadow-[0_18px_50px_-18px_rgba(6,40,25,0.35)] transition-shadow duration-500 hover:shadow-[0_32px_70px_-20px_rgba(6,40,25,0.45)] sm:w-[46%] lg:w-[31.4%]"
@@ -64,6 +66,24 @@ export function RoomsCarousel() {
                   sizes="(max-width: 640px) 84vw, (max-width: 1024px) 46vw, 31.4vw"
                   className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105"
                 />
+                {isPremium ? (
+                  <motion.span
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 overflow-hidden"
+                  >
+                    <motion.span
+                      className="absolute inset-y-0 left-0 w-1/2 -skew-x-12 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                      initial={{ x: "-160%" }}
+                      animate={{ x: "420%" }}
+                      transition={{
+                        duration: 2.8,
+                        repeat: Infinity,
+                        repeatDelay: 3.2,
+                        ease: "easeInOut",
+                      }}
+                    />
+                  </motion.span>
+                ) : null}
                 <span className="absolute left-4 top-4 bg-emerald-950/75 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-cream-100 backdrop-blur">
                   {room.category}
                 </span>
@@ -77,9 +97,13 @@ export function RoomsCarousel() {
                 >
                   {room.name}
                 </Link>
+                <p className="mt-1.5 text-[9px] font-bold uppercase tracking-[0.28em] text-emerald-950/55">
+                  {room.category}
+                </p>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* arrows */}
