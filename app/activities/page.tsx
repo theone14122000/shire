@@ -166,11 +166,11 @@ export default function ActivitiesPage() {
           <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
             <div>
               <span className="luxe-kicker text-gold-700">Nearby</span>
-              <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.06] text-parchment sm:text-5xl">
+              <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.06] text-emerald-950 sm:text-5xl">
                 Destinations.
               </h2>
             </div>
-            <p className="max-w-2xl text-base leading-[1.9] text-parchment/66 sm:text-lg lg:justify-self-end">
+            <p className="max-w-2xl text-base leading-[1.9] text-emerald-950/66 sm:text-lg lg:justify-self-end">
               Curated recommendations from our concierge - each destination chosen for its character, beauty, and ease of access from the property.
             </p>
           </div>
@@ -202,19 +202,19 @@ export default function ActivitiesPage() {
                     <Navigation size={13} strokeWidth={2} />
                     {place.travelTime}
                   </div>
-                  <h3 className="mt-5 font-display text-3xl font-semibold text-parchment sm:text-4xl">
+                  <h3 className="mt-5 font-display text-3xl font-semibold text-emerald-950 sm:text-4xl">
                     {place.name}
                   </h3>
                   {place.note && (
-                    <span className="mt-3 flex items-center gap-2 text-sm text-parchment/52">
+                    <span className="mt-3 flex items-center gap-2 text-sm text-emerald-950/55">
                       <MapPin size={14} strokeWidth={1.8} />
                       {place.note}
                     </span>
                   )}
-                  <p className="mt-6 max-w-[50ch] text-base leading-[1.85] text-parchment/66">
+                  <p className="mt-6 max-w-[50ch] text-base leading-[1.85] text-emerald-950/66">
                     {place.highlight}
                   </p>
-                  <div className="mt-8 flex flex-wrap gap-3 text-[10px] font-bold uppercase tracking-[0.16em] text-parchment/52">
+                  <div className="mt-8 flex flex-wrap gap-3 text-[10px] font-bold uppercase tracking-[0.16em] text-emerald-950/55">
                     <span className="border border-emerald-900/15 px-3 py-2">Best: {place.bestTime}</span>
                     <span className="border border-emerald-900/15 px-3 py-2">{place.distance}</span>
                   </div>
@@ -235,10 +235,10 @@ export default function ActivitiesPage() {
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
-                <h3 className="font-display text-lg font-semibold text-parchment">
+                <h3 className="font-display text-lg font-semibold text-emerald-950">
                   {place.name}
                 </h3>
-                <p className="mt-2 text-sm leading-[1.7] text-parchment/62">
+                <p className="mt-2 text-sm leading-[1.7] text-emerald-950/62">
                   {place.highlight}
                 </p>
                 <p className="mt-3 text-[10px] font-bold uppercase tracking-[0.18em] text-gold-700">
