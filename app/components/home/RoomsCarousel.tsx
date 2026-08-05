@@ -4,8 +4,7 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
-import { BOOKING_URL } from "@/lib/content";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { rooms } from "@/lib/rooms";
 
 const GAP = 16;
@@ -51,7 +50,7 @@ export function RoomsCarousel() {
           {rooms.map((room) => (
             <div
               key={room.id}
-              className="group relative block w-[84%] shrink-0 snap-start overflow-hidden rounded-[1.75rem] bg-emerald-950 sm:w-[46%] lg:w-[31.4%]"
+              className="group relative block w-[84%] shrink-0 snap-start overflow-hidden bg-emerald-950 sm:w-[46%] lg:w-[31.4%]"
             >
               <Link
                 href={`/rooms/${room.slug}`}
@@ -72,15 +71,6 @@ export function RoomsCarousel() {
               </Link>
 
               <div className="pointer-events-none absolute inset-x-0 bottom-0 p-5 text-center sm:p-6">
-                <a
-                  href={BOOKING_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="pointer-events-auto inline-flex items-center gap-2 rounded-full bg-gold-400 px-5 py-2.5 text-[11px] font-bold uppercase tracking-[0.18em] text-emerald-950 shadow-[0_10px_30px_-8px_rgba(217,180,74,0.55)] transition-all duration-300 hover:bg-gold-300 group-hover:-translate-y-0.5"
-                >
-                  Check Availability
-                  <ArrowUpRight size={14} strokeWidth={2.2} />
-                </a>
                 <Link
                   href={`/rooms/${room.slug}`}
                   className="pointer-events-auto mt-3.5 block font-display text-2xl font-semibold leading-tight text-cream-50 transition-colors duration-300 group-hover:text-gold-300 sm:text-3xl"
