@@ -44,7 +44,6 @@ export const hero = {
     { label: "Location", value: "Fagu (Himachal Pradesh)" },
     { label: "Altitude", value: "7500 ft" },
     { label: "Capacity", value: "7 rooms · full shire" },
-    { label: "Seasons", value: "Open year-round" },
   ],
 } as const;
 
