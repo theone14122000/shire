@@ -97,6 +97,8 @@ const GALLERY_FRAMES = [
   { title: "Mesmerizing Views", src: "/gallery/mesmerizing-views.jpg" },
 ] as const;
 
+const POLAROID_ROTATIONS = [-3.5, 2.5, -2, 3.5];
+
 export function HomeEditorial({ content }: { content?: Record<string, any> }) {
   const storyRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
@@ -347,25 +349,40 @@ export function HomeEditorial({ content }: { content?: Record<string, any> }) {
             </Link>
           </div>
 
-          <div className="mt-12 grid auto-rows-[220px] gap-4 sm:auto-rows-[280px] lg:grid-cols-6 lg:auto-rows-[190px]">
+          <div className="mt-14 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:mt-20 lg:grid-cols-4 lg:gap-10">
             {GALLERY_FRAMES.map((frame, index) => (
-              <Link
+              <motion.div
                 key={frame.src}
-                href="/gallery"
-                className={`group relative overflow-hidden ${index === 0 ? "lg:col-span-3 lg:row-span-3" : index === 1 ? "lg:col-span-3 lg:row-span-2" : "lg:col-span-3 lg:row-span-1"}`}
+                initial={{ opacity: 0, y: 34, rotate: 0 }}
+                whileInView={{ opacity: 1, y: 0, rotate: POLAROID_ROTATIONS[index % POLAROID_ROTATIONS.length] }}
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={{ rotate: 0, scale: 1.05, zIndex: 30 }}
+                className={index % 2 === 1 ? "lg:mt-12" : "lg:mt-0"}
               >
-                <Image
-                  src={frame.src}
-                  alt={frame.title}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover transition-transform duration-[1.1s] group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/70 via-transparent to-transparent opacity-80" />
-                <span className="absolute bottom-5 left-5 max-w-[80%] font-display text-xl font-semibold text-cream-50">
-                  {frame.title}
-                </span>
-              </Link>
+                <Link
+                  href="/gallery"
+                  className="group block bg-cream-50 p-3 pb-4 shadow-[0_18px_50px_-18px_rgba(6,40,25,0.4)] transition-shadow duration-500 hover:shadow-[0_32px_70px_-20px_rgba(6,40,25,0.5)]"
+                >
+                  <div className="relative aspect-[4/5] w-full overflow-hidden bg-emerald-950">
+                    <Image
+                      src={frame.src}
+                      alt={frame.title}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-110"
+                    />
+                  </div>
+                  <div className="px-1.5 pb-1 pt-4 text-center">
+                    <p className="font-display text-lg font-semibold italic leading-snug text-emerald-950">
+                      {frame.title}
+                    </p>
+                    <p className="mt-1.5 text-[9px] font-bold uppercase tracking-[0.3em] text-gold-700">
+                      Himalayan Shire &middot; Fagu
+                    </p>
+                  </div>
+                </Link>
+              </motion.div>
             ))}
           </div>
         </div>
