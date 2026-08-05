@@ -349,7 +349,7 @@ export function HomeEditorial({ content }: { content?: Record<string, any> }) {
             </Link>
           </div>
 
-          <div className="mt-14 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:mt-20 lg:grid-cols-4 lg:gap-10">
+          <div className="mt-14 grid grid-cols-3 gap-3 sm:gap-6 lg:mt-20 lg:grid-cols-4 lg:gap-10">
             {GALLERY_FRAMES.map((frame, index) => (
               <motion.div
                 key={frame.src}
@@ -362,23 +362,23 @@ export function HomeEditorial({ content }: { content?: Record<string, any> }) {
               >
                 <Link
                   href="/gallery"
-                  className="group block bg-cream-50 p-3 pb-4 shadow-[0_18px_50px_-18px_rgba(6,40,25,0.4)] transition-shadow duration-500 hover:shadow-[0_32px_70px_-20px_rgba(6,40,25,0.5)]"
+                  className="group block bg-cream-50 p-2 pb-2 shadow-[0_18px_50px_-18px_rgba(6,40,25,0.4)] transition-shadow duration-500 hover:shadow-[0_32px_70px_-20px_rgba(6,40,25,0.5)] sm:p-3 sm:pb-4"
                 >
                   <div className="relative aspect-[4/5] w-full overflow-hidden bg-emerald-950">
                     <Image
                       src={frame.src}
                       alt={frame.title}
                       fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      sizes="(max-width: 640px) 31vw, (max-width: 1024px) 50vw, 25vw"
                       className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-110"
                     />
                   </div>
-                  <div className="px-2 pb-1.5 pt-5 text-center">
-                    <span className="mx-auto mb-3 block h-px w-10 bg-gold-600/60" />
-                    <p className="font-display text-xl font-semibold leading-snug text-emerald-950 sm:text-[1.35rem]">
+                  <div className="px-1.5 pb-0.5 pt-3 text-center sm:px-2 sm:pb-1.5 sm:pt-5">
+                    <span className="mx-auto mb-2 block h-px w-6 bg-gold-600/60 sm:mb-3 sm:w-10" />
+                    <p className="font-display text-[13px] font-semibold leading-tight text-emerald-950 sm:text-xl sm:leading-snug lg:text-[1.35rem]">
                       {frame.title}
                     </p>
-                    <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.28em] text-gold-700">
+                    <p className="mt-1.5 text-[7px] font-bold uppercase tracking-[0.18em] text-gold-700 sm:mt-2 sm:text-[10px] sm:tracking-[0.28em]">
                       Himalayan Shire &middot; Fagu
                     </p>
                   </div>
