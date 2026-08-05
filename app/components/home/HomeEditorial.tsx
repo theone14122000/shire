@@ -17,7 +17,8 @@ import {
   Tv,
   Wifi,
 } from "lucide-react";
-import { brand, brandIntro, ELFSIGHT_GOOGLE_REVIEWS_ID, ELFSIGHT_INSTAGRAM_ID } from "@/lib/content";
+import { brand, brandIntro, ELFSIGHT_GOOGLE_REVIEWS_ID } from "@/lib/content";
+import { InstagramFeed } from "./InstagramFeed";
 import { RoomsCarousel } from "./RoomsCarousel";
 
 const fadeUp: Variants = {
@@ -226,7 +227,7 @@ export function HomeEditorial({ content }: { content?: Record<string, any> }) {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="mx-auto mt-12 max-w-[1100px] rounded-[1.75rem] border border-emerald-900/10 bg-white/60 p-3 sm:p-5"
           >
-            <div className={`elfsight-app-${ELFSIGHT_INSTAGRAM_ID}`} data-elfsight-app-lazy />
+            <InstagramFeed />
           </motion.div>
         </div>
       </section>
