@@ -49,6 +49,12 @@ export function RoomsCarousel() {
         >
           {rooms.map((room) => {
             const isPremium = /premium/i.test(room.category);
+            const isDeluxe = /deluxe/i.test(room.category);
+            const shimmer = isPremium
+              ? { duration: 1.6, repeatDelay: 1.2 }
+              : isDeluxe
+                ? { duration: 4.2, repeatDelay: 4.5 }
+                : null;
             return (
             <div
               key={room.id}
@@ -66,7 +72,7 @@ export function RoomsCarousel() {
                   sizes="(max-width: 640px) 84vw, (max-width: 1024px) 46vw, 31.4vw"
                   className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105"
                 />
-                {isPremium ? (
+                {shimmer ? (
                   <motion.span
                     aria-hidden
                     className="pointer-events-none absolute inset-0 overflow-hidden"
@@ -76,9 +82,9 @@ export function RoomsCarousel() {
                       initial={{ x: "-160%" }}
                       animate={{ x: "420%" }}
                       transition={{
-                        duration: 2.8,
+                        duration: shimmer.duration,
                         repeat: Infinity,
-                        repeatDelay: 3.2,
+                        repeatDelay: shimmer.repeatDelay,
                         ease: "easeInOut",
                       }}
                     />
