@@ -93,7 +93,7 @@ export function SiteNav() {
               The Himalayan Shire
             </span>
             <span className="font-bold text-emerald-800 text-[11px] sm:text-sm tracking-wider">
-              Fagu(Shimla)
+              Fagu (Shimla)
             </span>
           </div>
         </Link>

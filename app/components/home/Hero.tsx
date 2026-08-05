@@ -93,7 +93,7 @@ export function Hero({ content }: { content?: any }) {
               playsInline
               preload="auto"
               poster={poster}
-              className="absolute inset-0 h-full w-full object-cover object-[center_38%] sm:object-center"
+              className="absolute inset-0 h-full w-full object-contain object-center sm:object-cover"
               aria-hidden="true"
             >
               <source src={videoUrl} type="video/mp4" />
@@ -139,21 +139,24 @@ export function Hero({ content }: { content?: any }) {
         className="absolute inset-x-0 bottom-0 z-10 border-t border-white/10 bg-ink-900/40 backdrop-blur-md"
       >
         <Container>
-          <div className="grid grid-cols-2 gap-px bg-white/10 sm:grid-cols-4">
+          <div className="grid grid-cols-4 gap-px bg-white/10">
             {metaItems.map((m, i) => {
               const baseClass =
-                "group relative overflow-hidden bg-ink-900/60 px-3 py-3 sm:px-4 sm:py-4 flex flex-col gap-1 transition-all duration-300 hover:bg-ink-800/70";
+                "group relative overflow-hidden bg-ink-900/60 px-1.5 py-2 sm:px-4 sm:py-4 flex flex-col justify-center gap-0.5 sm:gap-1 transition-all duration-300 hover:bg-ink-800/70";
 
               const inner = (
                 <>
                   {/* hover glow sweep */}
                   <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-amber-400/10 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
 
-                  <span className="relative flex items-center gap-1.5 text-[9px] sm:text-[10px] uppercase tracking-[0.18em] sm:tracking-[0.22em] text-amber-300/70 font-bold">
+                  <span className="relative flex items-center gap-1 text-[8px] sm:gap-1.5 sm:text-[10px] uppercase tracking-[0.12em] sm:tracking-[0.22em] text-amber-300/70 font-bold">
                     <StatIcon name={m.icon} />
                     <span className="truncate">{m.label}</span>
                   </span>
-                  <span className="relative text-sm sm:text-lg text-amber-300 font-black tracking-tight group-hover:text-amber-200 transition-colors">
+                  <span
+                    title={m.value}
+                    className="relative truncate text-[11px] sm:text-lg text-amber-300 font-black tracking-tight group-hover:text-amber-200 transition-colors"
+                  >
                     {m.value}
                   </span>
                 </>
