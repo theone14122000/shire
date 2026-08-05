@@ -15,28 +15,52 @@ interface GalleryItem {
   src: string;
 }
 
-const GALLERY_ITEMS: GalleryItem[] = [
-  { id: "winter-views", title: "The Enchanting Winter Views", category: "Views", src: "/gallery/enchanting-winter-views.jpg" },
-  { id: "common-balcony", title: "Common Balcony", category: "Common Spaces", src: "/gallery/common-balcony.jpg" },
-  { id: "attic-area", title: "Attic Area (Common)", category: "Common Spaces", src: "/gallery/attic-area-common.jpg" },
-  { id: "snow-view", title: "Snow View", category: "Views", src: "/gallery/snow-view.jpg" },
-  { id: "common-seating-first-floor", title: "Common Seating on First Floor", category: "Common Spaces", src: "/gallery/common-seating-first-floor.jpg" },
-  { id: "mesmerizing-views", title: "Mesmerizing Views", category: "Views", src: "/gallery/mesmerizing-views.jpg" },
-  { id: "bonfire", title: "Bonfire", category: "Outdoor", src: "/gallery/bonfire.jpg" },
-  { id: "ground-floor-lobby", title: "Ground Floor Lobby - Double Height Ceiling", category: "Common Spaces", src: "/gallery/ground-floor-lobby.jpg" },
-  { id: "dining-area", title: "Dining Area", category: "Interiors", src: "/gallery/dining-area.jpg" },
-  { id: "surrounded-greenery", title: "Surrounded by Greenery", category: "Views", src: "/gallery/surrounded-by-greenery.jpg" },
-  { id: "sunrise-view", title: "Sunrise View", category: "Views", src: "/gallery/sunrise-view.png" },
-  { id: "common-balcony-swing", title: "Common Balcony with Swing", category: "Common Spaces", src: "/gallery/common-balcony-with-swing.jpg" },
-  { id: "lawn-seating-1", title: "Lawn with Outdoor Seating", category: "Outdoor", src: "/gallery/lawn-with-outdoor-seating-1.jpg" },
-  { id: "himachali-seating", title: "Low Height Himachali Style Seating (Ground Floor)", category: "Interiors", src: "/gallery/himachali-style-seating.jpg" },
-  { id: "recreational-hall", title: "Recreational Hall", category: "Common Spaces", src: "/gallery/recreational-hall.jpg" },
-  { id: "tv-lounge", title: "TV Lounge", category: "Interiors", src: "/gallery/tv-lounge.jpg" },
-  { id: "decor", title: "Decor", category: "Interiors", src: "/gallery/decor.png" },
-  { id: "reception-area", title: "Reception Area", category: "Common Spaces", src: "/gallery/reception-area.png" },
-  { id: "indoor-games", title: "Indoor Games", category: "Common Spaces", src: "/gallery/indoor-games.jpeg" },
-  { id: "winters", title: "Winters", category: "Views", src: "/gallery/winters.jpg" },
-];
+const GALLERY_FILES = [
+  "attic-area-common.jpg",
+  "bonfire.jpg",
+  "common-balcony.jpg",
+  "common-balcony-with-swing.jpg",
+  "common-seating-first-floor.jpg",
+  "decor.png",
+  "dining-area.jpg",
+  "enchanting-winter-views.jpg",
+  "ground-floor-lobby.jpg",
+  "himachali-style-seating.jpg",
+  "indoor-games.jpeg",
+  "lawn-with-outdoor-seating-1.jpg",
+  "mesmerizing-views.jpg",
+  "reception-area.png",
+  "recreational-hall.jpg",
+  "snow-view.jpg",
+  "sunrise-view.png",
+  "surrounded-by-greenery.jpg",
+  "tv-lounge.jpg",
+  "winters.jpg",
+] as const;
+
+function titleFromFile(file: string): string {
+  const name = file.replace(/\.[^.]+$/, "").replace(/-\d+$/, "");
+  return name
+    .split(/[-_]/)
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+function categoryFromFile(file: string): GalleryCategory {
+  const lower = file.toLowerCase();
+  if (/(view|snow|winter|sunrise|mesmerizing|greenery|enchant)/.test(lower)) return "Views";
+  if (/(bonfire|lawn|outdoor)/.test(lower)) return "Outdoor";
+  if (/(dining|decor|tv|lounge|himachali|games|kitchen)/.test(lower)) return "Interiors";
+  return "Common Spaces";
+}
+
+const GALLERY_ITEMS: GalleryItem[] = GALLERY_FILES.map((file) => ({
+  id: file,
+  title: titleFromFile(file),
+  category: categoryFromFile(file),
+  src: `/gallery/${file}`,
+}));
 
 const CATEGORIES: CategoryFilter[] = ["All", "Views", "Common Spaces", "Outdoor", "Interiors"];
 
@@ -90,8 +114,8 @@ export function GalleryPageContent() {
   }, [lightboxIndex, filteredItems.length]);
 
   return (
-    <section className="overflow-hidden">
-      <div className="relative min-h-[76vh] overflow-hidden">
+    <section className="overflow-hidden bg-[#f7f1e6]">
+      <div className="relative min-h-[70vh] overflow-hidden sm:min-h-[72vh]">
         <Image
           src="/gallery/enchanting-winter-views.jpg"
           alt="The Enchanting Winter Views"
@@ -100,7 +124,7 @@ export function GalleryPageContent() {
           sizes="100vw"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/86 via-emerald-950/38 to-emerald-950/8" />
+        <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/90 via-emerald-950/40 to-emerald-950/10" />
         <div className="absolute inset-x-0 bottom-0 px-5 pb-14 sm:px-8 sm:pb-20 lg:px-14">
           <motion.div
             initial={{ opacity: 0, y: 34 }}
@@ -124,14 +148,21 @@ export function GalleryPageContent() {
           <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
             <div>
               <span className="luxe-kicker text-gold-700">Browse By Space</span>
-              <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.06] text-parchment sm:text-5xl">
+              <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.06] text-emerald-950 sm:text-5xl">
                 Every corner, captured.
               </h2>
+              <p className="mt-5 max-w-lg text-base leading-[1.85] text-emerald-950/65">
+                {GALLERY_ITEMS.length} photographs across four spaces - the views, common areas, outdoor corners, and interiors.
+              </p>
             </div>
             <div className="flex flex-wrap gap-2 lg:justify-end">
               {CATEGORIES.map((category) => {
                 const active = activeCategory === category;
                 const Icon = category === "All" ? Sparkles : CATEGORY_ICONS[category];
+                const count =
+                  category === "All"
+                    ? GALLERY_ITEMS.length
+                    : GALLERY_ITEMS.filter((item) => item.category === category).length;
                 return (
                   <button
                     key={category}
@@ -139,12 +170,19 @@ export function GalleryPageContent() {
                     onClick={() => setActiveCategory(category)}
                     className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] transition-all duration-300 ${
                       active
-                        ? "border-emerald-900 bg-emerald-950 text-cream-50"
-                        : "border-emerald-900/15 bg-transparent text-parchment/62 hover:border-gold-600 hover:text-gold-700"
+                        ? "border-emerald-900 bg-emerald-950 text-cream-50 shadow-[var(--shadow-soft)]"
+                        : "border-emerald-900/15 bg-white/50 text-emerald-950/60 hover:border-gold-600 hover:text-gold-700"
                     }`}
                   >
                     <Icon size={13} strokeWidth={1.8} />
                     {category}
+                    <span
+                      className={`rounded-full px-1.5 py-0.5 text-[10px] tabular-nums ${
+                        active ? "bg-cream-50/15" : "bg-emerald-900/8"
+                      }`}
+                    >
+                      {count}
+                    </span>
                   </button>
                 );
               })}
@@ -155,7 +193,7 @@ export function GalleryPageContent() {
             variants={stagger}
             initial="hidden"
             animate="show"
-            className="mt-12 columns-1 gap-4 sm:columns-2 lg:columns-3 xl:columns-4"
+            className="mt-12 columns-1 gap-4 sm:columns-2 lg:columns-3"
           >
             <AnimatePresence mode="popLayout">
               {filteredItems.map((item, index) => (
@@ -200,17 +238,29 @@ export function GalleryPageContent() {
               exit={{ opacity: 0, scale: 0.96 }}
               transition={{ duration: 0.28 }}
               onClick={(event) => event.stopPropagation()}
-              className="relative h-[68vh] w-full max-w-6xl sm:h-[80vh]"
+              className="relative flex h-[72vh] w-full max-w-6xl flex-col sm:h-[80vh]"
             >
-              <Image
-                src={activeItem.src}
-                alt={activeItem.title}
-                fill
-                sizes="92vw"
-                className="object-contain"
-              />
-              <div className="absolute -bottom-12 left-1/2 max-w-[88vw] -translate-x-1/2 bg-emerald-950/78 px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-cream-50 backdrop-blur">
-                {activeItem.title}
+              <div className="relative min-h-0 grow">
+                <Image
+                  src={activeItem.src}
+                  alt={activeItem.title}
+                  fill
+                  sizes="92vw"
+                  className="object-contain"
+                />
+              </div>
+              <div className="mt-4 flex items-center justify-between gap-4 rounded-full bg-emerald-950/80 px-5 py-3 backdrop-blur">
+                <div className="flex min-w-0 items-center gap-3">
+                  <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.18em] text-gold-300">
+                    {activeItem.category}
+                  </span>
+                  <span className="truncate font-display text-base font-semibold text-cream-50 sm:text-lg">
+                    {activeItem.title}
+                  </span>
+                </div>
+                <span className="shrink-0 text-xs font-bold tabular-nums text-cream-100/60">
+                  {String(lightboxIndex! + 1).padStart(2, "0")} / {String(filteredItems.length).padStart(2, "0")}
+                </span>
               </div>
             </motion.div>
           </motion.div>
@@ -241,7 +291,7 @@ function GalleryTile({
       <button
         type="button"
         onClick={onClick}
-        className="group relative block w-full overflow-hidden text-left"
+        className="group relative block w-full overflow-hidden rounded-[1.25rem] bg-emerald-950 text-left shadow-[var(--shadow-soft)] transition-shadow duration-300 hover:shadow-[0_24px_60px_-16px_rgba(6,95,70,0.35)]"
       >
         <div className={`relative ${aspectFor(index)} overflow-hidden`}>
           <Image
@@ -249,15 +299,15 @@ function GalleryTile({
             alt={item.title}
             fill
             priority={index < 4}
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className="object-cover transition-transform duration-[1.1s] group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/78 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-          <div className="absolute inset-x-0 bottom-0 translate-y-4 p-5 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+          <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/85 via-emerald-950/10 to-transparent opacity-100 transition-opacity duration-500 lg:opacity-0 lg:group-hover:opacity-100" />
+          <div className="absolute inset-x-0 bottom-0 translate-y-0 p-5 opacity-100 transition-all duration-500 lg:translate-y-4 lg:opacity-0 lg:group-hover:translate-y-0 lg:group-hover:opacity-100">
             <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-gold-300">
               {item.category}
             </span>
-            <h3 className="mt-2 font-display text-xl font-semibold text-cream-50">
+            <h3 className="mt-1.5 font-display text-xl font-semibold leading-tight text-cream-50">
               {item.title}
             </h3>
           </div>

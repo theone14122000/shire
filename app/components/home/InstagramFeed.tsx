@@ -48,10 +48,37 @@ const FEED_CSS = `
   }
 `;
 
+const HEAD_CSS = `
+  .elfsight-app-${ELFSIGHT_INSTAGRAM_ID} .eapps-instagram-feed-posts-item:nth-child(n+${COMPACT_COUNT + 1}) {
+    display: none !important;
+  }
+  .elfsight-app-${ELFSIGHT_INSTAGRAM_ID}[data-elfsight-show="all"] .eapps-instagram-feed-posts-item {
+    display: block !important;
+  }
+`;
+
 function findShadowRoot(root: HTMLElement): ShadowRoot | null {
   if (root.shadowRoot) return root.shadowRoot;
   for (const child of Array.from(root.querySelectorAll("*"))) {
     if ((child as HTMLElement).shadowRoot) return (child as HTMLElement).shadowRoot;
+  }
+  return null;
+}
+
+function widgetElements(): HTMLElement[] {
+  return Array.from(
+    document.querySelectorAll<HTMLElement>(
+      `[class*="${ELFSIGHT_INSTAGRAM_ID}"], eapps-instagram-feed, [data-elfsight-app-lazy]`
+    )
+  );
+}
+
+function findScroller(): HTMLElement | null {
+  for (const el of widgetElements()) {
+    const scroller = el.querySelector<HTMLElement>(
+      ".eapps-instagram-feed-posts, .eapps-instagram-feed-container, .eapps-instagram-feed-items"
+    );
+    if (scroller) return scroller;
   }
   return null;
 }
@@ -64,44 +91,44 @@ export function InstagramFeed() {
 
   useEffect(() => {
     expandedRef.current = expanded;
+    hostRef.current?.setAttribute("data-elfsight-show", expanded ? "all" : "compact");
     feedHostRef.current?.setAttribute("data-elfsight-show", expanded ? "all" : "compact");
   }, [expanded]);
 
   useEffect(() => {
-    const host = hostRef.current;
-    if (!host) return;
-
-    const inject = () => {
-      const shadow = findShadowRoot(host);
-      if (!shadow) return false;
-
-      if (!shadow.querySelector("style[data-elfsight-style]")) {
-        const style = document.createElement("style");
-        style.setAttribute("data-elfsight-style", "");
-        style.textContent = FEED_CSS;
-        shadow.appendChild(style);
-      }
-      const hostEl = shadow.host as HTMLElement;
-      feedHostRef.current = hostEl;
-      hostEl.setAttribute("data-elfsight-show", expandedRef.current ? "all" : "compact");
-      return true;
+    const ensureHeadStyle = () => {
+      if (document.querySelector("style[data-elfsight-feed-css]")) return;
+      const style = document.createElement("style");
+      style.setAttribute("data-elfsight-feed-css", "");
+      style.textContent = HEAD_CSS;
+      document.head.appendChild(style);
     };
 
-    if (inject()) return;
+    const apply = () => {
+      ensureHeadStyle();
+      for (const el of widgetElements()) {
+        const shadow = findShadowRoot(el);
+        if (shadow) {
+          if (!shadow.querySelector("style[data-elfsight-style]")) {
+            const style = document.createElement("style");
+            style.setAttribute("data-elfsight-style", "");
+            style.textContent = FEED_CSS;
+            shadow.appendChild(style);
+          }
+          const hostEl = shadow.host as HTMLElement;
+          feedHostRef.current = hostEl;
+          hostEl.setAttribute("data-elfsight-show", expandedRef.current ? "all" : "compact");
+        }
+      }
+    };
 
-    const timer = setInterval(() => {
-      if (inject()) clearInterval(timer);
-    }, 700);
+    apply();
+    const timer = setInterval(apply, 800);
     return () => clearInterval(timer);
   }, []);
 
   const scrollFeed = (dir: 1 | -1) => {
-    const host = hostRef.current;
-    if (!host) return;
-    const scroller = host.querySelector<HTMLElement>(
-      ".eapps-instagram-feed-posts, .eapps-instagram-feed-container, .eapps-instagram-feed-items"
-    );
-    scroller?.scrollBy({ left: dir * (ITEM_WIDTH + GAP), behavior: "smooth" });
+    findScroller()?.scrollBy({ left: dir * (ITEM_WIDTH + GAP), behavior: "smooth" });
   };
 
   return (
