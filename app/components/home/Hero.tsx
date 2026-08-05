@@ -2,7 +2,6 @@
 
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
 import { useRef } from "react";
-import { Container } from "../ui/Container";
 import { hero } from "@/lib/content";
 import type { ReactNode } from "react";
 
@@ -131,65 +130,63 @@ export function Hero({ content }: { content?: any }) {
         aria-hidden
       />
 
-      {/* Meta / stats strip — dynamic, per-stat icons, hover lift, fully responsive */}
+      {/* Meta / stats strip — full-bleed, equal columns, evenly centered */}
       <motion.div
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
         className="absolute inset-x-0 bottom-0 z-10 border-t border-white/10 bg-ink-900/40 backdrop-blur-md"
       >
-        <Container>
-          <div className="grid grid-cols-4 gap-px bg-white/10">
-            {metaItems.map((m, i) => {
-              const baseClass =
-                "group relative overflow-hidden bg-ink-900/60 px-1.5 py-2 sm:px-4 sm:py-4 flex flex-col justify-center gap-0.5 sm:gap-1 transition-all duration-300 hover:bg-ink-800/70";
+        <div className="grid w-full grid-cols-4 gap-px bg-white/10">
+          {metaItems.map((m, i) => {
+            const baseClass =
+              "group relative flex flex-col items-center justify-center gap-0.5 overflow-hidden bg-ink-900/60 px-1.5 py-2 text-center sm:gap-1 sm:px-4 sm:py-4 transition-all duration-300 hover:bg-ink-800/70";
 
-              const inner = (
-                <>
-                  {/* hover glow sweep */}
-                  <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-amber-400/10 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+            const inner = (
+              <>
+                {/* hover glow sweep */}
+                <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-amber-400/10 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
 
-                  <span className="relative flex items-center gap-1 text-[8px] sm:gap-1.5 sm:text-[10px] uppercase tracking-[0.12em] sm:tracking-[0.22em] text-amber-300/70 font-bold">
-                    <StatIcon name={m.icon} />
-                    <span className="truncate">{m.label}</span>
-                  </span>
-                  <span
-                    title={m.value}
-                    className="relative truncate text-[11px] sm:text-lg text-amber-300 font-black tracking-tight group-hover:text-amber-200 transition-colors"
-                  >
-                    {m.value}
-                  </span>
-                </>
-              );
-
-              return (
-                <motion.div
-                  key={m.label}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    duration: 0.6,
-                    delay: 0.7 + i * 0.08,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
+                <span className="relative flex w-full items-center justify-center gap-1 text-[8px] sm:gap-1.5 sm:text-[10px] uppercase tracking-[0.12em] sm:tracking-[0.22em] text-amber-300/70 font-bold">
+                  <StatIcon name={m.icon} />
+                  <span className="truncate">{m.label}</span>
+                </span>
+                <span
+                  title={m.value}
+                  className="relative w-full truncate text-[11px] sm:text-lg text-amber-300 font-black tracking-tight group-hover:text-amber-200 transition-colors"
                 >
-                  {"href" in m && m.href ? (
-                    <a
-                      href={m.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`${baseClass} cursor-pointer`}
-                    >
-                      {inner}
-                    </a>
-                  ) : (
-                    <div className={baseClass}>{inner}</div>
-                  )}
-                </motion.div>
-              );
-            })}
-          </div>
-        </Container>
+                  {m.value}
+                </span>
+              </>
+            );
+
+            return (
+              <motion.div
+                key={m.label}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.6,
+                  delay: 0.7 + i * 0.08,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+              >
+                {"href" in m && m.href ? (
+                  <a
+                    href={m.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`${baseClass} cursor-pointer`}
+                  >
+                    {inner}
+                  </a>
+                ) : (
+                  <div className={baseClass}>{inner}</div>
+                )}
+              </motion.div>
+            );
+          })}
+        </div>
       </motion.div>
     </section>
   );
