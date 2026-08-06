@@ -225,12 +225,12 @@
   }
 
   .luxe-kicker {
-    @apply inline-flex items-center gap-3 text-sm font-extrabold uppercase tracking-[0.22em];
+    @apply inline-flex items-center gap-3 text-base font-extrabold uppercase tracking-[0.2em];
   }
 
   .luxe-kicker::before {
     content: "";
-    @apply h-px w-10 bg-current opacity-45;
+    @apply h-px w-12 bg-current opacity-60;
   }
 
   .luxe-link {
