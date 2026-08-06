@@ -23,6 +23,7 @@ const FEED_CSS = `
   }
   .eapps-instagram-feed-posts-grid {
     display: flex !important;
+    flex-direction: row !important;
     flex-wrap: nowrap !important;
     gap: ${GAP}px !important;
     overflow: visible !important;
@@ -31,21 +32,41 @@ const FEED_CSS = `
   .eapps-instagram-feed-posts-item {
     flex: 0 0 ${ITEM_WIDTH}px !important;
     width: ${ITEM_WIDTH}px !important;
+    min-width: ${ITEM_WIDTH}px !important;
+    max-width: ${ITEM_WIDTH}px !important;
     aspect-ratio: 1 / 1 !important;
     scroll-snap-align: start !important;
   }
   @media (max-width: 640px) {
-    .eapps-instagram-feed-posts-item {
-      flex-basis: 74vw !important;
-      width: 74vw !important;
+    .eapps-instagram-feed-posts,
+    .eapps-instagram-feed-posts-grid {
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
     }
     .eapps-instagram-feed-posts-grid {
       scroll-snap-type: none !important;
     }
-    .eapps-instagram-feed-posts,
-    .eapps-instagram-feed-container {
+    .eapps-instagram-feed-posts-item,
+    .eapps-instagram-feed-posts-item-list,
+    .eapps-instagram-feed-posts-items-item {
+      flex: 0 0 74vw !important;
+      width: 74vw !important;
+      min-width: 74vw !important;
+      max-width: 74vw !important;
+      aspect-ratio: 1 / 1 !important;
+    }
+    .eapps-instagram-feed-posts {
       -webkit-overflow-scrolling: touch !important;
       overscroll-behavior-x: contain !important;
+      touch-action: pan-x !important;
+    }
+    .eapps-instagram-feed-posts-pagination,
+    .eapps-instagram-feed-posts-slider-pagination,
+    .eapps-instagram-feed-posts-navigation {
+      display: none !important;
     }
   }
   :host([data-elfsight-show="compact"]) .eapps-instagram-feed-posts-item:nth-child(n+${COMPACT_COUNT + 1}) {
