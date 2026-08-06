@@ -15,7 +15,6 @@ import {
   Heater,
   Mountain,
   PawPrint,
-  Play,
   Sparkles,
   SquareParking,
   Trees,
@@ -24,7 +23,6 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { brand, brandIntro, ELFSIGHT_GOOGLE_REVIEWS_ID } from "@/lib/content";
-import { PROPERTY_PLAYLIST_URL } from "@/lib/rooms";
 import { InstagramFeed } from "./InstagramFeed";
 import { RoomsCarousel } from "./RoomsCarousel";
 
@@ -37,6 +35,14 @@ const stagger: Variants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.08, delayChildren: 0.08 } },
 };
+
+function youtubeId(url: string): string {
+  const trimmed = url.trim();
+  const match = trimmed.match(
+    /(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/))([A-Za-z0-9_-]{11})/
+  );
+  return match ? match[1] : trimmed;
+}
 
 type AmenityItem = {
   title: string;
@@ -227,18 +233,6 @@ export function HomeEditorial({
               <motion.p variants={fadeUp} className="max-w-2xl text-base leading-[1.9] text-emerald-950/65 sm:text-lg">
                 {t("rooms", "description", "We have lovingly prepared seven rooms, each with its own uniqueness - named after the tree species that surround our property.")}
               </motion.p>
-              <motion.a
-                variants={fadeUp}
-                href={PROPERTY_PLAYLIST_URL}
-                target="_blank"
-                rel="noreferrer"
-                className="mt-6 inline-flex items-center gap-3 text-sm font-extrabold uppercase tracking-[0.18em] text-gold-700 transition-colors duration-300 hover:text-emerald-950"
-              >
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gold-500 text-emerald-950 transition-colors duration-300 group-hover:bg-gold-400">
-                  <Play size={14} fill="currentColor" />
-                </span>
-                Watch property video
-              </motion.a>
             </motion.div>
           </motion.div>
 
@@ -370,6 +364,47 @@ export function HomeEditorial({
                 {t("setting", "ctaLabel", "Explore activities")}
               </Link>
             </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      <section className="bg-[#fffaf0] px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
+        <div className="mx-auto max-w-[1400px]">
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.25 }}
+            className="mx-auto max-w-3xl text-center"
+          >
+            <motion.span variants={fadeUp} className="luxe-kicker text-gold-700">
+              {t("video", "kicker", "The Shire on Film")}
+            </motion.span>
+            <motion.h2 variants={fadeUp} className="mt-5 font-display text-4xl font-semibold leading-[1.06] text-emerald-950 sm:text-5xl">
+              {t("video", "heading", "Watch the property film.")}
+            </motion.h2>
+            <motion.p variants={fadeUp} className="mx-auto mt-6 max-w-2xl text-base leading-[1.85] text-emerald-950/65 sm:text-lg">
+              {t("video", "description", "A slow walk through the shire - the rooms, the orchards, and the mountains that hold it all.")}
+            </motion.p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+            className="mx-auto mt-12 w-full max-w-5xl lg:mt-16"
+          >
+            <div className="relative aspect-video w-full overflow-hidden border border-emerald-900/10 bg-emerald-950 shadow-[0_24px_70px_rgba(3,45,32,0.16)]">
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/${youtubeId(t("video", "videoUrl", "uVUTB5HsBXU"))}?rel=0`}
+                title="The Himalayan Shire property video"
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                referrerPolicy="strict-origin-when-cross-origin"
+                className="absolute inset-0 h-full w-full"
+              />
+            </div>
           </motion.div>
         </div>
       </section>

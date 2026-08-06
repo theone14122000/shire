@@ -61,6 +61,16 @@ export const CMS_SECTIONS: CmsSection[] = [
     ],
   },
   {
+    key: "video",
+    label: "Property Video",
+    fields: [
+      { key: "kicker", label: "Kicker" },
+      { key: "heading", label: "Heading" },
+      { key: "description", label: "Description", textarea: true },
+      { key: "videoUrl", label: "YouTube Video URL" },
+    ],
+  },
+  {
     key: "gallery",
     label: "Gallery Intro",
     fields: [
@@ -121,6 +131,13 @@ We will make your stay a truly delightful one, and hope to send you back with me
       "A serene, beautiful countryside location - surrounded by apple orchards and tall pine trees, with an unparallelled view of the Kinnaur Kailash range.",
     ctaLabel: "Explore activities",
     ctaHref: "/activities",
+  },
+  video: {
+    kicker: "The Shire on Film",
+    heading: "Watch the property film.",
+    description:
+      "A slow walk through the shire — the rooms, the orchards, and the mountains that hold it all.",
+    videoUrl: "https://youtu.be/uVUTB5HsBXU",
   },
   gallery: {
     kicker: "Gallery",
