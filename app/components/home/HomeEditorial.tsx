@@ -46,7 +46,7 @@ type AmenityItem = {
 const AMENITY_ITEMS: AmenityItem[] = [
   {
     title: "Pet-Friendly",
-    note: "charges apply",
+    note: "click here for pet policy",
     href: "/pet-policy",
     icon: PawPrint,
   },
@@ -316,7 +316,7 @@ export function HomeEditorial({ content }: { content?: Record<string, any> }) {
         </div>
       </section>
 
-      <section className="grid bg-[#fffaf0] lg:grid-cols-2">
+      <section className="grid bg-emerald-950 lg:grid-cols-2">
         <div className="relative min-h-[430px] overflow-hidden lg:min-h-[720px]">
           <Image
             src="/images/setting-view.jpg"
@@ -334,13 +334,13 @@ export function HomeEditorial({ content }: { content?: Record<string, any> }) {
             viewport={{ once: true, amount: 0.25 }}
             className="max-w-2xl"
           >
-            <motion.span variants={fadeUp} className="luxe-kicker text-gold-700">
+            <motion.span variants={fadeUp} className="luxe-kicker text-gold-400">
               {t("setting", "kicker", "The Setting")}
             </motion.span>
-            <motion.h2 variants={fadeUp} className="mt-5 font-display text-4xl font-semibold leading-[1.08] text-emerald-950 sm:text-5xl">
+            <motion.h2 variants={fadeUp} className="mt-5 font-display text-4xl font-semibold leading-[1.08] text-cream-50 sm:text-5xl">
               {t("setting", "heading", "A serene, beautiful countryside surrounded by apple orchards.")}
             </motion.h2>
-            <motion.p variants={fadeUp} className="mt-7 text-base leading-[1.9] text-emerald-950/66 sm:text-lg">
+            <motion.p variants={fadeUp} className="mt-7 text-base leading-[1.9] text-cream-100/62 sm:text-lg">
               {t("setting", "description", "A serene, beautiful countryside location - surrounded by apple orchards and tall pine trees, with an unparallelled view of the Kinnaur Kailash range.")}
             </motion.p>
             <motion.div variants={fadeUp} className="mt-9 flex flex-col gap-4 sm:flex-row">

@@ -29,7 +29,7 @@ const stagger: Variants = {
 
 export default function PetPolicyPage() {
   return (
-    <main className="editorial-surface min-h-screen font-sans selection:bg-gold-200/30">
+    <main className="min-h-screen bg-[#f7f1e6] font-sans text-emerald-950 selection:bg-gold-200/30">
       <SiteNav />
 
       <section className="px-5 py-24 sm:px-8 sm:py-32 lg:px-14 lg:py-40">
@@ -44,10 +44,10 @@ export default function PetPolicyPage() {
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           >
             <span className="luxe-kicker text-gold-700">Guest Agreement</span>
-            <h1 className="mt-6 font-display text-5xl font-semibold leading-[1.02] text-parchment sm:text-6xl lg:text-7xl">
+            <h1 className="mt-6 font-display text-5xl font-semibold leading-[1.02] text-emerald-950 sm:text-6xl lg:text-7xl">
               Policy for Pets.
             </h1>
-            <p className="mt-6 max-w-2xl text-base leading-[1.9] text-parchment/66 sm:text-lg">
+            <p className="mt-6 max-w-2xl text-base leading-[1.9] text-emerald-950/65 sm:text-lg">
               Please read the following terms carefully before bringing your pet to The Himalayan Shire. We love having four-legged guests - these guidelines ensure a safe and harmonious stay for everyone.
             </p>
           </motion.div>
@@ -58,10 +58,10 @@ export default function PetPolicyPage() {
         <div className="mx-auto grid max-w-[1400px] gap-10 lg:grid-cols-[0.7fr_1.3fr]">
           <div>
             <FileText className="text-gold-700" size={28} strokeWidth={1.4} />
-            <h2 className="mt-6 font-display text-4xl font-semibold leading-[1.06] text-parchment sm:text-5xl">
+            <h2 className="mt-6 font-display text-4xl font-semibold leading-[1.06] text-emerald-950 sm:text-5xl">
               House Rules
             </h2>
-            <p className="mt-5 text-base leading-[1.8] text-parchment/60">
+            <p className="mt-5 text-base leading-[1.8] text-emerald-950/60">
               8 key terms for a safe and harmonious stay.
             </p>
           </div>
@@ -78,7 +78,7 @@ export default function PetPolicyPage() {
                 <span className="font-display text-sm font-semibold text-gold-700">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <p className="text-base leading-[1.85] text-parchment/68">
+                <p className="text-base leading-[1.85] text-emerald-950/68">
                   {policy}
                 </p>
               </motion.div>
