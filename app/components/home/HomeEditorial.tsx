@@ -63,7 +63,6 @@ const AMENITY_ITEMS: AmenityItem[] = [
   {
     title: "In-House Kitchen",
     note: "serving from 9am - 9pm",
-    href: "/kitchen",
     icon: ChefHat,
   },
   {
@@ -347,9 +346,6 @@ export function HomeEditorial({ content }: { content?: Record<string, any> }) {
             <motion.div variants={fadeUp} className="mt-9 flex flex-col gap-4 sm:flex-row">
               <Link href={t("setting", "ctaHref", "/activities")} className="luxe-button">
                 {t("setting", "ctaLabel", "Explore activities")}
-              </Link>
-              <Link href={t("setting", "cta2Href", "/kitchen")} className="luxe-button luxe-button-ghost">
-                {t("setting", "cta2Label", "Our kitchen")}
               </Link>
             </motion.div>
           </motion.div>

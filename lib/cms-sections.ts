@@ -58,8 +58,6 @@ export const CMS_SECTIONS: CmsSection[] = [
       { key: "description", label: "Description", textarea: true },
       { key: "ctaLabel", label: "Button 1 Label" },
       { key: "ctaHref", label: "Button 1 URL" },
-      { key: "cta2Label", label: "Button 2 Label" },
-      { key: "cta2Href", label: "Button 2 URL" },
     ],
   },
   {
@@ -123,8 +121,6 @@ We will make your stay a truly delightful one, and hope to send you back with me
       "A serene, beautiful countryside location - surrounded by apple orchards and tall pine trees, with an unparallelled view of the Kinnaur Kailash range.",
     ctaLabel: "Explore activities",
     ctaHref: "/activities",
-    cta2Label: "Our kitchen",
-    cta2Href: "/kitchen",
   },
   gallery: {
     kicker: "Gallery",

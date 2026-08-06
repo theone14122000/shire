@@ -21,7 +21,6 @@ const FOOTER_COLUMNS = [
     title: "Stay",
     links: [
       { label: "Rooms", href: "/#rooms" },
-      { label: "Kitchen", href: "/kitchen" },
       { label: "Pet Policy", href: "/pet-policy" },
     ],
   },
