@@ -332,7 +332,7 @@ export function HomeEditorial({ content }: { content?: Record<string, any> }) {
         </div>
       </section>
 
-      <section className="grid bg-[#008000] lg:grid-cols-2">
+      <section className="grid bg-[#006400] lg:grid-cols-2">
         <div className="relative min-h-[430px] overflow-hidden lg:min-h-[720px]">
           <Image
             src="/images/setting-view.jpg"
@@ -356,7 +356,7 @@ export function HomeEditorial({ content }: { content?: Record<string, any> }) {
             <motion.h2 variants={fadeUp} className="mt-5 font-display text-4xl font-semibold leading-[1.08] text-cream-50 sm:text-5xl">
               {t("setting", "heading", "A serene, beautiful countryside surrounded by apple orchards.")}
             </motion.h2>
-            <motion.p variants={fadeUp} className="mt-7 text-base leading-[1.9] text-cream-100/62 sm:text-lg">
+            <motion.p variants={fadeUp} className="mt-7 text-base leading-[1.9] text-cream-100/78 sm:text-lg">
               {t("setting", "description", "A serene, beautiful countryside location - surrounded by apple orchards and tall pine trees, with an unparallelled view of the Kinnaur Kailash range.")}
             </motion.p>
             <motion.div variants={fadeUp} className="mt-9 flex flex-col gap-4 sm:flex-row">
