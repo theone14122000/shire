@@ -175,7 +175,7 @@ export function RoomPageContent({ room }: { room: Room }) {
               viewport={{ once: true, amount: 0.15 }}
               className="flex w-full justify-center lg:justify-end"
             >
-              <motion.div variants={fadeUp}>
+              <motion.div variants={fadeUp} className="flex w-full justify-center lg:justify-end">
                 <ResponsiveVideoEmbed
                   videoId={room.tourVideoId}
                   title={`${room.name} room tour`}

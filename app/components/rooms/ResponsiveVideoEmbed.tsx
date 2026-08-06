@@ -19,8 +19,8 @@ export function ResponsiveVideoEmbed({
 
   return (
     <div
-      className="relative w-full overflow-hidden border border-emerald-900/10 bg-emerald-950 shadow-[0_24px_70px_rgba(3,45,32,0.16)]"
-      style={{ aspectRatio: "9 / 16", maxWidth: 480 }}
+      className="relative overflow-hidden border border-emerald-900/10 bg-emerald-950 shadow-[0_24px_70px_rgba(3,45,32,0.16)]"
+      style={{ aspectRatio: "9 / 16", width: "min(100%, 480px)" }}
     >
       <iframe
         src={`https://www.youtube-nocookie.com/embed/${id}?rel=0&playsinline=1`}
