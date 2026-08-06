@@ -13,9 +13,11 @@ function extractVideoId(value: string): string {
 export function ResponsiveVideoEmbed({
   videoId,
   title,
+  fullscreen = false,
 }: {
   videoId: string;
   title: string;
+  fullscreen?: boolean;
 }) {
   const id = extractVideoId(videoId);
   const [ratio, setRatio] = useState<number | null>(null);
@@ -42,15 +44,25 @@ export function ResponsiveVideoEmbed({
   }, [id]);
 
   const r = ratio && Number.isFinite(ratio) ? ratio : 9 / 16;
-  const landscape = r >= 1;
+
+  const style = fullscreen
+    ? {
+        aspectRatio: `${r}`,
+        width: `min(100%, calc(88vh * ${(Math.max(r, 1 / r) + 0.0001).toFixed(4)}))`,
+      }
+    : {
+        aspectRatio: `${r}`,
+        ...(r < 1 ? { maxWidth: 480, marginInline: "auto" } : {}),
+      };
+
+  const frameClass = fullscreen
+    ? "rounded-2xl border border-cream-50/10 shadow-[0_40px_120px_rgba(0,0,0,0.45)]"
+    : "border border-emerald-900/10 shadow-[0_24px_70px_rgba(3,45,32,0.16)]";
 
   return (
     <div
-      className="relative w-full overflow-hidden border border-emerald-900/10 bg-emerald-950 shadow-[0_24px_70px_rgba(3,45,32,0.16)]"
-      style={{
-        aspectRatio: `${r}`,
-        ...(landscape ? {} : { maxWidth: 480, marginInline: "auto" }),
-      }}
+      className={`relative w-full overflow-hidden bg-emerald-950 ${frameClass}`}
+      style={style}
     >
       <iframe
         src={`https://www.youtube-nocookie.com/embed/${id}?rel=0&playsinline=1`}

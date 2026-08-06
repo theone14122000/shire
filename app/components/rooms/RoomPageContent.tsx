@@ -157,30 +157,37 @@ export function RoomPageContent({ room }: { room: Room }) {
           </div>
         </section>
 
-        <section className="bg-[#fffaf0] px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
-          <div className="mx-auto grid max-w-[1400px] gap-10 lg:grid-cols-[0.7fr_1.3fr] lg:items-start">
-            <div>
-              <span className="luxe-kicker text-gold-700">Room Tour</span>
-              <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.06] text-emerald-950 sm:text-5xl">
-                See it for yourself.
-              </h2>
-              <p className="mt-6 max-w-md text-base leading-[1.85] text-emerald-950/65">
-                Take a slow walk through {room.name} in this short video tour shot at the property.
-              </p>
-            </div>
+        <section className="relative overflow-hidden bg-emerald-950 px-5 py-16 sm:px-8 sm:py-20 lg:py-24">
+          <div className="mx-auto flex w-full max-w-[1800px] flex-col items-center">
             <motion.div
               variants={stagger}
               initial="hidden"
               whileInView="show"
-              viewport={{ once: true, amount: 0.12 }}
-              className="w-full"
+              viewport={{ once: true, amount: 0.25 }}
+              className="mb-8 w-full text-center lg:mb-12"
             >
-              <motion.div variants={fadeUp} className="w-full">
-                <ResponsiveVideoEmbed
-                  videoId={room.tourVideoId}
-                  title={`${room.name} room tour`}
-                />
-              </motion.div>
+              <motion.span variants={fadeUp} className="luxe-kicker text-gold-400">
+                Room Tour
+              </motion.span>
+              <motion.h2 variants={fadeUp} className="mt-4 font-display text-4xl font-semibold leading-[1.06] text-cream-50 sm:text-5xl">
+                See it for yourself.
+              </motion.h2>
+              <motion.p variants={fadeUp} className="mx-auto mt-4 max-w-xl text-base leading-[1.8] text-cream-100/62 sm:text-lg">
+                Take a slow walk through {room.name} in this short video tour shot at the property.
+              </motion.p>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+              className="flex w-full justify-center"
+            >
+              <ResponsiveVideoEmbed
+                videoId={room.tourVideoId}
+                title={`${room.name} room tour`}
+                fullscreen
+              />
             </motion.div>
           </div>
         </section>
