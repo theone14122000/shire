@@ -15,6 +15,7 @@ import {
   Heater,
   Mountain,
   PawPrint,
+  Play,
   Sparkles,
   SquareParking,
   Trees,
@@ -23,6 +24,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { brand, brandIntro, ELFSIGHT_GOOGLE_REVIEWS_ID } from "@/lib/content";
+import { PROPERTY_PLAYLIST_URL } from "@/lib/rooms";
 import { InstagramFeed } from "./InstagramFeed";
 import { RoomsCarousel } from "./RoomsCarousel";
 
@@ -215,9 +217,23 @@ export function HomeEditorial({ content }: { content?: Record<string, any> }) {
                 {t("rooms", "heading", "Rooms named after the trees around the property.")}
               </motion.h2>
             </div>
-            <motion.p variants={fadeUp} className="max-w-2xl text-base leading-[1.9] text-emerald-950/65 sm:text-lg lg:justify-self-end">
-              {t("rooms", "description", "We have lovingly prepared seven rooms, each with its own uniqueness - named after the tree species that surround our property.")}
-            </motion.p>
+            <motion.div variants={fadeUp} className="max-w-2xl lg:justify-self-end">
+              <motion.p variants={fadeUp} className="max-w-2xl text-base leading-[1.9] text-emerald-950/65 sm:text-lg">
+                {t("rooms", "description", "We have lovingly prepared seven rooms, each with its own uniqueness - named after the tree species that surround our property.")}
+              </motion.p>
+              <motion.a
+                variants={fadeUp}
+                href={PROPERTY_PLAYLIST_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-6 inline-flex items-center gap-3 text-sm font-extrabold uppercase tracking-[0.18em] text-gold-700 transition-colors duration-300 hover:text-emerald-950"
+              >
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gold-500 text-emerald-950 transition-colors duration-300 group-hover:bg-gold-400">
+                  <Play size={14} fill="currentColor" />
+                </span>
+                Watch property video
+              </motion.a>
+            </motion.div>
           </motion.div>
 
           <RoomsCarousel />

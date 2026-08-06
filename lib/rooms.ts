@@ -25,6 +25,7 @@ export const rooms = [
       "/images/rooms/deodar-4.jpg",
       "/images/rooms/deodar-5.jpg",
     ],
+    tourVideoId: "LKOc2GmG2TE",
   },
   {
     id: 2,
@@ -51,6 +52,7 @@ export const rooms = [
       "/images/rooms/buransh-4.jpg",
       "/images/rooms/buransh-5.jpg",
     ],
+    tourVideoId: "GWyTHPKIJKw",
   },
   {
     id: 3,
@@ -76,6 +78,7 @@ export const rooms = [
       "/images/rooms/chir-pine-3.jpg",
       "/images/rooms/chir-pine-5.jpg",
     ],
+    tourVideoId: "I8iPvz0Xww4",
   },
   {
     id: 4,
@@ -101,6 +104,7 @@ export const rooms = [
       "/images/rooms/bluepine-4.jpg",
       "/images/rooms/bluepine-5.jpg",
     ],
+    tourVideoId: "skMEhkuOk0g",
   },
   {
     id: 5,
@@ -126,6 +130,7 @@ export const rooms = [
       "/images/rooms/walnut-4.jpg",
       "/images/rooms/walnut-5.jpg",
     ],
+    tourVideoId: "Cris9O7duNw",
   },
   {
     id: 6,
@@ -150,6 +155,7 @@ export const rooms = [
       "/images/rooms/mohru-4.jpg",
       "/images/rooms/mohru-5.jpg",
     ],
+    tourVideoId: "R-FYjmUpVqk",
   },
   {
     id: 7,
@@ -174,5 +180,9 @@ export const rooms = [
       "/images/rooms/tosh-4.jpg",
       "/images/rooms/tosh-5.jpg",
     ],
+    tourVideoId: "c9Vjfc6OWNw",
   },
 ];
+
+export const PROPERTY_PLAYLIST_URL =
+  "https://www.youtube.com/playlist?list=PLgC-Rqdy_SAZ8Zi8lZ69ZC_sAUuCT1rrl";
