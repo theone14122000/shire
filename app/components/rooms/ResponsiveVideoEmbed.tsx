@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 function extractVideoId(value: string): string {
   const trimmed = value.trim();
   const match = trimmed.match(
@@ -20,39 +18,16 @@ export function ResponsiveVideoEmbed({
   fullscreen?: boolean;
 }) {
   const id = extractVideoId(videoId);
-  const [ratio, setRatio] = useState<number | null>(null);
-
-  useEffect(() => {
-    let cancelled = false;
-    fetch(
-      `https://www.youtube.com/oembed?url=${encodeURIComponent(
-        `https://www.youtube.com/watch?v=${id}`
-      )}&format=json`
-    )
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data) => {
-        if (!cancelled && data?.width && data?.height) {
-          const w = Number(data.width);
-          const h = Number(data.height);
-          if (w > 0 && h > 0) setRatio(w / h);
-        }
-      })
-      .catch(() => {});
-    return () => {
-      cancelled = true;
-    };
-  }, [id]);
-
-  const r = ratio && Number.isFinite(ratio) ? ratio : 9 / 16;
 
   const style = fullscreen
     ? {
-        aspectRatio: `${r}`,
-        width: `min(100%, calc(88vh * ${(Math.max(r, 1 / r) + 0.0001).toFixed(4)}))`,
+        aspectRatio: "9 / 16",
+        width: "min(100%, calc(82vh * 0.5625))",
       }
     : {
-        aspectRatio: `${r}`,
-        ...(r < 1 ? { maxWidth: 480, marginInline: "auto" } : {}),
+        aspectRatio: "9 / 16",
+        maxWidth: 480,
+        marginInline: "auto",
       };
 
   const frameClass = fullscreen

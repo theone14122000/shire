@@ -39,6 +39,14 @@ const FEED_CSS = `
       flex-basis: 74vw !important;
       width: 74vw !important;
     }
+    .eapps-instagram-feed-posts-grid {
+      scroll-snap-type: none !important;
+    }
+    .eapps-instagram-feed-posts,
+    .eapps-instagram-feed-container {
+      -webkit-overflow-scrolling: touch !important;
+      overscroll-behavior-x: contain !important;
+    }
   }
   :host([data-elfsight-show="compact"]) .eapps-instagram-feed-posts-item:nth-child(n+${COMPACT_COUNT + 1}) {
     display: none !important;
