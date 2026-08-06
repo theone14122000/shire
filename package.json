@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
+    "postinstall": "prisma generate",
     "seed": "tsx prisma/seed.ts",
     "seed:blogs": "tsx scripts/seed-blogs.ts",
     "seed:gallery": "tsx scripts/seed-gallery.ts"
