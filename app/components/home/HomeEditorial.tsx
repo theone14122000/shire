@@ -256,7 +256,7 @@ export function HomeEditorial({ content }: { content?: Record<string, any> }) {
         </div>
       </section>
 
-      <section id="amenities" className="bg-emerald-950 px-5 py-20 text-cream-50 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
+      <section id="amenities" className="bg-[#fffaf0] px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
         <div className="mx-auto max-w-[1400px]">
           <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
             <motion.div
@@ -266,11 +266,11 @@ export function HomeEditorial({ content }: { content?: Record<string, any> }) {
               transition={{ duration: 0.75 }}
               className="lg:sticky lg:top-28"
             >
-              <span className="luxe-kicker text-gold-400">{t("amenities", "kicker", "Amenities")}</span>
-              <h2 className="mt-5 max-w-xl font-display text-4xl font-semibold leading-[1.05] text-cream-50 sm:text-5xl lg:text-6xl">
+              <span className="luxe-kicker text-gold-700">{t("amenities", "kicker", "Amenities")}</span>
+              <h2 className="mt-5 max-w-xl font-display text-4xl font-semibold leading-[1.05] text-emerald-950 sm:text-5xl lg:text-6xl">
                 {t("amenities", "heading", "Comforts arranged as part of the stay.")}
               </h2>
-              <p className="mt-7 max-w-[54ch] text-base leading-[1.9] text-cream-100/62 sm:text-lg">
+              <p className="mt-7 max-w-[54ch] text-base leading-[1.9] text-emerald-950/65 sm:text-lg">
                 {t("amenities", "description", "The property is built for slow days: warmth, food, quiet corners, common spaces, and practical comforts that make mountain travel feel easy.")}
               </p>
             </motion.div>
@@ -284,16 +284,16 @@ export function HomeEditorial({ content }: { content?: Record<string, any> }) {
             >
               {AMENITY_ITEMS.map((item) => {
                 const content = (
-                  <div className="group flex items-center gap-4 border-b border-cream-50/12 py-5 transition-colors duration-300">
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center border border-gold-400/35 bg-emerald-950/50 text-gold-300 transition-colors duration-300 group-hover:border-gold-400/70 group-hover:text-gold-200">
+                  <div className="group flex items-center gap-4 border-b border-emerald-900/10 py-5 transition-colors duration-300">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center border border-gold-600/30 bg-white/80 text-gold-700 transition-colors duration-300 group-hover:border-gold-600/60 group-hover:text-gold-700">
                       <item.icon size={19} strokeWidth={1.6} />
                     </span>
                     <span className="min-w-0">
-                      <span className="block font-display text-xl font-semibold leading-tight text-cream-50">
+                      <span className="block font-display text-xl font-semibold leading-tight text-emerald-950">
                         {item.title}
                       </span>
                       {item.note && (
-                        <span className="mt-1 block text-[11px] font-bold uppercase tracking-[0.18em] text-cream-100/52">
+                        <span className="mt-1 block text-[11px] font-bold uppercase tracking-[0.18em] text-emerald-950/50">
                           {item.note}
                         </span>
                       )}
