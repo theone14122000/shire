@@ -125,7 +125,13 @@ const GALLERY_FRAMES = [
 
 const POLAROID_ROTATIONS = [-3.5, 2.5, -2, 3.5];
 
-export function HomeEditorial({ content }: { content?: Record<string, any> }) {
+export function HomeEditorial({
+  content,
+  galleryFrames,
+}: {
+  content?: Record<string, any>;
+  galleryFrames?: { title: string; src: string }[];
+}) {
   const storyRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: storyRef,
@@ -384,7 +390,7 @@ export function HomeEditorial({ content }: { content?: Record<string, any> }) {
           </div>
 
           <div className="mt-14 grid grid-cols-3 gap-3 sm:gap-6 lg:mt-20 lg:grid-cols-4 lg:gap-10">
-            {GALLERY_FRAMES.map((frame, index) => (
+            {(galleryFrames && galleryFrames.length > 0 ? galleryFrames : GALLERY_FRAMES).map((frame, index) => (
               <motion.div
                 key={frame.src}
                 initial={{ opacity: 0, y: 34, rotate: 0 }}

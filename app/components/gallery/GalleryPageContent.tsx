@@ -4,16 +4,11 @@ import { AnimatePresence, motion, type Variants } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight, Home, Mountain, Sofa, Sparkles, Trees, X } from "lucide-react";
+import { categoryFromFile, titleFromFile } from "@/lib/gallery";
+import type { GalleryItem } from "@/lib/gallery-types";
 
 type GalleryCategory = "Views" | "Common Spaces" | "Outdoor" | "Interiors";
 type CategoryFilter = "All" | GalleryCategory;
-
-interface GalleryItem {
-  id: string;
-  title: string;
-  category: GalleryCategory;
-  src: string;
-}
 
 const GALLERY_FILES = [
   "attic-area-common.jpg",
@@ -27,7 +22,7 @@ const GALLERY_FILES = [
   "ground-floor-lobby.jpg",
   "himachali-style-seating.jpg",
   "indoor-games.jpeg",
-  "lawn-with-outdoor-seating-1.jpg",
+  "lawn-withoutdoor-seating-1.jpg",
   "mesmerizing-views.jpg",
   "reception-area.png",
   "recreational-hall.jpg",
@@ -38,29 +33,18 @@ const GALLERY_FILES = [
   "winters.jpg",
 ] as const;
 
-function titleFromFile(file: string): string {
-  const name = file.replace(/\.[^.]+$/, "").replace(/-\d+$/, "");
-  return name
-    .split(/[-_]/)
-    .filter(Boolean)
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
+function fallbackItems(): GalleryItem[] {
+  return GALLERY_FILES.map((file, index) => ({
+    id: file,
+    title: titleFromFile(file),
+    category: categoryFromFile(file) as GalleryCategory,
+    src: `/gallery/${file}`,
+    order: index,
+    status: "published",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  }));
 }
-
-function categoryFromFile(file: string): GalleryCategory {
-  const lower = file.toLowerCase();
-  if (/(view|snow|winter|sunrise|mesmerizing|greenery|enchant)/.test(lower)) return "Views";
-  if (/(bonfire|lawn|outdoor)/.test(lower)) return "Outdoor";
-  if (/(dining|decor|tv|lounge|himachali|games|kitchen)/.test(lower)) return "Interiors";
-  return "Common Spaces";
-}
-
-const GALLERY_ITEMS: GalleryItem[] = GALLERY_FILES.map((file) => ({
-  id: file,
-  title: titleFromFile(file),
-  category: categoryFromFile(file),
-  src: `/gallery/${file}`,
-}));
 
 const CATEGORIES: CategoryFilter[] = ["All", "Views", "Common Spaces", "Outdoor", "Interiors"];
 
@@ -83,16 +67,20 @@ const stagger: Variants = {
 
 const POLAROID_ROTATIONS = [-2.5, 2, -1.8, 2.8, -2, 1.5];
 
-export function GalleryPageContent() {
+export function GalleryPageContent({ items }: { items?: GalleryItem[] }) {
+  const galleryItems = useMemo(
+    () => (items && items.length > 0 ? items : fallbackItems()),
+    [items]
+  );
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>("All");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const filteredItems = useMemo(
     () =>
       activeCategory === "All"
-        ? GALLERY_ITEMS
-        : GALLERY_ITEMS.filter((item) => item.category === activeCategory),
-    [activeCategory]
+        ? galleryItems
+        : galleryItems.filter((item) => item.category === activeCategory),
+    [activeCategory, galleryItems]
   );
 
   const activeItem = lightboxIndex !== null ? filteredItems[lightboxIndex] : null;
@@ -154,7 +142,7 @@ export function GalleryPageContent() {
                 Every corner, captured.
               </h2>
               <p className="mt-5 max-w-lg text-base leading-[1.85] text-emerald-950/65">
-                {GALLERY_ITEMS.length} photographs across four spaces - the views, common areas, outdoor corners, and interiors.
+                {galleryItems.length} photographs across four spaces - the views, common areas, outdoor corners, and interiors.
               </p>
             </div>
             <div className="flex flex-wrap gap-2 lg:justify-end">
@@ -163,8 +151,8 @@ export function GalleryPageContent() {
                 const Icon = category === "All" ? Sparkles : CATEGORY_ICONS[category];
                 const count =
                   category === "All"
-                    ? GALLERY_ITEMS.length
-                    : GALLERY_ITEMS.filter((item) => item.category === category).length;
+                    ? galleryItems.length
+                    : galleryItems.filter((item) => item.category === category).length;
                 return (
                   <button
                     key={category}

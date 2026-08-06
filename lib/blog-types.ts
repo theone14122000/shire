@@ -26,6 +26,12 @@ export interface BlogPost {
   status: "draft" | "published";
   createdAt: string;
   updatedAt: string;
+  description?: string;
+  category?: string;
+  tags?: string;
+  seoTitle?: string;
+  seoDescription?: string;
+  publishedAt?: string;
 }
 
 export type BlogPostInput = Omit<

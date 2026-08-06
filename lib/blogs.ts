@@ -23,6 +23,12 @@ export async function getAllBlogs(
       tag: true,
       featured: true,
       status: true,
+      description: true,
+      category: true,
+      tags: true,
+      seoTitle: true,
+      seoDescription: true,
+      publishedAt: true,
       createdAt: true,
       updatedAt: true,
     },
@@ -39,6 +45,12 @@ export async function getAllBlogs(
     tag: b.tag ?? "",
     createdAt: b.createdAt.toISOString(),
     updatedAt: b.updatedAt.toISOString(),
+    description: b.description ?? undefined,
+    category: b.category ?? undefined,
+    tags: b.tags ?? undefined,
+    seoTitle: b.seoTitle ?? undefined,
+    seoDescription: b.seoDescription ?? undefined,
+    publishedAt: b.publishedAt?.toISOString(),
   }));
 }
 
@@ -54,7 +66,7 @@ export async function getBlogBySlug(
 
   return {
     ...blog,
-    content: JSON.parse(blog.content),
+    content: JSON.parse(blog.content ?? "[]"),
     status: blog.status as "draft" | "published",
     date: blog.date ?? "",
     readTime: blog.readTime ?? "",
@@ -63,6 +75,12 @@ export async function getBlogBySlug(
     tag: blog.tag ?? "",
     createdAt: blog.createdAt.toISOString(),
     updatedAt: blog.updatedAt.toISOString(),
+    description: blog.description ?? undefined,
+    category: blog.category ?? undefined,
+    tags: blog.tags ?? undefined,
+    seoTitle: blog.seoTitle ?? undefined,
+    seoDescription: blog.seoDescription ?? undefined,
+    publishedAt: blog.publishedAt?.toISOString(),
   };
 }
 
@@ -93,7 +111,7 @@ export async function createBlog(
 
   return {
     ...post,
-    content: JSON.parse(post.content),
+    content: JSON.parse(post.content ?? "[]"),
     status: post.status as "draft" | "published",
     date: post.date ?? "",
     readTime: post.readTime ?? "",
@@ -102,6 +120,12 @@ export async function createBlog(
     tag: post.tag ?? "",
     createdAt: post.createdAt.toISOString(),
     updatedAt: post.updatedAt.toISOString(),
+    description: post.description ?? undefined,
+    category: post.category ?? undefined,
+    tags: post.tags ?? undefined,
+    seoTitle: post.seoTitle ?? undefined,
+    seoDescription: post.seoDescription ?? undefined,
+    publishedAt: post.publishedAt?.toISOString(),
   };
 }
 
@@ -139,7 +163,7 @@ export async function updateBlog(
 
   return {
     ...updated,
-    content: JSON.parse(updated.content),
+    content: JSON.parse(updated.content ?? "[]"),
     status: updated.status as "draft" | "published",
     date: updated.date ?? "",
     readTime: updated.readTime ?? "",
@@ -148,6 +172,12 @@ export async function updateBlog(
     tag: updated.tag ?? "",
     createdAt: updated.createdAt.toISOString(),
     updatedAt: updated.updatedAt.toISOString(),
+    description: updated.description ?? undefined,
+    category: updated.category ?? undefined,
+    tags: updated.tags ?? undefined,
+    seoTitle: updated.seoTitle ?? undefined,
+    seoDescription: updated.seoDescription ?? undefined,
+    publishedAt: updated.publishedAt?.toISOString(),
   };
 }
 

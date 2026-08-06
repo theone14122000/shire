@@ -17,16 +17,24 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = await getBlogBySlug(slug);
   if (!post) return { title: "Post Not Found" };
+  const seoTitle = post.seoTitle || `${post.title} | The Himalayan Shire Blog`;
+  const seoDescription = post.seoDescription || post.excerpt;
   return {
-    title: `${post.title} | The Himalayan Shire Blog`,
-    description: post.excerpt,
+    title: seoTitle,
+    description: seoDescription,
     openGraph: {
-      title: post.title,
-      description: post.excerpt,
+      title: seoTitle,
+      description: seoDescription,
       images: [post.image],
       type: "article",
       publishedTime: post.createdAt,
       authors: [post.author],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: seoTitle,
+      description: seoDescription,
+      images: [post.image],
     },
   };
 }

@@ -38,8 +38,8 @@ model Blog {
   id             String     @id @default(cuid())
   title          String
   slug           String     @unique
-  description    String?
-  content        String     @default("[]")
+  description    String?    @db.Text
+  content        String?    @db.Text
   image          String?
   status         BlogStatus @default(DRAFT)
   publishedAt    DateTime?
@@ -47,11 +47,11 @@ model Blog {
   seoDescription String?
   author         String
   category       String?
-  tags           String     @default("[]")
+  tags           String?    @db.Text
   tag            String?
   date           String?
   readTime       String?
-  excerpt        String?
+  excerpt        String?    @db.Text
   featured       Boolean    @default(false)
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
@@ -60,6 +60,24 @@ model Blog {
   @@index([slug])
   @@index([status])
   @@index([category])
+}
+
+model GalleryItem {
+  id        String   @id @default(cuid())
+  title     String
+  caption   String?
+  category  String   @default("Common Spaces")
+  alt       String?
+  src       String   @unique
+  order     Int      @default(0)
+  status    String   @default("published")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("gallery_items")
+  @@index([category])
+  @@index([status])
+  @@index([order])
 }
 
 model HomepageContent {

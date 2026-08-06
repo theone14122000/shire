@@ -5,10 +5,10 @@ import path from "path";
 import { verifyToken, COOKIE_NAME } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
-const UPLOAD_DIR = path.join(process.cwd(), "public", "images", "blogs");
+const UPLOAD_DIR = path.join(process.cwd(), "public", "gallery");
 
 /* ------------------------------------------------------------------ */
-/*  POST /api/upload — upload an image (admin only)                    */
+/*  POST /api/upload/gallery — upload a gallery image (admin only)     */
 /* ------------------------------------------------------------------ */
 export async function POST(req: NextRequest) {
   const token = req.cookies.get(COOKIE_NAME)?.value;
@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
     const bytes = await file.arrayBuffer();
     await writeFile(filepath, Buffer.from(bytes));
 
-    const url = `/images/blogs/${filename}`;
+    const url = `/gallery/${filename}`;
 
     // Persist a media-library row alongside the file
     try {
@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
         data: {
           url,
           alt: file.name,
-          category: "blogs",
+          category: "gallery",
           size: file.size,
           mimeType: file.type,
         },
