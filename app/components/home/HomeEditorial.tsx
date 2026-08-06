@@ -113,7 +113,7 @@ const AMENITY_ITEMS: AmenityItem[] = [
     note: "Rs. 500 per night per person",
     icon: BedDouble,
   },
-] as const;
+];
 
 const GALLERY_FRAMES = [
   { title: "Common Balcony with Swing", src: "/gallery/common-balcony-with-swing.jpg" },
