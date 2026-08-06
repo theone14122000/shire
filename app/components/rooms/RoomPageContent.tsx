@@ -156,6 +156,42 @@ export function RoomPageContent({ room }: { room: Room }) {
           </div>
         </section>
 
+        <section className="bg-[#fffaf0] px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
+          <div className="mx-auto grid max-w-[1400px] gap-10 lg:grid-cols-[0.7fr_1.3fr] lg:items-start">
+            <div>
+              <span className="luxe-kicker text-gold-700">Room Tour</span>
+              <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.06] text-emerald-950 sm:text-5xl">
+                See it for yourself.
+              </h2>
+              <p className="mt-6 max-w-md text-base leading-[1.85] text-emerald-950/65">
+                Take a slow walk through {room.name} in this short video tour shot at the property.
+              </p>
+            </div>
+            <motion.div
+              variants={stagger}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.12 }}
+              className="w-full"
+            >
+              <motion.div
+                variants={fadeUp}
+                className="relative aspect-video w-full overflow-hidden border border-emerald-900/10 bg-emerald-950 shadow-[0_24px_70px_rgba(3,45,32,0.16)]"
+              >
+                <iframe
+                  src={`https://www.youtube-nocookie.com/embed/${room.tourVideoId}?rel=0`}
+                  title={`${room.name} room tour`}
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  className="absolute inset-0 h-full w-full"
+                />
+              </motion.div>
+            </motion.div>
+          </div>
+        </section>
+
         <section className="px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
           <div className="mx-auto max-w-[1400px]">
             <div className="mb-12 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
@@ -192,42 +228,6 @@ export function RoomPageContent({ room }: { room: Room }) {
                 </button>
               ))}
             </div>
-          </div>
-        </section>
-
-        <section className="bg-[#fffaf0] px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
-          <div className="mx-auto grid max-w-[1400px] gap-10 lg:grid-cols-[0.7fr_1.3fr] lg:items-start">
-            <div>
-              <span className="luxe-kicker text-gold-700">Room Tour</span>
-              <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.06] text-emerald-950 sm:text-5xl">
-                See it for yourself.
-              </h2>
-              <p className="mt-6 max-w-md text-base leading-[1.85] text-emerald-950/65">
-                Take a slow walk through {room.name} in this short video tour shot at the property.
-              </p>
-            </div>
-            <motion.div
-              variants={stagger}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.12 }}
-              className="w-full"
-            >
-              <motion.div
-                variants={fadeUp}
-                className="relative aspect-video w-full overflow-hidden border border-emerald-900/10 bg-emerald-950 shadow-[0_24px_70px_rgba(3,45,32,0.16)]"
-              >
-                <iframe
-                  src={`https://www.youtube-nocookie.com/embed/${room.tourVideoId}?rel=0`}
-                  title={`${room.name} room tour`}
-                  loading="lazy"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  className="absolute inset-0 h-full w-full"
-                />
-              </motion.div>
-            </motion.div>
           </div>
         </section>
 

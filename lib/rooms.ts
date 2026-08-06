@@ -185,4 +185,4 @@ export const rooms = [
 ];
 
 export const PROPERTY_PLAYLIST_URL =
-  "https://www.youtube.com/playlist?list=PLgC-Rqdy_SAZ8Zi8lZ69ZC_sAUuCT1rrl";
+  "https://www.youtube.com/channel/UCtwdXgLf4WsFtloqPWL23kw";
