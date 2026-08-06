@@ -7,15 +7,20 @@ import Script from "next/script";
 import { useRef } from "react";
 import {
   ArrowUpRight,
+  BedDouble,
   ChefHat,
+  Droplets,
   Flame,
   Gamepad2,
-  MapPin,
+  Heater,
   Mountain,
   PawPrint,
+  Sparkles,
+  SquareParking,
   Trees,
   Tv,
   Wifi,
+  type LucideIcon,
 } from "lucide-react";
 import { brand, brandIntro, ELFSIGHT_GOOGLE_REVIEWS_ID } from "@/lib/content";
 import { InstagramFeed } from "./InstagramFeed";
@@ -31,62 +36,82 @@ const stagger: Variants = {
   show: { transition: { staggerChildren: 0.08, delayChildren: 0.08 } },
 };
 
-const AMENITIES = [
+type AmenityItem = {
+  title: string;
+  note: string;
+  href?: string;
+  icon: LucideIcon;
+};
+
+const AMENITY_ITEMS: AmenityItem[] = [
   {
     title: "Pet-Friendly",
     note: "charges apply",
     href: "/pet-policy",
     icon: PawPrint,
-    image: "/gallery/lawn-with-outdoor-seating-1.jpg",
+  },
+  {
+    title: "Electric Heaters",
+    note: "",
+    icon: Heater,
+  },
+  {
+    title: "24/7 Hot Water",
+    note: "",
+    icon: Droplets,
   },
   {
     title: "In-House Kitchen",
-    note: "9am - 9pm",
+    note: "serving from 9am - 9pm",
     href: "/kitchen",
     icon: ChefHat,
-    image: "/gallery/dining-area.jpg",
   },
   {
-    title: "BBQ & Bonfire",
-    note: "on order",
+    title: "Barbeque & Bonfire",
+    note: "available on order",
     href: "/activities",
     icon: Flame,
-    image: "/gallery/bonfire.jpg",
+  },
+  {
+    title: "Outdoor Seating with Lawn",
+    note: "",
+    href: "/activities",
+    icon: Trees,
   },
   {
     title: "Recreation Floor",
-    note: "TT, Carrom & Board Games",
+    note: "entire floor for activities & chilling",
+    href: "/activities",
+    icon: Sparkles,
+  },
+  {
+    title: "TT, Carrom & Board Games",
+    note: "",
     href: "/activities",
     icon: Gamepad2,
-    image: "/gallery/recreational-hall.jpg",
   },
   {
     title: "TV Viewing Lounge",
-    note: "65-inch LED Smart TV",
+    note: "",
     href: "/activities",
     icon: Tv,
-    image: "/gallery/tv-lounge.jpg",
-  },
-  {
-    title: "Free Private Parking",
-    note: "drive-in property",
-    href: "/faq",
-    icon: MapPin,
-    image: "/gallery/ground-floor-lobby.jpg",
   },
   {
     title: "Hi-Speed WiFi",
     note: "",
     href: "/faq",
     icon: Wifi,
-    image: "/gallery/common-seating-first-floor.jpg",
   },
   {
-    title: "Outdoor Lawn Seating",
+    title: "Free Private Parking",
     note: "",
-    href: "/activities",
-    icon: Trees,
-    image: "/gallery/surrounded-by-greenery.jpg",
+    href: "/faq",
+    icon: SquareParking,
+  },
+  {
+    title: "Driver Accommodation",
+    note: "Rs. 500 per night per person",
+    icon: BedDouble,
   },
 ] as const;
 
@@ -255,38 +280,38 @@ export function HomeEditorial({ content }: { content?: Record<string, any> }) {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, amount: 0.08 }}
-              className="grid gap-4 sm:grid-cols-2"
+              className="grid gap-x-8 gap-y-3 sm:grid-cols-2"
             >
-              {AMENITIES.map((item, index) => (
-                <motion.div key={item.title} variants={fadeUp}>
-                  <Link
-                    href={item.href}
-                    className={`group relative block min-h-[300px] overflow-hidden ${index === 1 || index === 6 ? "sm:translate-y-10" : ""}`}
-                  >
-                    <Image
-                      src={item.image}
-                      alt={item.title}
-                      fill
-                      sizes="(max-width: 640px) 100vw, 38vw"
-                      className="object-cover transition-transform duration-[1.1s] group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-emerald-950 via-emerald-950/38 to-transparent" />
-                    <div className="absolute inset-x-0 bottom-0 p-6">
-                      <span className="flex h-11 w-11 items-center justify-center border border-gold-400/35 bg-emerald-950/50 text-gold-300 backdrop-blur">
-                        <item.icon size={19} strokeWidth={1.6} />
-                      </span>
-                      <h3 className="mt-5 font-display text-2xl font-semibold text-cream-50">
+              {AMENITY_ITEMS.map((item) => {
+                const content = (
+                  <div className="group flex items-center gap-4 border-b border-cream-50/12 py-5 transition-colors duration-300">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center border border-gold-400/35 bg-emerald-950/50 text-gold-300 transition-colors duration-300 group-hover:border-gold-400/70 group-hover:text-gold-200">
+                      <item.icon size={19} strokeWidth={1.6} />
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block font-display text-xl font-semibold leading-tight text-cream-50">
                         {item.title}
-                      </h3>
+                      </span>
                       {item.note && (
-                        <p className="mt-2 text-xs font-bold uppercase tracking-[0.18em] text-cream-100/52">
+                        <span className="mt-1 block text-[11px] font-bold uppercase tracking-[0.18em] text-cream-100/52">
                           {item.note}
-                        </p>
+                        </span>
                       )}
-                    </div>
-                  </Link>
-                </motion.div>
-              ))}
+                    </span>
+                  </div>
+                );
+                return (
+                  <motion.div key={item.title} variants={fadeUp}>
+                    {item.href ? (
+                      <Link href={item.href} className="block">
+                        {content}
+                      </Link>
+                    ) : (
+                      content
+                    )}
+                  </motion.div>
+                );
+              })}
             </motion.div>
           </div>
         </div>
