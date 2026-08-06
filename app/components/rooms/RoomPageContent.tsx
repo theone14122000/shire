@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowUpRight, Bath, Layers, Maximize2, Mountain, X, ChevronLeft, ChevronRight } from "lucide-react";
 import type { rooms } from "@/lib/rooms";
+import { ResponsiveVideoEmbed } from "./ResponsiveVideoEmbed";
 
 type Room = (typeof rooms)[number];
 
@@ -174,18 +175,10 @@ export function RoomPageContent({ room }: { room: Room }) {
               viewport={{ once: true, amount: 0.12 }}
               className="w-full"
             >
-              <motion.div
-                variants={fadeUp}
-                className="relative aspect-video w-full overflow-hidden border border-emerald-900/10 bg-emerald-950 shadow-[0_24px_70px_rgba(3,45,32,0.16)]"
-              >
-                <iframe
-                  src={`https://www.youtube-nocookie.com/embed/${room.tourVideoId}?rel=0`}
+              <motion.div variants={fadeUp} className="w-full">
+                <ResponsiveVideoEmbed
+                  videoId={room.tourVideoId}
                   title={`${room.name} room tour`}
-                  loading="lazy"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  className="absolute inset-0 h-full w-full"
                 />
               </motion.div>
             </motion.div>
