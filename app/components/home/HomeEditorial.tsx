@@ -338,7 +338,7 @@ export function HomeEditorial({
         </div>
       </section>
 
-      <section className="grid bg-[#006400] lg:grid-cols-2">
+      <section className="grid bg-[#4F7942] lg:grid-cols-2">
         <div className="relative min-h-[430px] overflow-hidden lg:min-h-[720px]">
           <Image
             src="/images/setting-view.jpg"
