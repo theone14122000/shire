@@ -316,7 +316,7 @@ export function HomeEditorial({ content }: { content?: Record<string, any> }) {
         </div>
       </section>
 
-      <section className="grid bg-emerald-950 lg:grid-cols-2">
+      <section className="grid bg-[#008000] lg:grid-cols-2">
         <div className="relative min-h-[430px] overflow-hidden lg:min-h-[720px]">
           <Image
             src="/images/setting-view.jpg"
