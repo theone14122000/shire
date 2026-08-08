@@ -156,7 +156,7 @@ export function RoomPageContent({
                 {room.facilities.map((facility) => (
                   <motion.div key={facility} variants={fadeUp} className="flex gap-4 border-t border-emerald-900/15 pt-5">
                     <Bath className="mt-1 shrink-0 text-gold-700" size={17} strokeWidth={1.6} />
-                    <p className="text-lg leading-[1.65] text-emerald-950/70">{facility}</p>
+                    <p className="text-lg font-bold leading-[1.65] text-emerald-950/70">{facility}</p>
                   </motion.div>
                 ))}
               </motion.div>
