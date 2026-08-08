@@ -57,7 +57,7 @@ export default function AdminDashboardPage() {
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="mb-8">
-        <h1 className="font-display text-3xl font-black tracking-tight text-parchment">
+        <h1 className="font-display text-3xl font-black tracking-tight text-emerald-900">
           Dashboard
         </h1>
         <p className="mt-1 text-sm text-emerald-800/50">
@@ -155,7 +155,7 @@ function StatCard({
         </div>
         <div>
           <p className="text-xs font-medium text-emerald-800/50">{label}</p>
-          <p className="text-2xl font-black text-parchment">{value}</p>
+          <p className="text-2xl font-black text-emerald-900">{value}</p>
         </div>
       </div>
     </div>
@@ -184,7 +184,7 @@ function QuickLink({
           strokeWidth={1.8}
           className="text-emerald-700"
         />
-        <h3 className="font-display text-lg font-bold text-parchment">
+        <h3 className="font-display text-lg font-bold text-emerald-900">
           {label}
         </h3>
       </div>

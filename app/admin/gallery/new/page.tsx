@@ -120,7 +120,7 @@ export default function AdminGalleryNewPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="mb-8">
-        <h1 className="font-display text-2xl font-black tracking-tight text-parchment">
+        <h1 className="font-display text-2xl font-black tracking-tight text-emerald-900">
           Upload Gallery Images
         </h1>
         <p className="mt-0.5 text-sm text-emerald-800/50">
@@ -144,7 +144,7 @@ export default function AdminGalleryNewPage() {
         className="mb-6 cursor-pointer rounded-2xl border-2 border-dashed border-emerald-300 bg-white px-6 py-14 text-center transition-colors hover:border-emerald-500"
       >
         <CloudUpload size={36} strokeWidth={1.4} className="mx-auto text-emerald-800/40" />
-        <p className="mt-4 text-sm font-bold text-parchment">
+        <p className="mt-4 text-sm font-bold text-emerald-900">
           Drop images here, or click to browse
         </p>
         <p className="mt-1 text-xs text-emerald-800/50">
@@ -182,7 +182,7 @@ export default function AdminGalleryNewPage() {
             >
               <div className="flex items-center justify-between gap-3">
                 <div className="min-w-0">
-                  <p className="truncate text-sm font-bold text-parchment">{row.file.name}</p>
+                  <p className="truncate text-sm font-bold text-emerald-900">{row.file.name}</p>
                   <p className="mt-0.5 text-xs text-emerald-800/50">
                     {(row.file.size / 1024 / 1024).toFixed(2)} MB
                   </p>
@@ -219,7 +219,7 @@ export default function AdminGalleryNewPage() {
                       type="text"
                       value={row.title ?? ""}
                       onChange={(e) => updateRow(index, { title: e.target.value })}
-                      className="w-full rounded-xl border border-emerald-200 bg-cream-50 px-4 py-2.5 text-sm text-parchment focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20"
+                      className="w-full rounded-xl border border-emerald-200 bg-cream-50 px-4 py-2.5 text-sm text-emerald-900 focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20"
                     />
                   </div>
                   <div>
@@ -229,7 +229,7 @@ export default function AdminGalleryNewPage() {
                     <select
                       value={row.category}
                       onChange={(e) => updateRow(index, { category: e.target.value })}
-                      className="w-full rounded-xl border border-emerald-200 bg-cream-50 px-4 py-2.5 text-sm text-parchment focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20"
+                      className="w-full rounded-xl border border-emerald-200 bg-cream-50 px-4 py-2.5 text-sm text-emerald-900 focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20"
                     >
                       {GALLERY_CATEGORIES.map((c) => (
                         <option key={c} value={c}>

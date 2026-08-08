@@ -8,7 +8,7 @@ import { BlockEditor } from "./BlockEditor";
 import type { BlogPost, BlogSection } from "@/lib/blog-types";
 
 const INPUT_CLASS =
-  "w-full rounded-xl border border-emerald-200 bg-cream-50 px-4 py-2.5 text-sm text-parchment focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20";
+  "w-full rounded-xl border border-emerald-200 bg-cream-50 px-4 py-2.5 text-sm text-emerald-900 focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20";
 
 export function PostForm({ post }: { post?: BlogPost }) {
   const editing = Boolean(post);
@@ -126,7 +126,7 @@ export function PostForm({ post }: { post?: BlogPost }) {
       )}
 
       <div className="rounded-2xl border border-emerald-200/50 bg-white p-6 shadow-sm">
-        <h2 className="mb-4 font-display text-lg font-bold text-parchment">
+        <h2 className="mb-4 font-display text-lg font-bold text-emerald-900">
           Post Details
         </h2>
         <div className="space-y-4">
@@ -273,14 +273,14 @@ export function PostForm({ post }: { post?: BlogPost }) {
       </div>
 
       <div className="rounded-2xl border border-emerald-200/50 bg-white p-6 shadow-sm">
-        <h2 className="mb-4 font-display text-lg font-bold text-parchment">
+        <h2 className="mb-4 font-display text-lg font-bold text-emerald-900">
           Content
         </h2>
         <BlockEditor value={sections} onChange={setSections} />
       </div>
 
       <div className="rounded-2xl border border-emerald-200/50 bg-white p-6 shadow-sm">
-        <h2 className="mb-4 font-display text-lg font-bold text-parchment">
+        <h2 className="mb-4 font-display text-lg font-bold text-emerald-900">
           SEO
         </h2>
         <div className="space-y-4">
@@ -310,7 +310,7 @@ export function PostForm({ post }: { post?: BlogPost }) {
       </div>
 
       <div className="rounded-2xl border border-emerald-200/50 bg-white p-6 shadow-sm">
-        <h2 className="mb-4 font-display text-lg font-bold text-parchment">
+        <h2 className="mb-4 font-display text-lg font-bold text-emerald-900">
           Publishing Options
         </h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">

@@ -8,7 +8,7 @@ import { GALLERY_CATEGORIES } from "@/lib/gallery-types";
 import type { GalleryItem } from "@/lib/gallery-types";
 
 const INPUT_CLASS =
-  "w-full rounded-xl border border-emerald-200 bg-cream-50 px-4 py-2.5 text-sm text-parchment focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20";
+  "w-full rounded-xl border border-emerald-200 bg-cream-50 px-4 py-2.5 text-sm text-emerald-900 focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20";
 
 export default function AdminGalleryEditPage({
   params,
@@ -125,7 +125,7 @@ export default function AdminGalleryEditPage({
   return (
     <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="mb-8">
-        <h1 className="font-display text-2xl font-black tracking-tight text-parchment">
+        <h1 className="font-display text-2xl font-black tracking-tight text-emerald-900">
           Edit Image
         </h1>
         <p className="mt-0.5 text-sm text-emerald-800/50">
@@ -147,7 +147,7 @@ export default function AdminGalleryEditPage({
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="rounded-2xl border border-emerald-200/50 bg-white p-6 shadow-sm">
-          <h2 className="mb-4 font-display text-lg font-bold text-parchment">
+          <h2 className="mb-4 font-display text-lg font-bold text-emerald-900">
             Image
           </h2>
           <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-emerald-200/50 bg-emerald-950">
@@ -198,7 +198,7 @@ export default function AdminGalleryEditPage({
         </div>
 
         <div className="rounded-2xl border border-emerald-200/50 bg-white p-6 shadow-sm">
-          <h2 className="mb-4 font-display text-lg font-bold text-parchment">
+          <h2 className="mb-4 font-display text-lg font-bold text-emerald-900">
             Details
           </h2>
           <div className="space-y-4">

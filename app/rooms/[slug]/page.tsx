@@ -1,7 +1,10 @@
 import { rooms } from "@/lib/rooms";
+import { getPublicRoomImages } from "@/lib/room-images";
 import { notFound } from "next/navigation";
 
-// 🔍 RELATIVE IMPORTS (adjust `../../` if your components live elsewhere)
+// Room photos are admin-managed, so render fresh on every request.
+export const dynamic = "force-dynamic";
+
 import { SiteNav } from "../../components/SiteNav";
 import { RoomPageContent } from "../../components/rooms/RoomPageContent";
 import { SiteFooter } from "../../components/SiteFooter";
@@ -24,11 +27,13 @@ export default async function RoomPage({
     notFound();
   }
 
+  const images = await getPublicRoomImages(slug);
+
   return (
     <main className="min-h-screen flex flex-col font-sans selection:bg-gold-200/30">
       <SiteNav />
       <div className="flex-1">
-        <RoomPageContent room={room} />
+        <RoomPageContent room={room} images={images} />
       </div>
       <SiteFooter />
     </main>

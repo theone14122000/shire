@@ -68,7 +68,7 @@ export default function AdminUsersPage() {
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="font-display text-2xl font-black tracking-tight text-parchment">
+          <h1 className="font-display text-2xl font-black tracking-tight text-emerald-900">
             Users
           </h1>
           <p className="mt-0.5 text-sm text-emerald-800/50">
@@ -100,7 +100,7 @@ export default function AdminUsersPage() {
             >
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-3">
-                  <h3 className="text-sm font-bold text-parchment">
+                  <h3 className="text-sm font-bold text-emerald-900">
                     {user.name}
                   </h3>
                   <span

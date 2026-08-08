@@ -71,7 +71,7 @@ export default function AdminMediaPage() {
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="mb-8">
-        <h1 className="font-display text-2xl font-black tracking-tight text-parchment">
+        <h1 className="font-display text-2xl font-black tracking-tight text-emerald-900">
           Media Library
         </h1>
         <p className="mt-0.5 text-sm text-emerald-800/50">
@@ -80,7 +80,7 @@ export default function AdminMediaPage() {
       </div>
 
       <div className="mb-8 rounded-2xl border border-emerald-200/50 bg-white p-6 shadow-sm">
-        <h2 className="mb-4 font-display text-lg font-bold text-parchment">
+        <h2 className="mb-4 font-display text-lg font-bold text-emerald-900">
           Upload Image
         </h2>
         <form onSubmit={handleUpload} className="flex items-center gap-4">
@@ -89,7 +89,7 @@ export default function AdminMediaPage() {
             name="file"
             accept="image/*"
             required
-            className="rounded-xl border border-emerald-200 bg-cream-50 px-4 py-2.5 text-sm text-parchment"
+            className="rounded-xl border border-emerald-200 bg-cream-50 px-4 py-2.5 text-sm text-emerald-900"
           />
           <button
             type="submit"

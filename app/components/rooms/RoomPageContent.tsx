@@ -22,7 +22,14 @@ const stagger: Variants = {
 
 const GALLERY_LABELS = ["Living Space", "Bedroom View", "Bathroom", "Balcony", "Details"];
 
-export function RoomPageContent({ room }: { room: Room }) {
+export function RoomPageContent({
+  room,
+  images: managedImages,
+}: {
+  room: Room;
+  images: string[];
+}) {
+  const images = managedImages.length > 0 ? managedImages : room.images;
   const heroRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -32,8 +39,8 @@ export function RoomPageContent({ room }: { room: Room }) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const close = () => setLightboxIndex(null);
-  const next = () => setLightboxIndex((i) => (i === null ? null : (i + 1) % room.images.length));
-  const prev = () => setLightboxIndex((i) => (i === null ? null : (i - 1 + room.images.length) % room.images.length));
+  const next = () => setLightboxIndex((i) => (i === null ? null : (i + 1) % images.length));
+  const prev = () => setLightboxIndex((i) => (i === null ? null : (i - 1 + images.length) % images.length));
 
   useEffect(() => {
     if (lightboxIndex === null) return;
@@ -55,7 +62,7 @@ export function RoomPageContent({ room }: { room: Room }) {
       <section ref={heroRef} className="relative flex min-h-[82vh] items-end overflow-hidden bg-emerald-950">
         <motion.div style={{ scale: imageScale }} className="absolute inset-0">
           <Image
-            src={room.images[0]}
+            src={images[0]}
             alt={room.name}
             fill
             priority
@@ -195,12 +202,12 @@ export function RoomPageContent({ room }: { room: Room }) {
                 </h2>
               </div>
               <p className="text-sm font-bold uppercase tracking-[0.18em] text-parchment/45">
-                {room.images.length} photos
+                {images.length} photos
               </p>
             </div>
 
             <div className="grid auto-rows-[230px] gap-4 sm:auto-rows-[290px] lg:grid-cols-6 lg:auto-rows-[180px]">
-              {room.images.map((image, index) => (
+              {images.map((image, index) => (
                 <button
                   key={image}
                   type="button"
@@ -273,7 +280,7 @@ export function RoomPageContent({ room }: { room: Room }) {
               className="relative h-[68vh] w-full max-w-6xl sm:h-[80vh]"
             >
               <Image
-                src={room.images[lightboxIndex]}
+                src={images[lightboxIndex]}
                 alt={`${room.name} - ${GALLERY_LABELS[lightboxIndex] ?? "Detail"}`}
                 fill
                 sizes="92vw"

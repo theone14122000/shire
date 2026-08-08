@@ -80,6 +80,20 @@ model GalleryItem {
   @@index([order])
 }
 
+model RoomImage {
+  id        String   @id @default(cuid())
+  roomSlug  String
+  src       String
+  alt       String?
+  caption   String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("room_images")
+  @@index([roomSlug, order])
+}
+
 model HomepageContent {
   id          String   @id @default(cuid())
   section     String   @unique

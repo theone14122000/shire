@@ -7,7 +7,7 @@ import { Copy, Eye, PencilLine, Search } from "lucide-react";
 import type { BlogPost } from "@/lib/blog-types";
 
 const INPUT_CLASS =
-  "w-full rounded-xl border border-emerald-200 bg-cream-50 px-4 py-2.5 text-sm text-parchment focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20";
+  "w-full rounded-xl border border-emerald-200 bg-cream-50 px-4 py-2.5 text-sm text-emerald-900 focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20";
 
 export default function AdminPostsPage() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -124,7 +124,7 @@ export default function AdminPostsPage() {
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="font-display text-2xl font-black tracking-tight text-parchment">
+          <h1 className="font-display text-2xl font-black tracking-tight text-emerald-900">
             Blogs
           </h1>
           <p className="mt-0.5 text-sm text-emerald-800/50">
@@ -184,7 +184,7 @@ export default function AdminPostsPage() {
             >
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-3">
-                  <h3 className="truncate text-sm font-bold text-parchment">
+                  <h3 className="truncate text-sm font-bold text-emerald-900">
                     {post.title}
                   </h3>
                   <span

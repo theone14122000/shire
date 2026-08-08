@@ -8,7 +8,7 @@ import { ArrowDown, ArrowUp, Eye, EyeOff, PencilLine, Search } from "lucide-reac
 import type { GalleryItem } from "@/lib/gallery-types";
 
 const INPUT_CLASS =
-  "w-full rounded-xl border border-emerald-200 bg-cream-50 px-4 py-2.5 text-sm text-parchment focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20";
+  "w-full rounded-xl border border-emerald-200 bg-cream-50 px-4 py-2.5 text-sm text-emerald-900 focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20";
 
 export default function AdminGalleryPage() {
   const [items, setItems] = useState<GalleryItem[]>([]);
@@ -122,7 +122,7 @@ export default function AdminGalleryPage() {
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="font-display text-2xl font-black tracking-tight text-parchment">
+          <h1 className="font-display text-2xl font-black tracking-tight text-emerald-900">
             Gallery
           </h1>
           <p className="mt-0.5 text-sm text-emerald-800/50">
@@ -215,7 +215,7 @@ export default function AdminGalleryPage() {
                 </div>
               </div>
               <div className="p-3">
-                <p className="truncate text-sm font-bold text-parchment">
+                <p className="truncate text-sm font-bold text-emerald-900">
                   {item.title}
                 </p>
                 <p className="mt-0.5 text-[10px] font-bold uppercase tracking-wider text-emerald-800/50">
