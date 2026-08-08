@@ -99,8 +99,8 @@ export function RoomPageContent({
       </section>
 
       <div className="editorial-surface">
-        <section className="px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
-          <div className="mx-auto grid max-w-[1400px] gap-12 lg:grid-cols-[1fr_0.72fr] lg:gap-20">
+        <section className="bg-[#EAF1E1] px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
+          <div className="mx-auto max-w-[1400px]">
             <motion.div
               variants={stagger}
               initial="hidden"
@@ -110,30 +110,30 @@ export function RoomPageContent({
               <motion.span variants={fadeUp} className="luxe-kicker text-gold-700">
                 The Space
               </motion.span>
-              <motion.p variants={fadeUp} className="mt-7 max-w-[72ch] font-display text-2xl font-semibold leading-[1.42] text-parchment sm:text-3xl">
+              <motion.p variants={fadeUp} className="mt-7 max-w-[72ch] font-display text-2xl font-semibold leading-[1.42] text-emerald-950 sm:text-3xl">
                 {room.description}
               </motion.p>
             </motion.div>
 
-            <motion.aside
+            <motion.div
               initial={{ opacity: 0, y: 26 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
-              className="border-y border-emerald-900/15 py-7"
+              className="mt-14 grid grid-cols-1 overflow-hidden rounded-3xl border border-emerald-900/10 bg-white/70 shadow-[0_18px_50px_rgba(3,45,32,0.08)] sm:grid-cols-2 lg:grid-cols-4"
             >
-              <h2 className="font-display text-2xl font-semibold text-parchment">
-                At a glance
-              </h2>
-              <dl className="mt-7 space-y-6">
-                <Spec icon={Maximize2} label="Size" value={room.size} />
-                <Spec icon={Mountain} label="View" value={room.view} />
-                <Spec icon={Layers} label="Floor" value={room.floor} />
-              </dl>
-              <Link href="https://letsbook.me/booking/thehimalayanshire?checkin=2026-08-04&checkout=2026-08-05&adults=2&children=0" className="luxe-button mt-9 w-full">
-                Book This Room
-              </Link>
-            </motion.aside>
+              <StatCell icon={Maximize2} label="Size" value={room.size} />
+              <StatCell icon={Layers} label="Floor" value={room.floor} />
+              <StatCell icon={Mountain} label="View" value={room.view} />
+              <div className="flex items-center justify-center px-6 py-8 lg:border-l lg:border-emerald-900/10">
+                <Link
+                  href="https://letsbook.me/booking/thehimalayanshire?checkin=2026-08-04&checkout=2026-08-05&adults=2&children=0"
+                  className="luxe-button w-full whitespace-nowrap lg:w-auto"
+                >
+                  Book This Room
+                </Link>
+              </div>
+            </motion.div>
           </div>
         </section>
 
@@ -294,7 +294,7 @@ export function RoomPageContent({
   );
 }
 
-function Spec({
+function StatCell({
   icon: Icon,
   label,
   value,
@@ -304,12 +304,12 @@ function Spec({
   value: string;
 }) {
   return (
-    <div className="flex items-start gap-4">
-      <Icon className="mt-1 shrink-0 text-gold-700" size={18} strokeWidth={1.6} />
-      <div>
-        <dt className="text-[10px] font-bold uppercase tracking-[0.22em] text-parchment/45">{label}</dt>
-        <dd className="mt-1 font-display text-xl font-semibold text-parchment">{value}</dd>
-      </div>
+    <div className="flex flex-col items-center justify-center gap-1.5 px-6 py-8 text-center">
+      <Icon className="shrink-0 text-gold-600" size={18} strokeWidth={1.6} />
+      <dt className="text-[10px] font-bold uppercase tracking-[0.22em] text-emerald-900/50">
+        {label}
+      </dt>
+      <dd className="font-display text-xl font-semibold text-emerald-950">{value}</dd>
     </div>
   );
 }
