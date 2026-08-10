@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowUpRight, Bath, Layers, Maximize2, Mountain, X, ChevronLeft, ChevronRight } from "lucide-react";
 import type { rooms } from "@/lib/rooms";
+import type { PublicRoomImage } from "@/lib/room-images";
 import { ResponsiveVideoEmbed } from "./ResponsiveVideoEmbed";
 
 type Room = (typeof rooms)[number];
@@ -27,9 +28,9 @@ export function RoomPageContent({
   images: managedImages,
 }: {
   room: Room;
-  images: string[];
+  images: PublicRoomImage[];
 }) {
-  const images = managedImages.length > 0 ? managedImages : room.images;
+  const images = managedImages.length > 0 ? managedImages : room.images.map((src) => ({ src, caption: null }));
   const heroRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -62,7 +63,7 @@ export function RoomPageContent({
       <section ref={heroRef} className="relative flex min-h-[82vh] items-end overflow-hidden bg-emerald-950">
         <motion.div style={{ scale: imageScale }} className="absolute inset-0">
           <Image
-            src={images[0]}
+            src={images[0].src}
             alt={room.name}
             fill
             priority
@@ -211,22 +212,28 @@ export function RoomPageContent({
             <div className="grid auto-rows-[230px] gap-4 sm:auto-rows-[290px] lg:grid-cols-6 lg:auto-rows-[180px]">
               {images.map((image, index) => (
                 <button
-                  key={image}
+                  key={image.src}
                   type="button"
                   onClick={() => setLightboxIndex(index)}
                   className={`group relative overflow-hidden text-left ${index === 0 ? "lg:col-span-4 lg:row-span-3" : index === 1 ? "lg:col-span-2 lg:row-span-2" : "lg:col-span-2 lg:row-span-1"}`}
                 >
                   <Image
-                    src={image}
-                    alt={`${room.name} - ${GALLERY_LABELS[index] ?? "Detail"}`}
+                    src={image.src}
+                    alt={`${room.name} - ${image.caption ?? GALLERY_LABELS[index] ?? "Detail"}`}
                     fill
                     sizes="(max-width: 1024px) 100vw, 55vw"
                     className="object-cover transition-transform duration-[1.1s] group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/72 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                  <span className="absolute bottom-5 left-5 translate-y-3 bg-emerald-950/72 px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-cream-50 opacity-0 backdrop-blur transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-                    {GALLERY_LABELS[index] ?? "Detail"}
-                  </span>
+                  {image.caption ? (
+                    <span className="absolute inset-x-0 bottom-0 bg-emerald-950/75 px-4 py-2.5 text-xs font-bold uppercase tracking-[0.16em] text-cream-50 backdrop-blur">
+                      {image.caption}
+                    </span>
+                  ) : (
+                    <span className="absolute bottom-5 left-5 translate-y-3 bg-emerald-950/72 px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-cream-50 opacity-0 backdrop-blur transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+                      {GALLERY_LABELS[index] ?? "Detail"}
+                    </span>
+                  )}
                 </button>
               ))}
             </div>
@@ -282,8 +289,8 @@ export function RoomPageContent({
               className="relative h-[68vh] w-full max-w-6xl sm:h-[80vh]"
             >
               <Image
-                src={images[lightboxIndex]}
-                alt={`${room.name} - ${GALLERY_LABELS[lightboxIndex] ?? "Detail"}`}
+                src={images[lightboxIndex].src}
+                alt={`${room.name} - ${images[lightboxIndex].caption ?? GALLERY_LABELS[lightboxIndex] ?? "Detail"}`}
                 fill
                 sizes="92vw"
                 className="object-contain"

@@ -33,18 +33,23 @@ export async function getRoomImageRows(slug: string): Promise<RoomImageRecord[]>
   }));
 }
 
+export interface PublicRoomImage {
+  src: string;
+  caption: string | null;
+}
+
 /**
  * Resolve the image list shown on the public room page.
  * Admin-managed images replace the defaults entirely; when none are
  * configured, the hardcoded set from lib/rooms.ts is used as a fallback.
  */
-export async function getPublicRoomImages(slug: string): Promise<string[]> {
+export async function getPublicRoomImages(slug: string): Promise<PublicRoomImage[]> {
   const rows = await getRoomImageRows(slug);
   if (rows.length > 0) {
-    return rows.map((r) => r.src);
+    return rows.map((r) => ({ src: r.src, caption: r.caption }));
   }
   const room = rooms.find((r) => r.slug === slug);
-  return room?.images ?? [];
+  return (room?.images ?? []).map((src) => ({ src, caption: null }));
 }
 
 /** Get the number of default (hardcoded) images for a room. */

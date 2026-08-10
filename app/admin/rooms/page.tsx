@@ -111,8 +111,9 @@ export default function AdminRoomsPage() {
       <div className="mt-10 flex items-center gap-3 rounded-2xl border border-emerald-200/50 bg-white p-5 shadow-sm">
         <BedDouble size={18} strokeWidth={1.8} className="shrink-0 text-emerald-700" />
         <p className="text-sm text-emerald-800/70">
-          The first image in the list is used as the room&apos;s hero cover. Until you add
-          images, each room shows its default photo set.
+          The first image in the list is used as the room&apos;s hero cover. Any name you
+          add to a photo appears below it on the room page. Until you add images, each
+          room shows its default photo set.
         </p>
       </div>
     </div>

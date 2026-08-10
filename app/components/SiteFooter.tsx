@@ -94,9 +94,6 @@ export function SiteFooter() {
             <p className="max-w-[42ch] text-sm font-medium leading-relaxed text-cream-200/60">
               {brand.tagline}
             </p>
-            <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-cream-200/30">
-              {brand.parent}
-            </p>
           </motion.div>
 
           {FOOTER_COLUMNS.map((col, idx) => (
@@ -144,7 +141,7 @@ export function SiteFooter() {
         </div>
 
         <div className="flex flex-col items-start justify-between gap-4 border-t border-emerald-800/60 pt-8 text-xs font-medium text-cream-200/40 sm:flex-row sm:items-center">
-          <p>Copyright 2026 The Himalayan Shire. A PageyBySaj property. All rights reserved.</p>
+          <p>Copyright 2026 The Himalayan Shire. All rights reserved.</p>
           <div className="flex items-center gap-5">
             {brand.socials.map((social) => (
               <a key={social.label} href={social.href} className="transition-colors hover:text-gold-400">

@@ -460,35 +460,48 @@ export default function AdminRoomImagesPage({
                       #{index + 1}
                     </span>
                   </div>
-                  <div className="flex items-center justify-between gap-1 p-3">
-                    <div className="flex items-center gap-1">
+                  <div className="p-3">
+                    <CaptionField
+                      row={row}
+                      slug={currentRoom.slug}
+                      onSaved={(savedRow, caption) =>
+                        setImages((prev) =>
+                          prev.map((i) =>
+                            i.id === savedRow.id ? { ...i, caption } : i
+                          )
+                        )
+                      }
+                    />
+                    <div className="flex items-center justify-between gap-1">
+                      <div className="flex items-center gap-1">
+                        <button
+                          type="button"
+                          onClick={() => handleMove(row, -1)}
+                          disabled={index === 0 || busy}
+                          className="rounded-lg border border-emerald-200 p-1.5 text-emerald-700 transition-colors hover:bg-emerald-50 disabled:opacity-30"
+                          aria-label="Move up"
+                        >
+                          <ArrowUp size={13} strokeWidth={1.8} />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleMove(row, 1)}
+                          disabled={index === sorted.length - 1 || busy}
+                          className="rounded-lg border border-emerald-200 p-1.5 text-emerald-700 transition-colors hover:bg-emerald-50 disabled:opacity-30"
+                          aria-label="Move down"
+                        >
+                          <ArrowDown size={13} strokeWidth={1.8} />
+                        </button>
+                      </div>
                       <button
                         type="button"
-                        onClick={() => handleMove(row, -1)}
-                        disabled={index === 0 || busy}
-                        className="rounded-lg border border-emerald-200 p-1.5 text-emerald-700 transition-colors hover:bg-emerald-50 disabled:opacity-30"
-                        aria-label="Move up"
+                        onClick={() => handleDelete(row)}
+                        className="rounded-lg border border-red-200 p-1.5 text-red-600 transition-colors hover:bg-red-50"
+                        aria-label="Remove image"
                       >
-                        <ArrowUp size={13} strokeWidth={1.8} />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleMove(row, 1)}
-                        disabled={index === sorted.length - 1 || busy}
-                        className="rounded-lg border border-emerald-200 p-1.5 text-emerald-700 transition-colors hover:bg-emerald-50 disabled:opacity-30"
-                        aria-label="Move down"
-                      >
-                        <ArrowDown size={13} strokeWidth={1.8} />
+                        <Trash2 size={13} strokeWidth={1.8} />
                       </button>
                     </div>
-                    <button
-                      type="button"
-                      onClick={() => handleDelete(row)}
-                      className="rounded-lg border border-red-200 p-1.5 text-red-600 transition-colors hover:bg-red-50"
-                      aria-label="Remove image"
-                    >
-                      <Trash2 size={13} strokeWidth={1.8} />
-                    </button>
                   </div>
                 </div>
               ))}
@@ -497,5 +510,50 @@ export default function AdminRoomImagesPage({
         </>
       )}
     </div>
+  );
+}
+
+function CaptionField({
+  row,
+  slug,
+  onSaved,
+}: {
+  row: RoomImageRow;
+  slug: string;
+  onSaved: (row: RoomImageRow, caption: string) => void;
+}) {
+  const [value, setValue] = useState(row.caption ?? "");
+  const [saving, setSaving] = useState(false);
+
+  async function save() {
+    if (saving) return;
+    setSaving(true);
+    try {
+      const res = await fetch(`/api/rooms/${slug}/images/${row.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ caption: value }),
+      });
+      if (res.ok) onSaved(row, value);
+    } catch {
+      // ignore
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <input
+      type="text"
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+      onBlur={save}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") (e.target as HTMLInputElement).blur();
+      }}
+      disabled={saving}
+      placeholder="Name below photo"
+      className="mb-3 w-full rounded-lg border border-emerald-200 bg-cream-50 px-2.5 py-1.5 text-xs text-emerald-900 placeholder:text-emerald-800/40 focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20"
+    />
   );
 }

@@ -21,7 +21,6 @@ export const ELFSIGHT_INSTAGRAM_ID = "9ef91159-a379-4f0d-a025-404b95790fae";
 
 export const brand = {
   name: "The Himalayan Shire",
-  parent: "A PageyBySaj Brand",
   tagline: "A quiet Himalayan retreat, designed for the kind of rest you remember.",
   shortPitch:
     "Heritage rooms, warm hospitality, and a view of the Kinnaur Kailash range that stays with you long after you've gone home.",
@@ -471,6 +470,6 @@ export const footer = {
       ],
     },
   ],
-  legal: "© 2026 The Himalayan Shire. A PageyBySaj property. All rights reserved.",
+  legal: "© 2026 The Himalayan Shire. All rights reserved.",
   theme: { bg: "bg-emerald-950", text: "text-emerald-100" },
 } as const;
