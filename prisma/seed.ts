@@ -39,15 +39,16 @@ async function main() {
     { key: "site_email", value: "himalayanshire@gmail.com", type: "string", group: "contact" },
     { key: "site_phone", value: "+91 81698 98066", type: "string", group: "contact" },
     { key: "site_phone2", value: "+91 95184 18833", type: "string", group: "contact" },
-    { key: "site_address", value: "Pagey, near Kalpa, Kinnaur, Himachal Pradesh, India", type: "string", group: "contact" },
+    { key: "site_address", value: "Fagu, near Kufri, Shimla, Himachal Pradesh, India", type: "string", group: "contact" },
     { key: "whatsapp_url", value: "https://wa.me/918169898066", type: "string", group: "contact" },
     { key: "instagram_url", value: "#", type: "string", group: "social" },
     { key: "facebook_url", value: "#", type: "string", group: "social" },
     { key: "youtube_url", value: "#", type: "string", group: "social" },
+    { key: "google_tag_manager_id", value: "", type: "string", group: "seo" },
     { key: "google_analytics_id", value: "", type: "string", group: "seo" },
     { key: "meta_pixel_id", value: "", type: "string", group: "seo" },
-    { key: "seo_title", value: "The Himalayan Shire — A Quiet Heritage Retreat in the Himalayas", type: "string", group: "seo" },
-    { key: "seo_description", value: "A serene countryside escape in Pagey, near Kalpa. Surrounded by apple orchards, pine forests, and the Kinnaur Kailash range.", type: "string", group: "seo" },
+    { key: "seo_title", value: "The Himalayan Shire | Offbeat Luxury Homestay in Fagu, Near Kufri & Shimla", type: "string", group: "seo" },
+    { key: "seo_description", value: "A family-run offbeat homestay in Fagu, near Kufri, a short drive from Shimla. Seven warm rooms, a private-villa calm, apple orchards, and pine views — one of the most loved luxury stays around Himachal.", type: "string", group: "seo" },
   ];
 
   for (const setting of defaultSettings) {
@@ -64,8 +65,8 @@ async function main() {
 
   const homepageSections = [
     { section: "hero", data: JSON.stringify({ videoUrl: "/hero/hero.mp4", poster: "/images/hero-1.jpg" }) },
-    { section: "about", data: JSON.stringify({ title: "A Heritage Mountain Retreat", description: "A family-run retreat in Pagey, near Kalpa. Seven warm rooms, an in-house kitchen, and the Kailash range at the end of the orchard road.", image: "/images/about.jpg" }) },
-    { section: "editorial", data: JSON.stringify({ kicker: "Our Story", heading: "A place to slow down, breathe, and stay a little longer.", body: "Looking for a relaxing vacation — away from the crowds and the noise of everyday life — in the quiet of the Himalayas? The Himalayan Shire is located in Pagey, near Kalpa, in a part of Himachal that has kept its old, unhurried rhythm.", signature: "— The Shire family", shortPitch: "Heritage rooms, warm hospitality, and a view of the Kinnaur Kailash range that stays with you long after you've gone home." }) },
+    { section: "about", data: JSON.stringify({ title: "A Heritage Mountain Retreat", description: "A family-run offbeat homestay in Fagu, near Kufri — a short drive from Shimla. Seven warm rooms, an in-house kitchen, and a private-villa calm that makes for some of the most loved luxury stays around.", image: "/images/about.jpg" }) },
+    { section: "editorial", data: JSON.stringify({ kicker: "Our Story", heading: "A place to slow down, breathe, and stay a little longer.", body: "Looking for a relaxing vacation — away from the crowds and the noise of everyday life — in the quiet of the Himalayas? The Himalayan Shire is a family-run offbeat homestay in Fagu, near Kufri on the Shimla ridge — close enough for a day trip, far enough to leave the rush behind. This is what private-villa stays feel like when they are done right: unhurried, warm, and quietly luxurious.", signature: "— The Shire family", shortPitch: "Heritage rooms, warm hospitality, and a view of the Kinnaur Kailash range that stays with you long after you've gone home." }) },
     { section: "rooms", data: JSON.stringify({ kicker: "Accommodations", heading: "Rooms named after the trees around the property.", description: "We have lovingly prepared seven rooms, each with its own uniqueness - named after the tree species that surround our property." }) },
     { section: "amenities", data: JSON.stringify({ kicker: "Amenities", heading: "Comforts arranged as part of the stay.", description: "The property is built for slow days: warmth, food, quiet corners, common spaces, and practical comforts that make mountain travel feel easy." }) },
     { section: "setting", data: JSON.stringify({ kicker: "The Setting", heading: "A serene, beautiful countryside surrounded by apple orchards.", description: "A serene, beautiful countryside location - surrounded by apple orchards and tall pine trees, with an unparallelled view of the Kinnaur Kailash range.", ctaLabel: "Explore activities", ctaHref: "/activities" }) },

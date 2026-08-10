@@ -68,7 +68,7 @@ export default function AdminSettingsPage() {
     { name: "General", keys: ["site_name", "site_logo", "site_favicon"] },
     { name: "Contact", keys: ["site_email", "site_phone", "site_phone2", "site_address"] },
     { name: "Social", keys: ["instagram_url", "facebook_url", "youtube_url", "whatsapp_url"] },
-    { name: "SEO", keys: ["seo_title", "seo_description", "google_analytics_id", "meta_pixel_id"] },
+    { name: "SEO", keys: ["seo_title", "seo_description", "google_tag_manager_id", "google_analytics_id", "meta_pixel_id"] },
   ];
 
   return (

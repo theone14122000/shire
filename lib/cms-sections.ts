@@ -103,7 +103,7 @@ export const CMS_DEFAULTS: Record<string, Record<string, string>> = {
   editorial: {
     kicker: "Our Story",
     heading: "A place to slow down, breathe, and stay a little longer.",
-    body: `Looking for a relaxing vacation — away from the crowds and the noise of everyday life — in the quiet of the Himalayas? The Himalayan Shire is located in Pagey, near Kalpa, in a part of Himachal that has kept its old, unhurried rhythm.
+    body: `Looking for a relaxing vacation — away from the crowds and the noise of everyday life — in the quiet of the Himalayas? The Himalayan Shire is a family-run offbeat homestay in Fagu, near Kufri on the Shimla ridge — close enough for a day trip, far enough to leave the rush behind. This is what private-villa stays feel like when they are done right: unhurried, warm, and quietly luxurious.
 
 If you are looking for a quiet place far from the rush, surrounded by apple orchards and pine, this is a place for escapists and travellers who simply want to enjoy a vacation on their own terms. You can book the entire shire if you are travelling in a group, or choose a single room. Every detail — from the warm wood interiors to the small, considered amenities — has been built to make you feel at home.
 
