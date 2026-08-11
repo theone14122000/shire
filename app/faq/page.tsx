@@ -76,7 +76,7 @@ const fadeUp: Variants = {
 
 export default function FaqPage() {
   return (
-    <main className="min-h-screen bg-[#f7f1e6] font-sans text-emerald-950 selection:bg-gold-200/30">
+    <main className="min-h-screen bg-[#fffdf7] font-sans text-emerald-950 selection:bg-gold-200/30">
       <SiteNav />
 
       <section className="px-5 py-24 sm:px-8 sm:py-32 lg:px-14 lg:py-40">
@@ -170,7 +170,7 @@ function FaqItem({ index, faq }: { index: number; faq: Faq }) {
             transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
             className="overflow-hidden"
           >
-            <div className="max-w-[72ch] pb-7 pl-10 text-base leading-[1.85] text-emerald-950/66 sm:pl-14">
+            <div className="max-w-[72ch] pb-7 pl-10 text-base font-bold leading-[1.8] text-emerald-950 sm:pl-14 sm:text-[1.0625rem]">
               {faq.answer}
             </div>
           </motion.div>
