@@ -134,9 +134,11 @@ const POLAROID_ROTATIONS = [-3.5, 2.5, -2, 3.5];
 export function HomeEditorial({
   content,
   galleryFrames,
+  rooms,
 }: {
   content?: Record<string, any>;
   galleryFrames?: { title: string; src: string }[];
+  rooms?: (typeof import("@/lib/rooms").rooms)[number][];
 }) {
   const storyRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
@@ -236,7 +238,7 @@ export function HomeEditorial({
             </motion.div>
           </motion.div>
 
-          <RoomsCarousel />
+          <RoomsCarousel rooms={rooms} />
         </div>
       </section>
 

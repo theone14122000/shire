@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { rooms } from "@/lib/rooms";
+import { rooms as defaultRooms } from "@/lib/rooms";
 
 const GAP = 16;
 
@@ -15,7 +15,8 @@ function cardWidth(track: HTMLElement | null) {
   return card.offsetWidth + GAP;
 }
 
-export function RoomsCarousel() {
+export function RoomsCarousel({ rooms: provided }: { rooms?: (typeof defaultRooms)[number][] }) {
+  const rooms = provided && provided.length > 0 ? provided : defaultRooms;
   const trackRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
 

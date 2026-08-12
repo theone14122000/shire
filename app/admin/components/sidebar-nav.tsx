@@ -13,6 +13,7 @@ import {
   UserCircle,
   LogOut,
   BedDouble,
+  Compass,
 } from "lucide-react";
 
 const NAV_ITEMS = [
@@ -21,6 +22,7 @@ const NAV_ITEMS = [
   { label: "Blogs", href: "/admin/posts", icon: FileText },
   { label: "Gallery", href: "/admin/gallery", icon: Images },
   { label: "Rooms", href: "/admin/rooms", icon: BedDouble },
+  { label: "Activities", href: "/admin/activities", icon: Compass },
   { label: "Homepage", href: "/admin/homepage", icon: Home },
   { label: "Settings", href: "/admin/settings", icon: Settings },
   { label: "Media", href: "/admin/media", icon: ImageIcon },

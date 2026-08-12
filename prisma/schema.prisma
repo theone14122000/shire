@@ -103,6 +103,32 @@ model HomepageContent {
   @@map("homepage_content")
 }
 
+model RoomContent {
+  id          String   @id @default(cuid())
+  roomSlug    String   @unique
+  name        String?
+  category    String?
+  size        String?
+  view        String?
+  floor       String?
+  description String?  @db.Text
+  facilities  String?  @db.Text
+  updatedAt   DateTime @updatedAt
+
+  @@map("room_content")
+  @@index([roomSlug])
+}
+
+model PageContent {
+  id        String   @id @default(cuid())
+  pageKey   String   @unique
+  data      String   @db.Text
+  updatedAt DateTime @updatedAt
+
+  @@map("page_content")
+  @@index([pageKey])
+}
+
 model Setting {
   id         String @id @default(cuid())
   key        String @unique

@@ -111,7 +111,7 @@ export function RoomPageContent({
               <motion.span variants={fadeUp} className="luxe-kicker text-gold-700">
                 The Space
               </motion.span>
-              <motion.p variants={fadeUp} className="mt-7 max-w-[72ch] font-display text-2xl font-semibold leading-[1.42] text-emerald-950 sm:text-3xl">
+              <motion.p variants={fadeUp} className="mt-7 max-w-[72ch] text-base leading-[1.85] text-emerald-950 sm:text-lg">
                 {room.description}
               </motion.p>
             </motion.div>

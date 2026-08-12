@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { rooms } from "@/lib/rooms";
+import { getMergedRoom } from "@/lib/room-content";
 import { getPublicRoomImages } from "@/lib/room-images";
 import { notFound } from "next/navigation";
 
-// Room photos are admin-managed, so render fresh on every request.
+// Room photos and details are admin-managed, so render fresh on every request.
 export const dynamic = "force-dynamic";
 
 import { SiteNav } from "../../components/SiteNav";
@@ -11,6 +11,7 @@ import { RoomPageContent } from "../../components/rooms/RoomPageContent";
 import { SiteFooter } from "../../components/SiteFooter";
 
 export async function generateStaticParams() {
+  const { rooms } = await import("@/lib/rooms");
   return rooms.map((room) => ({
     slug: room.slug,
   }));
@@ -22,7 +23,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const room = rooms.find((r) => r.slug === slug);
+  const room = await getMergedRoom(slug);
   if (!room) return {};
 
   const title = `${room.name} Room — Luxury Offbeat Homestay in Fagu, Near Kufri & Shimla`;
@@ -63,7 +64,7 @@ export default async function RoomPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const room = rooms.find((r) => r.slug === slug);
+  const room = await getMergedRoom(slug);
 
   if (!room) {
     notFound();

@@ -13,6 +13,8 @@ import {
   ExternalLink,
   ImagePlus,
   Loader2,
+  Plus,
+  Save,
   Trash2,
   XCircle,
 } from "lucide-react";
@@ -35,6 +37,16 @@ interface UploadRow {
   src?: string;
 }
 
+interface RoomDetails {
+  name: string;
+  category: string;
+  size: string;
+  view: string;
+  floor: string;
+  description: string;
+  facilities: string[];
+}
+
 const INPUT_CLASS =
   "w-full rounded-xl border border-emerald-200 bg-cream-50 px-4 py-2.5 text-sm text-emerald-900 focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20";
 
@@ -55,6 +67,12 @@ export default function AdminRoomImagesPage({
   const [uploadRows, setUploadRows] = useState<UploadRow[]>([]);
   const [importingDefaults, setImportingDefaults] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
+
+  // Room details editor
+  const [details, setDetails] = useState<RoomDetails | null>(null);
+  const [detailsLoaded, setDetailsLoaded] = useState(false);
+  const [savingDetails, setSavingDetails] = useState(false);
+  const [detailsMessage, setDetailsMessage] = useState("");
 
   useEffect(() => {
     params.then(({ slug: s }) => setSlug(s));
@@ -90,6 +108,95 @@ export default function AdminRoomImagesPage({
   useEffect(() => {
     fetchImages();
   }, [fetchImages]);
+
+  const fetchDetails = useCallback(async () => {
+    if (!slug) return;
+    try {
+      const res = await fetch(`/api/rooms/${slug}/content`);
+      if (!res.ok) return;
+      const data = (await res.json()) as {
+        content?: Partial<RoomDetails> | null;
+      };
+      const saved = data.content ?? {};
+      setDetails({
+        name: saved.name ?? room?.name ?? "",
+        category: saved.category ?? room?.category ?? "",
+        size: saved.size ?? room?.size ?? "",
+        view: saved.view ?? room?.view ?? "",
+        floor: saved.floor ?? room?.floor ?? "",
+        description: saved.description ?? room?.description ?? "",
+        facilities: saved.facilities ?? room?.facilities ?? [],
+      });
+    } catch {
+      // ignore
+    } finally {
+      setDetailsLoaded(true);
+    }
+  }, [slug, room]);
+
+  useEffect(() => {
+    fetchDetails();
+  }, [fetchDetails]);
+
+  async function saveDetails() {
+    if (!details || savingDetails) return;
+    setSavingDetails(true);
+    setDetailsMessage("");
+    try {
+      const res = await fetch(`/api/rooms/${currentRoom.slug}/content`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(details),
+      });
+      if (res.ok) {
+        setDetailsMessage("Room details saved — live on the room page now.");
+      } else {
+        const data = await res.json();
+        setDetailsMessage(data.error || "Failed to save room details");
+      }
+    } catch {
+      setDetailsMessage("Connection failed");
+    } finally {
+      setSavingDetails(false);
+    }
+  }
+
+  function updateDetail(field: keyof RoomDetails, value: string | string[]) {
+    setDetails((prev) => (prev ? { ...prev, [field]: value as never } : prev));
+  }
+
+  function updateFacility(index: number, value: string) {
+    setDetails((prev) =>
+      prev
+        ? { ...prev, facilities: prev.facilities.map((f, i) => (i === index ? value : f)) }
+        : prev
+    );
+  }
+
+  function addFacility() {
+    setDetails((prev) =>
+      prev ? { ...prev, facilities: [...prev.facilities, ""] } : prev
+    );
+  }
+
+  function removeFacility(index: number) {
+    setDetails((prev) =>
+      prev
+        ? { ...prev, facilities: prev.facilities.filter((_, i) => i !== index) }
+        : prev
+    );
+  }
+
+  function moveFacility(index: number, dir: -1 | 1) {
+    setDetails((prev) => {
+      if (!prev) return prev;
+      const target = index + dir;
+      if (target < 0 || target >= prev.facilities.length) return prev;
+      const facilities = [...prev.facilities];
+      [facilities[index], facilities[target]] = [facilities[target], facilities[index]];
+      return { ...prev, facilities };
+    });
+  }
 
   if (!authenticated) {
     router.push("/admin/login");
@@ -262,7 +369,7 @@ export default function AdminRoomImagesPage({
             {room.category}
           </p>
           <h1 className="mt-1 font-display text-2xl font-black tracking-tight text-emerald-900">
-            {room.name} — Pictures &amp; Gallery
+            {room.name} — Edit Room
           </h1>
           <p className="mt-0.5 text-sm text-emerald-800/50">
             {loading
@@ -293,6 +400,171 @@ export default function AdminRoomImagesPage({
       {message && (
         <div className="mb-4 rounded-xl bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-700">
           {message}
+        </div>
+      )}
+
+      {detailsLoaded && details && (
+        <div className="mb-10 rounded-2xl border border-emerald-200/60 bg-white p-6 shadow-sm sm:p-8">
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <h2 className="font-display text-xl font-black tracking-tight text-emerald-900">
+                Room Details
+              </h2>
+              <p className="mt-0.5 text-sm text-emerald-800/50">
+                What guests see on the room page — description, facilities, size, view &amp; floor.
+              </p>
+            </div>
+            <button
+              type="button"
+              disabled={savingDetails}
+              onClick={saveDetails}
+              className="inline-flex items-center gap-2 rounded-xl bg-emerald-700 px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-emerald-800 disabled:opacity-50"
+            >
+              {savingDetails ? (
+                <Loader2 size={15} className="animate-spin" />
+              ) : (
+                <Save size={15} strokeWidth={1.8} />
+              )}
+              Save Details
+            </button>
+          </div>
+
+          {detailsMessage && (
+            <div className="mt-4 rounded-xl bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-700">
+              {detailsMessage}
+            </div>
+          )}
+
+          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <label className="block">
+              <span className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-emerald-900/60">
+                Room Name
+              </span>
+              <input
+                type="text"
+                value={details.name}
+                onChange={(e) => updateDetail("name", e.target.value)}
+                className={INPUT_CLASS}
+                placeholder="e.g. Deodar"
+              />
+            </label>
+            <label className="block">
+              <span className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-emerald-900/60">
+                Category
+              </span>
+              <input
+                type="text"
+                value={details.category}
+                onChange={(e) => updateDetail("category", e.target.value)}
+                className={INPUT_CLASS}
+                placeholder="e.g. Premium Room"
+              />
+            </label>
+            <label className="block">
+              <span className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-emerald-900/60">
+                Size
+              </span>
+              <input
+                type="text"
+                value={details.size}
+                onChange={(e) => updateDetail("size", e.target.value)}
+                className={INPUT_CLASS}
+                placeholder="e.g. 484 sq ft."
+              />
+            </label>
+            <label className="block">
+              <span className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-emerald-900/60">
+                View
+              </span>
+              <input
+                type="text"
+                value={details.view}
+                onChange={(e) => updateDetail("view", e.target.value)}
+                className={INPUT_CLASS}
+                placeholder="e.g. Mountain View"
+              />
+            </label>
+            <label className="block">
+              <span className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-emerald-900/60">
+                Floor
+              </span>
+              <input
+                type="text"
+                value={details.floor}
+                onChange={(e) => updateDetail("floor", e.target.value)}
+                className={INPUT_CLASS}
+                placeholder="e.g. Ground Floor"
+              />
+            </label>
+          </div>
+
+          <label className="mt-5 block">
+            <span className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-emerald-900/60">
+              Description
+            </span>
+            <textarea
+              rows={5}
+              value={details.description}
+              onChange={(e) => updateDetail("description", e.target.value)}
+              className={INPUT_CLASS + " resize-y"}
+              placeholder="A short description of the room shown under 'The Space'."
+            />
+          </label>
+
+          <div className="mt-6">
+            <span className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-emerald-900/60">
+              What is inside
+            </span>
+            <div className="space-y-2">
+              {details.facilities.map((facility, index) => (
+                <div key={index} className="flex items-center gap-2">
+                  <div className="flex shrink-0 flex-col">
+                    <button
+                      type="button"
+                      onClick={() => moveFacility(index, -1)}
+                      disabled={index === 0}
+                      className="rounded-l-lg border border-emerald-200 p-1.5 text-emerald-700 transition-colors hover:bg-emerald-50 disabled:opacity-30"
+                      aria-label="Move up"
+                    >
+                      <ArrowUp size={12} strokeWidth={1.8} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => moveFacility(index, 1)}
+                      disabled={index === details.facilities.length - 1}
+                      className="rounded-r-lg border border-t-0 border-emerald-200 p-1.5 text-emerald-700 transition-colors hover:bg-emerald-50 disabled:opacity-30"
+                      aria-label="Move down"
+                    >
+                      <ArrowDown size={12} strokeWidth={1.8} />
+                    </button>
+                  </div>
+                  <input
+                    type="text"
+                    value={facility}
+                    onChange={(e) => updateFacility(index, e.target.value)}
+                    className={INPUT_CLASS}
+                    placeholder="e.g. Electric fireplace"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removeFacility(index)}
+                    className="rounded-lg border border-red-200 p-2 text-red-600 transition-colors hover:bg-red-50"
+                    aria-label="Remove facility"
+                  >
+                    <Trash2 size={14} strokeWidth={1.8} />
+                  </button>
+                </div>
+              ))}
+            </div>
+            <button
+              type="button"
+              onClick={addFacility}
+              className="mt-3 inline-flex items-center gap-1.5 rounded-lg border border-emerald-300 px-3.5 py-2 text-xs font-bold text-emerald-700 transition-colors hover:bg-emerald-50"
+            >
+              <Plus size={13} strokeWidth={2} />
+              Add Facility
+            </button>
+          </div>
         </div>
       )}
 
