@@ -28,6 +28,7 @@ const FOOTER_COLUMNS = [
     title: "Explore",
     links: [
       { label: "Activities", href: "/activities" },
+      { label: "Sustainability", href: "/sustainability" },
       { label: "Gallery", href: "/gallery" },
       { label: "FAQs", href: "/faq" },
     ],

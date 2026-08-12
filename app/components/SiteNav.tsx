@@ -11,6 +11,7 @@ const NAV_ITEMS = [
   { label: "Home", href: "/" },
   { label: "Rooms", href: "/#rooms", hasMenu: true },
   { label: "Activities", href: "/activities" },
+  { label: "Sustainability", href: "/sustainability" },
   { label: "Gallery", href: "/gallery" },
   { label: "FAQ", href: "/faq" },
   { label: "Blog", href: "/blog" },
