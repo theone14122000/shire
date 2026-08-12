@@ -4,7 +4,9 @@ import {
   getPageContent,
   savePageContent,
 } from "@/lib/page-content";
-import { verifyToken, COOKIE_NAME } from "@/lib/auth";
+import { verifyTokenPayload, COOKIE_NAME } from "@/lib/auth";
+
+const ALLOWED_ROLES = ["MASTER_ADMIN", "ADMIN", "EDITOR"];
 
 /* ------------------------------------------------------------------ */
 /*  GET /api/pages/[key] — saved page content (public for page build)  */
@@ -29,7 +31,8 @@ export async function PUT(
   { params }: { params: Promise<{ key: string }> }
 ) {
   const token = req.cookies.get(COOKIE_NAME)?.value;
-  if (!token || !(await verifyToken(token))) {
+  const payload = token ? await verifyTokenPayload(token) : null;
+  if (!token || !payload || !ALLOWED_ROLES.includes(payload.role)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

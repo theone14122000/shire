@@ -14,6 +14,7 @@ import {
   LogOut,
   BedDouble,
   Compass,
+  Leaf,
 } from "lucide-react";
 
 const NAV_ITEMS = [
@@ -23,6 +24,7 @@ const NAV_ITEMS = [
   { label: "Gallery", href: "/admin/gallery", icon: Images },
   { label: "Rooms", href: "/admin/rooms", icon: BedDouble },
   { label: "Activities", href: "/admin/activities", icon: Compass },
+  { label: "Sustainability", href: "/admin/sustainability", icon: Leaf },
   { label: "Homepage", href: "/admin/homepage", icon: Home },
   { label: "Settings", href: "/admin/settings", icon: Settings },
   { label: "Media", href: "/admin/media", icon: ImageIcon },

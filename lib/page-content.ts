@@ -1,7 +1,7 @@
 // lib/page-content.ts
 import { prisma } from "./prisma";
 
-const ALLOWED_KEYS = ["activities"];
+const ALLOWED_KEYS = ["activities", "sustainability"];
 
 export function isPageKey(key: string): boolean {
   return ALLOWED_KEYS.includes(key);
