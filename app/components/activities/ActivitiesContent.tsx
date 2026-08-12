@@ -64,11 +64,11 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
           <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
             <div>
               <span className="luxe-kicker text-gold-700">{content.atProperty.kicker}</span>
-              <h2 className="mt-5 max-w-3xl font-display text-4xl font-semibold leading-[1.06] text-parchment sm:text-5xl">
+              <h2 className="mt-5 max-w-3xl font-display text-4xl font-semibold leading-[1.06] text-emerald-950 sm:text-5xl">
                 {content.atProperty.heading}
               </h2>
             </div>
-            <p className="max-w-2xl text-base leading-[1.9] text-parchment/66 sm:text-lg lg:justify-self-end">
+            <p className="max-w-2xl text-base leading-[1.9] text-emerald-950/66 sm:text-lg lg:justify-self-end">
               {content.atProperty.description}
             </p>
           </div>
@@ -114,7 +114,7 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
         </div>
       </section>
 
-      <section className="bg-[#fffaf0] px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
+      <section className="bg-[#fffdf7] px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
         <div className="mx-auto max-w-[1400px]">
           <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
             <div>
@@ -128,78 +128,57 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
             </p>
           </div>
 
-          <div className="mt-14 space-y-7 lg:mt-20">
-            {content.destinations.slice(0, 4).map((place, index) => (
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.05 }}
+            className="mt-14 grid gap-6 sm:grid-cols-2 lg:mt-20 lg:grid-cols-3"
+          >
+            {content.destinations.map((place, index) => (
               <motion.article
                 key={`${place.name}-${index}`}
-                initial={{ opacity: 0, y: 26 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.18 }}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                className="grid overflow-hidden border-y border-emerald-900/12 py-7 lg:grid-cols-2 lg:gap-10"
+                variants={fadeUp}
+                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-emerald-900/10 bg-white/80 shadow-[0_14px_40px_rgba(3,45,32,0.07)]"
               >
-                <div className={`relative min-h-[320px] overflow-hidden lg:min-h-[470px] ${index % 2 ? "lg:order-2" : ""}`}>
+                <div className="relative aspect-[16/10] overflow-hidden">
                   <Image
                     src={place.image}
                     alt={place.name}
                     fill
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                    className="object-cover"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute right-5 top-5 bg-emerald-950/72 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-cream-50 backdrop-blur">
+                  <div className="absolute right-4 top-4 bg-emerald-950/72 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-cream-50 backdrop-blur">
                     {place.distance}
                   </div>
                 </div>
-                <div className="flex flex-col justify-center py-8 lg:px-8">
-                  <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.22em] text-gold-700">
+                <div className="flex flex-1 flex-col p-5 sm:p-6">
+                  <span className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-gold-700">
                     <Navigation size={13} strokeWidth={2} />
                     {place.travelTime}
-                  </div>
-                  <h3 className="mt-5 font-display text-3xl font-semibold text-emerald-950 sm:text-4xl">
+                  </span>
+                  <h3 className="mt-3 font-display text-2xl font-semibold leading-snug text-emerald-950">
                     {place.name}
                   </h3>
                   {place.note && (
-                    <span className="mt-3 flex items-center gap-2 text-sm text-emerald-950/55">
-                      <MapPin size={14} strokeWidth={1.8} />
+                    <span className="mt-2 flex items-center gap-1.5 text-xs font-medium text-emerald-950/55">
+                      <MapPin size={13} strokeWidth={1.8} />
                       {place.note}
                     </span>
                   )}
-                  <p className="mt-6 max-w-[50ch] text-base leading-[1.85] text-emerald-950/66">
+                  <p className="mt-3 flex-1 text-sm leading-[1.8] text-emerald-950/66">
                     {place.highlight}
                   </p>
-                  <div className="mt-8 flex flex-wrap gap-3 text-[10px] font-bold uppercase tracking-[0.16em] text-emerald-950/55">
-                    <span className="border border-emerald-900/15 px-3 py-2">Best: {place.bestTime}</span>
-                    <span className="border border-emerald-900/15 px-3 py-2">{place.distance}</span>
+                  <div className="mt-5 border-t border-emerald-900/10 pt-4">
+                    <span className="inline-block border border-emerald-900/15 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-emerald-950/55">
+                      Best: {place.bestTime}
+                    </span>
                   </div>
                 </div>
               </motion.article>
             ))}
-          </div>
-
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
-            {content.destinations.slice(4).map((place) => (
-              <article key={place.name} className="group border-t border-emerald-900/15 pt-5">
-                <div className="relative mb-4 aspect-[16/10] overflow-hidden">
-                  <Image
-                    src={place.image}
-                    alt={place.name}
-                    fill
-                    sizes="(max-width: 640px) 100vw, 20vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                </div>
-                <h3 className="font-display text-lg font-semibold text-emerald-950">
-                  {place.name}
-                </h3>
-                <p className="mt-2 text-sm leading-[1.7] text-emerald-950/62">
-                  {place.highlight}
-                </p>
-                <p className="mt-3 text-[10px] font-bold uppercase tracking-[0.18em] text-gold-700">
-                  {place.travelTime} / {place.distance}
-                </p>
-              </article>
-            ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -233,7 +212,7 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
       <section className="px-5 py-20 text-center sm:px-8 sm:py-28 lg:px-14">
         <div className="mx-auto max-w-3xl">
           <Compass className="mx-auto text-gold-700" size={28} strokeWidth={1.4} />
-          <h2 className="mt-7 font-display text-4xl font-semibold leading-[1.08] text-parchment sm:text-5xl">
+          <h2 className="mt-7 font-display text-4xl font-semibold leading-[1.08] text-emerald-950 sm:text-5xl">
             {content.finale.heading}
           </h2>
           <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">

@@ -11,7 +11,7 @@ export default async function ActivitiesPage() {
   const content = mergeActivities(db as Record<string, unknown> | null | undefined);
 
   return (
-    <main className="editorial-surface min-h-screen font-sans selection:bg-gold-200/30">
+    <main className="min-h-screen bg-[#fffdf7] font-sans text-emerald-950 selection:bg-gold-200/30">
       <SiteNav />
       <ActivitiesView content={content} />
       <SiteFooter />
