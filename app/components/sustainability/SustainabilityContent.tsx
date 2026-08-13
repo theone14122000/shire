@@ -33,7 +33,7 @@ export function SustainabilityContent({ content }: { content: SustainabilityCont
             <h1 className="mt-6 font-display text-4xl font-semibold uppercase leading-[1.06] text-emerald-950 sm:text-5xl lg:text-6xl">
               {content.hero.heading}
             </h1>
-            <p className="mx-auto mt-7 max-w-xl text-base leading-[1.85] text-emerald-950/65 sm:text-lg">
+            <p className="mx-auto mt-7 max-w-xl text-base leading-[1.85] text-emerald-950/85 sm:text-lg">
               {content.hero.intro}
             </p>
           </motion.div>
@@ -70,7 +70,7 @@ export function SustainabilityContent({ content }: { content: SustainabilityCont
                       {pillar.title}
                     </h2>
                   </div>
-                  <p className="text-base leading-[1.9] text-emerald-950/68 sm:text-lg">
+                  <p className="text-base leading-[1.9] text-emerald-950/90 sm:text-lg">
                     {pillar.body}
                   </p>
                 </motion.article>
