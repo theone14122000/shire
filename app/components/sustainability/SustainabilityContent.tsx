@@ -19,17 +19,8 @@ const PILLAR_ICONS = [Recycle, Sprout, Droplets] as const;
 export function SustainabilityContent({ content }: { content: SustainabilityContent }) {
   return (
     <>
-      <section className="relative isolate overflow-hidden px-5 py-24 sm:px-8 sm:py-32 lg:px-14 lg:py-40">
-        <div className="absolute inset-0">
-          <img
-            src="/images/bg-sustan.png"
-            alt=""
-            aria-hidden="true"
-            className="h-full w-full object-cover"
-          />
-          <div className="absolute inset-0 bg-[#f7f1e6] opacity-90" />
-        </div>
-        <div className="relative mx-auto max-w-4xl text-center">
+      <section className="px-5 py-24 sm:px-8 sm:py-32 lg:px-14 lg:py-40">
+        <div className="mx-auto max-w-4xl text-center">
           <motion.div
             initial={{ opacity: 0, y: 34 }}
             animate={{ opacity: 1, y: 0 }}
@@ -49,7 +40,7 @@ export function SustainabilityContent({ content }: { content: SustainabilityCont
         </div>
       </section>
 
-      <section className="bg-[#fffaf0] px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
+      <section className="px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
         <div className="mx-auto max-w-[1400px]">
           <motion.div
             variants={stagger}
@@ -89,7 +80,7 @@ export function SustainabilityContent({ content }: { content: SustainabilityCont
         </div>
       </section>
 
-      <section className="bg-emerald-950 px-5 py-20 text-center text-cream-50 sm:px-8 sm:py-28 lg:px-14">
+      <section className="bg-emerald-950/70 px-5 py-20 text-center text-cream-50 sm:px-8 sm:py-28 lg:px-14">
         <div className="mx-auto max-w-3xl">
           <motion.div
             initial={{ opacity: 0, y: 26 }}
