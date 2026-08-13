@@ -12,7 +12,7 @@ export default async function SustainabilityPage() {
 
   return (
     <main className="relative min-h-screen bg-[#f7f1e6] font-sans text-emerald-950 selection:bg-gold-200/30">
-      <div className="absolute inset-0">
+      <div className="fixed inset-0">
         <img
           src="/images/bg-sustan.png"
           alt=""
