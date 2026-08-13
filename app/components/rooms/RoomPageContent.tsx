@@ -93,7 +93,7 @@ export function RoomPageContent({
               {room.name}
             </h1>
             <p className="mt-6 max-w-xl text-base leading-[1.85] text-cream-100/70 sm:text-lg">
-              {[room.size, room.view, room.floor]
+              {[room.size, ...(room.viewLabel ? [] : [room.view]), room.floor]
                 .filter((value, index, all) => all.indexOf(value) === index)
                 .join(" / ")}
             </p>

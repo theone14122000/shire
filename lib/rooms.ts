@@ -153,8 +153,8 @@ export const rooms: RoomData[] = [
     name: "Mohru",
     category: "Standard Room",
     size: "300 sq ft.",
-    view: "First Floor",
-    viewLabel: "Location",
+    view: "Space for 2 extra beddings",
+    viewLabel: "Bedding",
     floor: "First Floor",
     description:
       "A cozy standard room named after the local Mohru tree, offering warm wooden interiors and a comfortable stay. It features handpicked carpets and a beautiful view, making it a serene retreat after a day in the mountains.",
