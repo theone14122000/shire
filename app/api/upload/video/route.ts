@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { writeFile, mkdir } from "fs/promises";
-import { existsSync } from "fs";
-import path from "path";
+import { saveMedia } from "@/lib/media-store";
 import { verifyToken, COOKIE_NAME } from "@/lib/auth";
-
-const UPLOAD_DIR = path.join(process.cwd(), "public", "videos");
 
 const ALLOWED_TYPES: Record<string, string> = {
   "video/mp4": "mp4",
@@ -48,19 +44,17 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (!existsSync(UPLOAD_DIR)) {
-      await mkdir(UPLOAD_DIR, { recursive: true });
-    }
+    const bytes = Buffer.from(await file.arrayBuffer());
+    const stored = await saveMedia({
+      buffer: bytes,
+      mimeType: file.type,
+      size: file.size,
+      alt: file.name,
+      category: "videos",
+      origin: new URL(req.url).origin,
+    });
 
-    const filename = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
-    const filepath = path.join(UPLOAD_DIR, filename);
-
-    const bytes = await file.arrayBuffer();
-    await writeFile(filepath, Buffer.from(bytes));
-
-    const url = `/videos/${filename}`;
-
-    return NextResponse.json({ url, filename }, { status: 201 });
+    return NextResponse.json({ url: stored.url, filename: stored.id }, { status: 201 });
   } catch {
     return NextResponse.json(
       { error: "Failed to upload video" },

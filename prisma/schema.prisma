@@ -152,6 +152,7 @@ model Media {
   height      Int?
   size        Int?
   mimeType    String?
+  blobData    Bytes?   @db.LongBlob
   createdAt   DateTime @default(now())
 
   @@map("media")
