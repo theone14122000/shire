@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   ArrowDown,
@@ -135,35 +135,39 @@ export default function AdminActivitiesPage() {
     });
   }
 
-  function uploadImage(target: "card" | "destination", index: number, file: File) {
+  function uploadImage(
+    target: "hero" | "card" | "destination" | "trails",
+    index: number | null,
+    file: File
+  ) {
     const xhr = new XMLHttpRequest();
     xhr.open("POST", "/api/upload/activity");
     xhr.onload = () => {
       if (xhr.status >= 200 && xhr.status < 300) {
         const data = JSON.parse(xhr.responseText) as { url: string };
-        if (target === "card") {
-          setContent((prev) =>
-            prev
-              ? {
-                  ...prev,
-                  propertyCards: prev.propertyCards.map((c, i) =>
-                    i === index ? { ...c, image: data.url } : c
-                  ),
-                }
-              : prev
-          );
-        } else {
-          setContent((prev) =>
-            prev
-              ? {
-                  ...prev,
-                  destinations: prev.destinations.map((d, i) =>
-                    i === index ? { ...d, image: data.url } : d
-                  ),
-                }
-              : prev
-          );
-        }
+        setContent((prev) => {
+          if (!prev) return prev;
+          if (target === "hero") {
+            return { ...prev, hero: { ...prev.hero, bgImage: data.url } };
+          }
+          if (target === "trails") {
+            return { ...prev, trails: { ...prev.trails, image: data.url } };
+          }
+          if (target === "card") {
+            return {
+              ...prev,
+              propertyCards: prev.propertyCards.map((c, i) =>
+                i === index ? { ...c, image: data.url } : c
+              ),
+            };
+          }
+          return {
+            ...prev,
+            destinations: prev.destinations.map((d, i) =>
+              i === index ? { ...d, image: data.url } : d
+            ),
+          };
+        });
       }
     };
     const formData = new FormData();
@@ -226,6 +230,7 @@ export default function AdminActivitiesPage() {
             label="Background image"
             value={content.hero.bgImage}
             onChange={(v) => setSectionField("hero", "bgImage", v)}
+            onUpload={(file) => uploadImage("hero", null, file)}
           />
           <Field label="Background alt text" value={content.hero.bgAlt} onChange={(v) => setSectionField("hero", "bgAlt", v)} />
         </GridCols>
@@ -458,6 +463,7 @@ export default function AdminActivitiesPage() {
             label="Image"
             value={content.trails.image}
             onChange={(v) => setSectionField("trails", "image", v)}
+            onUpload={(file) => uploadImage("trails", null, file)}
           />
           <Field label="Image alt text" value={content.trails.imageAlt} onChange={(v) => setSectionField("trails", "imageAlt", v)} />
         </GridCols>
@@ -564,6 +570,7 @@ function ImageField({
   onChange: (value: string) => void;
   onUpload?: (file: File) => void;
 }) {
+  const fileRef = useRef<HTMLInputElement>(null);
   return (
     <label className="block">
       <span className={LABEL_CLASS}>{label}</span>
@@ -576,10 +583,10 @@ function ImageField({
           placeholder="/uploads/activities/..." 
         />
         <input
+          ref={fileRef}
           type="file"
           accept="image/*"
           className="hidden"
-          id={`upload-${label.replace(/\s+/g, "-")}`}
           onChange={(e) => {
             const file = e.target.files?.[0];
             if (file && onUpload) onUpload(file);
@@ -588,8 +595,8 @@ function ImageField({
         />
         <button
           type="button"
-          onClick={() => document.getElementById(`upload-${label.replace(/\s+/g, "-")}`)?.click()}
-          className="inline-flex shrink-0 items-center gap-1.5 rounded-xl border border-emerald-300 px-3.5 py-2 text-xs font-bold text-emerald-700 transition-colors hover:bg-emerald-50"
+          onClick={() => fileRef.current?.click()}
+          className="inline-flex shrink-0 items-center gap-1.5 rounded-xl border border-emerald-300 px-3.5 py-2 text-xs font-bold text-emerald-700 transition-colors hover:bg-emerald-50 disabled:opacity-50"
           title="Upload a new image"
         >
           <CloudUpload size={13} strokeWidth={1.8} />
