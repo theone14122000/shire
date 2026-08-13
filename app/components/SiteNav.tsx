@@ -53,6 +53,18 @@ export function SiteNav() {
   const [desktopDropdown, setDesktopDropdown] = useState(false);
   const [mobileRoomsOpen, setMobileRoomsOpen] = useState(false);
   const [hoveredLabel, setHoveredLabel] = useState<string | null>(null);
+  const [logo, setLogo] = useState("/images/logo2.jpg");
+
+  useEffect(() => {
+    fetch("/api/public/settings")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data: { site_logo?: string } | null) => {
+        if (data?.site_logo?.trim()) setLogo(data.site_logo.trim());
+      })
+      .catch(() => {
+        // keep default logo
+      });
+  }, []);
 
   useEffect(() => {
     return scrollY.on("change", (v) => setScrolled(v > 60));
@@ -81,7 +93,7 @@ export function SiteNav() {
           aria-label="Go to Home"
         >
           <Image
-            src="/images/logo2.jpg"
+            src={logo}
             alt="The Himalayan Shire Logo"
             width={408}
             height={243}

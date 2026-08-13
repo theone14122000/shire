@@ -4,6 +4,7 @@ import { SiteFooter } from "../components/SiteFooter";
 import { FloatingActions } from "../components/FloatingActions";
 import { GalleryPageContent } from "../components/gallery/GalleryPageContent";
 import { getPublishedGalleryItems } from "@/lib/gallery";
+import { getHomepageSections } from "@/lib/homepage-content";
 
 export const dynamic = "force-dynamic";
 
@@ -15,12 +16,17 @@ export const metadata: Metadata = {
 
 export default async function GalleryPage() {
   const items = await getPublishedGalleryItems();
+  const content = await getHomepageSections();
+  const heroImage =
+    typeof content?.gallery?.heroImage === "string"
+      ? content.gallery.heroImage
+      : undefined;
 
   return (
     <>
       <SiteNav />
       <main id="main" className="relative">
-        <GalleryPageContent items={items} />
+        <GalleryPageContent items={items} heroImage={heroImage} />
       </main>
       <SiteFooter />
       <FloatingActions />

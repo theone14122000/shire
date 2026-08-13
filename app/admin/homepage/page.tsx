@@ -171,6 +171,32 @@ export default function AdminHomepagePage() {
     }
   }
 
+  async function handleUploadImage(
+    section: string,
+    field: string,
+    file: File
+  ) {
+    if (!/^image\//.test(file.type)) return;
+    setUploadError("");
+    const formData = new FormData();
+    formData.append("file", file);
+    try {
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+      if (res.ok) {
+        const data = await res.json();
+        updateField(section, field, data.url);
+      } else {
+        const data = await res.json().catch(() => ({}));
+        setUploadError(data.error || "Upload failed");
+      }
+    } catch {
+      setUploadError("Upload failed. Please try again.");
+    }
+  }
+
   function StatusBadge({
     sectionKey,
     status,
@@ -327,6 +353,57 @@ export default function AdminHomepagePage() {
                             placeholder={field.placeholder ?? ""}
                             className="w-full rounded-xl border border-emerald-200 bg-cream-50 px-4 py-2.5 text-sm text-black focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20"
                           />
+                        </div>
+                      );
+                    }
+                    if (field.image) {
+                      return (
+                        <div key={field.key} className="sm:col-span-2">
+                          <label className="mb-1 block text-xs font-bold uppercase tracking-wider text-emerald-700">
+                            {field.label}
+                          </label>
+                          <div className="flex items-center gap-2">
+                            <input
+                              type="text"
+                              value={value}
+                              onChange={(e) =>
+                                updateField(section.key, field.key, e.target.value)
+                              }
+                              placeholder={field.placeholder ?? "Paste an image URL, or upload below"}
+                              className="w-full rounded-xl border border-emerald-200 bg-cream-50 px-4 py-2.5 text-sm text-black focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20"
+                            />
+                            <input
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              id={`upload-${section.key}-${field.key}`}
+                              onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file)
+                                  handleUploadImage(section.key, field.key, file);
+                                e.target.value = "";
+                              }}
+                            />
+                            <button
+                              type="button"
+                              onClick={() =>
+                                document
+                                  .getElementById(`upload-${section.key}-${field.key}`)
+                                  ?.click()
+                              }
+                              className="shrink-0 rounded-xl border border-emerald-300 px-4 py-2.5 text-sm font-bold text-emerald-700 transition-colors hover:bg-emerald-50"
+                            >
+                              Upload
+                            </button>
+                          </div>
+                          {value && (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                              src={value}
+                              alt={`${field.label} preview`}
+                              className="mt-3 h-28 w-full rounded-xl border border-emerald-200 bg-white object-cover sm:w-56"
+                            />
+                          )}
                         </div>
                       );
                     }

@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { UploadCloud } from "lucide-react";
 
 export default function AdminSettingsPage() {
   const [settings, setSettings] = useState<Record<string, string>>({});
@@ -9,6 +10,7 @@ export default function AdminSettingsPage() {
   const [saving, setSaving] = useState(false);
   const [authenticated, setAuthenticated] = useState(true);
   const [message, setMessage] = useState("");
+  const [uploading, setUploading] = useState("");
   const router = useRouter();
 
   const fetchSettings = useCallback(async () => {
@@ -64,6 +66,29 @@ export default function AdminSettingsPage() {
     setSettings((prev) => ({ ...prev, [key]: value }));
   }
 
+  async function handleUpload(key: string, file: File) {
+    setUploading(key);
+    setMessage("");
+    const formData = new FormData();
+    formData.append("file", file);
+    try {
+      const res = await fetch("/api/upload", { method: "POST", body: formData });
+      if (res.ok) {
+        const data = await res.json();
+        handleChange(key, data.url);
+      } else {
+        const data = await res.json().catch(() => ({}));
+        setMessage(data.error || "Upload failed");
+      }
+    } catch {
+      setMessage("Upload failed. Please try again.");
+    } finally {
+      setUploading("");
+      const input = document.getElementById(`upload-${key}`) as HTMLInputElement | null;
+      if (input) input.value = "";
+    }
+  }
+
   const groups = [
     { name: "General", keys: ["site_name", "site_logo", "site_favicon"] },
     { name: "Contact", keys: ["site_email", "site_phone", "site_phone2", "site_address"] },
@@ -105,12 +130,55 @@ export default function AdminSettingsPage() {
                     <label className="mb-1 block text-xs font-bold uppercase tracking-wider text-emerald-700">
                       {key.replace(/_/g, " ")}
                     </label>
-                    <input
-                      type="text"
-                      value={settings[key] ?? ""}
-                      onChange={(e) => handleChange(key, e.target.value)}
-                      className="w-full rounded-xl border border-emerald-200 bg-cream-50 px-4 py-2.5 text-sm text-emerald-900 focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20"
-                    />
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        value={settings[key] ?? ""}
+                        onChange={(e) => handleChange(key, e.target.value)}
+                        className="w-full rounded-xl border border-emerald-200 bg-cream-50 px-4 py-2.5 text-sm text-emerald-900 focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20"
+                      />
+                      {(key === "site_logo" || key === "site_favicon") && (
+                        <>
+                          <input
+                            id={`upload-${key}`}
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (file) handleUpload(key, file);
+                            }}
+                          />
+                          <button
+                            type="button"
+                            disabled={uploading === key}
+                            onClick={() =>
+                              document.getElementById(`upload-${key}`)?.click()
+                            }
+                            className="inline-flex shrink-0 items-center gap-1.5 rounded-xl border border-emerald-300 px-3.5 py-2 text-xs font-bold text-emerald-700 transition-colors hover:bg-emerald-50 disabled:opacity-50"
+                          >
+                            <UploadCloud size={13} strokeWidth={1.8} />
+                            {uploading === key ? "Uploading..." : "Upload"}
+                          </button>
+                        </>
+                      )}
+                    </div>
+                    {key === "site_logo" && settings.site_logo?.trim() && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={settings.site_logo}
+                        alt="Logo preview"
+                        className="mt-2 h-12 rounded-lg border border-emerald-200 bg-white object-contain"
+                      />
+                    )}
+                    {key === "site_favicon" && settings.site_favicon?.trim() && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={settings.site_favicon}
+                        alt="Favicon preview"
+                        className="mt-2 h-8 w-8 rounded-lg border border-emerald-200 bg-white object-contain"
+                      />
+                    )}
                   </div>
                 ))}
               </div>

@@ -198,7 +198,7 @@ export function HomeEditorial({
           >
             <div className="relative ml-auto aspect-[4/5] max-w-[620px] overflow-hidden rounded-[1.5rem]">
               <Image
-                src="/images/brand-lifestyle.jpg"
+                src={t("editorial", "image", "/images/brand-lifestyle.jpg")}
                 alt="The Himalayan Shire property"
                 fill
                 sizes="(max-width: 1024px) 100vw, 48vw"
@@ -337,7 +337,7 @@ export function HomeEditorial({
       <section className="grid bg-[#1E3E2B] lg:grid-cols-2">
         <div className="relative min-h-[430px] overflow-hidden lg:min-h-[720px]">
           <Image
-            src="/images/setting-view.jpg"
+            src={t("setting", "image", "/images/setting-view.jpg")}
             alt="Mountain view from The Himalayan Shire"
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"

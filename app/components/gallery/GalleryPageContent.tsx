@@ -67,11 +67,18 @@ const stagger: Variants = {
 
 const POLAROID_ROTATIONS = [-2.5, 2, -1.8, 2.8, -2, 1.5];
 
-export function GalleryPageContent({ items }: { items?: GalleryItem[] }) {
+export function GalleryPageContent({
+  items,
+  heroImage,
+}: {
+  items?: GalleryItem[];
+  heroImage?: string;
+}) {
   const galleryItems = useMemo(
     () => (items && items.length > 0 ? items : fallbackItems()),
     [items]
   );
+  const heroSrc = heroImage?.trim() ? heroImage : "/gallery/enchanting-winter-views.jpg";
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>("All");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
@@ -107,7 +114,7 @@ export function GalleryPageContent({ items }: { items?: GalleryItem[] }) {
     <section className="overflow-hidden bg-[#f7f1e6]">
       <div className="relative min-h-[70vh] overflow-hidden sm:min-h-[72vh]">
         <Image
-          src="/gallery/enchanting-winter-views.jpg"
+          src={heroSrc}
           alt="The Enchanting Winter Views"
           fill
           priority

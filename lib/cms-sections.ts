@@ -3,6 +3,7 @@ export interface CmsField {
   label: string;
   textarea?: boolean;
   placeholder?: string;
+  image?: boolean;
 }
 
 export interface CmsSection {
@@ -17,7 +18,7 @@ export const CMS_SECTIONS: CmsSection[] = [
     label: "Hero Video",
     fields: [
       { key: "videoUrl", label: "Video URL (mp4)" },
-      { key: "poster", label: "Poster Image URL" },
+      { key: "poster", label: "Poster Image URL", image: true },
     ],
   },
   {
@@ -29,6 +30,7 @@ export const CMS_SECTIONS: CmsSection[] = [
       { key: "body", label: "Body", textarea: true },
       { key: "signature", label: "Signature" },
       { key: "shortPitch", label: "Short Pitch Card" },
+      { key: "image", label: "Image", image: true },
     ],
   },
   {
@@ -58,6 +60,7 @@ export const CMS_SECTIONS: CmsSection[] = [
       { key: "description", label: "Description", textarea: true },
       { key: "ctaLabel", label: "Button 1 Label" },
       { key: "ctaHref", label: "Button 1 URL" },
+      { key: "image", label: "Image", image: true },
     ],
   },
   {
@@ -76,6 +79,7 @@ export const CMS_SECTIONS: CmsSection[] = [
     fields: [
       { key: "kicker", label: "Kicker" },
       { key: "heading", label: "Heading" },
+      { key: "heroImage", label: "Gallery Page Hero Image", image: true },
     ],
   },
   {
@@ -111,6 +115,7 @@ We will make your stay a truly delightful one, and hope to send you back with me
     signature: "— The Shire family",
     shortPitch:
       "Heritage rooms, warm hospitality, and a view of the Kinnaur Kailash range that stays with you long after you've gone home.",
+    image: "/images/brand-lifestyle.jpg",
   },
   rooms: {
     kicker: "Accommodations",
@@ -131,6 +136,7 @@ We will make your stay a truly delightful one, and hope to send you back with me
       "A serene, beautiful countryside location - surrounded by apple orchards and tall pine trees, with an unparallelled view of the Kinnaur Kailash range.",
     ctaLabel: "Explore activities",
     ctaHref: "/activities",
+    image: "/images/setting-view.jpg",
   },
   video: {
     kicker: "The Shire on Film",
@@ -142,6 +148,7 @@ We will make your stay a truly delightful one, and hope to send you back with me
   gallery: {
     kicker: "Gallery",
     heading: "A visual walk through the property.",
+    heroImage: "/gallery/enchanting-winter-views.jpg",
   },
   bookCta: {
     heading: "A quiet room, a warm meal, and a view worth the journey.",
