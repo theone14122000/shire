@@ -27,7 +27,11 @@ export async function generateMetadata({
   if (!room) return {};
 
   const title = `${room.name} Room — Luxury Offbeat Homestay in Fagu, Near Kufri & Shimla`;
-  const description = `${room.name}: a ${room.category.toLowerCase()} with ${room.size.toLowerCase()} of space and ${room.view.toLowerCase()}, set in The Himalayan Shire — a family-run offbeat homestay in Fagu, near Kufri, a short drive from Shimla. Part of one of the most loved luxury stays around Himachal.`;
+  const viewText =
+    room.viewLabel === "Location"
+      ? `located on the ${room.view.toLowerCase()}`
+      : `and ${room.view.toLowerCase()}`;
+  const description = `${room.name}: a ${room.category.toLowerCase()} with ${room.size.toLowerCase()} of space ${viewText}, set in The Himalayan Shire — a family-run offbeat homestay in Fagu, near Kufri, a short drive from Shimla. Part of one of the most loved luxury stays around Himachal.`;
 
   return {
     title,

@@ -1,5 +1,20 @@
 // lib/rooms.ts
-export const rooms = [
+export interface RoomData {
+  id: number;
+  slug: string;
+  name: string;
+  category: string;
+  size: string;
+  view: string;
+  viewLabel?: string;
+  floor: string;
+  description: string;
+  facilities: string[];
+  images: string[];
+  tourVideoId: string;
+}
+
+export const rooms: RoomData[] = [
   {
     id: 1,
     slug: "deodar",
@@ -138,7 +153,8 @@ export const rooms = [
     name: "Mohru",
     category: "Standard Room",
     size: "300 sq ft.",
-    view: "Mountain View",
+    view: "First Floor",
+    viewLabel: "Location",
     floor: "First Floor",
     description:
       "A cozy standard room named after the local Mohru tree, offering warm wooden interiors and a comfortable stay. It features handpicked carpets and a beautiful view, making it a serene retreat after a day in the mountains.",

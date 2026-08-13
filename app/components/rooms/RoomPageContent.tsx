@@ -93,7 +93,9 @@ export function RoomPageContent({
               {room.name}
             </h1>
             <p className="mt-6 max-w-xl text-base leading-[1.85] text-cream-100/70 sm:text-lg">
-              {room.size} / {room.view} / {room.floor}
+              {[room.size, room.view, room.floor]
+                .filter((value, index, all) => all.indexOf(value) === index)
+                .join(" / ")}
             </p>
           </motion.div>
         </div>
@@ -125,7 +127,7 @@ export function RoomPageContent({
             >
               <StatCell icon={Maximize2} label="Size" value={room.size} />
               <StatCell icon={Layers} label="Floor" value={room.floor} />
-              <StatCell icon={Mountain} label="View" value={room.view} />
+              <StatCell icon={Mountain} label={room.viewLabel ?? "View"} value={room.view} />
               <div className="flex items-center justify-center px-6 py-8 lg:border-l lg:border-emerald-900/10">
                 <Link
                   href="https://letsbook.me/booking/thehimalayanshire?checkin=2026-08-04&checkout=2026-08-05&adults=2&children=0"
