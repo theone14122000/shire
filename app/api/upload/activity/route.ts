@@ -30,9 +30,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (file.size > 5 * 1024 * 1024) {
+    if (file.size > 4.2 * 1024 * 1024) {
       return NextResponse.json(
-        { error: "File too large. Maximum size: 5MB" },
+        { error: "File too large. Maximum size: 4.2MB (Vercel request limit)" },
         { status: 400 }
       );
     }

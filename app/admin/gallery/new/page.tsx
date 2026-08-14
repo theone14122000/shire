@@ -148,7 +148,7 @@ export default function AdminGalleryNewPage() {
           Drop images here, or click to browse
         </p>
         <p className="mt-1 text-xs text-emerald-800/50">
-          JPEG, PNG, WebP or GIF · up to 5MB each
+          JPEG, PNG, WebP or GIF · up to 4.2MB each
         </p>
         <input
           type="file"

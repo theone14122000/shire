@@ -239,9 +239,13 @@ export default function AdminRoomImagesPage({
       } else {
         let error = "Upload failed";
         try {
-          error = JSON.parse(xhr.responseText).error || error;
+          const parsed = JSON.parse(xhr.responseText);
+          error = parsed.error || error;
         } catch {
-          // keep default
+          if (xhr.responseText) {
+            const text = xhr.responseText.trim();
+            if (text.length < 120) error = text;
+          }
         }
         updateRow(index, { status: "error", error });
       }
@@ -268,8 +272,8 @@ export default function AdminRoomImagesPage({
         rejected.push(`${file.name} (not an image)`);
         continue;
       }
-      if (file.size > 4 * 1024 * 1024) {
-        rejected.push(`${file.name} (larger than 4MB)`);
+      if (file.size > 4.2 * 1024 * 1024) {
+        rejected.push(`${file.name} (larger than 4.2MB)`);
         continue;
       }
       accepted.push(file);
@@ -625,7 +629,7 @@ export default function AdminRoomImagesPage({
               Drop photos here, or click to browse
             </p>
             <p className="mt-1 text-xs text-emerald-800/50">
-              JPEG, PNG, WebP or GIF · up to 4MB each
+              JPEG, PNG, WebP or GIF · up to 4.2MB each
             </p>
             <input
               ref={fileRef}
