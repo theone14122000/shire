@@ -3,6 +3,11 @@
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { UploadCloud } from "lucide-react";
+import {
+  getFileSizeError,
+  IMAGE_SIZE_HINT,
+  uploadWithProgress,
+} from "@/app/admin/components/upload";
 
 export default function AdminSettingsPage() {
   const [settings, setSettings] = useState<Record<string, string>>({});
@@ -11,6 +16,7 @@ export default function AdminSettingsPage() {
   const [authenticated, setAuthenticated] = useState(true);
   const [message, setMessage] = useState("");
   const [uploading, setUploading] = useState("");
+  const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({});
   const router = useRouter();
 
   const fetchSettings = useCallback(async () => {
@@ -67,26 +73,31 @@ export default function AdminSettingsPage() {
   }
 
   async function handleUpload(key: string, file: File) {
+    const sizeError = getFileSizeError(file);
+    if (sizeError) {
+      setMessage(`Skipped: ${sizeError}`);
+      return;
+    }
     setUploading(key);
     setMessage("");
-    const formData = new FormData();
-    formData.append("file", file);
-    try {
-      const res = await fetch("/api/upload", { method: "POST", body: formData });
-      if (res.ok) {
-        const data = await res.json();
-        handleChange(key, data.url);
-      } else {
-        const data = await res.json().catch(() => ({}));
-        setMessage(data.error || "Upload failed");
-      }
-    } catch {
-      setMessage("Upload failed. Please try again.");
-    } finally {
-      setUploading("");
-      const input = document.getElementById(`upload-${key}`) as HTMLInputElement | null;
-      if (input) input.value = "";
+    setUploadProgress((prev) => ({ ...prev, [key]: 0 }));
+
+    const result = await uploadWithProgress(file, "/api/upload", (percent) => {
+      setUploadProgress((prev) => ({ ...prev, [key]: percent }));
+    });
+
+    setUploading("");
+    setUploadProgress((prev) => {
+      const next = { ...prev };
+      delete next[key];
+      return next;
+    });
+    setMessage(result.ok ? "" : result.error || "Upload failed");
+    if (result.ok && result.url) {
+      handleChange(key, result.url);
     }
+    const input = document.getElementById(`upload-${key}`) as HTMLInputElement | null;
+    if (input) input.value = "";
   }
 
   const groups = [
@@ -163,6 +174,24 @@ export default function AdminSettingsPage() {
                         </>
                       )}
                     </div>
+                    {typeof uploadProgress[key] === "number" && (
+                      <div className="mt-2 flex items-center gap-2">
+                        <div className="h-1.5 w-36 overflow-hidden rounded-full bg-emerald-100">
+                          <div
+                            className="h-full rounded-full bg-emerald-600 transition-all duration-300"
+                            style={{ width: `${uploadProgress[key]}%` }}
+                          />
+                        </div>
+                        <span className="text-[11px] font-bold tabular-nums text-emerald-800/60">
+                          {uploadProgress[key]}%
+                        </span>
+                      </div>
+                    )}
+                    {(key === "site_logo" || key === "site_favicon") && (
+                      <p className="mt-1.5 text-[11px] font-medium text-emerald-800/40">
+                        {IMAGE_SIZE_HINT}
+                      </p>
+                    )}
                     {key === "site_logo" && settings.site_logo?.trim() && (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img

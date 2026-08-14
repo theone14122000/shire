@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { CheckCircle2, CloudUpload, ImagePlus, XCircle } from "lucide-react";
 import { categoryFromFile, titleFromFile } from "@/lib/gallery";
 import { GALLERY_CATEGORIES } from "@/lib/gallery-types";
+import { MAX_UPLOAD_BYTES, MAX_UPLOAD_MB } from "@/app/admin/components/upload";
 
 interface UploadRow {
   file: File;
@@ -27,7 +28,17 @@ export default function AdminGalleryNewPage() {
   };
 
   function addFiles(files: FileList | File[]) {
-    const list = Array.from(files).filter((f) => f.type.startsWith("image/"));
+    const skipped: string[] = [];
+    const list = Array.from(files).filter(
+      (f) => f.type.startsWith("image/") && !(f.size > MAX_UPLOAD_BYTES)
+    );
+    for (const f of Array.from(files)) {
+      if (!f.type.startsWith("image/")) continue;
+      if (f.size > MAX_UPLOAD_BYTES) skipped.push(f.name);
+    }
+    if (skipped.length > 0) {
+      setMessage(`Skipped: ${skipped.join(", ")} (larger than ${MAX_UPLOAD_MB})`);
+    }
     const startIndex = rows.length;
     setRows((prev) => [
       ...prev,

@@ -4,6 +4,12 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { CMS_SECTIONS, CMS_DEFAULTS } from "@/lib/cms-sections";
+import {
+  getFileSizeError,
+  IMAGE_SIZE_HINT,
+  uploadWithProgress,
+  VIDEO_MAX_BYTES,
+} from "@/app/admin/components/upload";
 
 interface SectionStatus {
   state: "idle" | "saving" | "saved" | "error";
@@ -19,6 +25,10 @@ export default function AdminHomepagePage() {
   const [globalSaving, setGlobalSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState("");
+  const [uploadProgress, setUploadProgress] = useState<{
+    video?: number;
+    [key: string]: number | undefined;
+  }>({});
   const videoInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
@@ -144,30 +154,31 @@ export default function AdminHomepagePage() {
   }
 
   async function handleUploadVideo(file: File) {
-    setUploading(true);
+    const sizeError = getFileSizeError(file, VIDEO_MAX_BYTES);
+    if (sizeError) {
+      setUploadError(`Skipped: ${sizeError}`);
+      return;
+    }
     setUploadError("");
+    setUploading(true);
+    setUploadProgress((prev) => ({ ...prev, video: 0 }));
 
-    const formData = new FormData();
-    formData.append("file", file);
+    const result = await uploadWithProgress(file, "/api/upload/video", (percent) => {
+      setUploadProgress((prev) => ({ ...prev, video: percent }));
+    });
 
-    try {
-      const res = await fetch("/api/upload/video", {
-        method: "POST",
-        body: formData,
-      });
+    setUploading(false);
+    setUploadProgress((prev) => {
+      const next = { ...prev };
+      delete next.video;
+      return next;
+    });
 
-      if (res.ok) {
-        const data = await res.json();
-        updateField("hero", "videoUrl", data.url);
-        if (videoInputRef.current) videoInputRef.current.value = "";
-      } else {
-        const data = await res.json().catch(() => ({}));
-        setUploadError(data.error || "Upload failed");
-      }
-    } catch {
-      setUploadError("Upload failed. Please try again.");
-    } finally {
-      setUploading(false);
+    if (result.ok && result.url) {
+      updateField("hero", "videoUrl", result.url);
+      if (videoInputRef.current) videoInputRef.current.value = "";
+    } else {
+      setUploadError(result.error || "Upload failed");
     }
   }
 
@@ -177,23 +188,29 @@ export default function AdminHomepagePage() {
     file: File
   ) {
     if (!/^image\//.test(file.type)) return;
+    const sizeError = getFileSizeError(file);
+    if (sizeError) {
+      setUploadError(`Skipped: ${sizeError}`);
+      return;
+    }
     setUploadError("");
-    const formData = new FormData();
-    formData.append("file", file);
-    try {
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-      if (res.ok) {
-        const data = await res.json();
-        updateField(section, field, data.url);
-      } else {
-        const data = await res.json().catch(() => ({}));
-        setUploadError(data.error || "Upload failed");
-      }
-    } catch {
-      setUploadError("Upload failed. Please try again.");
+    const progressKey = `${section}.${field}`;
+    setUploadProgress((prev) => ({ ...prev, [progressKey]: 0 }));
+
+    const result = await uploadWithProgress(file, "/api/upload", (percent) => {
+      setUploadProgress((prev) => ({ ...prev, [progressKey]: percent }));
+    });
+
+    setUploadProgress((prev) => {
+      const next = { ...prev };
+      delete next[progressKey];
+      return next;
+    });
+
+    if (result.ok && result.url) {
+      updateField(section, field, result.url);
+    } else {
+      setUploadError(result.error || "Upload failed");
     }
   }
 
@@ -315,23 +332,32 @@ export default function AdminHomepagePage() {
                         }}
                         className="flex-1 rounded-xl border border-emerald-200 bg-white px-4 py-2.5 text-sm text-black file:mr-3 file:rounded-lg file:border-0 file:bg-emerald-700 file:px-3 file:py-1.5 file:text-xs file:font-bold file:text-white"
                       />
-                      {uploading && (
-                        <span className="inline-flex items-center justify-center gap-2 rounded-xl bg-amber-50 px-4 py-2.5 text-sm font-bold text-amber-700">
+                      {uploading && typeof uploadProgress.video === "number" && (
+                        <div className="flex items-center justify-center gap-2 rounded-xl bg-amber-50 px-4 py-2.5 text-sm font-bold text-amber-700">
                           <svg className="animate-spin" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
                             <path d="M21 12a9 9 0 1 1-6.2-8.56" />
                           </svg>
-                          Uploading...
-                        </span>
+                          {uploadProgress.video}%
+                        </div>
                       )}
                     </div>
+                    {uploading && typeof uploadProgress.video === "number" && (
+                      <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-emerald-100">
+                        <div
+                          className="h-full rounded-full bg-emerald-600 transition-all duration-300"
+                          style={{ width: `${uploadProgress.video}%` }}
+                        />
+                      </div>
+                    )}
                     {uploadError && (
                       <p className="mt-2 text-sm font-medium text-red-600">
                         {uploadError}
                       </p>
                     )}
                     <p className="mt-3 text-xs text-emerald-800/50">
-                      Tip: on Vercel the upload limit is small — for large videos,
-                      host the file elsewhere and paste its URL in the Video URL field below.
+                      Note: this plan rejects uploads larger than about 4.5MB — for
+                      large videos, host the file elsewhere and paste its URL in the
+                      Video URL field below.
                     </p>
                   </div>
                 )}
@@ -396,6 +422,25 @@ export default function AdminHomepagePage() {
                               Upload
                             </button>
                           </div>
+                          {typeof uploadProgress[`${section.key}.${field.key}`] ===
+                            "number" && (
+                            <div className="mt-2 flex items-center gap-2">
+                              <div className="h-1.5 w-36 overflow-hidden rounded-full bg-emerald-100">
+                                <div
+                                  className="h-full rounded-full bg-emerald-600 transition-all duration-300"
+                                  style={{
+                                    width: `${uploadProgress[`${section.key}.${field.key}`]}%`,
+                                  }}
+                                />
+                              </div>
+                              <span className="text-[11px] font-bold tabular-nums text-emerald-800/60">
+                                {uploadProgress[`${section.key}.${field.key}`]}%
+                              </span>
+                            </div>
+                          )}
+                          <p className="mt-1.5 text-[11px] font-medium text-emerald-800/40">
+                            {IMAGE_SIZE_HINT}
+                          </p>
                           {value && (
                             // eslint-disable-next-line @next/next/no-img-element
                             <img

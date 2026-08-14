@@ -14,6 +14,12 @@ import {
   UploadCloud,
 } from "lucide-react";
 import type { BlogSection } from "@/lib/blog-types";
+import {
+  getFileSizeError,
+  IMAGE_SIZE_HINT,
+  UploadProgress,
+  uploadWithProgress,
+} from "@/app/admin/components/upload";
 
 const INPUT_CLASS =
   "w-full rounded-xl border border-emerald-200 bg-cream-50 px-4 py-2.5 text-sm text-emerald-900 focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20";
@@ -24,16 +30,19 @@ function makeId(): string {
   return `block-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 }
 
-async function uploadImage(file: File): Promise<string> {
-  const formData = new FormData();
-  formData.append("file", file);
-  const res = await fetch("/api/upload", { method: "POST", body: formData });
-  if (!res.ok) {
-    const data = await res.json();
-    throw new Error(data.error || "Upload failed");
+async function uploadImage(
+  file: File,
+  onProgress?: (percent: number) => void
+): Promise<string> {
+  const sizeError = getFileSizeError(file);
+  if (sizeError) {
+    throw new Error(`Skipped: ${sizeError}`);
   }
-  const data = await res.json();
-  return data.url as string;
+  const result = await uploadWithProgress(file, "/api/upload", onProgress);
+  if (!result.ok || !result.url) {
+    throw new Error(result.error || "Upload failed");
+  }
+  return result.url;
 }
 
 export function BlockEditor({
@@ -44,6 +53,7 @@ export function BlockEditor({
   onChange: (sections: BlogSection[]) => void;
 }) {
   const [uploading, setUploading] = useState(false);
+  const [uploadPercent, setUploadPercent] = useState(0);
   const fileRef = useRef<HTMLInputElement>(null);
 
   const update = (index: number, patch: Partial<BlogSection>) => {
@@ -76,8 +86,9 @@ export function BlockEditor({
 
   const addImage = async (file: File) => {
     setUploading(true);
+    setUploadPercent(0);
     try {
-      const url = await uploadImage(file);
+      const url = await uploadImage(file, (percent) => setUploadPercent(percent));
       onChange([...value, { id: makeId(), type: "image", src: url, alt: file.name }]);
     } catch (err) {
       alert(err instanceof Error ? err.message : "Upload failed");
@@ -108,8 +119,16 @@ export function BlockEditor({
           className={`${TOOL_CLASS} disabled:opacity-50`}
         >
           <FileImage size={13} strokeWidth={1.8} className="mr-1.5 inline" />
-          {uploading ? "Uploading..." : "Add Image"}
+          {uploading ? `Uploading ${uploadPercent}%` : "Add Image"}
         </button>
+        <span className="text-[11px] font-medium text-emerald-800/40">
+          {IMAGE_SIZE_HINT}
+        </span>
+        {uploading && (
+          <div className="w-40">
+            <UploadProgress progress={uploadPercent} status="uploading" />
+          </div>
+        )}
         <button type="button" onClick={addYoutube} className={TOOL_CLASS}>
           <Play size={13} strokeWidth={1.8} className="mr-1.5 inline" />
           YouTube

@@ -3,11 +3,18 @@
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import {
+  getFileSizeError,
+  IMAGE_SIZE_HINT,
+  uploadWithProgress,
+} from "@/app/admin/components/upload";
 
 export default function AdminMediaPage() {
   const [media, setMedia] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState("");
+  const [uploadPercent, setUploadPercent] = useState(0);
   const [authenticated, setAuthenticated] = useState(true);
   const router = useRouter();
 
@@ -38,34 +45,37 @@ export default function AdminMediaPage() {
 
   async function handleUpload(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setUploading(true);
+    setUploadError("");
 
     const formData = new FormData(e.currentTarget);
     const file = formData.get("file") as File;
-    if (!file) {
-      setUploading(false);
+    if (!file) return;
+
+    const sizeError = getFileSizeError(file);
+    if (sizeError) {
+      setUploadError(`Skipped: ${sizeError}`);
+      e.currentTarget.reset();
       return;
     }
 
-    try {
-      const uploadRes = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
+    setUploading(true);
+    setUploadPercent(0);
 
-      if (uploadRes.ok) {
-        const data = await uploadRes.json();
-        setMedia((prev) => [
-          { url: data.url, alt: data.filename, createdAt: new Date().toISOString() },
-          ...prev,
-        ]);
-      }
-    } catch {
-      // ignore
-    } finally {
-      setUploading(false);
-      e.currentTarget.reset();
+    const result = await uploadWithProgress(file, "/api/upload", (percent) => {
+      setUploadPercent(percent);
+    });
+
+    setUploading(false);
+
+    if (result.ok && result.url) {
+      setMedia((prev) => [
+        { url: result.url!, alt: file.name, createdAt: new Date().toISOString() },
+        ...prev,
+      ]);
+    } else {
+      setUploadError(result.error || "Upload failed");
     }
+    e.currentTarget.reset();
   }
 
   return (
@@ -83,7 +93,7 @@ export default function AdminMediaPage() {
         <h2 className="mb-4 font-display text-lg font-bold text-emerald-900">
           Upload Image
         </h2>
-        <form onSubmit={handleUpload} className="flex items-center gap-4">
+        <form onSubmit={handleUpload} className="flex flex-wrap items-center gap-4">
           <input
             type="file"
             name="file"
@@ -96,9 +106,23 @@ export default function AdminMediaPage() {
             disabled={uploading}
             className="rounded-xl bg-emerald-700 px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-emerald-800 disabled:opacity-50"
           >
-            {uploading ? "Uploading..." : "Upload"}
+            {uploading ? `Uploading ${uploadPercent}%` : "Upload"}
           </button>
         </form>
+        <p className="mt-2 text-[11px] font-medium text-emerald-800/40">
+          {IMAGE_SIZE_HINT}
+        </p>
+        {uploading && (
+          <div className="mt-2 h-1.5 w-full max-w-sm overflow-hidden rounded-full bg-emerald-100">
+            <div
+              className="h-full rounded-full bg-emerald-600 transition-all duration-300"
+              style={{ width: `${uploadPercent}%` }}
+            />
+          </div>
+        )}
+        {uploadError && (
+          <p className="mt-2 text-sm font-medium text-red-600">{uploadError}</p>
+        )}
       </div>
 
       {loading ? (

@@ -6,6 +6,11 @@ import Image from "next/image";
 import { UploadCloud } from "lucide-react";
 import { BlockEditor } from "./BlockEditor";
 import type { BlogPost, BlogSection } from "@/lib/blog-types";
+import {
+  getFileSizeError,
+  IMAGE_SIZE_HINT,
+  uploadWithProgress,
+} from "@/app/admin/components/upload";
 
 const INPUT_CLASS =
   "w-full rounded-xl border border-emerald-200 bg-cream-50 px-4 py-2.5 text-sm text-emerald-900 focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20";
@@ -27,6 +32,7 @@ export function PostForm({ post }: { post?: BlogPost }) {
   const [featured, setFeatured] = useState(post?.featured ?? false);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [uploadPercent, setUploadPercent] = useState(0);
   const [message, setMessage] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -50,15 +56,17 @@ export function PostForm({ post }: { post?: BlogPost }) {
   }, [post]);
 
   async function uploadFeatured(file: File) {
-    const formData = new FormData();
-    formData.append("file", file);
-    const res = await fetch("/api/upload", { method: "POST", body: formData });
-    if (!res.ok) {
-      const data = await res.json();
-      throw new Error(data.error || "Upload failed");
+    const sizeError = getFileSizeError(file);
+    if (sizeError) {
+      throw new Error(`Skipped: ${sizeError}`);
     }
-    const data = await res.json();
-    return data.url as string;
+    const result = await uploadWithProgress(file, "/api/upload", (percent) => {
+      setUploadPercent(percent);
+    });
+    if (!result.ok || !result.url) {
+      throw new Error(result.error || "Upload failed");
+    }
+    return result.url;
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -246,7 +254,7 @@ export function PostForm({ post }: { post?: BlogPost }) {
                 className="shrink-0 rounded-xl border border-emerald-200 px-4 py-2.5 text-sm font-bold text-emerald-700 transition-colors hover:bg-emerald-50 disabled:opacity-50"
               >
                 <UploadCloud size={14} strokeWidth={1.8} className="mr-1.5 inline" />
-                {uploading ? "Uploading..." : "Upload"}
+                {uploading ? `Uploading ${uploadPercent}%` : "Upload"}
               </button>
               <input
                 ref={fileRef}
@@ -257,6 +265,7 @@ export function PostForm({ post }: { post?: BlogPost }) {
                   const file = e.target.files?.[0];
                   if (!file) return;
                   setUploading(true);
+                  setUploadPercent(0);
                   try {
                     setImage(await uploadFeatured(file));
                   } catch (err) {
@@ -268,6 +277,17 @@ export function PostForm({ post }: { post?: BlogPost }) {
                 }}
               />
             </div>
+            {uploading && (
+              <div className="mt-2 h-1.5 w-full max-w-sm overflow-hidden rounded-full bg-emerald-100">
+                <div
+                  className="h-full rounded-full bg-emerald-600 transition-all duration-300"
+                  style={{ width: `${uploadPercent}%` }}
+                />
+              </div>
+            )}
+            <p className="mt-1.5 text-[11px] font-medium text-emerald-800/40">
+              {IMAGE_SIZE_HINT}
+            </p>
           </div>
         </div>
       </div>

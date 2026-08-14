@@ -17,6 +17,12 @@ import {
   type ActivityCard,
   type Destination,
 } from "@/lib/activities-content";
+import {
+  getFileSizeError,
+  IMAGE_SIZE_HINT,
+  UploadProgress,
+  uploadWithProgress,
+} from "@/app/admin/components/upload";
 
 const INPUT_CLASS =
   "w-full rounded-xl border border-emerald-200 bg-cream-50 px-4 py-2.5 text-sm text-emerald-900 focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20";
@@ -47,6 +53,13 @@ export default function AdminActivitiesPage() {
   const [authenticated, setAuthenticated] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
+  const [uploadProgress, setUploadProgress] = useState<
+    Record<string, { percent: number }>
+  >({});
+
+  function uploadKey(target: string, index: number | null) {
+    return `${target}${index ?? ""}`;
+  }
 
   const fetchContent = useCallback(async () => {
     try {
@@ -140,39 +153,51 @@ export default function AdminActivitiesPage() {
     index: number | null,
     file: File
   ) {
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "/api/upload/activity");
-    xhr.onload = () => {
-      if (xhr.status >= 200 && xhr.status < 300) {
-        const data = JSON.parse(xhr.responseText) as { url: string };
-        setContent((prev) => {
-          if (!prev) return prev;
-          if (target === "hero") {
-            return { ...prev, hero: { ...prev.hero, bgImage: data.url } };
-          }
-          if (target === "trails") {
-            return { ...prev, trails: { ...prev.trails, image: data.url } };
-          }
-          if (target === "card") {
-            return {
-              ...prev,
-              propertyCards: prev.propertyCards.map((c, i) =>
-                i === index ? { ...c, image: data.url } : c
-              ),
-            };
-          }
+    const sizeError = getFileSizeError(file);
+    if (sizeError) {
+      setMessage(`Skipped: ${sizeError}`);
+      return;
+    }
+    setUploadProgress((prev) => ({ ...prev, [uploadKey(target, index)]: { percent: 0 } }));
+    uploadWithProgress(file, "/api/upload/activity", (percent) => {
+      setUploadProgress((prev) => ({
+        ...prev,
+        [uploadKey(target, index)]: { percent },
+      }));
+    }).then((result) => {
+      setUploadProgress((prev) => {
+        const next = { ...prev };
+        delete next[uploadKey(target, index)];
+        return next;
+      });
+      if (!result.ok) {
+        setMessage(result.error || "Upload failed");
+        return;
+      }
+      setContent((prev) => {
+        if (!prev) return prev;
+        if (target === "hero") {
+          return { ...prev, hero: { ...prev.hero, bgImage: result.url! } };
+        }
+        if (target === "trails") {
+          return { ...prev, trails: { ...prev.trails, image: result.url! } };
+        }
+        if (target === "card") {
           return {
             ...prev,
-            destinations: prev.destinations.map((d, i) =>
-              i === index ? { ...d, image: data.url } : d
+            propertyCards: prev.propertyCards.map((c, i) =>
+              i === index ? { ...c, image: result.url! } : c
             ),
           };
-        });
-      }
-    };
-    const formData = new FormData();
-    formData.append("file", file);
-    xhr.send(formData);
+        }
+        return {
+          ...prev,
+          destinations: prev.destinations.map((d, i) =>
+            i === index ? { ...d, image: result.url! } : d
+          ),
+        };
+      });
+    });
   }
 
   if (loading || !content) {
@@ -231,6 +256,7 @@ export default function AdminActivitiesPage() {
             value={content.hero.bgImage}
             onChange={(v) => setSectionField("hero", "bgImage", v)}
             onUpload={(file) => uploadImage("hero", null, file)}
+            progress={uploadProgress["heronull"]}
           />
           <Field label="Background alt text" value={content.hero.bgAlt} onChange={(v) => setSectionField("hero", "bgAlt", v)} />
         </GridCols>
@@ -302,6 +328,7 @@ export default function AdminActivitiesPage() {
                     )
                   }
                   onUpload={(file) => uploadImage("card", index, file)}
+                  progress={uploadProgress[`card${index}`]}
                 />
               </GridCols>
               <AreaField
@@ -444,6 +471,7 @@ export default function AdminActivitiesPage() {
                   )
                 }
                 onUpload={(file) => uploadImage("destination", index, file)}
+                progress={uploadProgress[`destination${index}`]}
               />
             </div>
           ))}
@@ -464,6 +492,7 @@ export default function AdminActivitiesPage() {
             value={content.trails.image}
             onChange={(v) => setSectionField("trails", "image", v)}
             onUpload={(file) => uploadImage("trails", null, file)}
+            progress={uploadProgress["trailsnull"]}
           />
           <Field label="Image alt text" value={content.trails.imageAlt} onChange={(v) => setSectionField("trails", "imageAlt", v)} />
         </GridCols>
@@ -564,11 +593,13 @@ function ImageField({
   value,
   onChange,
   onUpload,
+  progress,
 }: {
   label: string;
   value: string;
   onChange: (value: string) => void;
   onUpload?: (file: File) => void;
+  progress?: { percent: number } | null;
 }) {
   const fileRef = useRef<HTMLInputElement>(null);
   return (
@@ -603,6 +634,14 @@ function ImageField({
           Upload
         </button>
       </div>
+      {progress && (
+        <div className="mt-1.5">
+          <UploadProgress progress={progress.percent} status="uploading" />
+        </div>
+      )}
+      <p className="mt-1 text-[11px] font-medium text-emerald-800/40">
+        {IMAGE_SIZE_HINT}
+      </p>
       {value && (
         // eslint-disable-next-line @next/next/no-img-element
         <img

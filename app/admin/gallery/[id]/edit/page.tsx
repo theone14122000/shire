@@ -6,6 +6,11 @@ import Image from "next/image";
 import { UploadCloud } from "lucide-react";
 import { GALLERY_CATEGORIES } from "@/lib/gallery-types";
 import type { GalleryItem } from "@/lib/gallery-types";
+import {
+  getFileSizeError,
+  IMAGE_SIZE_HINT,
+  uploadWithProgress,
+} from "@/app/admin/components/upload";
 
 const INPUT_CLASS =
   "w-full rounded-xl border border-emerald-200 bg-cream-50 px-4 py-2.5 text-sm text-emerald-900 focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20";
@@ -22,6 +27,7 @@ export default function AdminGalleryEditPage({
   const [authenticated, setAuthenticated] = useState(true);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [uploadPercent, setUploadPercent] = useState(0);
   const [message, setMessage] = useState("");
 
   useEffect(() => {
@@ -58,16 +64,19 @@ export default function AdminGalleryEditPage({
     return null;
   }
 
-  async function uploadImage(file: File) {
-    const formData = new FormData();
-    formData.append("file", file);
-    const res = await fetch("/api/upload/gallery", { method: "POST", body: formData });
-    if (!res.ok) {
-      const data = await res.json();
-      throw new Error(data.error || "Upload failed");
+  async function uploadImage(
+    file: File,
+    onProgress?: (percent: number) => void
+  ): Promise<string> {
+    const sizeError = getFileSizeError(file);
+    if (sizeError) {
+      throw new Error(`Skipped: ${sizeError}`);
     }
-    const data = await res.json();
-    return data.url as string;
+    const result = await uploadWithProgress(file, "/api/upload/gallery", onProgress);
+    if (!result.ok || !result.url) {
+      throw new Error(result.error || "Upload failed");
+    }
+    return result.url;
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -178,8 +187,9 @@ export default function AdminGalleryEditPage({
                   const file = input.files?.[0];
                   if (!file) return;
                   setUploading(true);
+                  setUploadPercent(0);
                   try {
-                    const url = await uploadImage(file);
+                    const url = await uploadImage(file, (p) => setUploadPercent(p));
                     setItem((prev) => (prev ? { ...prev, src: url } : prev));
                   } catch (err) {
                     alert(err instanceof Error ? err.message : "Upload failed");
@@ -192,9 +202,20 @@ export default function AdminGalleryEditPage({
               className="shrink-0 rounded-xl border border-emerald-200 px-4 py-2.5 text-sm font-bold text-emerald-700 transition-colors hover:bg-emerald-50 disabled:opacity-50"
             >
               <UploadCloud size={14} strokeWidth={1.8} className="mr-1.5 inline" />
-              {uploading ? "Uploading..." : "Replace Image"}
+              {uploading ? `Uploading ${uploadPercent}%` : "Replace Image"}
             </button>
           </div>
+          {uploading && (
+            <div className="mt-2 h-1.5 w-full max-w-sm overflow-hidden rounded-full bg-emerald-100">
+              <div
+                className="h-full rounded-full bg-emerald-600 transition-all duration-300"
+                style={{ width: `${uploadPercent}%` }}
+              />
+            </div>
+          )}
+          <p className="mt-1.5 text-[11px] font-medium text-emerald-800/40">
+            {IMAGE_SIZE_HINT}
+          </p>
         </div>
 
         <div className="rounded-2xl border border-emerald-200/50 bg-white p-6 shadow-sm">
