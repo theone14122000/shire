@@ -11,21 +11,10 @@ export default async function SustainabilityPage() {
   const content = mergeSustainability(db as Record<string, unknown> | null | undefined);
 
   return (
-    <main className="relative min-h-screen bg-[#f7f1e6] font-sans text-emerald-950 selection:bg-gold-200/30">
-      <div className="fixed inset-0">
-        <img
-          src="/images/bg-sustan.png"
-          alt=""
-          aria-hidden="true"
-          className="h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-cream-50 opacity-50" />
-      </div>
-      <div className="relative">
-        <SiteNav />
-        <SustainabilityView content={content} />
-        <SiteFooter />
-      </div>
+    <main className="min-h-screen bg-[#fffdf7] font-sans text-emerald-950 selection:bg-gold-200/30">
+      <SiteNav />
+      <SustainabilityView content={content} />
+      <SiteFooter />
     </main>
   );
 }

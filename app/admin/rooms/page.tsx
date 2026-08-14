@@ -15,6 +15,7 @@ interface RoomImageRow {
 
 export default function AdminRoomsPage() {
   const [counts, setCounts] = useState<Record<string, number>>({});
+  const [covers, setCovers] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
   const [authenticated, setAuthenticated] = useState(true);
   const router = useRouter();
@@ -22,6 +23,7 @@ export default function AdminRoomsPage() {
   const fetchCounts = useCallback(async () => {
     try {
       const results: Record<string, number> = {};
+      const coverResults: Record<string, string> = {};
       for (const room of rooms) {
         const res = await fetch(`/api/rooms/${room.slug}/images`);
         if (res.status === 401) {
@@ -30,8 +32,10 @@ export default function AdminRoomsPage() {
         }
         const data = (await res.json()) as { images: RoomImageRow[]; defaultCount: number };
         results[room.slug] = data.images.length > 0 ? data.images.length : data.defaultCount;
+        coverResults[room.slug] = data.images[0]?.src ?? room.images[0];
       }
       setCounts(results);
+      setCovers(coverResults);
     } catch {
       // ignore
     } finally {
@@ -70,7 +74,7 @@ export default function AdminRoomsPage() {
               className="group relative block aspect-[4/3] overflow-hidden bg-emerald-50"
             >
               <Image
-                src={room.images[0]}
+                src={covers[room.slug] ?? room.images[0]}
                 alt={room.name}
                 fill
                 sizes="(max-width: 640px) 100vw, 33vw"

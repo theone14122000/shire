@@ -226,8 +226,16 @@ export default function AdminRoomImagesPage({
     };
     xhr.onload = () => {
       if (xhr.status >= 200 && xhr.status < 300) {
-        const data = JSON.parse(xhr.responseText);
-        updateRow(index, { progress: 100, status: "saved", src: data.url });
+        try {
+          const data = JSON.parse(xhr.responseText);
+          if (typeof data?.url === "string") {
+            updateRow(index, { progress: 100, status: "saved", src: data.url });
+          } else {
+            updateRow(index, { status: "error", error: "Unexpected upload response" });
+          }
+        } catch {
+          updateRow(index, { status: "error", error: "Unexpected server response" });
+        }
       } else {
         let error = "Upload failed";
         try {
@@ -252,21 +260,40 @@ export default function AdminRoomImagesPage({
   }
 
   function addFiles(files: FileList | File[]) {
-    const list = Array.from(files).filter((f) => f.type.startsWith("image/"));
+    const list = Array.from(files);
+    const accepted: File[] = [];
+    const rejected: string[] = [];
+    for (const file of list) {
+      if (file.type && !file.type.startsWith("image/")) {
+        rejected.push(`${file.name} (not an image)`);
+        continue;
+      }
+      if (file.size > 4 * 1024 * 1024) {
+        rejected.push(`${file.name} (larger than 4MB)`);
+        continue;
+      }
+      accepted.push(file);
+    }
+    if (rejected.length > 0) {
+      setMessage(`Skipped: ${rejected.join(", ")}`);
+    } else {
+      setMessage("");
+    }
+    if (accepted.length === 0) return;
     const startIndex = uploadRows.length;
     setUploadRows((prev) => [
       ...prev,
-      ...list.map((file) => ({
+      ...accepted.map((file) => ({
         file,
         progress: 0,
         status: "uploading" as const,
       })),
     ]);
-    list.forEach((file, offset) => uploadOne(file, startIndex + offset));
+    accepted.forEach((file, offset) => uploadOne(file, startIndex + offset));
   }
 
-  async function addImage(src: string) {
-    if (!src.trim() || busy) return;
+  async function addImage(src: string): Promise<boolean> {
+    if (!src.trim() || busy) return false;
     setBusy(true);
     setMessage("");
     try {
@@ -279,12 +306,14 @@ export default function AdminRoomImagesPage({
         const row = (await res.json()) as RoomImageRow;
         setImages((prev) => [...prev, row]);
         setNewUrl("");
-      } else {
-        const data = await res.json();
-        setMessage(data.error || "Failed to add image");
+        return true;
       }
+      const data = await res.json();
+      setMessage(data.error || "Failed to add image");
+      return false;
     } catch {
       setMessage("Connection failed");
+      return false;
     } finally {
       setBusy(false);
     }
@@ -292,10 +321,21 @@ export default function AdminRoomImagesPage({
 
   async function addSavedUploads() {
     const ready = uploadRows.filter((r) => r.status === "saved" && r.src);
+    let added = 0;
+    let failed = 0;
     for (const row of ready) {
-      await addImage(row.src!);
+      if (await addImage(row.src!)) {
+        added++;
+      } else {
+        failed++;
+      }
     }
-    setUploadRows([]);
+    setUploadRows((prev) => prev.filter((r) => r.status !== "saved"));
+    setMessage(
+      failed === 0
+        ? `Added ${added} image${added === 1 ? "" : "s"} to ${currentRoom.name}.`
+        : `Added ${added} image${added === 1 ? "" : "s"}, ${failed} failed — see messages above.`
+    );
   }
 
   async function importDefaults() {
@@ -585,7 +625,7 @@ export default function AdminRoomImagesPage({
               Drop photos here, or click to browse
             </p>
             <p className="mt-1 text-xs text-emerald-800/50">
-              JPEG, PNG, WebP or GIF · up to 5MB each
+              JPEG, PNG, WebP or GIF · up to 4MB each
             </p>
             <input
               ref={fileRef}
