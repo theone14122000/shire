@@ -24,7 +24,7 @@ export const brand = {
   tagline: "A quiet Himalayan retreat, designed for the kind of rest you remember.",
   shortPitch:
     "Heritage rooms, warm hospitality, and a view of the Kinnaur Kailash range that stays with you long after you've gone home.",
-  email: "himalayanashire@gmail.com",
+  email: "himalayanshire@gmail.com",
   phoneDisplay: ["8580411998", "8168698066"],
   phoneHref: ["tel:+918580411998", "tel:+918168698066"],
   whatsapp: "https://wa.me/918580411998",
@@ -444,7 +444,7 @@ export const footer = {
     {
       title: "Contact",
       links: [
-        { label: "himalayanashire@gmail.com", href: "mailto:" + brand.email },
+        { label: "himalayanshire@gmail.com", href: "mailto:" + brand.email },
         { label: "8580411998", href: "tel:+918580411998" },
         {
           label: "Fagu, Shimla",

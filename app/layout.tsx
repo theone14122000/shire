@@ -70,7 +70,7 @@ const JSONLD = {
     "A family-run offbeat homestay in Fagu, near Kufri, a short drive from Shimla. Seven warm rooms with a private-villa calm — one of the most loved luxury stays around Shimla.",
   url: "https://shire-nu.vercel.app/",
   telephone: "+918580411998",
-  email: "himalayanashire@gmail.com",
+  email: "himalayanshire@gmail.com",
   priceRange: "₹₹",
   image: "https://shire-nu.vercel.app/images/hero-1.jpg",
   address: {

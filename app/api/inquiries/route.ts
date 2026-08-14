@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 
-const INQUIRY_TO_EMAIL = "himalayanashire@gmail.com";
+const INQUIRY_TO_EMAIL = "himalayanshire@gmail.com";
 
 const inquirySchema = z.object({
   name: z.string().trim().min(1, "Name is required"),
