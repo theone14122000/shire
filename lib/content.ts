@@ -28,7 +28,9 @@ export const brand = {
   phoneDisplay: ["+91 81698 98066", "+91 95184 18833"],
   phoneHref: ["tel:+918169898066", "tel:+919518418833"],
   whatsapp: "https://wa.me/918169898066",
-  address: "Fagu, near Kufri, Shimla, Himachal Pradesh, India",
+  address: "Dehna Road, near Talayi Village, Fagu, Himachal Pradesh 171209",
+  mapsUrl:
+    "https://www.google.com/maps?ll=31.066671,77.309332&z=13&t=m&hl=en&gl=IN&mapclient=embed&cid=4674173627328913394",
   socials: [
     { label: "Instagram", href: "#" },
     { label: "Facebook", href: "#" },
