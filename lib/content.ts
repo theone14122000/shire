@@ -24,10 +24,10 @@ export const brand = {
   tagline: "A quiet Himalayan retreat, designed for the kind of rest you remember.",
   shortPitch:
     "Heritage rooms, warm hospitality, and a view of the Kinnaur Kailash range that stays with you long after you've gone home.",
-  email: "himalayanshire@gmail.com",
-  phoneDisplay: ["+91 81698 98066", "+91 95184 18833"],
-  phoneHref: ["tel:+918169898066", "tel:+919518418833"],
-  whatsapp: "https://wa.me/918169898066",
+  email: "himalayanashire@gmail.com",
+  phoneDisplay: ["8580411998", "8168698066"],
+  phoneHref: ["tel:+918580411998", "tel:+918168698066"],
+  whatsapp: "https://wa.me/918580411998",
   address: "Dehna Road, near Talayi Village, Fagu, Himachal Pradesh 171209",
   mapsUrl:
     "https://www.google.com/maps?ll=31.066671,77.309332&z=13&t=m&hl=en&gl=IN&mapclient=embed&cid=4674173627328913394",
@@ -444,8 +444,8 @@ export const footer = {
     {
       title: "Contact",
       links: [
-        { label: "himalayanshire@gmail.com", href: "mailto:" + brand.email },
-        { label: "+91 81698 98066", href: "tel:+918169898066" },
+        { label: "himalayanashire@gmail.com", href: "mailto:" + brand.email },
+        { label: "8580411998", href: "tel:+918580411998" },
         {
           label: "Fagu, Shimla",
           href: "https://www.google.com/maps?ll=31.066671,77.309332&z=13&t=m&hl=en&gl=IN&mapclient=embed&cid=4674173627328913394",

@@ -1,5 +1,61 @@
 import { prisma } from "./prisma";
+import { readFile } from "fs/promises";
+import path from "path";
 import type { BlogPost, BlogPostInput, BlogListItem } from "./blog-types";
+
+const LEGACY_BLOGS_FILE = path.join(process.cwd(), "data", "blogs.json");
+
+function normalizeStatus(status: unknown): "draft" | "published" {
+  return String(status).toLowerCase() === "published" ? "published" : "draft";
+}
+
+function toPrismaStatus(status: unknown): "DRAFT" | "PUBLISHED" {
+  return normalizeStatus(status) === "published" ? "PUBLISHED" : "DRAFT";
+}
+
+function normalizePost(post: any): BlogPost {
+  return {
+    ...post,
+    content: Array.isArray(post.content)
+      ? post.content
+      : JSON.parse(post.content ?? "[]"),
+    status: normalizeStatus(post.status),
+    date: post.date ?? "",
+    readTime: post.readTime ?? "",
+    excerpt: post.excerpt ?? "",
+    image: post.image ?? "",
+    tag: post.tag ?? "",
+    createdAt:
+      post.createdAt instanceof Date ? post.createdAt.toISOString() : post.createdAt ?? "",
+    updatedAt:
+      post.updatedAt instanceof Date ? post.updatedAt.toISOString() : post.updatedAt ?? "",
+    description: post.description ?? undefined,
+    category: post.category ?? undefined,
+    tags: post.tags ?? undefined,
+    seoTitle: post.seoTitle ?? undefined,
+    seoDescription: post.seoDescription ?? undefined,
+    publishedAt:
+      post.publishedAt instanceof Date
+        ? post.publishedAt.toISOString()
+        : post.publishedAt ?? undefined,
+  };
+}
+
+function toListItem(post: BlogPost): BlogListItem {
+  const { content: _content, ...rest } = post;
+  return rest;
+}
+
+async function getLegacyBlogs(): Promise<BlogPost[]> {
+  try {
+    const raw = await readFile(LEGACY_BLOGS_FILE, "utf-8");
+    const posts = JSON.parse(raw);
+    if (!Array.isArray(posts)) return [];
+    return posts.map(normalizePost);
+  } catch {
+    return [];
+  }
+}
 
 /* ------------------------------------------------------------------ */
 /*  CRUD operations                                                    */
@@ -9,79 +65,46 @@ import type { BlogPost, BlogPostInput, BlogListItem } from "./blog-types";
 export async function getAllBlogs(
   includeDrafts = false
 ): Promise<BlogListItem[]> {
-  const blogs = await prisma.blog.findMany({
-    where: includeDrafts ? undefined : { status: "PUBLISHED" },
-    select: {
-      id: true,
-      slug: true,
-      title: true,
-      author: true,
-      date: true,
-      readTime: true,
-      excerpt: true,
-      image: true,
-      tag: true,
-      featured: true,
-      status: true,
-      description: true,
-      category: true,
-      tags: true,
-      seoTitle: true,
-      seoDescription: true,
-      publishedAt: true,
-      createdAt: true,
-      updatedAt: true,
-    },
-    orderBy: { updatedAt: "desc" },
-  });
+  const legacy = await getLegacyBlogs();
+  let dbPosts: BlogPost[] = [];
 
-  return blogs.map((b) => ({
-    ...b,
-    status: b.status as "draft" | "published",
-    date: b.date ?? "",
-    readTime: b.readTime ?? "",
-    excerpt: b.excerpt ?? "",
-    image: b.image ?? "",
-    tag: b.tag ?? "",
-    createdAt: b.createdAt.toISOString(),
-    updatedAt: b.updatedAt.toISOString(),
-    description: b.description ?? undefined,
-    category: b.category ?? undefined,
-    tags: b.tags ?? undefined,
-    seoTitle: b.seoTitle ?? undefined,
-    seoDescription: b.seoDescription ?? undefined,
-    publishedAt: b.publishedAt?.toISOString(),
-  }));
+  try {
+    const blogs = await prisma.blog.findMany({
+      where: includeDrafts ? undefined : { status: "PUBLISHED" },
+      orderBy: { updatedAt: "desc" },
+    });
+    dbPosts = blogs.map(normalizePost);
+  } catch {
+    dbPosts = [];
+  }
+
+  const merged = new Map<string, BlogPost>();
+  for (const post of legacy) merged.set(post.slug, post);
+  for (const post of dbPosts) merged.set(post.slug, post);
+
+  return Array.from(merged.values())
+    .filter((post) => includeDrafts || post.status === "published")
+    .sort(
+      (a, b) =>
+        new Date(b.updatedAt || b.createdAt).getTime() -
+        new Date(a.updatedAt || a.createdAt).getTime()
+    )
+    .map(toListItem);
 }
 
 /** Get a single blog post by slug */
 export async function getBlogBySlug(
   slug: string
 ): Promise<BlogPost | null> {
-  const blog = await prisma.blog.findUnique({
-    where: { slug },
-  });
+  try {
+    const blog = await prisma.blog.findUnique({ where: { slug } });
+    if (blog) return normalizePost(blog);
+  } catch {
+    // Fall back to the legacy JSON content below.
+  }
 
-  if (!blog) return null;
-
-  return {
-    ...blog,
-    content: JSON.parse(blog.content ?? "[]"),
-    status: blog.status as "draft" | "published",
-    date: blog.date ?? "",
-    readTime: blog.readTime ?? "",
-    excerpt: blog.excerpt ?? "",
-    image: blog.image ?? "",
-    tag: blog.tag ?? "",
-    createdAt: blog.createdAt.toISOString(),
-    updatedAt: blog.updatedAt.toISOString(),
-    description: blog.description ?? undefined,
-    category: blog.category ?? undefined,
-    tags: blog.tags ?? undefined,
-    seoTitle: blog.seoTitle ?? undefined,
-    seoDescription: blog.seoDescription ?? undefined,
-    publishedAt: blog.publishedAt?.toISOString(),
-  };
+  const legacy = await getLegacyBlogs();
+  return legacy.find((post) => post.slug === slug) ?? null;
 }
 
 /** Create a new blog post */
@@ -103,30 +126,13 @@ export async function createBlog(
       ...input,
       slug,
       content: JSON.stringify(input.content || []),
-      status: (input.status || "DRAFT") as any,
+      status: toPrismaStatus(input.status),
       createdAt: now,
       updatedAt: now,
     },
   });
 
-  return {
-    ...post,
-    content: JSON.parse(post.content ?? "[]"),
-    status: post.status as "draft" | "published",
-    date: post.date ?? "",
-    readTime: post.readTime ?? "",
-    excerpt: post.excerpt ?? "",
-    image: post.image ?? "",
-    tag: post.tag ?? "",
-    createdAt: post.createdAt.toISOString(),
-    updatedAt: post.updatedAt.toISOString(),
-    description: post.description ?? undefined,
-    category: post.category ?? undefined,
-    tags: post.tags ?? undefined,
-    seoTitle: post.seoTitle ?? undefined,
-    seoDescription: post.seoDescription ?? undefined,
-    publishedAt: post.publishedAt?.toISOString(),
-  };
+  return normalizePost(post);
 }
 
 /** Update an existing blog post */
@@ -156,29 +162,12 @@ export async function updateBlog(
       content: input.content
         ? JSON.stringify(input.content)
         : undefined,
-      status: input.status ? (input.status as any) : undefined,
+      status: input.status ? toPrismaStatus(input.status) : undefined,
       updatedAt: new Date().toISOString(),
     },
   });
 
-  return {
-    ...updated,
-    content: JSON.parse(updated.content ?? "[]"),
-    status: updated.status as "draft" | "published",
-    date: updated.date ?? "",
-    readTime: updated.readTime ?? "",
-    excerpt: updated.excerpt ?? "",
-    image: updated.image ?? "",
-    tag: updated.tag ?? "",
-    createdAt: updated.createdAt.toISOString(),
-    updatedAt: updated.updatedAt.toISOString(),
-    description: updated.description ?? undefined,
-    category: updated.category ?? undefined,
-    tags: updated.tags ?? undefined,
-    seoTitle: updated.seoTitle ?? undefined,
-    seoDescription: updated.seoDescription ?? undefined,
-    publishedAt: updated.publishedAt?.toISOString(),
-  };
+  return normalizePost(updated);
 }
 
 /** Delete a blog post */

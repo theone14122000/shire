@@ -42,7 +42,6 @@ function emptyDestination(): Destination {
     image: "",
     travelTime: "",
     highlight: "",
-    bestTime: "",
   };
 }
 
@@ -447,16 +446,6 @@ export default function AdminActivitiesPage() {
                     setSection(
                       "destinations",
                       content.destinations.map((d, i) => (i === index ? { ...d, highlight: v } : d))
-                    )
-                  }
-                />
-                <Field
-                  label="Best time"
-                  value={place.bestTime}
-                  onChange={(v) =>
-                    setSection(
-                      "destinations",
-                      content.destinations.map((d, i) => (i === index ? { ...d, bestTime: v } : d))
                     )
                   }
                 />

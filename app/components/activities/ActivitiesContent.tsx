@@ -170,11 +170,6 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
                   <p className="mt-3 flex-1 text-sm leading-[1.8] text-emerald-950/66">
                     {place.highlight}
                   </p>
-                  <div className="mt-5 border-t border-emerald-900/10 pt-4">
-                    <span className="inline-block border border-emerald-900/15 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-emerald-950/55">
-                      Best: {place.bestTime}
-                    </span>
-                  </div>
                 </div>
               </motion.article>
             ))}

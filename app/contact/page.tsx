@@ -20,44 +20,91 @@ const stagger: Variants = {
 const FIELD_CLASS =
   "w-full rounded-xl border border-emerald-200 bg-white px-4 py-3 text-sm text-emerald-950 placeholder:text-emerald-800/35 focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20";
 
+type InquiryForm = {
+  name: string;
+  phone: string;
+  email: string;
+  checkInDate: string;
+  checkOutDate: string;
+  adults: string;
+  children: string;
+};
+
+const initialForm: InquiryForm = {
+  name: "",
+  phone: "",
+  email: "",
+  checkInDate: "",
+  checkOutDate: "",
+  adults: "",
+  children: "",
+};
+
 export default function ContactPage() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
+  const [form, setForm] = useState<InquiryForm>(initialForm);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [statusMessage, setStatusMessage] = useState("");
 
   function validate(): boolean {
     const next: Record<string, string> = {};
-    if (!name.trim()) next.name = "Please tell us your name.";
-    if (!email.trim()) {
-      next.email = "We need an email to reply to you.";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
-      next.email = "That email address does not look right.";
+    if (!form.name.trim()) next.name = "Name is required.";
+    if (!form.phone.trim()) next.phone = "Phone number is required.";
+    if (form.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
+      next.email = "Email address is invalid.";
     }
-    if (!message.trim()) next.message = "Please write a short message.";
-    else if (message.trim().length < 10) next.message = "A little more detail helps us reply well.";
+    if (!form.checkInDate) next.checkInDate = "Check-in date is required.";
+    if (!form.checkOutDate) next.checkOutDate = "Check-out date is required.";
+    if (!form.adults) next.adults = "Number of adults is required.";
+    if (!form.children) next.children = "Number of children is required.";
+    if (form.checkInDate && form.checkOutDate && form.checkOutDate <= form.checkInDate) {
+      next.checkOutDate = "Check-out date must be after check-in date.";
+    }
     setErrors(next);
     return Object.keys(next).length === 0;
   }
 
-  function handleInput(setter: (value: string) => void) {
-    return (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setter(event.target.value);
-      setSent(false);
+  function handleInput(field: keyof InquiryForm) {
+    return (event: ChangeEvent<HTMLInputElement>) => {
+      setForm((current) => ({ ...current, [field]: event.target.value }));
+      setStatus("idle");
+      setStatusMessage("");
     };
   }
 
-  function submit(event: FormEvent) {
+  async function submit(event: FormEvent) {
     event.preventDefault();
     if (!validate()) return;
-    const text = `Hello ${brand.name}! I'm ${name.trim()} (${email.trim()}). ${message.trim()}`;
-    window.open(`${brand.whatsapp}?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
-    setSent(true);
-    setName("");
-    setEmail("");
-    setMessage("");
-    setErrors({});
+
+    setStatus("sending");
+    setStatusMessage("");
+
+    try {
+      const response = await fetch("/api/inquiries", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...form,
+          adults: Number(form.adults),
+          children: Number(form.children),
+        }),
+      });
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        setStatus("error");
+        setStatusMessage(data.error || "Inquiry could not be sent. Please call or WhatsApp us.");
+        return;
+      }
+
+      setStatus("sent");
+      setStatusMessage(`Inquiry sent to ${brand.email}.`);
+      setForm(initialForm);
+      setErrors({});
+    } catch {
+      setStatus("error");
+      setStatusMessage("Inquiry could not be sent. Please call or WhatsApp us.");
+    }
   }
 
   return (
@@ -94,17 +141,11 @@ export default function ContactPage() {
               Reach us directly.
             </h2>
             <p className="mt-4 text-base leading-[1.85] text-emerald-950/65">
-              Call, mail, or message the property — we usually reply within a few hours, every day of the week.
+              Call, mail, or message the property - we usually reply within a few hours, every day of the week.
             </p>
 
             <div className="mt-10 flex flex-col">
-              <ContactBlock
-                icon={MapPin}
-                label="Location"
-                title={brand.address}
-                href={brand.mapsUrl}
-                external
-              />
+              <ContactBlock icon={MapPin} label="Location" title={brand.address} href={brand.mapsUrl} external />
               <ContactBlock icon={Mail} label="Email" title={brand.email} href={`mailto:${brand.email}`} />
               <div className="group border-y border-emerald-900/15 py-8">
                 <Phone className="text-gold-700" size={22} strokeWidth={1.5} />
@@ -116,7 +157,7 @@ export default function ContactPage() {
                     <a
                       key={display}
                       href={brand.phoneHref[index]}
-                      className="block font-display text-xl font-semibold text-emerald-950 transition-colors hover:text-gold-700 sm:text-2xl"
+                      className="block font-sans text-xl font-semibold text-emerald-950 transition-colors hover:text-gold-700 sm:text-2xl"
                     >
                       {display}
                     </a>
@@ -139,7 +180,7 @@ export default function ContactPage() {
                   {brand.address}
                 </h3>
               </div>
-              <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-emerald-950 text-cream-50 transition-colors group-hover:bg-gold-500 group-hover:text-parchment">
+              <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-emerald-950 text-cream-50 transition-colors group-hover:bg-gold-500 group-hover:text-emerald-950">
                 <Send size={17} strokeWidth={1.8} />
               </span>
             </a>
@@ -152,73 +193,39 @@ export default function ContactPage() {
             viewport={{ once: true, amount: 0.15 }}
             className="rounded-3xl border border-emerald-900/10 bg-white/70 p-6 shadow-[0_18px_50px_rgba(3,45,32,0.08)] sm:p-10"
           >
-            <span className="luxe-kicker text-gold-700">Write to us</span>
+            <span className="luxe-kicker text-gold-700">Inquiry Form</span>
             <h2 className="mt-4 font-display text-3xl font-semibold leading-[1.1] text-emerald-950 sm:text-4xl">
-              Send a message.
+              Plan your stay.
             </h2>
             <p className="mt-4 text-sm leading-[1.8] text-emerald-950/60 sm:text-base">
-              Fill in the form and it opens in WhatsApp with your message ready — nothing is stored anywhere.
+              All fields are required except email.
             </p>
 
-            <form onSubmit={submit} noValidate className="mt-8 space-y-5">
-              <div>
-                <label htmlFor="contact-name" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-emerald-900/60">
-                  Your Name
-                </label>
-                <input
-                  id="contact-name"
-                  type="text"
-                  value={name}
-                  onChange={handleInput(setName)}
-                  placeholder="e.g. Aanya Sharma"
-                  className={FIELD_CLASS}
-                />
-                {errors.name && <p className="mt-1.5 text-xs font-medium text-red-600">{errors.name}</p>}
+            <form onSubmit={submit} noValidate className="mt-8 grid gap-5 sm:grid-cols-2">
+              <Field id="name" label="Name" value={form.name} onChange={handleInput("name")} error={errors.name} autoComplete="name" />
+              <Field id="phone" label="Phone Number" value={form.phone} onChange={handleInput("phone")} error={errors.phone} autoComplete="tel" inputMode="tel" />
+              <Field id="email" label="Email (Optional)" value={form.email} onChange={handleInput("email")} error={errors.email} autoComplete="email" type="email" required={false} />
+              <Field id="check-in" label="Check In Date" value={form.checkInDate} onChange={handleInput("checkInDate")} error={errors.checkInDate} type="date" />
+              <Field id="check-out" label="Check Out Date" value={form.checkOutDate} onChange={handleInput("checkOutDate")} error={errors.checkOutDate} type="date" />
+              <Field id="adults" label="Number of Adults (8yrs and above)" value={form.adults} onChange={handleInput("adults")} error={errors.adults} type="number" min={1} />
+              <Field id="children" label="Number of Children (7yrs and below)" value={form.children} onChange={handleInput("children")} error={errors.children} type="number" min={0} />
+
+              <div className="sm:col-span-2">
+                <button
+                  type="submit"
+                  disabled={status === "sending"}
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-800 px-6 py-3.5 text-sm font-bold text-cream-50 shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+                >
+                  <Send size={15} strokeWidth={1.8} />
+                  {status === "sending" ? "Sending..." : "Send Inquiry"}
+                </button>
+
+                {statusMessage && (
+                  <p className={`mt-4 text-sm font-medium ${status === "sent" ? "text-emerald-700" : "text-red-600"}`}>
+                    {statusMessage}
+                  </p>
+                )}
               </div>
-
-              <div>
-                <label htmlFor="contact-email" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-emerald-900/60">
-                  Your Email
-                </label>
-                <input
-                  id="contact-email"
-                  type="email"
-                  value={email}
-                  onChange={handleInput(setEmail)}
-                  placeholder="you@example.com"
-                  className={FIELD_CLASS}
-                />
-                {errors.email && <p className="mt-1.5 text-xs font-medium text-red-600">{errors.email}</p>}
-              </div>
-
-              <div>
-                <label htmlFor="contact-message" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-emerald-900/60">
-                  Message
-                </label>
-                <textarea
-                  id="contact-message"
-                  rows={6}
-                  value={message}
-                  onChange={handleInput(setMessage)}
-                  placeholder="Dates you are thinking of, number of guests, anything we should know…"
-                  className={FIELD_CLASS + " resize-y"}
-                />
-                {errors.message && <p className="mt-1.5 text-xs font-medium text-red-600">{errors.message}</p>}
-              </div>
-
-              <button
-                type="submit"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-800 px-6 py-3.5 text-sm font-bold text-cream-50 transition-all duration-300 hover:bg-emerald-700 hover:-translate-y-0.5 shadow-md sm:w-auto"
-              >
-                <Send size={15} strokeWidth={1.8} />
-                Send via WhatsApp
-              </button>
-
-              {sent && (
-                <p className="text-sm font-medium text-emerald-700">
-                  WhatsApp should have opened with your message. You can also email us directly at {brand.email}.
-                </p>
-              )}
             </form>
           </motion.div>
         </div>
@@ -237,7 +244,7 @@ export default function ContactPage() {
             Not sure which room fits your plans?
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-base leading-[1.85] text-cream-100/62 sm:text-lg">
-            Write to us or give us a call — we are happy to help you choose the perfect space for your Himalayan getaway.
+            Write to us or give us a call - we are happy to help you choose the perfect space for your Himalayan getaway.
           </p>
           <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a href={`mailto:${brand.email}`} className="luxe-button">
@@ -252,6 +259,50 @@ export default function ContactPage() {
 
       <SiteFooter />
     </main>
+  );
+}
+
+function Field({
+  id,
+  label,
+  value,
+  onChange,
+  error,
+  type = "text",
+  required = true,
+  autoComplete,
+  inputMode,
+  min,
+}: {
+  id: string;
+  label: string;
+  value: string;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  error?: string;
+  type?: string;
+  required?: boolean;
+  autoComplete?: string;
+  inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"];
+  min?: number;
+}) {
+  return (
+    <div>
+      <label htmlFor={id} className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-emerald-900/60">
+        {label}
+      </label>
+      <input
+        id={id}
+        type={type}
+        value={value}
+        onChange={onChange}
+        className={FIELD_CLASS}
+        required={required}
+        autoComplete={autoComplete}
+        inputMode={inputMode}
+        min={min}
+      />
+      {error && <p className="mt-1.5 text-xs font-medium text-red-600">{error}</p>}
+    </div>
   );
 }
 

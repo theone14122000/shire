@@ -17,7 +17,6 @@ export type Destination = {
   image: string;
   travelTime: string;
   highlight: string;
-  bestTime: string;
 };
 
 export type ActivitiesContent = {
@@ -102,15 +101,15 @@ export const ACTIVITIES_DEFAULTS: ActivitiesContent = {
       "Curated recommendations from our concierge - each destination chosen for its character, beauty, and ease of access from the property.",
   },
   destinations: [
-    { name: "Tungesh Peak Hike", distance: "6 km", note: "Cheog, Shimla", image: "/images/sightseeing/tungesh-peak.jpg", travelTime: "20 min drive", highlight: "Panoramic ridgeline trek through pine forests", bestTime: "Year-round" },
-    { name: "Deshu Peak / Fagu Top", distance: "3 km", note: null, image: "/images/sightseeing/deshu-peak.jpg", travelTime: "10 min drive", highlight: "Sunrise views over the Kinnaur range", bestTime: "Oct - Mar" },
-    { name: "Kufri Adventure Park", distance: "5.6 km", note: null, image: "/images/sightseeing/kufri-park.jpg", travelTime: "15 min drive", highlight: "Horse riding, zip-lining, and mountain tubing", bestTime: "Apr - Jun" },
-    { name: "Mahasu Peak, Kufri", distance: "6 km", note: null, image: "/images/sightseeing/mahasu-peak.jpg", travelTime: "18 min drive", highlight: "Highest point in Kufri with 360 degree valley views", bestTime: "Oct - Feb" },
-    { name: "Rashtrapati Niwas, Mashobra", distance: "12 km", note: null, image: "/images/sightseeing/rashtrapati-niwas.jpg", travelTime: "30 min drive", highlight: "Colonial-era retreat surrounded by ancient cedars", bestTime: "Year-round" },
-    { name: "Jakhu Temple", distance: "20 km", note: "Shimla", image: "/images/sightseeing/jakhu-temple.jpg", travelTime: "50 min drive", highlight: "Hilltop Hanuman temple with sweeping Shimla views", bestTime: "Year-round" },
-    { name: "Shimla Mall Road", distance: "20 km", note: null, image: "/images/sightseeing/mall-road.jpg", travelTime: "50 min drive", highlight: "Heritage promenade with colonial architecture", bestTime: "Mar - Dec" },
-    { name: "Narkanda - Hatu Peak", distance: "45 km", note: null, image: "/images/sightseeing/hatu-peak.jpg", travelTime: "1.5 hr drive", highlight: "Alpine meadows and snow-dusted forest trails", bestTime: "Oct - May" },
-    { name: "Tata Pani", distance: "62 km", note: null, image: "/images/sightseeing/tata-pani.jpg", travelTime: "2 hr drive", highlight: "Natural hot springs along the Sutlej river", bestTime: "Oct - May" },
+    { name: "Tungesh Peak Hike", distance: "6 km", note: "Cheog, Shimla", image: "/images/sightseeing/tungesh-peak.jpg", travelTime: "20 min drive", highlight: "Panoramic ridgeline trek through pine forests" },
+    { name: "Deshu Peak / Fagu Top", distance: "3 km", note: null, image: "/images/sightseeing/deshu-peak.jpg", travelTime: "10 min drive", highlight: "Sunrise views over the Kinnaur range" },
+    { name: "Kufri Adventure Park", distance: "5.6 km", note: null, image: "/images/sightseeing/kufri-park.jpg", travelTime: "15 min drive", highlight: "Horse riding, zip-lining, and mountain tubing" },
+    { name: "Mahasu Peak, Kufri", distance: "6 km", note: null, image: "/images/sightseeing/mahasu-peak.jpg", travelTime: "18 min drive", highlight: "Highest point in Kufri with 360 degree valley views" },
+    { name: "Rashtrapati Niwas, Mashobra", distance: "12 km", note: null, image: "/images/sightseeing/rashtrapati-niwas.jpg", travelTime: "30 min drive", highlight: "Colonial-era retreat surrounded by ancient cedars" },
+    { name: "Jakhu Temple", distance: "20 km", note: "Shimla", image: "/images/sightseeing/jakhu-temple.jpg", travelTime: "50 min drive", highlight: "Hilltop Hanuman temple with sweeping Shimla views" },
+    { name: "Shimla Mall Road", distance: "20 km", note: null, image: "/images/sightseeing/mall-road.jpg", travelTime: "50 min drive", highlight: "Heritage promenade with colonial architecture" },
+    { name: "Narkanda - Hatu Peak", distance: "45 km", note: null, image: "/images/sightseeing/hatu-peak.jpg", travelTime: "1.5 hr drive", highlight: "Alpine meadows and snow-dusted forest trails" },
+    { name: "Tata Pani", distance: "62 km", note: null, image: "/images/sightseeing/tata-pani.jpg", travelTime: "2 hr drive", highlight: "Natural hot springs along the Sutlej river" },
   ],
   trails: {
     kicker: "Trails",
@@ -161,7 +160,6 @@ function destinations(value: unknown, fallback: Destination[]): Destination[] {
       image: str(o.image, ""),
       travelTime: str(o.travelTime, ""),
       highlight: str(o.highlight, ""),
-      bestTime: str(o.bestTime, ""),
     });
   }
   return out.filter((d) => d.name.trim());

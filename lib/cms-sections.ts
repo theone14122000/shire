@@ -155,7 +155,7 @@ We will make your stay a truly delightful one, and hope to send you back with me
     description:
       "Tell us when you are coming and how many of you there are. We will reply with availability and a simple plan for your stay.",
     ctaLabel: "Check availability",
-    ctaHref: "https://wa.me/918169898066",
+    ctaHref: "https://wa.me/918580411998",
     cta2Label: "Contact the shire",
     cta2Href: "/contact",
   },
