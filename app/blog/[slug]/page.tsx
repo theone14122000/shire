@@ -43,7 +43,7 @@ function SectionBlock({ section }: { section: BlogSection }) {
   switch (section.type) {
     case "paragraph":
       return (
-        <p className="text-base leading-[1.9] text-parchment/80/70 sm:text-lg">
+        <p className="text-base leading-[1.9] text-emerald-950/80 sm:text-lg">
           {section.text?.split("\n").map((line, i, arr) => (
             <span key={i}>
               {line}
@@ -56,13 +56,13 @@ function SectionBlock({ section }: { section: BlogSection }) {
     case "heading":
       if (section.level === 3) {
         return (
-          <h3 className="mt-10 font-display text-xl font-bold tracking-tight text-parchment sm:text-2xl">
+          <h3 className="mt-10 font-display text-xl font-bold tracking-tight text-emerald-950 sm:text-2xl">
             {section.text}
           </h3>
         );
       }
       return (
-        <h2 className="mt-14 font-display text-2xl font-black tracking-tight text-parchment sm:text-3xl">
+        <h2 className="mt-14 font-display text-2xl font-black tracking-tight text-emerald-950 sm:text-3xl">
           {section.text}
         </h2>
       );
@@ -139,7 +139,7 @@ export default async function BlogPostPage({
         <div className="rounded-[2rem] border border-emerald-200/50 bg-white p-8 shadow-sm sm:p-10 lg:p-12">
           <Link
             href="/blog"
-            className="group mb-8 inline-flex items-center gap-2 text-sm font-bold text-parchment/80 transition-colors hover:text-parchment"
+            className="group mb-8 inline-flex items-center gap-2 text-sm font-bold text-emerald-950/70 transition-colors hover:text-emerald-950"
           >
             <svg width="12" height="12" viewBox="0 0 14 14" fill="none" className="transition-transform group-hover:-translate-x-1">
               <path d="M13 7H1M1 7L6.5 1.5M1 7L6.5 12.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
@@ -148,17 +148,17 @@ export default async function BlogPostPage({
           </Link>
 
           <div className="flex items-center gap-3">
-            <span className="rounded-full bg-emerald-100 px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider text-parchment/80">
+            <span className="rounded-full bg-emerald-100 px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider text-emerald-800">
               {post.tag}
             </span>
           </div>
 
-          <h1 className="mt-4 font-display text-3xl font-black leading-tight tracking-tight text-parchment sm:text-4xl lg:text-5xl">
+          <h1 className="mt-4 font-display text-3xl font-black leading-tight tracking-tight text-emerald-950 sm:text-4xl lg:text-5xl">
             {post.title}
           </h1>
 
-          <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-parchment/80/60">
-            <span className="font-bold text-parchment/80">{post.author}</span>
+          <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-emerald-950/60">
+            <span className="font-bold text-emerald-950/80">{post.author}</span>
             <span>·</span>
             <span>{post.date}</span>
             <span>·</span>
@@ -172,13 +172,13 @@ export default async function BlogPostPage({
           </div>
 
           <div className="mt-14 border-t border-emerald-100 pt-10 text-center">
-            <p className="text-sm font-medium text-parchment/80/50">
-              Enjoyed this story? Plan your stay at Fagu.
+<p className="text-sm font-medium text-emerald-950/70">
+              Enjoyed this story? <a href="https://letsbook.me/booking/thehimalayanshire" className="font-medium text-gold-600 underline">plan your stay at Fagu</a>.
             </p>
             <Link
-              href="https://letsbook.me/booking/thehimalayanshire?checkin=2026-08-04&checkout=2026-08-05&adults=2&children=0"
-              className="group mt-5 inline-flex items-center gap-2.5 rounded-full bg-gold-500 px-8 py-4 text-sm font-bold text-parchment shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-gold-400 hover:shadow-xl"
-            >
+              href="https://letsbook.me/booking/thehimalayanshire"
+              className="group mt-5 inline-flex items-center gap-2.5 rounded-full bg-gold-500 px-8 py-4 text-sm font-bold text-emerald-950 shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-gold-400 hover:shadow-xl"
+              >
               Book Your Stay
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform group-hover:translate-x-1">
                 <path d="M1 7H13M13 7L7.5 1.5M13 7L7.5 12.5" />

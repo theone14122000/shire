@@ -34,7 +34,7 @@ export default function BlogListingClient({ blogs }: { blogs: BlogListItem[] }) 
           className="mx-auto grid max-w-[1400px] gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-end lg:gap-20"
         >
           <div>
-            <motion.span variants={fadeUp} className="luxe-kicker text-gold-700">
+            <motion.span variants={fadeUp} className="luxe-kicker text-gold-400">
               Blog
             </motion.span>
             <motion.h1 variants={fadeUp} className="mt-6 max-w-4xl font-display text-5xl font-semibold leading-[1.02] text-parchment sm:text-6xl lg:text-7xl">
@@ -67,7 +67,7 @@ export default function BlogListingClient({ blogs }: { blogs: BlogListItem[] }) 
                 />
               </div>
               <div className="flex flex-col justify-center py-8 lg:px-8">
-                <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-gold-700">
+                <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-gold-400">
                   {featured.tag} / {featured.readTime}
                 </span>
                 <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.08] text-parchment sm:text-5xl">
@@ -76,7 +76,7 @@ export default function BlogListingClient({ blogs }: { blogs: BlogListItem[] }) 
                 <p className="mt-6 max-w-[58ch] text-base leading-[1.85] text-parchment/66">
                   {featured.excerpt}
                 </p>
-                <span className="luxe-link mt-8">
+                <span className="luxe-link mt-8 text-gold-400 hover:text-gold-300">
                   Read Article
                   <ArrowUpRight size={15} strokeWidth={1.8} />
                 </span>
@@ -109,10 +109,10 @@ export default function BlogListingClient({ blogs }: { blogs: BlogListItem[] }) 
                 <span className="mt-6 block text-[10px] font-bold uppercase tracking-[0.2em] text-gold-700">
                   {post.tag} / {post.readTime}
                 </span>
-                <h2 className="mt-3 font-display text-2xl font-semibold leading-[1.18] text-parchment">
+                <h2 className="mt-3 font-display text-2xl font-semibold leading-[1.18] text-emerald-950">
                   {post.title}
                 </h2>
-                <p className="mt-4 text-sm leading-[1.8] text-parchment/64">
+                <p className="mt-4 text-sm leading-[1.8] text-emerald-950/70">
                   {post.excerpt}
                 </p>
                 <span className="luxe-link mt-6">
