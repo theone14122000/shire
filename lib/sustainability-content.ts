@@ -34,7 +34,7 @@ export const SUSTAINABILITY_DEFAULTS: SustainabilityContent = {
     {
       src: "/sust/Sustainability2.jpeg",
       title: "From Kitchen to Garden",
-      caption: "Compost returns what the kitchen takes",
+      caption: "From Kitchen to Garden",
     },
     {
       src: "/sust/Sustainability1.jpeg",
