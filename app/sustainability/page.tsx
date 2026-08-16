@@ -11,7 +11,7 @@ export default async function SustainabilityPage() {
   const content = mergeSustainability(db as Record<string, unknown> | null | undefined);
 
   return (
-    <main className="min-h-screen bg-[#fffdf7] font-sans text-emerald-950 selection:bg-gold-200/30">
+    <main className="min-h-screen overflow-x-clip bg-[#fffdf7] font-sans text-emerald-950 selection:bg-gold-200/30">
       <SiteNav />
       <SustainabilityView content={content} />
       <SiteFooter />
