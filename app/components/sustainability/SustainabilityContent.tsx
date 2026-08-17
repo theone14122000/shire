@@ -146,19 +146,18 @@ function ApproachSection({
           className="relative lg:col-span-7"
         >
           <div className="bg-cream-50 p-3 pb-4 shadow-[0_18px_50px_-18px_rgba(6,40,25,0.4)] transition-shadow duration-500 hover:shadow-[0_32px_70px_-20px_rgba(6,40,25,0.5)] lg:-mr-10">
-            <motion.div
-              style={{ y, scale: 1.12 }}
-              className="relative aspect-[4/5] w-full overflow-hidden bg-emerald-950 sm:aspect-[4/4.6]"
-            >
-              <Image
-                src={image.src}
-                alt={image.title}
-                fill
-                priority
-                sizes="(max-width: 1024px) 100vw, 55vw"
-                className="object-cover"
-              />
-            </motion.div>
+            <div className="relative aspect-[4/5] w-full overflow-hidden bg-emerald-950 sm:aspect-[4/4.6]">
+              <motion.div style={{ y, scale: 1.12 }} className="absolute inset-0">
+                <Image
+                  src={image.src}
+                  alt={image.title}
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 55vw"
+                  className="object-cover"
+                />
+              </motion.div>
+            </div>
             <div className="px-2 pb-1.5 pt-5 text-left">
               <span className="mb-3 block h-px w-10 bg-gold-600/60" />
               <p className="font-display text-xl font-semibold leading-snug text-emerald-950 sm:text-[1.35rem]">
