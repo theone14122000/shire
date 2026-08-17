@@ -86,24 +86,25 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
                 <motion.article
                   key={`${activity.title}-${index}`}
                   variants={fadeUp}
-                  className={`group relative min-h-[430px] overflow-hidden ${index < 2 ? "lg:col-span-3" : "lg:col-span-2"}`}
+                  className={`group flex h-full flex-col overflow-hidden rounded-2xl border border-emerald-900/10 bg-white/80 shadow-[0_14px_40px_rgba(3,45,32,0.07)] ${index < 2 ? "lg:col-span-3" : "lg:col-span-2"}`}
                 >
-                  <Image
-                    src={activity.image}
-                    alt={activity.title}
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 33vw"
-                    className="object-cover transition-transform duration-[1.1s] group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-emerald-950 via-emerald-950/42 to-transparent" />
-                  <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
-                    <span className="flex h-12 w-12 items-center justify-center border border-gold-400/40 bg-emerald-950/55 text-gold-300 backdrop-blur">
+                  <div className="relative aspect-[16/10] overflow-hidden">
+                    <Image
+                      src={activity.image}
+                      alt={activity.title}
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 33vw"
+                      className="object-cover transition-transform duration-[1.1s] group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="flex flex-1 flex-col p-6 sm:p-8">
+                    <span className="flex h-12 w-12 items-center justify-center border border-gold-400/40 bg-emerald-950/6 text-gold-700">
                       <Icon size={20} strokeWidth={1.5} />
                     </span>
-                    <h3 className="mt-6 font-display text-2xl font-semibold text-cream-50 sm:text-3xl">
+                    <h3 className="mt-6 font-display text-2xl font-semibold text-emerald-950 sm:text-3xl">
                       {activity.title}
                     </h3>
-                    <p className="mt-4 max-w-[42ch] text-sm leading-[1.8] text-cream-100/68 sm:text-base">
+                    <p className="mt-4 max-w-[42ch] text-sm leading-[1.8] text-emerald-950/66 sm:text-base">
                       {activity.body}
                     </p>
                   </div>
