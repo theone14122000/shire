@@ -128,10 +128,10 @@ export function RoomPageContent({
               <StatCell icon={Maximize2} label="Size" value={room.size} />
               <StatCell icon={Layers} label="Floor" value={room.floor} />
               <StatCell icon={Mountain} label={room.viewLabel ?? "View"} value={room.view} />
-              <div className="flex items-center justify-center px-6 py-8 lg:border-l lg:border-emerald-900/10">
+              <div className="flex items-center justify-center px-6 py-3.5 lg:border-l lg:border-emerald-900/10">
                 <Link
                   href="https://letsbook.me/booking/thehimalayanshire?checkin=2026-08-04&checkout=2026-08-05&adults=2&children=0"
-                  className="luxe-button w-full whitespace-nowrap lg:w-auto"
+                  className="w-full whitespace-nowrap rounded-full bg-gold-500 px-6 py-2 text-sm font-bold tracking-wide text-emerald-950 transition-all duration-300 hover:bg-gold-400 lg:w-auto"
                 >
                   Book This Room
                 </Link>
@@ -315,12 +315,12 @@ function StatCell({
   value: string;
 }) {
   return (
-    <div className="flex flex-col items-center justify-center gap-1.5 px-6 py-8 text-center">
-      <Icon className="shrink-0 text-gold-600" size={18} strokeWidth={1.6} />
+    <div className="flex flex-col items-center justify-center gap-1 px-5 py-3.5 text-center">
+      <Icon className="shrink-0 text-gold-600" size={15} strokeWidth={1.6} />
       <dt className="text-[10px] font-bold uppercase tracking-[0.22em] text-emerald-900/50">
         {label}
       </dt>
-      <dd className="font-display text-xl font-semibold text-emerald-950">{value}</dd>
+      <dd className="font-display text-base font-semibold text-emerald-950">{value}</dd>
     </div>
   );
 }
