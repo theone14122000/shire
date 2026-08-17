@@ -60,7 +60,7 @@ export function Hero({ content }: { content?: any }) {
       ref={ref}
       id="top"
       onMouseMove={handleMouseMove}
-      className="relative h-[70vh] min-h-[480px] w-full overflow-hidden bg-ink-900 sm:h-[80vh] sm:min-h-[560px] lg:h-[92vh]"
+      className="relative h-[70vh] min-h-[480px] w-full overflow-hidden bg-pine-100 sm:h-[80vh] sm:min-h-[560px] lg:h-[92vh]"
     >
       {/*
         Full-bleed cinematic video frame — edge to edge on every screen
@@ -99,6 +99,12 @@ export function Hero({ content }: { content?: any }) {
             </video>
           </motion.div>
 
+          {/* Light green tint wash */}
+          <div
+            className="absolute inset-0 pointer-events-none bg-emerald-200/25 mix-blend-soft-light"
+            aria-hidden
+          />
+
           {/* Cinematic dark overlay */}
           <div className="absolute inset-0 hero-overlay pointer-events-none" />
 
@@ -117,7 +123,7 @@ export function Hero({ content }: { content?: any }) {
       {/* Floating ambient glow orb — reacts to cursor */}
       <motion.div
         style={{ x: springX, y: springY }}
-        className="pointer-events-none absolute left-1/2 top-1/3 h-[22rem] w-[22rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/10 blur-[100px] mix-blend-screen sm:h-[28rem] sm:w-[28rem] lg:h-[32rem] lg:w-[32rem] lg:blur-[120px]"
+        className="pointer-events-none absolute left-1/2 top-1/3 h-[22rem] w-[22rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-300/25 blur-[100px] mix-blend-screen sm:h-[28rem] sm:w-[28rem] lg:h-[32rem] lg:w-[32rem] lg:blur-[120px]"
         aria-hidden
       />
 
