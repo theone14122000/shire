@@ -99,7 +99,7 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.1 }}
-            className="mt-12 grid gap-5 lg:mt-16 lg:grid-cols-5"
+            className="mt-12 grid gap-6 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3"
           >
             {content.propertyCards.map((activity, index) => {
               return (
@@ -108,17 +108,17 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
                   variants={fadeUp}
                   className="group flex h-full flex-col overflow-hidden bg-cream-50 shadow-[0_12px_36px_-16px_rgba(6,40,25,0.28)] transition-shadow duration-500 hover:shadow-[0_26px_60px_-22px_rgba(6,40,25,0.38)]"
                 >
-                  <div className="relative aspect-[16/10] overflow-hidden">
+                  <div className="relative aspect-[16/11] overflow-hidden">
                     <Image
                       src={activity.image}
                       alt={activity.title}
                       fill
-                      sizes="(max-width: 1024px) 100vw, 33vw"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105"
                     />
                   </div>
                   <div className="flex flex-1 flex-col p-7 sm:p-9">
-                    <h3 className="font-display text-2xl font-semibold leading-snug text-emerald-950 sm:text-[1.7rem]">
+                    <h3 className="font-display text-2xl font-semibold leading-snug text-emerald-950 sm:text-3xl">
                       {activity.title}
                     </h3>
                   </div>
