@@ -108,7 +108,7 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
                   variants={fadeUp}
                   className="group flex h-full flex-col overflow-hidden border border-emerald-900/10 bg-white shadow-[0_14px_40px_rgba(3,45,32,0.07)]"
                 >
-                  <div className="relative aspect-square overflow-hidden">
+                  <div className="relative aspect-[3/4] overflow-hidden">
                     <Image
                       src={activity.image}
                       alt={activity.title}
