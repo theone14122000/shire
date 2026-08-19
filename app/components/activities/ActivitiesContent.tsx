@@ -71,14 +71,42 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.1 }}
-            className="mt-14 grid gap-5 lg:mt-20 lg:grid-cols-6"
+            className="mt-14 grid gap-x-12 gap-y-7 border-t border-emerald-900/10 pt-10 lg:mt-16 lg:grid-cols-2"
+          >
+            {content.propertyCards.map((activity, index) => (
+              <motion.div
+                key={`${activity.title}-${index}`}
+                variants={fadeUp}
+                className="flex gap-5"
+              >
+                <span className="font-display text-2xl font-semibold text-gold-700">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <div className="border-b border-emerald-900/10 pb-6">
+                  <h3 className="font-display text-xl font-semibold text-emerald-950">
+                    {activity.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-[1.8] text-emerald-950/66 sm:text-base">
+                    {activity.body}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.1 }}
+            className="mt-12 grid gap-5 lg:mt-16 lg:grid-cols-5"
           >
             {content.propertyCards.map((activity, index) => {
               return (
                 <motion.article
                   key={`${activity.title}-${index}`}
                   variants={fadeUp}
-                  className={`group flex h-full flex-col overflow-hidden bg-cream-50 shadow-[0_12px_36px_-16px_rgba(6,40,25,0.28)] transition-shadow duration-500 hover:shadow-[0_26px_60px_-22px_rgba(6,40,25,0.38)] ${index < 2 ? "lg:col-span-3" : "lg:col-span-2"}`}
+                  className="group flex h-full flex-col overflow-hidden bg-cream-50 shadow-[0_12px_36px_-16px_rgba(6,40,25,0.28)] transition-shadow duration-500 hover:shadow-[0_26px_60px_-22px_rgba(6,40,25,0.38)]"
                 >
                   <div className="relative aspect-[16/10] overflow-hidden">
                     <Image
@@ -90,15 +118,9 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
                     />
                   </div>
                   <div className="flex flex-1 flex-col p-7 sm:p-9">
-                    <span className="text-[10px] font-bold uppercase tracking-[0.28em] text-gold-700">
-                      Himalayan Shire &middot; Fagu
-                    </span>
-                    <h3 className="mt-4 font-display text-2xl font-semibold leading-snug text-emerald-950 sm:text-[1.7rem]">
+                    <h3 className="font-display text-2xl font-semibold leading-snug text-emerald-950 sm:text-[1.7rem]">
                       {activity.title}
                     </h3>
-                    <p className="mt-4 max-w-[46ch] text-sm leading-[1.8] text-emerald-950/66 sm:text-base">
-                      {activity.body}
-                    </p>
                   </div>
                 </motion.article>
               );
