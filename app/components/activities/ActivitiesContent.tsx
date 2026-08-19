@@ -99,25 +99,25 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.1 }}
-            className="mt-12 grid gap-6 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3"
+            className="mt-12 grid gap-5 lg:mt-16 lg:grid-cols-5"
           >
             {content.propertyCards.map((activity, index) => {
               return (
                 <motion.article
                   key={`${activity.title}-${index}`}
                   variants={fadeUp}
-                  className="group flex h-full flex-col overflow-hidden rounded-2xl border border-emerald-900/10 bg-white shadow-[0_14px_40px_rgba(3,45,32,0.07)]"
+                  className="group flex h-full flex-col overflow-hidden border border-emerald-900/10 bg-white shadow-[0_14px_40px_rgba(3,45,32,0.07)]"
                 >
-                  <div className="relative aspect-[4/3] overflow-hidden">
+                  <div className="relative aspect-[10/9] overflow-hidden">
                     <Image
                       src={activity.image}
                       alt={activity.title}
                       fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
                       className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105"
                     />
                   </div>
-                  <div className="flex flex-1 flex-col p-7 sm:p-9">
+                  <div className="flex flex-1 flex-col p-6 sm:p-7">
                     <h3 className="font-display text-lg font-semibold leading-snug text-emerald-950 sm:text-xl">
                       {activity.title}
                     </h3>
