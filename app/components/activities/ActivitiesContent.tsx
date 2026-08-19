@@ -104,16 +104,16 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
         </div>
       </section>
 
-      <section className="bg-[#f7f1e6] px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
+      <section className="bg-[#072e2b] px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
         <div className="mx-auto max-w-[1400px]">
           <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
             <div>
-              <span className="luxe-kicker text-gold-700">{content.nearby.kicker}</span>
-              <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.06] text-emerald-950 sm:text-5xl">
+              <span className="luxe-kicker text-gold-400">{content.nearby.kicker}</span>
+              <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.06] text-cream-50 sm:text-5xl">
                 {content.nearby.heading}
               </h2>
             </div>
-            <p className="max-w-2xl text-base leading-[1.9] text-emerald-950/66 sm:text-lg lg:justify-self-end">
+            <p className="max-w-2xl text-base leading-[1.9] text-cream-100/62 sm:text-lg lg:justify-self-end">
               {content.nearby.description}
             </p>
           </div>
