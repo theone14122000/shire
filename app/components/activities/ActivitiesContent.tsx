@@ -78,7 +78,7 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
                 <motion.article
                   key={`${activity.title}-${index}`}
                   variants={fadeUp}
-                  className={`group flex h-full flex-col overflow-hidden rounded-2xl border border-emerald-900/10 bg-white/80 shadow-[0_14px_40px_rgba(3,45,32,0.07)] ${index < 2 ? "lg:col-span-3" : "lg:col-span-2"}`}
+                  className={`group flex h-full flex-col overflow-hidden bg-cream-50 shadow-[0_12px_36px_-16px_rgba(6,40,25,0.28)] transition-shadow duration-500 hover:shadow-[0_26px_60px_-22px_rgba(6,40,25,0.38)] ${index < 2 ? "lg:col-span-3" : "lg:col-span-2"}`}
                 >
                   <div className="relative aspect-[16/10] overflow-hidden">
                     <Image
@@ -86,14 +86,17 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
                       alt={activity.title}
                       fill
                       sizes="(max-width: 1024px) 100vw, 33vw"
-                      className="object-cover transition-transform duration-[1.1s] group-hover:scale-105"
+                      className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105"
                     />
                   </div>
-                  <div className="flex flex-1 flex-col p-6 sm:p-8">
-                    <h3 className="font-display text-2xl font-semibold text-emerald-950 sm:text-3xl">
+                  <div className="flex flex-1 flex-col p-7 sm:p-9">
+                    <span className="text-[10px] font-bold uppercase tracking-[0.28em] text-gold-700">
+                      Himalayan Shire &middot; Fagu
+                    </span>
+                    <h3 className="mt-4 font-display text-2xl font-semibold leading-snug text-emerald-950 sm:text-[1.7rem]">
                       {activity.title}
                     </h3>
-                    <p className="mt-4 max-w-[42ch] text-sm leading-[1.8] text-emerald-950/66 sm:text-base">
+                    <p className="mt-4 max-w-[46ch] text-sm leading-[1.8] text-emerald-950/66 sm:text-base">
                       {activity.body}
                     </p>
                   </div>
