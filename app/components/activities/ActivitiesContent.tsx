@@ -3,13 +3,17 @@
 import { motion, type Variants } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import {
   ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
   Compass,
+  ImagePlus,
   MapPin,
   Navigation,
 } from "lucide-react";
-import type { ActivitiesContent } from "@/lib/activities-content";
+import type { ActivitiesContent, ActivityCard } from "@/lib/activities-content";
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 28 },
@@ -95,36 +99,12 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
           </motion.div>
 
           <motion.div
-            variants={stagger}
+            variants={fadeUp}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.1 }}
-            className="mt-12 grid gap-5 lg:mt-16 lg:grid-cols-5"
           >
-            {content.propertyCards.map((activity, index) => {
-              return (
-                <motion.article
-                  key={`${activity.title}-${index}`}
-                  variants={fadeUp}
-                  className="group flex h-full flex-col overflow-hidden border border-emerald-900/10 bg-white shadow-[0_14px_40px_rgba(3,45,32,0.07)]"
-                >
-                  <div className="relative aspect-[3/4] overflow-hidden">
-                    <Image
-                      src={activity.image}
-                      alt={activity.title}
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
-                      className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="flex flex-1 flex-col p-4 sm:p-5">
-                    <h3 className="font-display text-base font-semibold leading-snug text-emerald-950 sm:text-lg">
-                      {activity.title}
-                    </h3>
-                  </div>
-                </motion.article>
-              );
-            })}
+            <PropertyCardSlider cards={content.propertyCards} />
           </motion.div>
         </div>
       </section>
@@ -236,5 +216,99 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
         </div>
       </section>
     </>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Property card slider — 4 cards per row on desktop, slide for rest  */
+/* ------------------------------------------------------------------ */
+function PropertyCardSlider({ cards }: { cards: ActivityCard[] }) {
+  const [page, setPage] = useState(0);
+  const [perPage, setPerPage] = useState(4);
+
+  useEffect(() => {
+    function update() {
+      const w = window.innerWidth;
+      setPerPage(w >= 1024 ? 4 : w >= 640 ? 2 : 1);
+    }
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  const maxPage = Math.max(0, cards.length - perPage);
+
+  useEffect(() => {
+    setPage((p) => Math.min(p, maxPage));
+  }, [maxPage, cards.length]);
+
+  if (cards.length === 0) return null;
+
+  return (
+    <div className="mt-12 lg:mt-16">
+      <div className="mb-5 flex items-center justify-between">
+        <span className="text-[11px] font-bold uppercase tracking-[0.22em] text-emerald-950/40">
+          {String(Math.min(page, maxPage) + 1).padStart(2, "0")} / {String(maxPage + 1).padStart(2, "0")}
+        </span>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setPage((p) => Math.max(0, p - 1))}
+            disabled={page === 0}
+            aria-label="Previous cards"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-emerald-900/15 text-emerald-950 transition-colors duration-300 hover:border-gold-600 hover:text-gold-700 disabled:opacity-30"
+          >
+            <ChevronLeft size={16} strokeWidth={1.8} />
+          </button>
+          <button
+            type="button"
+            onClick={() => setPage((p) => Math.min(maxPage, p + 1))}
+            disabled={page >= maxPage}
+            aria-label="Next cards"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-emerald-900/15 text-emerald-950 transition-colors duration-300 hover:border-gold-600 hover:text-gold-700 disabled:opacity-30"
+          >
+            <ChevronRight size={16} strokeWidth={1.8} />
+          </button>
+        </div>
+      </div>
+
+      <div className="overflow-hidden">
+        <motion.div
+          className="flex"
+          animate={{ x: `${-Math.min(page, maxPage) * (100 / perPage)}%` }}
+          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+        >
+          {cards.map((activity, index) => (
+            <div
+              key={`${activity.title}-${index}`}
+              className="w-full shrink-0 px-2.5 sm:w-1/2 lg:w-1/4"
+            >
+              <article className="group flex h-full flex-col overflow-hidden border border-emerald-900/10 bg-white shadow-[0_14px_40px_rgba(3,45,32,0.07)]">
+                <div className="relative aspect-[3/4] overflow-hidden">
+                  {activity.image ? (
+                    <Image
+                      src={activity.image}
+                      alt={activity.title}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center bg-emerald-950">
+                      <ImagePlus size={24} strokeWidth={1.3} className="text-gold-400/70" />
+                    </div>
+                  )}
+                </div>
+                <div className="flex flex-1 flex-col p-4 sm:p-5">
+                  <h3 className="font-display text-base font-semibold leading-snug text-emerald-950 sm:text-lg">
+                    {activity.title}
+                  </h3>
+                </div>
+              </article>
+            </div>
+          ))}
+        </motion.div>
+      </div>
+    </div>
   );
 }
