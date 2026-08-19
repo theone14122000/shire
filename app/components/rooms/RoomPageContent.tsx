@@ -109,11 +109,15 @@ export function RoomPageContent({
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, amount: 0.22 }}
+              className="flex flex-col items-center text-center"
             >
               <motion.span variants={fadeUp} className="luxe-kicker text-gold-700">
                 The Space
               </motion.span>
-              <motion.p variants={fadeUp} className="mt-7 max-w-[72ch] text-base leading-[1.85] text-emerald-950 sm:text-lg">
+              <motion.p
+                variants={fadeUp}
+                className="mx-auto mt-7 max-w-[92ch] px-0 text-justify text-base leading-[1.85] text-emerald-950 sm:px-4 sm:text-lg"
+              >
                 {room.description}
               </motion.p>
             </motion.div>
