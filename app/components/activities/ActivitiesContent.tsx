@@ -108,7 +108,7 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
                   variants={fadeUp}
                   className="group flex h-full flex-col overflow-hidden border border-emerald-900/10 bg-white shadow-[0_14px_40px_rgba(3,45,32,0.07)]"
                 >
-                  <div className="relative aspect-[10/9] overflow-hidden">
+                  <div className="relative aspect-[4/3] overflow-hidden">
                     <Image
                       src={activity.image}
                       alt={activity.title}
@@ -117,8 +117,8 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
                       className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105"
                     />
                   </div>
-                  <div className="flex flex-1 flex-col p-6 sm:p-7">
-                    <h3 className="font-display text-lg font-semibold leading-snug text-emerald-950 sm:text-xl">
+                  <div className="flex flex-1 flex-col p-4 sm:p-5">
+                    <h3 className="font-display text-base font-semibold leading-snug text-emerald-950 sm:text-lg">
                       {activity.title}
                     </h3>
                   </div>
