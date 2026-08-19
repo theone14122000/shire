@@ -107,7 +107,7 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
         </div>
       </section>
 
-      <section className="bg-[#072e2b] px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
+      <section className="bg-[#003E33] px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
         <div className="mx-auto max-w-[1400px]">
           <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
             <div>
