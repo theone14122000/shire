@@ -3,7 +3,7 @@
 import { motion, type Variants } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowUpRight,
   ChevronLeft,
@@ -225,11 +225,20 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
 function PropertyCardSlider({ cards }: { cards: ActivityCard[] }) {
   const [page, setPage] = useState(0);
   const [perPage, setPerPage] = useState(4);
+  const [unitPct, setUnitPct] = useState(100);
+  const trackRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     function update() {
       const w = window.innerWidth;
-      setPerPage(w >= 1024 ? 4 : w >= 640 ? 2 : 1);
+      const cols = w >= 1024 ? 4 : w >= 640 ? 2 : 1;
+      setPerPage(cols);
+      const trackW = trackRef.current?.clientWidth ?? w;
+      if (cols === 1) {
+        setUnitPct(((0.86 * trackW) / trackW) * 100);
+      } else {
+        setUnitPct(((trackW / cols) / trackW) * 100);
+      }
     }
     update();
     window.addEventListener("resize", update);
@@ -237,6 +246,7 @@ function PropertyCardSlider({ cards }: { cards: ActivityCard[] }) {
   }, []);
 
   const maxPage = Math.max(0, cards.length - perPage);
+  const clampedPage = Math.min(page, maxPage);
 
   useEffect(() => {
     setPage((p) => Math.min(p, maxPage));
@@ -248,13 +258,13 @@ function PropertyCardSlider({ cards }: { cards: ActivityCard[] }) {
     <div className="mt-12 lg:mt-16">
       <div className="mb-5 flex items-center justify-between">
         <span className="text-[11px] font-bold uppercase tracking-[0.22em] text-emerald-950/40">
-          {String(Math.min(page, maxPage) + 1).padStart(2, "0")} / {String(maxPage + 1).padStart(2, "0")}
+          {String(clampedPage + 1).padStart(2, "0")} / {String(maxPage + 1).padStart(2, "0")}
         </span>
         <div className="flex items-center gap-2">
           <button
             type="button"
             onClick={() => setPage((p) => Math.max(0, p - 1))}
-            disabled={page === 0}
+            disabled={clampedPage === 0}
             aria-label="Previous cards"
             className="flex h-10 w-10 items-center justify-center rounded-full border border-emerald-900/15 text-emerald-950 transition-colors duration-300 hover:border-gold-600 hover:text-gold-700 disabled:opacity-30"
           >
@@ -263,7 +273,7 @@ function PropertyCardSlider({ cards }: { cards: ActivityCard[] }) {
           <button
             type="button"
             onClick={() => setPage((p) => Math.min(maxPage, p + 1))}
-            disabled={page >= maxPage}
+            disabled={clampedPage >= maxPage}
             aria-label="Next cards"
             className="flex h-10 w-10 items-center justify-center rounded-full border border-emerald-900/15 text-emerald-950 transition-colors duration-300 hover:border-gold-600 hover:text-gold-700 disabled:opacity-30"
           >
@@ -272,16 +282,26 @@ function PropertyCardSlider({ cards }: { cards: ActivityCard[] }) {
         </div>
       </div>
 
-      <div className="overflow-hidden">
+      <div ref={trackRef} className="overflow-hidden">
         <motion.div
-          className="flex"
-          animate={{ x: `${-Math.min(page, maxPage) * (100 / perPage)}%` }}
+          className="flex cursor-grab active:cursor-grabbing"
+          animate={{ x: `${-clampedPage * unitPct}%` }}
           transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+          drag="x"
+          dragConstraints={{ left: 0, right: 0 }}
+          dragElastic={0.12}
+          onDragEnd={(_, info) => {
+            if (info.offset.x < -60 || info.velocity.x < -400) {
+              setPage((p) => Math.min(maxPage, p + 1));
+            } else if (info.offset.x > 60 || info.velocity.x > 400) {
+              setPage((p) => Math.max(0, p - 1));
+            }
+          }}
         >
           {cards.map((activity, index) => (
             <div
               key={`${activity.title}-${index}`}
-              className="w-full shrink-0 px-2.5 sm:w-1/2 lg:w-1/4"
+              className="w-[86%] shrink-0 px-2.5 sm:w-1/2 lg:w-1/4"
             >
               <article className="group flex h-full flex-col overflow-hidden border border-emerald-900/10 bg-white shadow-[0_14px_40px_rgba(3,45,32,0.07)]">
                 <div className="relative aspect-[3/4] overflow-hidden">
