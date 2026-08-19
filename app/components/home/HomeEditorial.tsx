@@ -157,7 +157,7 @@ export function HomeEditorial({
       <section
         ref={storyRef}
         id="story"
-        className="relative border-b border-emerald-900/10 px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36"
+        className="relative border-b border-emerald-900/10 bg-[#fffdf7] px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36"
       >
         <div className="mx-auto grid max-w-[1400px] gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:gap-20">
           <motion.div
