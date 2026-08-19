@@ -10,6 +10,11 @@ export type ActivityCard = {
   image: string;
 };
 
+export type PropertyPoint = {
+  title: string;
+  body: string;
+};
+
 export type Destination = {
   name: string;
   distance: string;
@@ -33,6 +38,7 @@ export type ActivitiesContent = {
     description: string;
   };
   propertyCards: ActivityCard[];
+  propertyPoints: PropertyPoint[];
   nearby: {
     kicker: string;
     heading: string;
@@ -94,6 +100,28 @@ export const ACTIVITIES_DEFAULTS: ActivitiesContent = {
       image: "/images/activity/activity-10.jpg",
     },
   ],
+  propertyPoints: [
+    {
+      title: "Quiet corners for reading while the valley does the talking.",
+      body: "At The Himalayan Shire, we believe in giving you space to breathe. Beyond your room, you’ll discover plenty of cozy common areas and quiet corners, each offering incredible panoramic views. Whether you want to read a book in our cozy carpeted attic, unwind on the balcony swing, or stroll across the lawn, there is always a perfect spot for some personal space.",
+    },
+    {
+      title: "Indoor Fun",
+      body: "Table Tennis, Carrom, board games, and playing cards. For quieter afternoons, explore our mini-library of books.",
+    },
+    {
+      title: "The TV Lounge",
+      body: "Sink into lounge sofas on the top floor and enjoy movies on our 65-inch LED Smart TV.",
+    },
+    {
+      title: "The Lawn",
+      body: "A sprawling lawn with Himalayan views - ideal for morning yoga or meditation. A small slide keeps the little ones entertained.",
+    },
+    {
+      title: "Nature Trails & Orchard Walks",
+      body: "Step into apple orchards and deodar forests right outside. Stroll through orchards, meet locals, or explore jungle trails steps from the property. Bonfire and barbeque available on request.",
+    },
+  ],
   nearby: {
     kicker: "Nearby",
     heading: "Destinations.",
@@ -147,6 +175,20 @@ function cards(value: unknown, fallback: ActivityCard[]): ActivityCard[] {
   return out;
 }
 
+function points(value: unknown, fallback: PropertyPoint[]): PropertyPoint[] {
+  if (!Array.isArray(value)) return fallback;
+  const out: PropertyPoint[] = [];
+  for (const item of value) {
+    if (!item || typeof item !== "object") continue;
+    const o = item as Record<string, unknown>;
+    out.push({
+      title: str(o.title, ""),
+      body: str(o.body, ""),
+    });
+  }
+  return out;
+}
+
 function destinations(value: unknown, fallback: Destination[]): Destination[] {
   if (!Array.isArray(value)) return fallback;
   const out: Destination[] = [];
@@ -190,6 +232,7 @@ export function mergeActivities(
       description: str(atProperty.description, ACTIVITIES_DEFAULTS.atProperty.description),
     },
     propertyCards: cards(db.propertyCards, ACTIVITIES_DEFAULTS.propertyCards),
+    propertyPoints: points(db.propertyPoints, ACTIVITIES_DEFAULTS.propertyPoints),
     nearby: {
       kicker: str(nearby.kicker, ACTIVITIES_DEFAULTS.nearby.kicker),
       heading: str(nearby.heading, ACTIVITIES_DEFAULTS.nearby.heading),

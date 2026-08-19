@@ -77,7 +77,7 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
             viewport={{ once: true, amount: 0.1 }}
             className="mt-14 grid gap-x-12 gap-y-7 border-t border-emerald-900/10 pt-10 lg:mt-16 lg:grid-cols-2"
           >
-            {content.propertyCards.map((activity, index) => (
+            {content.propertyPoints.map((activity, index) => (
               <motion.div
                 key={`${activity.title}-${index}`}
                 variants={fadeUp}

@@ -16,6 +16,7 @@ import {
   type ActivitiesContent,
   type ActivityCard,
   type Destination,
+  type PropertyPoint,
 } from "@/lib/activities-content";
 import {
   getFileSizeError,
@@ -32,6 +33,10 @@ const LABEL_CLASS =
 
 function emptyCard(): ActivityCard {
   return { title: "", body: "", image: "" };
+}
+
+function emptyPoint(): PropertyPoint {
+  return { title: "", body: "" };
 }
 
 function emptyDestination(): Destination {
@@ -133,6 +138,17 @@ export default function AdminActivitiesPage() {
       const cards = [...prev.propertyCards];
       [cards[index], cards[target]] = [cards[target], cards[index]];
       return { ...prev, propertyCards: cards };
+    });
+  }
+
+  function movePoint(index: number, dir: -1 | 1) {
+    setContent((prev) => {
+      if (!prev) return prev;
+      const target = index + dir;
+      if (target < 0 || target >= prev.propertyPoints.length) return prev;
+      const points = [...prev.propertyPoints];
+      [points[index], points[target]] = [points[target], points[index]];
+      return { ...prev, propertyPoints: points };
     });
   }
 
@@ -270,6 +286,68 @@ export default function AdminActivitiesPage() {
         <AreaField label="Description" value={content.atProperty.description} onChange={(v) => setSectionField("atProperty", "description", v)} />
       </Section>
 
+      {/* PROPERTY POINTS (text list) */}
+      <Section
+        title="Text Points (At the Property)"
+        action={
+          <button
+            type="button"
+            onClick={() =>
+              setSection("propertyPoints", [...content.propertyPoints, emptyPoint()])
+            }
+            className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-300 px-3.5 py-2 text-xs font-bold text-emerald-700 transition-colors hover:bg-emerald-50"
+          >
+            <Plus size={13} strokeWidth={2} />
+            Add Point
+          </button>
+        }
+      >
+        <div className="space-y-5">
+          {content.propertyPoints.map((point, index) => (
+            <div key={index} className="rounded-2xl border border-emerald-200/60 bg-cream-50/60 p-4">
+              <div className="mb-3 flex items-center justify-between">
+                <span className="text-xs font-bold uppercase tracking-wider text-emerald-900/50">
+                  Point {index + 1}
+                </span>
+                <ListButtons
+                  onUp={() => movePoint(index, -1)}
+                  onDown={() => movePoint(index, 1)}
+                  disableUp={index === 0}
+                  disableDown={index === content.propertyPoints.length - 1}
+                  onDelete={() =>
+                    setSection(
+                      "propertyPoints",
+                      content.propertyPoints.filter((_, i) => i !== index)
+                    )
+                  }
+                />
+              </div>
+              <Field
+                label="Title"
+                value={point.title}
+                onChange={(v) =>
+                  setSection(
+                    "propertyPoints",
+                    content.propertyPoints.map((p, i) => (i === index ? { ...p, title: v } : p))
+                  )
+                }
+              />
+              <AreaField
+                label="Body"
+                value={point.body}
+                rows={3}
+                onChange={(v) =>
+                  setSection(
+                    "propertyPoints",
+                    content.propertyPoints.map((p, i) => (i === index ? { ...p, body: v } : p))
+                  )
+                }
+              />
+            </div>
+          ))}
+        </div>
+      </Section>
+
       {/* PROPERTY CARDS */}
       <Section
         title="Cards (At the Property)"
@@ -330,17 +408,6 @@ export default function AdminActivitiesPage() {
                   progress={uploadProgress[`card${index}`]}
                 />
               </GridCols>
-              <AreaField
-                label="Body"
-                value={card.body}
-                rows={3}
-                onChange={(v) =>
-                  setSection(
-                    "propertyCards",
-                    content.propertyCards.map((c, i) => (i === index ? { ...c, body: v } : c))
-                  )
-                }
-              />
             </div>
           ))}
         </div>
