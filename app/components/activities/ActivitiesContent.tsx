@@ -108,7 +108,7 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
                   variants={fadeUp}
                   className="group flex h-full flex-col overflow-hidden bg-cream-50 shadow-[0_12px_36px_-16px_rgba(6,40,25,0.28)] transition-shadow duration-500 hover:shadow-[0_26px_60px_-22px_rgba(6,40,25,0.38)]"
                 >
-                  <div className="relative aspect-[16/11] overflow-hidden">
+                  <div className="relative aspect-[4/3] overflow-hidden">
                     <Image
                       src={activity.image}
                       alt={activity.title}
@@ -118,7 +118,7 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
                     />
                   </div>
                   <div className="flex flex-1 flex-col p-7 sm:p-9">
-                    <h3 className="font-display text-2xl font-semibold leading-snug text-emerald-950 sm:text-3xl">
+                    <h3 className="font-display text-lg font-semibold leading-snug text-emerald-950 sm:text-xl">
                       {activity.title}
                     </h3>
                   </div>
@@ -154,7 +154,7 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
               <motion.article
                 key={`${place.name}-${index}`}
                 variants={fadeUp}
-                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-emerald-900/10 bg-white/80 shadow-[0_14px_40px_rgba(3,45,32,0.07)]"
+                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-emerald-900/10 bg-white shadow-[0_14px_40px_rgba(3,45,32,0.07)]"
               >
                 <div className="relative aspect-[16/10] overflow-hidden">
                   <Image
