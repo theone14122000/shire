@@ -6,17 +6,10 @@ import Link from "next/link";
 import {
   ArrowUpRight,
   Compass,
-  Flower2,
-  Gamepad2,
-  Home,
   MapPin,
   Navigation,
-  TreePine,
-  Tv2,
 } from "lucide-react";
 import type { ActivitiesContent } from "@/lib/activities-content";
-
-const CARD_ICONS = [Home, Gamepad2, Tv2, Flower2, TreePine] as const;
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 28 },
@@ -81,7 +74,6 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
             className="mt-14 grid gap-5 lg:mt-20 lg:grid-cols-6"
           >
             {content.propertyCards.map((activity, index) => {
-              const Icon = CARD_ICONS[index % CARD_ICONS.length];
               return (
                 <motion.article
                   key={`${activity.title}-${index}`}
@@ -98,10 +90,7 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
                     />
                   </div>
                   <div className="flex flex-1 flex-col p-6 sm:p-8">
-                    <span className="flex h-12 w-12 items-center justify-center border border-gold-400/40 bg-emerald-950/6 text-gold-700">
-                      <Icon size={20} strokeWidth={1.5} />
-                    </span>
-                    <h3 className="mt-6 font-display text-2xl font-semibold text-emerald-950 sm:text-3xl">
+                    <h3 className="font-display text-2xl font-semibold text-emerald-950 sm:text-3xl">
                       {activity.title}
                     </h3>
                     <p className="mt-4 max-w-[42ch] text-sm leading-[1.8] text-emerald-950/66 sm:text-base">
@@ -115,7 +104,7 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
         </div>
       </section>
 
-      <section className="bg-[#fffdf7] px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
+      <section className="bg-[#f7f1e6] px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
         <div className="mx-auto max-w-[1400px]">
           <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
             <div>
