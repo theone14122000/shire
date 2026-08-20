@@ -8,11 +8,17 @@ import { brand } from "@/lib/content";
 const MAPS_URL =
   "https://www.google.com/maps?ll=31.066671,77.309332&z=13&t=m&hl=en&gl=IN&mapclient=embed&cid=4674173627328913394";
 
-const FOOTER_COLUMNS = [
+type FooterColumn = {
+  title: string;
+  links: { label: string; href: string }[];
+  phones?: { label: string; href: string }[];
+};
+
+const FOOTER_COLUMNS: FooterColumn[] = [
   {
     title: "Contact",
-    links: [
-      { label: brand.email, href: `mailto:${brand.email}` },
+    links: [{ label: brand.email, href: `mailto:${brand.email}` }],
+    phones: [
       { label: brand.phoneDisplay[0], href: brand.phoneHref[0] },
       { label: brand.phoneDisplay[1], href: brand.phoneHref[1] },
     ],
@@ -118,6 +124,18 @@ export function SiteFooter() {
                     </FooterLink>
                   </li>
                 ))}
+                {col.phones && (
+                  <li>
+                    <div className="flex flex-row flex-wrap items-center gap-x-5 gap-y-2.5 sm:flex-col sm:items-start">
+                      {col.phones.map((phone) => (
+                        <FooterLink key={phone.label} href={phone.href} className="group/link relative inline-flex flex-col text-sm font-semibold text-cream-50">
+                          {phone.label}
+                          <span className="mt-0.5 h-[1.5px] w-0 rounded-full bg-gold-400 transition-all duration-300 group-hover/link:w-full" />
+                        </FooterLink>
+                      ))}
+                    </div>
+                  </li>
+                )}
               </ul>
             </motion.div>
           ))}
