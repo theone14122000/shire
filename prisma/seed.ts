@@ -44,7 +44,7 @@ async function main() {
     { key: "instagram_url", value: "#", type: "string", group: "social" },
     { key: "facebook_url", value: "#", type: "string", group: "social" },
     { key: "youtube_url", value: "#", type: "string", group: "social" },
-    { key: "google_tag_manager_id", value: "", type: "string", group: "seo" },
+    { key: "google_tag_manager_id", value: "GTM-KNHVLMTK", type: "string", group: "seo" },
     { key: "google_analytics_id", value: "G-WQXYHL162K", type: "string", group: "seo" },
     { key: "meta_pixel_id", value: "", type: "string", group: "seo" },
     { key: "seo_title", value: "The Himalayan Shire | Offbeat Luxury Homestay in Fagu, Near Kufri & Shimla", type: "string", group: "seo" },
