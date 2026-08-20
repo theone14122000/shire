@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { Raleway } from "next/font/google";
 import { prisma } from "@/lib/prisma";
+import { BookClickTracker } from "./components/BookClickTracker";
 import "./globals.css";
 
 const raleway = Raleway({
@@ -109,12 +110,22 @@ async function getGtmId(): Promise<string | null> {
   }
 }
 
+async function getGaId(): Promise<string | null> {
+  try {
+    const row = await prisma.setting.findUnique({ where: { key: "google_analytics_id" } });
+    return row?.value?.trim() || process.env.NEXT_PUBLIC_GA4_ID?.trim() || null;
+  } catch {
+    return process.env.NEXT_PUBLIC_GA4_ID?.trim() || null;
+  }
+}
+
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   const gtmId = await getGtmId();
+  const gaId = await getGaId();
 
   return (
     <html lang="en" className={raleway.variable}>
@@ -141,6 +152,23 @@ export default async function RootLayout({
             />
           </>
         )}
+        {gaId && (
+          <>
+            <Script
+              id="ga4"
+              strategy="afterInteractive"
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+            />
+            <Script
+              id="ga4-init"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', '${gaId}');`,
+              }}
+            />
+          </>
+        )}
+        <BookClickTracker />
         {children}
       </body>
     </html>
