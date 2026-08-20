@@ -4,7 +4,7 @@ import { AnimatePresence, motion, useScroll, useTransform, type Variants } from 
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { ArrowLeft, ArrowUpRight, Bath, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Bath, Layers, Maximize2, Mountain, X, ChevronLeft, ChevronRight } from "lucide-react";
 import type { rooms } from "@/lib/rooms";
 import type { PublicRoomImage } from "@/lib/room-images";
 import { ResponsiveVideoEmbed } from "./ResponsiveVideoEmbed";
@@ -92,11 +92,6 @@ export function RoomPageContent({
             <h1 className="mt-6 font-display text-6xl font-semibold leading-[0.95] text-cream-50 sm:text-7xl lg:text-8xl">
               {room.name}
             </h1>
-            <p className="mt-6 max-w-xl text-base leading-[1.85] text-cream-100/70 sm:text-lg">
-              {[room.size, ...(room.viewLabel ? [] : [room.view]), room.floor]
-                .filter((value, index, all) => all.indexOf(value) === index)
-                .join(" / ")}
-            </p>
           </motion.div>
         </div>
       </section>
@@ -120,6 +115,26 @@ export function RoomPageContent({
               >
                 {room.description}
               </motion.p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 26 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-14 grid grid-cols-1 overflow-hidden rounded-3xl border border-emerald-900/10 bg-white/70 shadow-[0_18px_50px_rgba(3,45,32,0.08)] sm:grid-cols-2 lg:grid-cols-4"
+            >
+              <StatCell icon={Maximize2} label="Size" value={room.size} />
+              <StatCell icon={Layers} label="Floor" value={room.floor} />
+              <StatCell icon={Mountain} label={room.viewLabel ?? "View"} value={room.view} />
+              <div className="flex items-center justify-center px-6 py-3.5 lg:border-l lg:border-emerald-900/10">
+                <Link
+                  href="https://letsbook.me/booking/thehimalayanshire?checkin=2026-08-04&checkout=2026-08-05&adults=2&children=0"
+                  className="w-full whitespace-nowrap rounded-full bg-gold-500 px-6 py-2 text-sm font-bold tracking-wide text-emerald-950 transition-all duration-300 hover:bg-gold-400 lg:w-auto"
+                >
+                  Book This Room
+                </Link>
+              </div>
             </motion.div>
           </div>
         </section>
@@ -286,5 +301,25 @@ export function RoomPageContent({
         )}
       </AnimatePresence>
     </>
+  );
+}
+
+function StatCell({
+  icon: Icon,
+  label,
+  value,
+}: {
+  icon: typeof Maximize2;
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="flex flex-col items-center justify-center gap-1 px-5 py-3.5 text-center">
+      <Icon className="shrink-0 text-gold-600" size={15} strokeWidth={1.6} />
+      <dt className="text-[10px] font-bold uppercase tracking-[0.22em] text-emerald-900/50">
+        {label}
+      </dt>
+      <dd className="font-display text-base font-semibold text-emerald-950">{value}</dd>
+    </div>
   );
 }
