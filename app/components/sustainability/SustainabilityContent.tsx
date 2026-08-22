@@ -46,13 +46,15 @@ function useParallax<T extends HTMLElement>(range: [string, string]) {
 
 export function SustainabilityContent({ content }: { content: SustainabilityContent }) {
   return (
-    <MotionConfig reducedMotion="user">
-      <HeroSection hero={content.hero} />
-      <ApproachSection approach={content.approach} image={content.featured[0]} />
-      <VisualStorySection image={content.featured[1]} />
-      <InitiativesSection initiatives={content.initiatives} />
-      <ClosingSection closing={content.closing} />
-    </MotionConfig>
+    <div className="min-h-screen overflow-x-hidden" style={{ backgroundImage: "radial-gradient at 70% -20%, #00A800 0%, transparent 50%, radial-gradient at -10% 80%, #007A12 20%, transparent 50%, linear-gradient(180deg, #005A22, #003B2B)" }}>
+      <MotionConfig reducedMotion="user">
+        <HeroSection hero={content.hero} />
+        <ApproachSection approach={content.approach} image={content.featured[0]} />
+        <VisualStorySection image={content.featured[1]} />
+        <InitiativesSection initiatives={content.initiatives} />
+        <ClosingSection closing={content.closing} />
+      </MotionConfig>
+    </div>
   );
 }
 
