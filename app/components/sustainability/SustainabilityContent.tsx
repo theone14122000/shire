@@ -62,7 +62,7 @@ function HeroSection({ hero }: { hero: SustainabilityHero }) {
   const { ref, y } = useParallax(["-6%", "8%"]);
 
   return (
-    <section ref={ref} className="relative overflow-hidden px-5 pt-24 sm:px-8 sm:pt-32 lg:px-14 lg:pt-40">
+    <section ref={ref} className="relative overflow-hidden px-5 pt-24 sm:px-8 sm:pt-32 lg:px-14 lg:pt-40" style={{ backgroundImage: "radial-gradient at 70% -20%, #00A800 0%, transparent 50%, radial-gradient at -10% 80%, #007A12 20%, transparent 50%, linear-gradient(180deg, #005A22, #003B2B)" }}>
       <motion.div
         aria-hidden
         style={{ y }}
@@ -80,14 +80,14 @@ function HeroSection({ hero }: { hero: SustainabilityHero }) {
           </motion.span>
           <motion.h1
             variants={fadeUp}
-            className="mt-6 max-w-4xl font-display text-5xl font-semibold leading-[1.02] text-emerald-950 sm:text-6xl lg:text-7xl"
+            className="mt-6 max-w-4xl font-display text-5xl font-semibold leading-[1.02] text-emerald-100 sm:text-6xl lg:text-7xl"
           >
             {hero.heading}
           </motion.h1>
         </div>
         <motion.div variants={fadeUp}>
           <span className="block h-px w-16 bg-gold-600/70" />
-          <p className="mt-6 max-w-xl text-base leading-[1.9] text-emerald-950/70 sm:text-lg">
+          <p className="mt-6 max-w-xl text-base leading-[1.9] text-emerald-100/80 sm:text-lg">
             {hero.intro}
           </p>
         </motion.div>
@@ -123,14 +123,14 @@ function ApproachSection({
           </motion.span>
           <motion.h2
             variants={fadeUp}
-            className="mt-5 max-w-md font-display text-4xl font-semibold leading-[1.06] text-emerald-950 sm:text-5xl"
+            className="mt-5 max-w-md font-display text-4xl font-semibold leading-[1.06] text-emerald-100 sm:text-5xl"
           >
             {approach.heading}
           </motion.h2>
           <motion.span variants={fadeUp} className="mt-8 block h-px w-16 bg-gold-600/60" />
           <motion.div variants={fadeUp} className="mt-8 max-w-[62ch] space-y-6">
             {paragraphs.map((paragraph, index) => (
-              <p key={index} className="text-base leading-[1.9] text-emerald-950/70 sm:text-lg">
+              <p key={index} className="text-base leading-[1.9] text-emerald-100/80 sm:text-lg">
                 {paragraph}
               </p>
             ))}
@@ -160,7 +160,7 @@ function ApproachSection({
             </div>
             <div className="px-2 pb-1.5 pt-5 text-left">
               <span className="mb-3 block h-px w-10 bg-gold-600/60" />
-              <p className="font-display text-xl font-semibold leading-snug text-emerald-950 sm:text-[1.35rem]">
+              <p className="font-display text-xl font-semibold leading-snug text-emerald-100 sm:text-[1.35rem]">
                 {image.title}
               </p>
               <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.28em] text-gold-700">
@@ -180,14 +180,14 @@ function VisualStorySection({ image }: { image: SustainabilityFeaturedImage }) {
   const { ref, y } = useParallax(["-8%", "8%"]);
 
   return (
-    <section ref={ref} className="bg-emerald-950 px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
+    <section ref={ref} className="bg-emerald-950 px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36" style={{ backgroundImage: "radial-gradient at 70% -20%, #00A800 0%, transparent 50%, radial-gradient at -10% 80%, #007A12 20%, transparent 50%, linear-gradient(180deg, #005A22, #003B2B)" }}>
       <div className="mx-auto max-w-[1400px]">
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="relative bg-emerald-950/95 p-3 pb-4 transition-shadow duration-500 hover:shadow-[0_32px_70px_-20px_rgba(6,40,25,0.55)] sm:p-4"
+          className="relative bg-emerald-950/95 p-3 pb-4 transition-shadow duration-500 hover:shadow-[0_32px_70px_-20px_rgba(0,90,34,0.55)] sm:p-4"
         >
           <div className="relative aspect-[16/10] w-full overflow-hidden bg-emerald-950 sm:aspect-[16/8] lg:aspect-[21/9]">
             <motion.div style={{ y, scale: 1.12 }} className="absolute inset-0">
@@ -206,7 +206,7 @@ function VisualStorySection({ image }: { image: SustainabilityFeaturedImage }) {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.5 }}
-            className="relative z-10 mx-auto mt-6 w-full max-w-md bg-emerald-950 px-6 py-6 text-center text-emerald-100 shadow-[0_18px_50px_-18px_rgba(6,40,25,0.55)] sm:-mt-14 sm:px-10 sm:py-8 lg:-mt-20"
+            className="relative z-10 mx-auto mt-6 w-full max-w-md bg-emerald-950 px-6 py-6 text-center text-emerald-100 shadow-[0_18px_50px_-18px_rgba(0,90,34,0.55)] sm:-mt-14 sm:px-10 sm:py-8 lg:-mt-20"
           >
             <span className="mx-auto mb-4 block h-px w-10 bg-gold-500/60" />
             <p className="font-display text-xl font-semibold leading-snug sm:text-2xl">
@@ -226,7 +226,7 @@ function VisualStorySection({ image }: { image: SustainabilityFeaturedImage }) {
 
 function InitiativesSection({ initiatives }: { initiatives: SustainabilityPillar[] }) {
   return (
-    <section className="px-5 py-24 sm:px-8 sm:py-32 lg:px-14 lg:py-40" style={{ background: "linear-gradient(180deg, #f0fdf4 0%, #e8f5e9 100%)" }}>
+    <section className="px-5 py-24 sm:px-8 sm:py-32 lg:px-14 lg:py-40" style={{ backgroundImage: "radial-gradient at 70% -20%, #00A800 0%, transparent 50%, radial-gradient at -10% 80%, #007A12 20%, transparent 50%, linear-gradient(180deg, #005A22, #003B2B)" }}>
       <motion.div
         variants={stagger}
         initial="hidden"
@@ -251,7 +251,7 @@ function InitiativesSection({ initiatives }: { initiatives: SustainabilityPillar
                 <span className="absolute -bottom-1.5 left-0 block h-px w-0 bg-emerald-600/70 transition-all duration-500 group-hover:w-full" />
               </span>
             </h3>
-            <p className="max-w-[72ch] text-base leading-[1.8] text-emerald-950/90 sm:text-[1.0625rem]">
+            <p className="max-w-[72ch] text-base leading-[1.8] text-emerald-100/90 sm:text-[1.0625rem]">
               {initiative.body}
             </p>
           </motion.div>
