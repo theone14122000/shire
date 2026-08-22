@@ -145,7 +145,7 @@ function ApproachSection({
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           className="relative lg:col-span-7"
         >
-          <div className="bg-cream-50 p-3 pb-4 shadow-[0_18px_50px_-18px_rgba(6,40,25,0.4)] transition-shadow duration-500 hover:shadow-[0_32px_70px_-20px_rgba(6,40,25,0.5)] lg:-mr-10">
+          <div className="relative bg-emerald-900/80 p-3 pb-4 transition-colors duration-500 hover:bg-emerald-900/90 shadow-[0_18px_50px_-18px_rgba(6,40,25,0.4)] lg:-mr-10">
             <div className="relative aspect-[4/5] w-full overflow-hidden bg-emerald-950 sm:aspect-[4/4.6]">
               <motion.div style={{ y, scale: 1.12 }} className="absolute inset-0">
                 <Image
@@ -180,14 +180,14 @@ function VisualStorySection({ image }: { image: SustainabilityFeaturedImage }) {
   const { ref, y } = useParallax(["-8%", "8%"]);
 
   return (
-    <section ref={ref} className="bg-[#fffaf0] px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
+    <section ref={ref} className="bg-emerald-950 px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
       <div className="mx-auto max-w-[1400px]">
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="relative bg-cream-50 p-3 pb-4 shadow-[0_18px_50px_-18px_rgba(6,40,25,0.4)] transition-shadow duration-500 hover:shadow-[0_32px_70px_-20px_rgba(6,40,25,0.5)] sm:p-4"
+          className="relative bg-emerald-950/95 p-3 pb-4 transition-shadow duration-500 hover:shadow-[0_32px_70px_-20px_rgba(6,40,25,0.55)] sm:p-4"
         >
           <div className="relative aspect-[16/10] w-full overflow-hidden bg-emerald-950 sm:aspect-[16/8] lg:aspect-[21/9]">
             <motion.div style={{ y, scale: 1.12 }} className="absolute inset-0">
@@ -206,13 +206,13 @@ function VisualStorySection({ image }: { image: SustainabilityFeaturedImage }) {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.5 }}
-            className="relative z-10 mx-auto mt-6 w-full max-w-md bg-emerald-950 px-6 py-6 text-center text-cream-50 shadow-[0_18px_50px_-18px_rgba(6,40,25,0.55)] sm:-mt-14 sm:px-10 sm:py-8 lg:-mt-20"
+            className="relative z-10 mx-auto mt-6 w-full max-w-md bg-emerald-950 px-6 py-6 text-center text-emerald-100 shadow-[0_18px_50px_-18px_rgba(6,40,25,0.55)] sm:-mt-14 sm:px-10 sm:py-8 lg:-mt-20"
           >
-            <span className="mx-auto mb-4 block h-px w-10 bg-gold-400/80" />
+            <span className="mx-auto mb-4 block h-px w-10 bg-gold-500/60" />
             <p className="font-display text-xl font-semibold leading-snug sm:text-2xl">
               {image.title}
             </p>
-            <p className="mt-2.5 text-[10px] font-bold uppercase tracking-[0.28em] text-gold-300">
+            <p className="mt-2.5 text-[10px] font-bold uppercase tracking-[0.28em] text-gold-400">
               {image.caption}
             </p>
           </motion.div>
@@ -226,7 +226,7 @@ function VisualStorySection({ image }: { image: SustainabilityFeaturedImage }) {
 
 function InitiativesSection({ initiatives }: { initiatives: SustainabilityPillar[] }) {
   return (
-    <section className="px-5 py-24 sm:px-8 sm:py-32 lg:px-14 lg:py-40">
+    <section className="px-5 py-24 sm:px-8 sm:py-32 lg:px-14 lg:py-40" style={{ background: "linear-gradient(180deg, #f0fdf4 0%, #e8f5e9 100%)" }}>
       <motion.div
         variants={stagger}
         initial="hidden"
@@ -241,17 +241,17 @@ function InitiativesSection({ initiatives }: { initiatives: SustainabilityPillar
             className="group grid gap-6 border-t border-emerald-900/15 py-10 last:border-b lg:grid-cols-[0.45fr_0.55fr] lg:gap-16"
           >
             <h3 className="flex items-baseline gap-5 transition-transform duration-500 group-hover:translate-x-2">
-              <span className="font-display text-sm font-semibold text-gold-700 transition-colors duration-300 group-hover:text-gold-600">
+              <span className="font-display text-sm font-semibold text-emerald-700 transition-colors duration-300 group-hover:text-emerald-600">
                 {String(index + 1).padStart(2, "0")}
               </span>
               <span className="relative">
                 <span className="font-display text-lg font-semibold leading-snug text-emerald-950 transition-colors duration-300 group-hover:text-emerald-800 sm:text-xl lg:text-2xl">
                   {initiative.title}
                 </span>
-                <span className="absolute -bottom-1.5 left-0 block h-px w-0 bg-gold-600/70 transition-all duration-500 group-hover:w-full" />
+                <span className="absolute -bottom-1.5 left-0 block h-px w-0 bg-emerald-600/70 transition-all duration-500 group-hover:w-full" />
               </span>
             </h3>
-            <p className="max-w-[72ch] text-base font-bold leading-[1.8] text-emerald-950/70 sm:text-[1.0625rem]">
+            <p className="max-w-[72ch] text-base leading-[1.8] text-emerald-950/90 sm:text-[1.0625rem]">
               {initiative.body}
             </p>
           </motion.div>

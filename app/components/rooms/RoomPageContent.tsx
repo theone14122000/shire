@@ -196,7 +196,7 @@ export function RoomPageContent({
           </div>
         </section>
 
-        <section className="px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
+        <section className="px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36" style={{ backgroundColor: "#F4F0E7" }}>
           <div className="mx-auto max-w-[1400px]">
             <div className="mb-12 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
               <div>
@@ -227,7 +227,7 @@ export function RoomPageContent({
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/72 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                   {image.caption ? (
-                    <span className="absolute inset-x-0 bottom-0 bg-emerald-950/75 px-4 py-2.5 text-xs font-bold uppercase tracking-[0.16em] text-cream-50 backdrop-blur">
+                    <span className="absolute inset-x-0 bottom-0 bg-emerald-950/75 px-4 py-2.5 text-xs font-bold uppercase tracking-[0.16em] text-cream-50 backdrop-blur opacity-0 transition-all duration-500 group-hover:opacity-100">
                       {image.caption}
                     </span>
                   ) : (

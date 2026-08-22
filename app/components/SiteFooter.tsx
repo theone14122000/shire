@@ -124,11 +124,11 @@ export function SiteFooter() {
                     </FooterLink>
                   </li>
                 ))}
-                {col.phones && (
+{col.phones && (
                   <li>
                     <div className="flex flex-row flex-wrap items-center gap-x-5 gap-y-2.5 sm:flex-col sm:items-start">
                       {col.phones.map((phone) => (
-                        <FooterLink key={phone.label} href={phone.href} className="group/link relative inline-flex flex-col text-sm font-semibold text-cream-50">
+                        <FooterLink key={phone.label} href={phone.href} className="group/link relative inline-flex flex-col text-sm font-normal text-cream-50">
                           {phone.label}
                           <span className="mt-0.5 h-[1.5px] w-0 rounded-full bg-gold-400 transition-all duration-300 group-hover/link:w-full" />
                         </FooterLink>

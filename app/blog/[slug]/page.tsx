@@ -39,18 +39,20 @@ export async function generateMetadata({
   };
 }
 
+function transformMonthText(text: string): string {
+  if (!text) return text;
+  // Wrap specific labels: The Best Part:, Crowd & Traffic:, Overall Weather:
+  return text
+    .replace(/The Best Part:/gi, '<b><i>The Best Part:</i></b>')
+    .replace(/Crowd & Traffic:/gi, '<b><i>Crowd & Traffic:</i></b>')
+    .replace(/Overall Weather:/gi, '<b><i>Overall Weather:</i></b>');
+}
+
 function SectionBlock({ section }: { section: BlogSection }) {
   switch (section.type) {
     case "paragraph":
       return (
-        <p className="text-base leading-[1.9] text-emerald-950/80 sm:text-lg">
-          {section.text?.split("\n").map((line, i, arr) => (
-            <span key={i}>
-              {line}
-              {i < arr.length - 1 && <br />}
-            </span>
-          ))}
-        </p>
+        <p className="text-base leading-[1.9] text-emerald-950/80 sm:text-lg" dangerouslySetInnerHTML={{ __html: transformMonthText(section.text as string) }} />
       );
 
     case "heading":
