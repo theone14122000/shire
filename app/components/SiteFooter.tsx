@@ -128,7 +128,7 @@ export function SiteFooter() {
                   <li>
                     <div className="flex flex-row flex-wrap items-center gap-x-5 gap-y-2.5 sm:flex-col sm:items-start">
                       {col.phones.map((phone) => (
-                        <FooterLink key={phone.label} href={phone.href} className="group/link relative inline-flex flex-col text-sm font-normal tracking-normal text-cream-50">
+                        <FooterLink key={phone.label} href={phone.href} style={{fontFamily: "Inter, Arial, sans-serif", fontWeight: 400, fontStyle: "normal", fontStretch: "normal", letterSpacing: 0, lineHeight: 1.6, color: "#F4F0E7", textTransform: "none", transform: "none"}} className="group/link relative inline-flex flex-col text-sm font-normal tracking-normal">
                           {phone.label}
                           <span className="mt-0.5 h-[1.5px] w-0 rounded-full bg-gold-400 transition-all duration-300 group-hover/link:w-full" />
                         </FooterLink>
@@ -199,22 +199,24 @@ export function SiteFooter() {
 function FooterLink({
   href,
   className,
+  style,
   children,
 }: {
   href: string;
   className?: string;
+  style?: React.CSSProperties;
   children: React.ReactNode;
 }) {
   if (href.startsWith("/") && !href.includes("#")) {
     return (
-      <Link href={href} className={className}>
+      <Link href={href} className={className} style={style}>
         {children}
       </Link>
     );
   }
 
   return (
-    <a href={href} className={className}>
+    <a href={href} className={className} style={style}>
       {children}
     </a>
   );
