@@ -27,7 +27,7 @@ export const SUSTAINABILITY_DEFAULTS: SustainabilityContent = {
   },
   approach: {
     kicker: "Our Conscious Choices",
-    heading: "Living lightly on the mountains we love",
+    heading: "Our Conscious Choices",
     body: "At The Himalayan Shire, sustainability begins with mindful details. We practice waste segregation - plastic, cardboard, paper, glass, and metals are sent for recycling. Plastic bottles are replaced with glass, and bathroom toiletries come in thoughtful dispensers instead of disposable plastics. Even the simple act of brushing is greener here, with bamboo toothbrushes in place of synthetic ones.",
   },
   featured: [
