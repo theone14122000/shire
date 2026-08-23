@@ -26,9 +26,9 @@ export const SUSTAINABILITY_DEFAULTS: SustainabilityContent = {
     intro: "We care for the mountains we call home. Here's how we tread lightly:",
   },
   approach: {
-    kicker: "Our Approach",
+    kicker: "Our Conscious Choices",
     heading: "Living lightly on the mountains we love",
-    body: "Sustainability at The Himalayan Shire is not a badge we wear — it is the quiet way we run the house. Being a small, family-run homestay means every choice is ours to make, and we make it with the land in mind. From the water we harvest to the waste we sort, from the soil we feed to the people we work with, each practice is deliberate, visible, and easy to live with.\n\nWe keep our footprint small so that Fagu stays the way our guests find it — unhurried, green, and genuinely wild. That is the trade we make every day: comfort for our guests, care for the mountains.",
+    body: "At The Himalayan Shire, sustainability begins with mindful details. We practice waste segregation - plastic, cardboard, paper, glass, and metals are sent for recycling. Plastic bottles are replaced with glass, and bathroom toiletries come in thoughtful dispensers instead of disposable plastics. Even the simple act of brushing is greener here, with bamboo toothbrushes in place of synthetic ones.",
   },
   featured: [
     {
@@ -44,30 +44,26 @@ export const SUSTAINABILITY_DEFAULTS: SustainabilityContent = {
   ],
   initiatives: [
     {
-      title: "Responsible Resource Use",
-      body: "Blessed by Fagu's abundant rainfall, we capture and store rainwater to meet much of our property's needs. This practice allows us to cherish every drop while reducing dependence on external sources — keeping us aligned with the natural abundance around us.",
+      title: "Harvesting the Himalayan Rain",
+      body: "Blessed by Fagu's abundant rainfall, we capture and store rainwater to meet much of our property's needs. This practice allows us to cherish every drop while reducing dependence on external sources – keeping us aligned with the natural abundance around us.",
     },
     {
       title: "Waste Reduction & Recycling",
-      body: "We practice waste segregation — plastic, cardboard, paper, glass, and metals are sent for recycling. Plastic bottles are replaced with glass, and bathroom toiletries come in thoughtful dispensers instead of disposable plastics. Even the simple act of brushing is greener here, with bamboo toothbrushes in place of synthetic ones.",
+      body: "At The Himalayan Shire, sustainability begins with mindful details. We practice waste segregation - plastic, cardboard, paper, glass, and metals are sent for recycling. Plastic bottles are replaced with glass, and bathroom toiletries come in thoughtful dispensers instead of disposable plastics. Even the simple act of brushing is greener here, with bamboo toothbrushes in place of synthetic ones.",
     },
     {
       title: "From Kitchen to Garden",
-      body: "What nourishes you also nourishes the land. All biodegradable waste, including kitchen scraps, is composted on-site and returned to the soil as rich manure. The result: a thriving lawn and garden that grow in harmony with the rhythms of nature.",
-    },
-    {
-      title: "Local & Community Responsibility",
-      body: "We source vegetables, dairy, and grain from the village and neighbouring farms — and we name our suppliers. Our team is paid fairly, trained in the shire, and lives in the village. We work with the people who built this place, and the place gives back to them.",
+      body: "What nourishes you also nourishes the land. All biodegradable waste, including kitchen scraps, is composted on - site and returned to the soil as rich manure. The result: a thriving lawn and garden that grow in harmony with the rhythms of nature.",
     },
     {
       title: "Everyday Sustainable Practices",
-      body: "A zero-plastic kitchen policy runs through the shire. Linens are changed on request, rooms are cleaned daily with mindful products, and single-use plastics have no place in how we host. Small habits, repeated every single time — that is what sustainability looks like here.",
+      body: "While we do not claim to be a 100% eco - paradise, we do believe in doing our bit – one glass bottle, compost pile, and rain shower at a time.",
     },
   ],
   closing: {
     kicker: "Our Promise",
     heading:
-      "While we do not claim to be a 100% eco-paradise, we do believe in doing our bit – one glass bottle, compost pile, and rain shower at a time.",
+      "While we do not claim to be a 100% eco - paradise, we do believe in doing our bit – one glass bottle, compost pile, and rain shower at a time.",
     body: "Every practice at The Himalayan Shire is a small, honest choice repeated daily. Together, they add up to a stay that is comfortable for you and kind to the mountains we both call home.",
     ctaLabel: "Plan Your Stay",
   },
