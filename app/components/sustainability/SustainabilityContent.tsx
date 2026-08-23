@@ -46,7 +46,7 @@ function useParallax<T extends HTMLElement>(range: [string, string]) {
 
 export function SustainabilityContent({ content }: { content: SustainabilityContent }) {
   return (
-    <div className="min-h-screen overflow-x-hidden" style={{ background: "linear-gradient(135deg, #98FF98 0%, #00A86B 100%)", color: "#F4F0E7" }}>
+    <div className="min-h-screen overflow-x-hidden" style={{ background: "linear-gradient(135deg, #98FF98 0%, #00A86B 100%)", color: "#1A1A1A" }}>
       <MotionConfig reducedMotion="user">
         <HeroSection hero={content.hero} />
         <ApproachSection approach={content.approach} image={content.featured[0]} />
