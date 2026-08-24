@@ -45,27 +45,40 @@ function useParallax<T extends HTMLElement>(range: [string, string]) {
 }
 
 export function SustainabilityContent({ content }: { content: SustainabilityContent }) {
+  const filteredInitiatives = filterInitiatives(content.initiatives);
   return (
     <div className="min-h-screen overflow-x-hidden" style={{ background: "linear-gradient(135deg, #98FF98 0%, #00A86B 100%)", color: "#1A1A1A" }}>
       <MotionConfig reducedMotion="user">
-        <HeroSection hero={content.hero} />
-        <ApproachSection approach={content.approach} image={content.featured[0]} initiatives={content.initiatives} />
-        <VisualStorySection image={content.featured[1]} initiatives={content.initiatives} />
-        <InitiativesSection initiatives={filterInitiatives(content.initiatives)} />
+        <HeroSection hero={content.hero} approach={content.approach} />
+        <ApproachSection image={content.featured[0]} />
+        <VisualStorySection image={content.featured[1]} />
+        {filteredInitiatives.length > 0 && (
+          <InitiativesSection initiatives={filteredInitiatives} />
+        )}
         <ClosingSection closing={content.closing} />
       </MotionConfig>
     </div>
   );
 }
 
+const REMOVED_TITLES = ["Kitchen", "Himalayan Rain"];
+
 function filterInitiatives(initiatives: SustainabilityPillar[]) {
   if (!Array.isArray(initiatives)) return [];
-  return initiatives.filter((_, index) => index !== 3 && index !== 4);
+  return initiatives.filter(
+    (item) => !REMOVED_TITLES.some((t) => item.title?.includes(t))
+  );
 }
 
 /* ── 01 · Hero ── */
 
-function HeroSection({ hero }: { hero: SustainabilityHero }) {
+function HeroSection({
+  hero,
+  approach,
+}: {
+  hero: SustainabilityHero;
+  approach: SustainabilityApproach;
+}) {
   const { ref, y } = useParallax(["-6%", "8%"]);
 
   return (
@@ -99,6 +112,19 @@ function HeroSection({ hero }: { hero: SustainabilityHero }) {
           </p>
         </motion.div>
       </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        className="relative mx-auto mt-20 max-w-[1400px] sm:mt-28 lg:mt-36"
+      >
+        <span className="luxe-kicker text-gold-700">{approach.kicker}</span>
+        <p className="mt-5 max-w-3xl text-base leading-[1.9] text-emerald-900/80 sm:text-lg">
+          {approach.body}
+        </p>
+      </motion.div>
     </section>
   );
 }
@@ -106,71 +132,44 @@ function HeroSection({ hero }: { hero: SustainabilityHero }) {
 /* ── 02 · Philosophy — content above image card ── */
 
 function ApproachSection({
-  approach,
   image,
-  initiatives,
 }: {
-  approach: SustainabilityApproach;
   image: SustainabilityFeaturedImage;
-  initiatives: SustainabilityPillar[];
 }) {
   const { ref, y } = useParallax(["6%", "-6%"]);
-  const kitchenInitiative = initiatives.find(
-    (item) => item.title && item.title.includes("Kitchen")
-  );
 
   return (
-    <section className="px-5 py-24 sm:px-8 sm:py-32 lg:px-14 lg:py-40">
+    <section className="px-5 py-16 sm:px-8 sm:py-24 lg:px-14 lg:py-32">
       <div className="mx-auto max-w-[1400px]">
-        <motion.div
-          variants={stagger}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.22 }}
-          className="flex flex-col items-center text-center mb-24 sm:mb-32 lg:mb-40"
-        >
-          <motion.span variants={fadeUp} className="luxe-kicker text-gold-700">
-            {approach.kicker}
-          </motion.span>
-          <motion.h2
-            variants={fadeUp}
-            className="mt-5 max-w-md font-display text-4xl font-semibold leading-[1.06] text-emerald-950 sm:text-5xl"
-          >
-            {image.title ?? approach.heading}
-          </motion.h2>
-          <motion.span variants={fadeUp} className="mt-8 block h-px w-16 bg-gold-600/60" />
-          {kitchenInitiative && (
-            <motion.div
-              variants={fadeUp}
-              className="mt-8 max-w-[62ch] space-y-6 text-left"
-            >
-              <p key={0} className="text-base leading-[1.9] text-emerald-900/80 sm:text-lg">
-                {kitchenInitiative.body}
-              </p>
-            </motion.div>
-          )}
-        </motion.div>
-
         <motion.div
           ref={ref as React.RefObject<HTMLDivElement>}
           initial={{ opacity: 0, scale: 0.97 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, amount: 0.25 }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="relative w-full"
+          className="mx-auto max-w-[360px] sm:max-w-[400px] lg:max-w-[420px]"
         >
-          <div className="relative bg-white/70 p-3 pb-4 transition-colors duration-500 hover:bg-white/80 shadow-[0_18px_50px_-18px_rgba(6,40,25,0.25)] lg:-mr-10 mx-0">
-            <div className="relative aspect-[4/5] w-full overflow-hidden bg-emerald-100 sm:aspect-[4/4.6]">
+          <div className="relative bg-white/70 p-3 pb-4 transition-colors duration-500 hover:bg-white/80 shadow-[0_18px_50px_-18px_rgba(6,40,25,0.25)]">
+            <div className="relative aspect-[4/5] w-full overflow-hidden bg-emerald-100">
               <motion.div style={{ y, scale: 1.12 }} className="absolute inset-0">
                 <Image
                   src={image.src}
                   alt={image.title}
                   fill
                   priority
-                  sizes="(max-width: 1024px) 100vw, 55vw"
+                  sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 420px"
                   className="object-cover"
                 />
               </motion.div>
+            </div>
+            <div className="px-2 pb-1.5 pt-5 text-left">
+              <span className="mb-3 block h-px w-10 bg-gold-600/60" />
+              <p className="font-display text-xl font-semibold leading-snug text-emerald-950 sm:text-[1.35rem]">
+                {image.title}
+              </p>
+              <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.28em] text-gold-700">
+                {image.caption}
+              </p>
             </div>
           </div>
         </motion.div>
@@ -183,55 +182,34 @@ function ApproachSection({
 
 function VisualStorySection({
   image,
-  initiatives,
 }: {
   image: SustainabilityFeaturedImage;
-  initiatives: SustainabilityPillar[];
 }) {
   const { ref, y } = useParallax(["-8%", "8%"]);
-  const rainInitiative = initiatives.find(
-    (item) => item.title && item.title.includes("Himalayan Rain")
-  );
 
   return (
-    <section ref={ref} className="px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
+    <section ref={ref} className="px-5 py-16 sm:px-8 sm:py-24 lg:px-14 lg:py-32">
       <div className="mx-auto max-w-[1400px]">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="relative z-10 mx-auto mb-24 sm:mb-32 lg:mb-40"
-        >
-          {rainInitiative && (
-            <div className="mx-auto text-center max-w-md">
-              <motion.h2
-                variants={fadeUp}
-                className="mt-0 text-4xl font-semibold leading-[1.08] text-emerald-950 sm:text-5xl"
-              >
-                {rainInitiative.title}
-              </motion.h2>
-              <p
-                key={0}
-                className="mt-4 text-sm leading-[1.6] text-emerald-900/80 sm:text-base"
-              >
-                {rainInitiative.body}
-              </p>
-            </div>
-          )}
-        </motion.div>
-
-        <div className="relative">
-          <div className="relative aspect-[16/10] w-full overflow-hidden bg-emerald-100 sm:aspect-[16/8] lg:aspect-[21/9]">
+        <div className="relative mx-auto max-w-[600px] sm:max-w-[700px] lg:max-w-[800px]">
+          <div className="relative aspect-[16/10] w-full overflow-hidden bg-emerald-100 sm:aspect-[16/9]">
             <motion.div style={{ y, scale: 1.12 }} className="absolute inset-0">
               <Image
                 src={image.src}
                 alt={image.title}
                 fill
-                sizes="(max-width: 1024px) 100vw, 90vw"
+                sizes="(max-width: 640px) 90vw, (max-width: 1024px) 70vw, 800px"
                 className="object-cover"
               />
             </motion.div>
+          </div>
+          <div className="mt-5 text-center sm:mt-6">
+            <span className="mx-auto mb-3 block h-px w-10 bg-gold-500/60" />
+            <p className="font-display text-xl font-semibold leading-snug text-emerald-950 sm:text-2xl">
+              {image.title}
+            </p>
+            <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.28em] text-gold-700">
+              {image.caption}
+            </p>
           </div>
         </div>
       </div>
