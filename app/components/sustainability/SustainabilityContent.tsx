@@ -118,13 +118,13 @@ export function SustainabilityContent({ content }: { content: SustainabilityCont
   );
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#fffdf7] text-emerald-950">
+    <div className="min-h-screen overflow-x-hidden bg-[#dce9dc] text-emerald-950">
       <MotionConfig reducedMotion="user">
         <HeroSection hero={content.hero} approach={content.approach} />
 
         {/* Row 1: Image LEFT + Kitchen text RIGHT */}
         {kitchenInitiative && (
-          <section className="bg-[#dce9dc] px-5 py-12 sm:px-8 sm:py-16 lg:px-14 lg:py-24">
+          <section className="bg-[#f7f1e6] px-5 py-12 sm:px-8 sm:py-16 lg:px-14 lg:py-24">
             <div className="mx-auto grid max-w-[1400px] items-center gap-10 lg:grid-cols-2 lg:gap-16">
               <ImageCard image={content.featured[0]} priority />
               <TextBlock initiative={kitchenInitiative} />
@@ -162,7 +162,7 @@ function HeroSection({
   return (
     <section
       ref={ref}
-      className="relative overflow-hidden bg-[#f7f1e6] px-5 pt-24 sm:px-8 sm:pt-32 lg:px-14 lg:pt-40"
+      className="relative overflow-hidden bg-[#fffdf7] px-5 pt-24 sm:px-8 sm:pt-32 lg:px-14 lg:pt-40"
     >
       <motion.div
         aria-hidden
@@ -248,7 +248,7 @@ function ClosingSection({ closing }: { closing: SustainabilityClosing }) {
         </motion.h2>
         <motion.p
           variants={fadeUp}
-          className="mx-auto mt-7 max-w-xl text-xs leading-[1.6] text-cream-100/70 sm:text-sm"
+          className="mx-auto mt-7 max-w-xl text-[10px] leading-[1.6] text-cream-100/70 sm:text-xs"
         >
           {closing.body}
         </motion.p>
