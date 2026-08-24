@@ -282,52 +282,73 @@ function PropertyCardSlider({ cards }: { cards: ActivityCard[] }) {
         </div>
       </div>
 
-      <div ref={trackRef} className="overflow-hidden">
-        <motion.div
-          className="flex cursor-grab active:cursor-grabbing"
-          animate={{ x: `${-clampedPage * unitPct}%` }}
-          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-          drag="x"
-          dragConstraints={{ left: 0, right: 0 }}
-          dragElastic={0.12}
-          onDragEnd={(_, info) => {
-            if (info.offset.x < -60 || info.velocity.x < -400) {
-              setPage((p) => Math.min(maxPage, p + 1));
-            } else if (info.offset.x > 60 || info.velocity.x > 400) {
-              setPage((p) => Math.max(0, p - 1));
-            }
-          }}
+      <div className="relative">
+        <div ref={trackRef} className="overflow-hidden">
+          <motion.div
+            className="flex cursor-grab active:cursor-grabbing"
+            animate={{ x: `${-clampedPage * unitPct}%` }}
+            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.12}
+            onDragEnd={(_, info) => {
+              if (info.offset.x < -60 || info.velocity.x < -400) {
+                setPage((p) => Math.min(maxPage, p + 1));
+              } else if (info.offset.x > 60 || info.velocity.x > 400) {
+                setPage((p) => Math.max(0, p - 1));
+              }
+            }}
+          >
+            {cards.map((activity, index) => (
+              <div
+                key={`${activity.title}-${index}`}
+                className="w-[86%] shrink-0 px-2.5 sm:w-1/2 lg:w-1/4"
+              >
+                <article className="group flex h-full flex-col overflow-hidden border border-emerald-900/10 bg-white shadow-[0_14px_40px_rgba(3,45,32,0.07)]">
+                  <div className="relative aspect-[3/4] overflow-hidden">
+                    {activity.image ? (
+                      <Image
+                        src={activity.image}
+                        alt={activity.title}
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center bg-emerald-950">
+                        <ImagePlus size={24} strokeWidth={1.3} className="text-gold-400/70" />
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex flex-1 flex-col p-4 sm:p-5">
+                    <h3 className="font-display text-base font-semibold leading-snug text-emerald-950 sm:text-lg">
+                      {activity.title}
+                    </h3>
+                  </div>
+                </article>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setPage((p) => Math.max(0, p - 1))}
+          disabled={clampedPage === 0}
+          aria-label="Previous cards"
+          className="absolute -left-5 top-1/2 z-10 hidden -translate-y-1/2 items-center justify-center rounded-full border border-emerald-900/15 bg-white/90 p-3 text-emerald-950 shadow-lg backdrop-blur transition-colors duration-300 hover:border-gold-600 hover:text-gold-700 disabled:opacity-30 lg:flex"
         >
-          {cards.map((activity, index) => (
-            <div
-              key={`${activity.title}-${index}`}
-              className="w-[86%] shrink-0 px-2.5 sm:w-1/2 lg:w-1/4"
-            >
-              <article className="group flex h-full flex-col overflow-hidden border border-emerald-900/10 bg-white shadow-[0_14px_40px_rgba(3,45,32,0.07)]">
-                <div className="relative aspect-[3/4] overflow-hidden">
-                  {activity.image ? (
-                    <Image
-                      src={activity.image}
-                      alt={activity.title}
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105"
-                    />
-                  ) : (
-                    <div className="flex h-full w-full items-center justify-center bg-emerald-950">
-                      <ImagePlus size={24} strokeWidth={1.3} className="text-gold-400/70" />
-                    </div>
-                  )}
-                </div>
-                <div className="flex flex-1 flex-col p-4 sm:p-5">
-                  <h3 className="font-display text-base font-semibold leading-snug text-emerald-950 sm:text-lg">
-                    {activity.title}
-                  </h3>
-                </div>
-              </article>
-            </div>
-          ))}
-        </motion.div>
+          <ChevronLeft size={18} strokeWidth={1.8} />
+        </button>
+        <button
+          type="button"
+          onClick={() => setPage((p) => Math.min(maxPage, p + 1))}
+          disabled={clampedPage >= maxPage}
+          aria-label="Next cards"
+          className="absolute -right-5 top-1/2 z-10 hidden -translate-y-1/2 items-center justify-center rounded-full border border-emerald-900/15 bg-white/90 p-3 text-emerald-950 shadow-lg backdrop-blur transition-colors duration-300 hover:border-gold-600 hover:text-gold-700 disabled:opacity-30 lg:flex"
+        >
+          <ChevronRight size={18} strokeWidth={1.8} />
+        </button>
       </div>
     </div>
   );
