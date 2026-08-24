@@ -97,7 +97,7 @@ export function RoomPageContent({
       </section>
 
       <div className="editorial-surface">
-        <section className="bg-[#F4F0E7] px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
+        <section className="bg-[#F8F2E8] px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
           <div className="mx-auto max-w-[1400px]">
             <motion.div
               variants={stagger}
