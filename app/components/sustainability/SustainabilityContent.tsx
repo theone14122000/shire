@@ -118,13 +118,13 @@ export function SustainabilityContent({ content }: { content: SustainabilityCont
   );
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#f7f1e6] text-emerald-950">
+    <div className="min-h-screen overflow-x-hidden bg-[#fffdf7] text-emerald-950">
       <MotionConfig reducedMotion="user">
         <HeroSection hero={content.hero} approach={content.approach} />
 
         {/* Row 1: Image LEFT + Kitchen text RIGHT */}
         {kitchenInitiative && (
-          <section className="px-5 py-12 sm:px-8 sm:py-16 lg:px-14 lg:py-24">
+          <section className="bg-[#dce9dc] px-5 py-12 sm:px-8 sm:py-16 lg:px-14 lg:py-24">
             <div className="mx-auto grid max-w-[1400px] items-center gap-10 lg:grid-cols-2 lg:gap-16">
               <ImageCard image={content.featured[0]} priority />
               <TextBlock initiative={kitchenInitiative} />
@@ -134,7 +134,7 @@ export function SustainabilityContent({ content }: { content: SustainabilityCont
 
         {/* Row 2: Rain text LEFT + Image RIGHT */}
         {rainInitiative && (
-          <section className="bg-[#fffdf7] px-5 py-12 sm:px-8 sm:py-16 lg:px-14 lg:py-24">
+          <section className="bg-white px-5 py-12 sm:px-8 sm:py-16 lg:px-14 lg:py-24">
             <div className="mx-auto grid max-w-[1400px] items-center gap-10 lg:grid-cols-2 lg:gap-16">
               <TextBlock initiative={rainInitiative} />
               <ImageCard image={content.featured[1]} />
@@ -162,7 +162,7 @@ function HeroSection({
   return (
     <section
       ref={ref}
-      className="relative overflow-hidden bg-[#dce9dc] px-5 pt-24 sm:px-8 sm:pt-32 lg:px-14 lg:pt-40"
+      className="relative overflow-hidden bg-[#f7f1e6] px-5 pt-24 sm:px-8 sm:pt-32 lg:px-14 lg:pt-40"
     >
       <motion.div
         aria-hidden
