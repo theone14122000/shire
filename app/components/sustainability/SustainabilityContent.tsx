@@ -199,10 +199,10 @@ function HeroSection({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        className="relative mx-auto mt-20 max-w-[1400px] sm:mt-28 lg:mt-36"
+        className="relative mx-auto mt-20 max-w-3xl text-center sm:mt-28 lg:mt-36"
       >
-        <span className="luxe-kicker text-gold-700">{approach.kicker}</span>
-        <p className="mt-5 max-w-3xl text-base leading-[1.9] text-emerald-900/80 sm:text-lg">
+        <span className="luxe-kicker justify-center text-gold-700">{approach.kicker}</span>
+        <p className="mx-auto mt-5 max-w-2xl text-lg leading-[1.9] text-emerald-900/80 sm:text-xl">
           {approach.body}
         </p>
       </motion.div>
