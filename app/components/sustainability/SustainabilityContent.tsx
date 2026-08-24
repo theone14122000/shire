@@ -12,7 +12,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
-import { ArrowUpRight, Sprout } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import type {
   SustainabilityApproach,
   SustainabilityClosing,
@@ -32,10 +32,6 @@ const stagger: Variants = {
   show: { transition: { staggerChildren: 0.1, delayChildren: 0.08 } },
 };
 
-/* ------------------------------------------------------------------ */
-/*  Scroll-driven helpers (same pattern as home sections)              */
-/* ------------------------------------------------------------------ */
-
 function useParallax<T extends HTMLElement>(range: [string, string]) {
   const ref = useRef<T>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
@@ -44,6 +40,75 @@ function useParallax<T extends HTMLElement>(range: [string, string]) {
   return { ref, y: prefersReduced ? useMotionValue(0) : value };
 }
 
+/* ── Image card (shared design for both rows) ── */
+
+function ImageCard({
+  image,
+  priority,
+}: {
+  image: SustainabilityFeaturedImage;
+  priority?: boolean;
+}) {
+  const { ref, y } = useParallax(["-6%", "6%"]);
+
+  return (
+    <motion.div
+      ref={ref as React.RefObject<HTMLDivElement>}
+      initial={{ opacity: 0, scale: 0.97 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      className="relative"
+    >
+      <div className="relative bg-white/70 p-3 pb-4 shadow-[0_18px_50px_-18px_rgba(6,40,25,0.2)] transition-colors duration-500 hover:bg-white/80">
+        <div className="relative aspect-[4/5] w-full overflow-hidden bg-[#dce9dc] sm:aspect-[4/4.6]">
+          <motion.div style={{ y, scale: 1.12 }} className="absolute inset-0">
+            <Image
+              src={image.src}
+              alt={image.title}
+              fill
+              priority={priority}
+              sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 480px"
+              className="object-cover"
+            />
+          </motion.div>
+        </div>
+        <div className="px-2 pb-1.5 pt-5 text-left">
+          <span className="mb-3 block h-px w-10 bg-gold-600/60" />
+          <p className="font-display text-xl font-semibold leading-snug text-emerald-950 sm:text-[1.35rem]">
+            {image.title}
+          </p>
+          <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.28em] text-gold-700">
+            {image.caption}
+          </p>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+/* ── Text block for initiative content ── */
+
+function TextBlock({ initiative }: { initiative: SustainabilityPillar }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      className="flex flex-col justify-center"
+    >
+      <span className="luxe-kicker text-gold-700">{initiative.title}</span>
+      <span className="mt-6 block h-px w-10 bg-gold-600/60" />
+      <p className="mt-6 max-w-[48ch] text-base leading-[1.9] text-emerald-900/80 sm:text-lg">
+        {initiative.body}
+      </p>
+    </motion.div>
+  );
+}
+
+/* ── Main component ── */
+
 export function SustainabilityContent({ content }: { content: SustainabilityContent }) {
   const kitchenInitiative = content.initiatives.find(
     (item) => item.title?.includes("Kitchen")
@@ -51,21 +116,39 @@ export function SustainabilityContent({ content }: { content: SustainabilityCont
   const rainInitiative = content.initiatives.find(
     (item) => item.title?.includes("Himalayan Rain")
   );
+
   return (
-    <div className="min-h-screen overflow-x-hidden" style={{ background: "linear-gradient(135deg, #98FF98 0%, #00A86B 100%)", color: "#1A1A1A" }}>
+    <div className="min-h-screen overflow-x-hidden bg-[#f7f1e6] text-emerald-950">
       <MotionConfig reducedMotion="user">
         <HeroSection hero={content.hero} approach={content.approach} />
-        <ApproachSection image={content.featured[0]} />
-        {kitchenInitiative && <ContentBlock initiative={kitchenInitiative} />}
-        {rainInitiative && <ContentBlock initiative={rainInitiative} />}
-        <VisualStorySection image={content.featured[1]} />
+
+        {/* Row 1: Image LEFT + Kitchen text RIGHT */}
+        {kitchenInitiative && (
+          <section className="px-5 py-12 sm:px-8 sm:py-16 lg:px-14 lg:py-24">
+            <div className="mx-auto grid max-w-[1400px] items-center gap-10 lg:grid-cols-2 lg:gap-16">
+              <ImageCard image={content.featured[0]} priority />
+              <TextBlock initiative={kitchenInitiative} />
+            </div>
+          </section>
+        )}
+
+        {/* Row 2: Rain text LEFT + Image RIGHT */}
+        {rainInitiative && (
+          <section className="bg-[#fffdf7] px-5 py-12 sm:px-8 sm:py-16 lg:px-14 lg:py-24">
+            <div className="mx-auto grid max-w-[1400px] items-center gap-10 lg:grid-cols-2 lg:gap-16">
+              <TextBlock initiative={rainInitiative} />
+              <ImageCard image={content.featured[1]} />
+            </div>
+          </section>
+        )}
+
         <ClosingSection closing={content.closing} />
       </MotionConfig>
     </div>
   );
 }
 
-/* ── 01 · Hero ── */
+/* ── Hero ── */
 
 function HeroSection({
   hero,
@@ -77,7 +160,10 @@ function HeroSection({
   const { ref, y } = useParallax(["-6%", "8%"]);
 
   return (
-    <section ref={ref} className="relative overflow-hidden px-5 pt-24 sm:px-8 sm:pt-32 lg:px-14 lg:pt-40">
+    <section
+      ref={ref}
+      className="relative overflow-hidden bg-[#dce9dc] px-5 pt-24 sm:px-8 sm:pt-32 lg:px-14 lg:pt-40"
+    >
       <motion.div
         aria-hidden
         style={{ y }}
@@ -124,162 +210,7 @@ function HeroSection({
   );
 }
 
-/* ── Content block between images ── */
-
-function ContentBlock({ initiative }: { initiative: SustainabilityPillar }) {
-  return (
-    <motion.section
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      className="px-5 py-16 sm:px-8 sm:py-20 lg:px-14 lg:py-28"
-    >
-      <div className="mx-auto max-w-[1400px]">
-        <div className="mx-auto max-w-2xl text-center">
-          <span className="mx-auto mb-4 block h-px w-10 bg-gold-600/60" />
-          <h2 className="font-display text-3xl font-semibold leading-[1.08] text-emerald-950 sm:text-4xl lg:text-5xl">
-            {initiative.title}
-          </h2>
-          <p className="mx-auto mt-6 max-w-xl text-base leading-[1.9] text-emerald-900/80 sm:text-lg">
-            {initiative.body}
-          </p>
-        </div>
-      </div>
-    </motion.section>
-  );
-}
-
-/* ── 02 · Philosophy — content above image card ── */
-
-function ApproachSection({
-  image,
-}: {
-  image: SustainabilityFeaturedImage;
-}) {
-  const { ref, y } = useParallax(["6%", "-6%"]);
-
-  return (
-    <section className="px-5 py-16 sm:px-8 sm:py-24 lg:px-14 lg:py-32">
-      <div className="mx-auto max-w-[1400px]">
-        <motion.div
-          ref={ref as React.RefObject<HTMLDivElement>}
-          initial={{ opacity: 0, scale: 0.97 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, amount: 0.25 }}
-          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="mx-auto max-w-[360px] sm:max-w-[400px] lg:max-w-[420px]"
-        >
-          <div className="relative bg-white/70 p-3 pb-4 transition-colors duration-500 hover:bg-white/80 shadow-[0_18px_50px_-18px_rgba(6,40,25,0.25)]">
-            <div className="relative aspect-[4/5] w-full overflow-hidden bg-emerald-100">
-              <motion.div style={{ y, scale: 1.12 }} className="absolute inset-0">
-                <Image
-                  src={image.src}
-                  alt={image.title}
-                  fill
-                  priority
-                  sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 420px"
-                  className="object-cover"
-                />
-              </motion.div>
-            </div>
-            <div className="px-2 pb-1.5 pt-5 text-left">
-              <span className="mb-3 block h-px w-10 bg-gold-600/60" />
-              <p className="font-display text-xl font-semibold leading-snug text-emerald-950 sm:text-[1.35rem]">
-                {image.title}
-              </p>
-              <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.28em] text-gold-700">
-                {image.caption}
-              </p>
-            </div>
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-/* ── 03 · Visual story — full-width feature with layered content ── */
-
-function VisualStorySection({
-  image,
-}: {
-  image: SustainabilityFeaturedImage;
-}) {
-  const { ref, y } = useParallax(["-8%", "8%"]);
-
-  return (
-    <section ref={ref} className="px-5 py-16 sm:px-8 sm:py-24 lg:px-14 lg:py-32">
-      <div className="mx-auto max-w-[1400px]">
-        <div className="relative mx-auto max-w-[600px] sm:max-w-[700px] lg:max-w-[800px]">
-          <div className="relative aspect-[16/10] w-full overflow-hidden bg-emerald-100 sm:aspect-[16/9]">
-            <motion.div style={{ y, scale: 1.12 }} className="absolute inset-0">
-              <Image
-                src={image.src}
-                alt={image.title}
-                fill
-                sizes="(max-width: 640px) 90vw, (max-width: 1024px) 70vw, 800px"
-                className="object-cover"
-              />
-            </motion.div>
-          </div>
-          <div className="mt-5 text-center sm:mt-6">
-            <span className="mx-auto mb-3 block h-px w-10 bg-gold-500/60" />
-            <p className="font-display text-xl font-semibold leading-snug text-emerald-950 sm:text-2xl">
-              {image.title}
-            </p>
-            <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.28em] text-gold-700">
-              {image.caption}
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ── 04 · Initiatives — editorial numbered rows with micro-interactions ── */
-
-function InitiativesSection({ initiatives }: { initiatives: SustainabilityPillar[] }) {
-  return (
-    <section className="px-5 py-24 sm:px-8 sm:py-32 lg:px-14 lg:py-40">
-      <motion.div
-        variants={stagger}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.08 }}
-        className="mx-auto max-w-[1400px]"
-      >
-        {initiatives.map((initiative, index) => (
-          <motion.div
-            key={`${initiative.title}-${index}`}
-            variants={fadeUp}
-            className="group grid gap-6 border-t border-emerald-900/15 py-10 last:border-b lg:grid-cols-[0.45fr_0.55fr] lg:gap-16"
-          >
-            <h3 className="flex items-baseline gap-5 transition-transform duration-500 group-hover:translate-x-2">
-              <span className="font-display text-sm font-semibold text-emerald-700 transition-colors duration-300 group-hover:text-emerald-600">
-                <span className="relative">
-                  <span className="font-display text-lg font-semibold leading-snug text-emerald-950 transition-colors duration-300 group-hover:text-emerald-800 sm:text-xl lg:text-2xl">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span className="absolute -bottom-1.5 left-0 block h-px w-0 bg-emerald-600/70 transition-all duration-500 group-hover:w-full" />
-                </span>
-              </span>
-              <span className="font-display text-lg font-semibold leading-snug text-emerald-950 transition-colors duration-300 group-hover:text-emerald-800 sm:text-xl lg:text-2xl">
-                {initiative.title}
-              </span>
-            </h3>
-            <p className="max-w-[72ch] text-base leading-[1.8] text-emerald-900/85 sm:text-[1.0625rem]">
-              {initiative.body}
-            </p>
-          </motion.div>
-        ))}
-      </motion.div>
-    </section>
-  );
-}
-
-/* ── 05 · Commitment / CTA ── */
+/* ── Closing ── */
 
 function ClosingSection({ closing }: { closing: SustainabilityClosing }) {
   const { ref, y } = useParallax(["-8%", "8%"]);
@@ -287,7 +218,7 @@ function ClosingSection({ closing }: { closing: SustainabilityClosing }) {
   return (
     <section
       ref={ref}
-      className="relative overflow-hidden px-5 py-24 text-center sm:px-8 sm:py-32 lg:px-14"
+      className="relative overflow-hidden bg-[#1E3E2B] px-5 py-24 text-center text-cream-50 sm:px-8 sm:py-32 lg:px-14"
     >
       <motion.div
         aria-hidden
@@ -306,18 +237,18 @@ function ClosingSection({ closing }: { closing: SustainabilityClosing }) {
         viewport={{ once: true, amount: 0.3 }}
         className="relative mx-auto max-w-3xl"
       >
-        <motion.span variants={fadeUp} className="luxe-kicker justify-center text-gold-700">
+        <motion.span variants={fadeUp} className="luxe-kicker justify-center text-gold-300">
           {closing.kicker}
         </motion.span>
         <motion.h2
           variants={fadeUp}
-          className="mt-7 font-display text-4xl font-semibold leading-[1.08] text-emerald-950 sm:text-5xl"
+          className="mt-7 font-display text-4xl font-semibold leading-[1.08] text-cream-50 sm:text-5xl"
         >
           {closing.heading}
         </motion.h2>
         <motion.p
           variants={fadeUp}
-          className="mx-auto mt-7 max-w-xl text-xs leading-[1.6] text-emerald-900/75 sm:text-sm"
+          className="mx-auto mt-7 max-w-xl text-xs leading-[1.6] text-cream-100/70 sm:text-sm"
         >
           {closing.body}
         </motion.p>
