@@ -261,10 +261,13 @@ function InitiativesSection({ initiatives }: { initiatives: SustainabilityPillar
               <span className="font-display text-sm font-semibold text-emerald-700 transition-colors duration-300 group-hover:text-emerald-600">
                 <span className="relative">
                   <span className="font-display text-lg font-semibold leading-snug text-emerald-950 transition-colors duration-300 group-hover:text-emerald-800 sm:text-xl lg:text-2xl">
-                    {initiative.title}
+                    {String(index + 1).padStart(2, "0")}
                   </span>
                   <span className="absolute -bottom-1.5 left-0 block h-px w-0 bg-emerald-600/70 transition-all duration-500 group-hover:w-full" />
                 </span>
+              </span>
+              <span className="font-display text-lg font-semibold leading-snug text-emerald-950 transition-colors duration-300 group-hover:text-emerald-800 sm:text-xl lg:text-2xl">
+                {initiative.title}
               </span>
             </h3>
             <p className="max-w-[72ch] text-base leading-[1.8] text-emerald-900/85 sm:text-[1.0625rem]">
@@ -315,7 +318,7 @@ function ClosingSection({ closing }: { closing: SustainabilityClosing }) {
         </motion.h2>
         <motion.p
           variants={fadeUp}
-          className="mx-auto mt-7 max-w-xl text-sm leading-[1.6] text-emerald-900/75 sm:text-base"
+          className="mx-auto mt-7 max-w-xl text-base leading-[1.85] text-emerald-900/75 sm:text-lg"
         >
           {closing.body}
         </motion.p>
