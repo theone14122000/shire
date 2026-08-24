@@ -49,13 +49,18 @@ export function SustainabilityContent({ content }: { content: SustainabilityCont
     <div className="min-h-screen overflow-x-hidden" style={{ background: "linear-gradient(135deg, #98FF98 0%, #00A86B 100%)", color: "#1A1A1A" }}>
       <MotionConfig reducedMotion="user">
         <HeroSection hero={content.hero} />
-        <ApproachSection approach={content.approach} image={content.featured[0]} />
-        <VisualStorySection image={content.featured[1]} />
-        <InitiativesSection initiatives={content.initiatives} />
+        <ApproachSection approach={content.approach} image={content.featured[0]} initiatives={content.initiatives} />
+        <VisualStorySection image={content.featured[1]} initiatives={content.initiatives} />
+        <InitiativesSection initiatives={filterInitiatives(content.initiatives)} />
         <ClosingSection closing={content.closing} />
       </MotionConfig>
     </div>
   );
+}
+
+function filterInitiatives(initiatives: SustainabilityPillar[]) {
+  if (!Array.isArray(initiatives)) return [];
+  return initiatives.filter((_, index) => index !== 3 && index !== 4);
 }
 
 /* ── 01 · Hero ── */
@@ -98,27 +103,31 @@ function HeroSection({ hero }: { hero: SustainabilityHero }) {
   );
 }
 
-/* ── 02 · Philosophy — asymmetric: content left, image bleeding right ── */
+/* ── 02 · Philosophy — content above image card ── */
 
 function ApproachSection({
   approach,
   image,
+  initiatives,
 }: {
   approach: SustainabilityApproach;
   image: SustainabilityFeaturedImage;
+  initiatives: SustainabilityPillar[];
 }) {
   const { ref, y } = useParallax(["6%", "-6%"]);
-  const paragraphs = approach.body.split("\n\n").filter(Boolean);
+  const kitchenInitiative = initiatives.find(
+    (item) => item.title && item.title.includes("Kitchen")
+  );
 
   return (
     <section className="px-5 py-24 sm:px-8 sm:py-32 lg:px-14 lg:py-40">
-      <div className="mx-auto grid max-w-[1400px] gap-14 lg:grid-cols-12 lg:gap-20">
+      <div className="mx-auto max-w-[1400px]">
         <motion.div
           variants={stagger}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-          className="flex flex-col justify-center lg:col-span-5"
+          viewport={{ once: true, amount: 0.22 }}
+          className="flex flex-col items-center text-center mb-24 sm:mb-32 lg:mb-40"
         >
           <motion.span variants={fadeUp} className="luxe-kicker text-gold-700">
             {approach.kicker}
@@ -127,16 +136,19 @@ function ApproachSection({
             variants={fadeUp}
             className="mt-5 max-w-md font-display text-4xl font-semibold leading-[1.06] text-emerald-950 sm:text-5xl"
           >
-            {approach.heading}
+            {image.title ?? approach.heading}
           </motion.h2>
           <motion.span variants={fadeUp} className="mt-8 block h-px w-16 bg-gold-600/60" />
-          <motion.div variants={fadeUp} className="mt-8 max-w-[62ch] space-y-6">
-            {paragraphs.map((paragraph, index) => (
-              <p key={index} className="text-base leading-[1.9] text-emerald-900/80 sm:text-lg">
-                {paragraph}
+          {kitchenInitiative && (
+            <motion.div
+              variants={fadeUp}
+              className="mt-8 max-w-[62ch] space-y-6 text-left"
+            >
+              <p key={0} className="text-base leading-[1.9] text-emerald-900/80 sm:text-lg">
+                {kitchenInitiative.body}
               </p>
-            ))}
-          </motion.div>
+            </motion.div>
+          )}
         </motion.div>
 
         <motion.div
@@ -145,9 +157,9 @@ function ApproachSection({
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, amount: 0.25 }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="relative lg:col-span-7"
+          className="relative w-full"
         >
-          <div className="relative bg-white/70 p-3 pb-4 transition-colors duration-500 hover:bg-white/80 shadow-[0_18px_50px_-18px_rgba(6,40,25,0.25)] lg:-mr-10">
+          <div className="relative bg-white/70 p-3 pb-4 transition-colors duration-500 hover:bg-white/80 shadow-[0_18px_50px_-18px_rgba(6,40,25,0.25)] lg:-mr-10 mx-0">
             <div className="relative aspect-[4/5] w-full overflow-hidden bg-emerald-100 sm:aspect-[4/4.6]">
               <motion.div style={{ y, scale: 1.12 }} className="absolute inset-0">
                 <Image
@@ -160,15 +172,6 @@ function ApproachSection({
                 />
               </motion.div>
             </div>
-            <div className="px-2 pb-1.5 pt-5 text-left">
-              <span className="mb-3 block h-px w-10 bg-gold-600/60" />
-              <p className="font-display text-xl font-semibold leading-snug text-emerald-950 sm:text-[1.35rem]">
-                {image.title}
-              </p>
-              <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.28em] text-gold-700">
-                {image.caption}
-              </p>
-            </div>
           </div>
         </motion.div>
       </div>
@@ -178,8 +181,17 @@ function ApproachSection({
 
 /* ── 03 · Visual story — full-width feature with layered content ── */
 
-function VisualStorySection({ image }: { image: SustainabilityFeaturedImage }) {
+function VisualStorySection({
+  image,
+  initiatives,
+}: {
+  image: SustainabilityFeaturedImage;
+  initiatives: SustainabilityPillar[];
+}) {
   const { ref, y } = useParallax(["-8%", "8%"]);
+  const rainInitiative = initiatives.find(
+    (item) => item.title && item.title.includes("Himalayan Rain")
+  );
 
   return (
     <section ref={ref} className="px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
@@ -189,8 +201,27 @@ function VisualStorySection({ image }: { image: SustainabilityFeaturedImage }) {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="relative bg-white/80 p-3 pb-4 transition-shadow duration-500 hover:shadow-[0_32px_70px_-20px_rgba(6,40,25,0.25)] sm:p-4"
+          className="relative z-10 mx-auto mb-24 sm:mb-32 lg:mb-40"
         >
+          {rainInitiative && (
+            <div className="mx-auto text-center max-w-md">
+              <motion.h2
+                variants={fadeUp}
+                className="mt-0 text-4xl font-semibold leading-[1.08] text-emerald-950 sm:text-5xl"
+              >
+                {rainInitiative.title}
+              </motion.h2>
+              <p
+                key={0}
+                className="mt-4 text-sm leading-[1.6] text-emerald-900/80 sm:text-base"
+              >
+                {rainInitiative.body}
+              </p>
+            </div>
+          )}
+        </motion.div>
+
+        <div className="relative">
           <div className="relative aspect-[16/10] w-full overflow-hidden bg-emerald-100 sm:aspect-[16/8] lg:aspect-[21/9]">
             <motion.div style={{ y, scale: 1.12 }} className="absolute inset-0">
               <Image
@@ -202,23 +233,7 @@ function VisualStorySection({ image }: { image: SustainabilityFeaturedImage }) {
               />
             </motion.div>
           </div>
-
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.5 }}
-            className="relative z-10 mx-auto mt-6 w-full max-w-md bg-white px-6 py-6 text-center text-emerald-950 shadow-[0_18px_50px_-18px_rgba(6,40,25,0.25)] sm:-mt-14 sm:px-10 sm:py-8 lg:-mt-20"
-          >
-            <span className="mx-auto mb-4 block h-px w-10 bg-gold-500/60" />
-            <p className="font-display text-xl font-semibold leading-snug sm:text-2xl">
-              {image.title}
-            </p>
-            <p className="mt-2.5 text-[10px] font-bold uppercase tracking-[0.28em] text-gold-700">
-              {image.caption}
-            </p>
-          </motion.div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
