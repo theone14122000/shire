@@ -317,7 +317,7 @@ function ClosingSection({ closing }: { closing: SustainabilityClosing }) {
         </motion.h2>
         <motion.p
           variants={fadeUp}
-          className="mx-auto mt-7 max-w-xl text-base leading-[1.85] text-emerald-900/75 sm:text-lg"
+          className="mx-auto mt-7 max-w-xl text-xs leading-[1.6] text-emerald-900/75 sm:text-sm"
         >
           {closing.body}
         </motion.p>
