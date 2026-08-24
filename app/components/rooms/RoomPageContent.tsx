@@ -97,7 +97,7 @@ export function RoomPageContent({
       </section>
 
       <div className="editorial-surface">
-        <section className="bg-[#F8F2E8] px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
+        <section className="bg-[#EAF1E1] px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
           <div className="mx-auto max-w-[1400px]">
             <motion.div
               variants={stagger}
@@ -139,7 +139,7 @@ export function RoomPageContent({
           </div>
         </section>
 
-        <section className="bg-[#fffaf0] px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
+        <section className="bg-[#EAF1E1] px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
           <div className="mx-auto max-w-[1400px]">
             <div className="grid gap-8 lg:grid-cols-[0.7fr_1.3fr] lg:items-start">
               <div>
@@ -168,7 +168,7 @@ export function RoomPageContent({
           </div>
         </section>
 
-        <section className="bg-[#EAF1E1] px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
+        <section className="bg-[#F8F2E8] px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
           <div className="mx-auto grid max-w-[1400px] gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
             <div>
               <span className="luxe-kicker text-gold-700">Room Tour</span>
@@ -196,7 +196,7 @@ export function RoomPageContent({
           </div>
         </section>
 
-        <section className="px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36" style={{ backgroundColor: "#F4F0E7" }}>
+        <section className="px-5 py-20 sm:px-8 sm:py-28 lg:px-14 lg:py-36" style={{ backgroundColor: "#1E3E2B" }}>
           <div className="mx-auto max-w-[1400px]">
             <div className="mb-12 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
               <div>
