@@ -121,31 +121,31 @@ export function SustainabilityContent({ content }: { content: SustainabilityCont
       <MotionConfig reducedMotion="user">
         <HeroSection hero={content.hero} />
 
-        {/* Our Conscious Choices: text LEFT + image RIGHT */}
-        <section className="bg-[#fffdf7] px-5 py-12 sm:px-8 sm:py-16 lg:px-14 lg:py-24">
-          <div className="mx-auto grid max-w-[1400px] items-center gap-10 lg:grid-cols-2 lg:gap-16">
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="flex flex-col justify-center"
-            >
-              <span className="luxe-kicker text-gold-700">{content.approach.kicker}</span>
-              <p className="mt-5 max-w-[48ch] text-base leading-[1.9] text-emerald-900/80 sm:text-lg">
-                {content.approach.body}
-              </p>
-            </motion.div>
-            <ImageCard image={content.featured[0]} priority />
-          </div>
-        </section>
-
-        {/* Row 1: Image LEFT + Kitchen text RIGHT */}
+        {/* Our Conscious Choices + From Kitchen to Garden: combined text LEFT + image RIGHT */}
         {kitchenInitiative && (
-          <section className="bg-[#f7f1e6] px-5 py-12 sm:px-8 sm:py-16 lg:px-14 lg:py-24">
+          <section className="bg-[#fffdf7] px-5 py-12 sm:px-8 sm:py-16 lg:px-14 lg:py-24">
             <div className="mx-auto grid max-w-[1400px] items-center gap-10 lg:grid-cols-2 lg:gap-16">
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                className="flex flex-col justify-center space-y-10"
+              >
+                <div>
+                  <span className="luxe-kicker text-gold-700">{content.approach.kicker}</span>
+                  <p className="mt-5 max-w-[48ch] text-base leading-[1.9] text-emerald-900/80 sm:text-lg">
+                    {content.approach.body}
+                  </p>
+                </div>
+                <div>
+                  <span className="luxe-kicker text-gold-700">{kitchenInitiative.title}</span>
+                  <p className="mt-5 max-w-[48ch] text-base leading-[1.9] text-emerald-900/80 sm:text-lg">
+                    {kitchenInitiative.body}
+                  </p>
+                </div>
+              </motion.div>
               <ImageCard image={content.featured[0]} priority />
-              <TextBlock initiative={kitchenInitiative} />
             </div>
           </section>
         )}
