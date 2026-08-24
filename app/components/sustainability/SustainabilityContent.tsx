@@ -99,8 +99,7 @@ function TextBlock({ initiative }: { initiative: SustainabilityPillar }) {
       className="flex flex-col justify-center"
     >
       <span className="luxe-kicker text-gold-700">{initiative.title}</span>
-      <span className="mt-6 block h-px w-10 bg-gold-600/60" />
-      <p className="mt-6 max-w-[48ch] text-base leading-[1.9] text-emerald-900/80 sm:text-lg">
+      <p className="mt-5 max-w-[48ch] text-base leading-[1.9] text-emerald-900/80 sm:text-lg">
         {initiative.body}
       </p>
     </motion.div>
@@ -120,7 +119,26 @@ export function SustainabilityContent({ content }: { content: SustainabilityCont
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#dce9dc] text-emerald-950">
       <MotionConfig reducedMotion="user">
-        <HeroSection hero={content.hero} approach={content.approach} />
+        <HeroSection hero={content.hero} />
+
+        {/* Our Conscious Choices: text LEFT + image RIGHT */}
+        <section className="bg-[#fffdf7] px-5 py-12 sm:px-8 sm:py-16 lg:px-14 lg:py-24">
+          <div className="mx-auto grid max-w-[1400px] items-center gap-10 lg:grid-cols-2 lg:gap-16">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              className="flex flex-col justify-center"
+            >
+              <span className="luxe-kicker text-gold-700">{content.approach.kicker}</span>
+              <p className="mt-5 max-w-[48ch] text-base leading-[1.9] text-emerald-900/80 sm:text-lg">
+                {content.approach.body}
+              </p>
+            </motion.div>
+            <ImageCard image={content.featured[0]} priority />
+          </div>
+        </section>
 
         {/* Row 1: Image LEFT + Kitchen text RIGHT */}
         {kitchenInitiative && (
@@ -150,19 +168,13 @@ export function SustainabilityContent({ content }: { content: SustainabilityCont
 
 /* ── Hero ── */
 
-function HeroSection({
-  hero,
-  approach,
-}: {
-  hero: SustainabilityHero;
-  approach: SustainabilityApproach;
-}) {
+function HeroSection({ hero }: { hero: SustainabilityHero }) {
   const { ref, y } = useParallax(["-6%", "8%"]);
 
   return (
     <section
       ref={ref}
-      className="relative overflow-hidden bg-[#fffdf7] px-5 pt-24 sm:px-8 sm:pt-32 lg:px-14 lg:pt-40"
+      className="relative overflow-hidden bg-[#fffdf7] px-5 pt-24 sm:px-8 sm:pt-32 lg:px-14 lg:pt-40 pb-16 sm:pb-20 lg:pb-28"
     >
       <motion.div
         aria-hidden
@@ -192,19 +204,6 @@ function HeroSection({
             {hero.intro}
           </p>
         </motion.div>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        className="relative mx-auto mt-20 max-w-3xl text-center sm:mt-28 lg:mt-36"
-      >
-        <span className="luxe-kicker justify-center text-gold-700">{approach.kicker}</span>
-        <p className="mx-auto mt-5 max-w-2xl text-lg leading-[1.9] text-emerald-900/80 sm:text-xl">
-          {approach.body}
-        </p>
       </motion.div>
     </section>
   );
@@ -242,7 +241,7 @@ function ClosingSection({ closing }: { closing: SustainabilityClosing }) {
         </motion.span>
         <motion.h2
           variants={fadeUp}
-          className="mt-7 font-display text-4xl font-semibold leading-[1.08] text-cream-50 sm:text-5xl"
+          className="mt-7 font-display text-2xl font-semibold leading-[1.08] text-cream-50 sm:text-3xl"
         >
           {closing.heading}
         </motion.h2>
