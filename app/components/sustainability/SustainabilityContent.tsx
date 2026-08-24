@@ -45,28 +45,23 @@ function useParallax<T extends HTMLElement>(range: [string, string]) {
 }
 
 export function SustainabilityContent({ content }: { content: SustainabilityContent }) {
-  const filteredInitiatives = filterInitiatives(content.initiatives);
+  const kitchenInitiative = content.initiatives.find(
+    (item) => item.title?.includes("Kitchen")
+  );
+  const rainInitiative = content.initiatives.find(
+    (item) => item.title?.includes("Himalayan Rain")
+  );
   return (
     <div className="min-h-screen overflow-x-hidden" style={{ background: "linear-gradient(135deg, #98FF98 0%, #00A86B 100%)", color: "#1A1A1A" }}>
       <MotionConfig reducedMotion="user">
         <HeroSection hero={content.hero} approach={content.approach} />
         <ApproachSection image={content.featured[0]} />
+        {kitchenInitiative && <ContentBlock initiative={kitchenInitiative} />}
+        {rainInitiative && <ContentBlock initiative={rainInitiative} />}
         <VisualStorySection image={content.featured[1]} />
-        {filteredInitiatives.length > 0 && (
-          <InitiativesSection initiatives={filteredInitiatives} />
-        )}
         <ClosingSection closing={content.closing} />
       </MotionConfig>
     </div>
-  );
-}
-
-const REMOVED_TITLES = ["Kitchen", "Himalayan Rain"];
-
-function filterInitiatives(initiatives: SustainabilityPillar[]) {
-  if (!Array.isArray(initiatives)) return [];
-  return initiatives.filter(
-    (item) => !REMOVED_TITLES.some((t) => item.title?.includes(t))
   );
 }
 
@@ -126,6 +121,32 @@ function HeroSection({
         </p>
       </motion.div>
     </section>
+  );
+}
+
+/* ── Content block between images ── */
+
+function ContentBlock({ initiative }: { initiative: SustainabilityPillar }) {
+  return (
+    <motion.section
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      className="px-5 py-16 sm:px-8 sm:py-20 lg:px-14 lg:py-28"
+    >
+      <div className="mx-auto max-w-[1400px]">
+        <div className="mx-auto max-w-2xl text-center">
+          <span className="mx-auto mb-4 block h-px w-10 bg-gold-600/60" />
+          <h2 className="font-display text-3xl font-semibold leading-[1.08] text-emerald-950 sm:text-4xl lg:text-5xl">
+            {initiative.title}
+          </h2>
+          <p className="mx-auto mt-6 max-w-xl text-base leading-[1.9] text-emerald-900/80 sm:text-lg">
+            {initiative.body}
+          </p>
+        </div>
+      </div>
+    </motion.section>
   );
 }
 
