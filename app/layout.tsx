@@ -76,7 +76,7 @@ const JSONLD = {
   image: "https://shire-nu.vercel.app/images/hero-1.jpg",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "Fagu",
+    streetAddress: "Dehna Road, near Talayi Village",
     addressLocality: "Fagu",
     addressRegion: "Himachal Pradesh",
     postalCode: "171209",
@@ -87,18 +87,31 @@ const JSONLD = {
     latitude: 31.066671,
     longitude: 77.309332,
   },
-  containsPlace: {
-    "@type": "TouristAttraction",
-    name: "Kufri",
-    url: "https://shire-nu.vercel.app/activities",
-  },
+  sameAs: [
+    "https://www.instagram.com/thehimalayanshire",
+    "https://facebook.com/thehimalayanshire",
+    "https://www.youtube.com/@thehimalayanshire",
+  ],
   amenityFeature: [
     { "@type": "LocationFeatureSpecification", name: "Mountain view", value: true },
     { "@type": "LocationFeatureSpecification", name: "Free parking", value: true },
     { "@type": "LocationFeatureSpecification", name: "In-house kitchen", value: true },
     { "@type": "LocationFeatureSpecification", name: "Electric fireplace", value: true },
     { "@type": "LocationFeatureSpecification", name: "Lawn and orchard gardens", value: true },
+    { "@type": "LocationFeatureSpecification", name: "Pet-friendly", value: true },
+    { "@type": "LocationFeatureSpecification", name: "Wi-Fi", value: true },
+    { "@type": "LocationFeatureSpecification", name: "24/7 Hot water", value: true },
   ],
+  containsPlace: {
+    "@type": "TouristAttraction",
+    name: "Kufri",
+    url: "https://shire-nu.vercel.app/activities",
+  },
+  author: {
+    "@type": "Organization",
+    name: "The Himalayan Shire",
+    url: "https://shire-nu.vercel.app/",
+  },
 };
 
 async function getGtmId(): Promise<string | null> {
