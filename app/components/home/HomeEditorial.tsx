@@ -176,6 +176,9 @@ export function HomeEditorial({
               {t("editorial", "body", brandIntro.body).split("\n\n").map((paragraph: string) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
+              <p className="mt-4 text-sm text-emerald-950/60">
+                <strong>Fagu climate:</strong> The Himalayan Shire is situated at 7,500 ft in the Himalayas. Winter brings snowfall (typically Dec–Feb), spring brings blooming orchards, and summer offers mild mountain weather. Current weather varies by season — check a live weather source for real-time conditions.
+              </p>
             </motion.div>
             <motion.div variants={fadeUp} className="mt-10 flex flex-col gap-4 border-t border-emerald-900/15 pt-7 sm:flex-row sm:items-center sm:justify-between">
               <p className="font-display text-xl font-semibold italic text-emerald-900">

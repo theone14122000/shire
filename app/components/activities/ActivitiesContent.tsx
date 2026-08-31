@@ -163,7 +163,7 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
                     </span>
                   )}
                   <p className="mt-3 flex-1 text-sm leading-[1.8] text-emerald-950/66">
-                    {place.highlight}
+                    {place.highlight} <a href="/activities" className="font-display font-medium text-emerald-950 hover:text-gold-700 transition-colors">— explore activities</a>
                   </p>
                 </div>
               </motion.article>
@@ -189,7 +189,7 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
               {content.trails.heading}
             </h2>
             <p className="mt-6 max-w-lg text-base leading-[1.85] text-cream-100/62 sm:text-lg">
-              {content.trails.description}
+              {content.trails.description} Please read <a href="/activities" className="font-display font-medium text-emerald-950 hover:text-gold-700 transition-colors">this guide</a> about activities in and around The Himalayan Shire.
             </p>
             <a href={content.trails.blogUrl} target="_blank" rel="noreferrer" className="luxe-button mt-9">
               Read the Blog
