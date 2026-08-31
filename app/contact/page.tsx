@@ -42,37 +42,6 @@ const initialForm: InquiryForm = {
 
 export const dynamic = "force-dynamic";
 
-export async function generateMetadata() {
-  return {
-    title: "Contact | The Himalayan Shire",
-    description:
-      "Get in touch with The Himalayan Shire - book a stay, ask about availability, or reach us for directions and travel planning. Fagu, Shimla, Himachal Pradesh.",
-    keywords: [
-      "Himalayan Shire",
-      "contact",
-      "hotel contact Shimla",
-      "Fagu Shimla contact",
-      "booking inquiries Himachal Pradesh",
-    ],
-    openGraph: {
-      title: "Contact The Himalayan Shire",
-      description:
-        "Get in touch with The Himalayan Shire - book a stay, ask about availability, or reach us for directions and travel planning.",
-      type: "website",
-      url: "https://shire-nu.vercel.app/contact",
-      images: ["/images/hero-1.jpg"],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: "Contact The Himalayan Shire",
-      description:
-        "Get in touch with The Himalayan Shire - book a stay, ask about availability, or reach us for directions and travel planning.",
-      images: ["/images/hero-1.jpg"],
-    },
-    alternates: { canonical: "/contact" },
-  };
-}
-
 export default function ContactPage() {
   const [form, setForm] = useState<InquiryForm>(initialForm);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -221,7 +190,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section bg-emerald-950 px-5 py-20 text-center text-cream-50 sm:px-8 sm:py-28 lg:px-14 lg:py-36>
+      <section className="bg-emerald-950 px-5 py-20 text-center text-cream-50 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
         <motion.div
           variants={fadeUp}
           initial="hidden"
