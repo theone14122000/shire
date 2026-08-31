@@ -40,6 +40,39 @@ const initialForm: InquiryForm = {
   children: "",
 };
 
+export const dynamic = "force-dynamic";
+
+export async function generateMetadata() {
+  return {
+    title: "Contact | The Himalayan Shire",
+    description:
+      "Get in touch with The Himalayan Shire - book a stay, ask about availability, or reach us for directions and travel planning. Fagu, Shimla, Himachal Pradesh.",
+    keywords: [
+      "Himalayan Shire",
+      "contact",
+      "hotel contact Shimla",
+      "Fagu Shimla contact",
+      "booking inquiries Himachal Pradesh",
+    ],
+    openGraph: {
+      title: "Contact The Himalayan Shire",
+      description:
+        "Get in touch with The Himalayan Shire - book a stay, ask about availability, or reach us for directions and travel planning.",
+      type: "website",
+      url: "https://shire-nu.vercel.app/contact",
+      images: ["/images/hero-1.jpg"],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Contact The Himalayan Shire",
+      description:
+        "Get in touch with The Himalayan Shire - book a stay, ask about availability, or reach us for directions and travel planning.",
+      images: ["/images/hero-1.jpg"],
+    },
+    alternates: { canonical: "/contact" },
+  };
+}
+
 export default function ContactPage() {
   const [form, setForm] = useState<InquiryForm>(initialForm);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -185,53 +218,10 @@ export default function ContactPage() {
               </span>
             </a>
           </motion.div>
-
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.15 }}
-            className="rounded-3xl border border-emerald-900/10 bg-white/70 p-6 shadow-[0_18px_50px_rgba(3,45,32,0.08)] sm:p-10"
-          >
-            <span className="luxe-kicker text-gold-700">Inquiry Form</span>
-            <h2 className="mt-4 font-display text-3xl font-semibold leading-[1.1] text-emerald-950 sm:text-4xl">
-              Plan your stay.
-            </h2>
-            <p className="mt-4 text-sm leading-[1.8] text-emerald-950/60 sm:text-base">
-              All fields are required except email.
-            </p>
-
-            <form onSubmit={submit} noValidate className="mt-8 grid gap-5 sm:grid-cols-2">
-              <Field id="name" label="Name" value={form.name} onChange={handleInput("name")} error={errors.name} autoComplete="name" />
-              <Field id="phone" label="Phone Number" value={form.phone} onChange={handleInput("phone")} error={errors.phone} autoComplete="tel" inputMode="tel" />
-              <Field id="email" label="Email (Optional)" value={form.email} onChange={handleInput("email")} error={errors.email} autoComplete="email" type="email" required={false} />
-              <Field id="check-in" label="Check In Date" value={form.checkInDate} onChange={handleInput("checkInDate")} error={errors.checkInDate} type="date" />
-              <Field id="check-out" label="Check Out Date" value={form.checkOutDate} onChange={handleInput("checkOutDate")} error={errors.checkOutDate} type="date" />
-              <Field id="adults" label="Number of Adults (8yrs and above)" value={form.adults} onChange={handleInput("adults")} error={errors.adults} type="number" min={1} />
-              <Field id="children" label="Number of Children (7yrs and below)" value={form.children} onChange={handleInput("children")} error={errors.children} type="number" min={0} />
-
-              <div className="sm:col-span-2">
-                <button
-                  type="submit"
-                  disabled={status === "sending"}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-800 px-6 py-3.5 text-sm font-bold text-cream-50 shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
-                >
-                  <Send size={15} strokeWidth={1.8} />
-                  {status === "sending" ? "Sending..." : "Send Inquiry"}
-                </button>
-
-                {statusMessage && (
-                  <p className={`mt-4 text-sm font-medium ${status === "sent" ? "text-emerald-700" : "text-red-600"}`}>
-                    {statusMessage}
-                  </p>
-                )}
-              </div>
-            </form>
-          </motion.div>
         </div>
       </section>
 
-      <section className="bg-emerald-950 px-5 py-20 text-center text-cream-50 sm:px-8 sm:py-28 lg:px-14">
+      <section bg-emerald-950 px-5 py-20 text-center text-cream-50 sm:px-8 sm:py-28 lg:px-14 lg:py-36>
         <motion.div
           variants={fadeUp}
           initial="hidden"

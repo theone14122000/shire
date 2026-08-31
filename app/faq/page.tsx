@@ -3,7 +3,7 @@
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import Link from "next/link";
 import { useId, useState } from "react";
-import { ChevronDown, MessageCircle } from "lucide-react";
+import { MessageCircle, ChevronDown } from "lucide-react";
 import { SiteNav } from "../components/SiteNav";
 import { SiteFooter } from "../components/SiteFooter";
 
@@ -60,7 +60,7 @@ const FAQS: Faq[] = [
     answer: "Yes, we have a big lawn with outdoor sofa seating. We can light bonfires and barbeque on request. We also have a terrace balcony on the 2nd floor with a 2-seater swing and additional seating for 5-6 people. This balcony is common for all the guests and has an amazing view on all sides.",
   },
   {
-    question: "Do you provide housekeeping service?",
+    question: "Do you have housekeeping service?",
     answer: "Yes. Rooms are cleaned every day between 11am and 5pm. We change the bedsheet every alternate day. In case guests request a bedsheet change earlier, we charge a cleaning fee of Rs. 500.",
   },
   {
@@ -73,6 +73,40 @@ const fadeUp: Variants = {
   hidden: { opacity: 0, y: 24 },
   show: { opacity: 1, y: 0, transition: { duration: 0.68, ease: [0.22, 1, 0.36, 1] } },
 };
+
+export const dynamic = "force-dynamic";
+
+export async function generateMetadata() {
+  return {
+    title: "FAQs | The Himalayan Shire",
+    description:
+      "Frequently asked questions about staying at The Himalayan Shire - room bookings, pet policy, amenities, location, and more. Fagu, Shimla, Himachal Pradesh.",
+    keywords: [
+      "Himalayan Shire",
+      "FAQs",
+      "frequently asked questions",
+      "hotel FAQs Shimla",
+      "Fagu accommodation questions",
+      "Himachal Pradesh stay information",
+    ],
+    openGraph: {
+      title: "FAQs | The Himalayan Shire",
+      description:
+        "Frequently asked questions about staying at The Himalayan Shire - room bookings, pet policy, amenities, location, and more.",
+      type: "website",
+      url: "https://shire-nu.vercel.app/faq",
+      images: ["/images/hero-1.jpg"],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "FAQs | The Himalayan Shire",
+      description:
+        "Frequently asked questions about staying at The Himalayan Shire - room bookings, pet policy, amenities, location, and more.",
+      images: ["/images/hero-1.jpg"],
+    },
+    alternates: { canonical: "/faq" },
+  };
+}
 
 export default function FaqPage() {
   return (
