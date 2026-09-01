@@ -210,7 +210,7 @@ export function RoomPageContent({
               </p>
             </div>
 
-            <div className="grid auto-rows-[230px] gap-4 sm:auto-rows-[290px] lg:grid-cols-6 lg:auto-rows-[180px]">
+            <div className="grid auto-rows-[280px] gap-4 sm:auto-rows-[340px] lg:grid-cols-6 lg:auto-rows-[220px]">
               {images.map((image, index) => (
                 <button
                   key={image.src}
