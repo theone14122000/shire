@@ -223,7 +223,7 @@ export function RoomPageContent({
                     alt={`${room.name} - ${image.caption ?? GALLERY_LABELS[index] ?? "Detail"}`}
                     fill
                     sizes="(max-width: 1024px) 100vw, 55vw"
-                    className="object-cover transition-transform duration-[1.1s] group-hover:scale-105"
+                    className="object-cover transition-transform duration-[1.1s] lg:group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/72 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                   {image.caption ? (

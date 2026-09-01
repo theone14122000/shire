@@ -169,6 +169,10 @@
     letter-spacing: var(--tracking-display);
     color: var(--color-pine-50);
   }
+
+  p {
+    color: black;
+  }
 }
 
 @layer components {
