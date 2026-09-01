@@ -179,7 +179,7 @@ export default function ContactPage() {
                   Find Us on Google Maps
                 </p>
                 <h3 className="mt-3 font-display text-2xl font-semibold leading-[1.25] text-emerald-950 transition-colors group-hover:text-gold-700 sm:text-3xl">
-                  {brand.address}
+                  Dehna Road, near Talayi Village, Fagu, Himachal Pradesh 171209
                 </h3>
               </div>
               <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-emerald-950 text-cream-50 transition-colors group-hover:bg-gold-500 group-hover:text-emerald-950">
@@ -188,6 +188,86 @@ export default function ContactPage() {
             </a>
           </motion.div>
         </div>
+      </section>
+
+      <section className="px-5 py-12 sm:px-8 sm:py-28 lg:px-14 lg:py-32">
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.15 }}
+          className="mx-auto max-w-2xl"
+        >
+          <h2 className="font-display text-2xl font-semibold text-emerald-950 sm:text-3xl mb-6">
+            Send Us an Inquiry
+          </h2>
+          <p className="mb-6 text-base leading-[1.85] text-emerald-950/65">
+            Fill in the form below and we'll get back to you within a few hours.
+          </p>
+          <form onSubmit={submit} className="space-y-4">
+            <Field
+              id="name"
+              label="Full Name"
+              value={form.name}
+              onChange={handleInput("name")}
+              required
+            />
+            <Field
+              id="phone"
+              label="Phone Number"
+              value={form.phone}
+              onChange={handleInput("phone")}
+              required
+            />
+            <Field
+              id="email"
+              label="Email Address"
+              value={form.email}
+              onChange={handleInput("email")}
+              required
+            />
+            <Field
+              id="checkInDate"
+              label="Check-in Date"
+              type="date"
+              value={form.checkInDate}
+              onChange={handleInput("checkInDate")}
+              required
+            />
+            <Field
+              id="checkOutDate"
+              label="Check-out Date"
+              type="date"
+              value={form.checkOutDate}
+              onChange={handleInput("checkOutDate")}
+              required
+            />
+            <Field
+              id="adults"
+              label="Number of Adults"
+              value={form.adults}
+              onChange={handleInput("adults")}
+              required
+            />
+            <Field
+              id="children"
+              label="Number of Children"
+              value={form.children}
+              onChange={handleInput("children")}
+              required
+            />
+            <button type="submit" className="luxe-button w-full">
+              Submit Inquiry
+            </button>
+            {errors.name && <p className="text-red-600 text-xs">{errors.name}</p>}
+            {errors.phone && <p className="text-red-600 text-xs">{errors.phone}</p>}
+            {errors.email && <p className="text-red-600 text-xs">{errors.email}</p>}
+            {errors.checkInDate && <p className="text-red-600 text-xs">{errors.checkInDate}</p>}
+            {errors.checkOutDate && <p className="text-red-600 text-xs">{errors.checkOutDate}</p>}
+            {errors.adults && <p className="text-red-600 text-xs">{errors.adults}</p>}
+            {errors.children && <p className="text-red-600 text-xs">{errors.children}</p>}
+          </form>
+        </motion.div>
       </section>
 
       <section className="bg-emerald-950 px-5 py-20 text-center text-cream-50 sm:px-8 sm:py-28 lg:px-14 lg:py-36">
