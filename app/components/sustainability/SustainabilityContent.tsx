@@ -61,7 +61,7 @@ function ImageCard({
       className="relative"
     >
       <div className="relative bg-white/70 p-3 pb-4 shadow-[0_18px_50px_-18px_rgba(6,40,25,0.2)] transition-colors duration-500 hover:bg-white/80">
-        <div className="relative aspect-[4/5] w-full overflow-hidden bg-[#dce9dc] sm:aspect-[4/4.6]">
+        <div className="relative aspect-[4/5] w-full overflow-hidden bg-white sm:aspect-[4/4.6]">
           <motion.div style={{ y, scale: 1.12 }} className="absolute inset-0">
             <Image
               src={image.src}
@@ -117,13 +117,13 @@ export function SustainabilityContent({ content }: { content: SustainabilityCont
   );
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#dce9dc] text-emerald-950">
+    <div className="min-h-screen overflow-x-hidden bg-white text-black">
       <MotionConfig reducedMotion="user">
         <HeroSection hero={content.hero} />
 
         {/* Our Conscious Choices + From Kitchen to Garden: combined text LEFT + image RIGHT */}
         {kitchenInitiative && (
-          <section className="bg-[#fffdf7] px-5 py-12 sm:px-8 sm:py-16 lg:px-14 lg:py-24">
+          <section className="bg-white px-5 py-12 sm:px-8 sm:py-16 lg:px-14 lg:py-24">
             <div className="mx-auto grid max-w-[1400px] items-center gap-10 lg:grid-cols-2 lg:gap-16">
               <motion.div
                 initial={{ opacity: 0, y: 24 }}
@@ -145,17 +145,21 @@ export function SustainabilityContent({ content }: { content: SustainabilityCont
                   </p>
                 </div>
               </motion.div>
+              {/* Show only the first featured image from CMS. 
+                  content.featured[1] is still available in the CMS for admins, 
+                  but hidden from the frontend display. */}
               <ImageCard image={content.featured[0]} priority />
             </div>
           </section>
         )}
 
-        {/* Row 2: Rain text LEFT + Image RIGHT */}
-        {rainInitiative && (
+        {/* Row 2: Kitchen text + image from CMS (featured[0] only) */}
+        {kitchenInitiative && (
           <section className="bg-white px-5 py-12 sm:px-8 sm:py-16 lg:px-14 lg:py-24">
             <div className="mx-auto grid max-w-[1400px] items-center gap-10 lg:grid-cols-2 lg:gap-16">
-              <TextBlock initiative={rainInitiative} />
-              <ImageCard image={content.featured[1]} />
+              <TextBlock initiative={kitchenInitiative} />
+              {/* Only featured[0] is displayed; featured[1] remains in CMS but not rendered here */}
+              <ImageCard image={content.featured[0]} />
             </div>
           </section>
         )}
@@ -174,7 +178,7 @@ function HeroSection({ hero }: { hero: SustainabilityHero }) {
   return (
     <section
       ref={ref}
-      className="relative overflow-hidden bg-[#fffdf7] px-5 pt-24 sm:px-8 sm:pt-32 lg:px-14 lg:pt-40 pb-16 sm:pb-20 lg:pb-28"
+      className="relative overflow-hidden bg-white px-5 pt-24 sm:px-8 sm:pt-32 lg:px-14 lg:pt-40 pb-16 sm:pb-20 lg:pb-28"
     >
       <motion.div
         aria-hidden
