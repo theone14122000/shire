@@ -121,48 +121,38 @@ export function SustainabilityContent({ content }: { content: SustainabilityCont
       <MotionConfig reducedMotion="user">
         <HeroSection hero={content.hero} />
 
-        {/* Our Conscious Choices + From Kitchen to Garden: combined text LEFT + image RIGHT */}
-        {kitchenInitiative && (
-          <section className="bg-white px-5 py-12 sm:px-8 sm:py-16 lg:px-14 lg:py-24">
-            <div className="mx-auto grid max-w-[1400px] items-center gap-10 lg:grid-cols-2 lg:gap-16">
+        {/* Two-column layout: all content LEFT, one image RIGHT */}
+        <section className="bg-white px-5 py-12 sm:px-8 sm:py-16 lg:px-14 lg:py-24">
+          <div className="mx-auto grid max-w-[1400px] items-start gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+            <div className="flex flex-col space-y-12">
+              {/* Approach section */}
               <motion.div
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                className="flex flex-col justify-center space-y-10"
               >
-                <div>
-                  <span className="luxe-kicker text-gold-700">{content.approach.kicker}</span>
-                  <p className="mt-5 max-w-[48ch] text-base leading-[1.9] text-emerald-900/80 sm:text-lg">
-                    {content.approach.body}
-                  </p>
-                </div>
-                <div>
-                  <span className="luxe-kicker text-gold-700">{kitchenInitiative.title}</span>
-                  <p className="mt-5 max-w-[48ch] text-base leading-[1.9] text-emerald-900/80 sm:text-lg">
-                    {kitchenInitiative.body}
-                  </p>
-                </div>
+                <span className="luxe-kicker text-gold-700">{content.approach.kicker}</span>
+                <p className="mt-5 max-w-[48ch] text-base leading-[1.9] text-emerald-900/80 sm:text-lg">
+                  {content.approach.body}
+                </p>
               </motion.div>
-              {/* Show only the first featured image from CMS. 
-                  content.featured[1] is still available in the CMS for admins, 
-                  but hidden from the frontend display. */}
-              <ImageCard image={content.featured[0]} priority />
-            </div>
-          </section>
-        )}
 
-        {/* Row 2: Kitchen text + image from CMS (featured[0] only) */}
-        {kitchenInitiative && (
-          <section className="bg-white px-5 py-12 sm:px-8 sm:py-16 lg:px-14 lg:py-24">
-            <div className="mx-auto grid max-w-[1400px] items-center gap-10 lg:grid-cols-2 lg:gap-16">
-              <TextBlock initiative={kitchenInitiative} />
-              {/* Only featured[0] is displayed; featured[1] remains in CMS but not rendered here */}
-              <ImageCard image={content.featured[0]} />
+              {/* Kitchen initiative */}
+              {kitchenInitiative && (
+                <TextBlock initiative={kitchenInitiative} />
+              )}
+
+              {/* Rain initiative */}
+              {rainInitiative && (
+                <TextBlock initiative={rainInitiative} />
+              )}
             </div>
-          </section>
-        )}
+
+            {/* Single featured image */}
+            <ImageCard image={content.featured[0]} priority />
+          </div>
+        </section>
 
         <ClosingSection closing={content.closing} />
       </MotionConfig>
