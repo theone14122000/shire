@@ -313,3 +313,42 @@ p {
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── Rooms Gallery — Desktop Hover Expansion ── */
+/* Uses grid-template-columns transition (NOT transform: scale) */
+@media (min-width: 1025px) {
+  .gallery-grid {
+    grid-template-columns: repeat(6, 1fr);
+    transition: grid-template-columns 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* Image 0 (cols 1-4): expand those cols, shrink cols 5-6 */
+  .gallery-grid:has(.gallery-item-0:hover) {
+    grid-template-columns: 2fr 1fr 1fr 1fr 0.5fr 0.5fr !important;
+  }
+
+  /* Image 1 (cols 5-6, rows 1-2): expand cols 5-6, shrink cols 1-4 */
+  .gallery-grid:has(.gallery-item-1:hover) {
+    grid-template-columns: 0.7fr 0.7fr 0.7fr 0.7fr 1.6fr 1.6fr !important;
+  }
+
+  /* Image 2 (cols 5-6, row 3): same as Image 1 */
+  .gallery-grid:has(.gallery-item-2:hover) {
+    grid-template-columns: 0.7fr 0.7fr 0.7fr 0.7fr 1.6fr 1.6fr !important;
+  }
+
+  /* Image 3 (cols 1-2, row 4): expand cols 1-2, shrink cols 3-6 */
+  .gallery-grid:has(.gallery-item-3:hover) {
+    grid-template-columns: 1.6fr 1.6fr 0.7fr 0.7fr 0.7fr 0.7fr !important;
+  }
+
+  /* Image 4 (cols 3-4, row 4): expand cols 3-4, shrink cols 1-2, 5-6 */
+  .gallery-grid:has(.gallery-item-4:hover) {
+    grid-template-columns: 0.7fr 0.7fr 1.6fr 1.6fr 0.7fr 0.7fr !important;
+  }
+
+  /* Image 5 (cols 5-6, row 4): expand cols 5-6, shrink cols 1-4 */
+  .gallery-grid:has(.gallery-item-5:hover) {
+    grid-template-columns: 0.7fr 0.7fr 0.7fr 0.7fr 1.6fr 1.6fr !important;
+  }
+}

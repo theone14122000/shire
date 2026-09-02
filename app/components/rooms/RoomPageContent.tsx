@@ -210,31 +210,21 @@ export function RoomPageContent({
               </p>
             </div>
 
-            <div className="grid auto-rows-[280px] gap-4 sm:auto-rows-[340px] lg:grid-cols-6 lg:auto-rows-[220px]">
+            <div className="gallery-grid grid auto-rows-[280px] gap-4 sm:auto-rows-[340px] lg:auto-rows-[220px]">
               {images.map((image, index) => (
                 <button
                   key={image.src}
                   type="button"
                   onClick={() => setLightboxIndex(index)}
-                  className={`group relative overflow-hidden text-left ${index === 0 ? "lg:col-span-4 lg:row-span-3" : index === 1 ? "lg:col-span-2 lg:row-span-2" : "lg:col-span-2 lg:row-span-1"}`}
+                  className={`group relative overflow-hidden text-left ${index === 0 ? "lg:col-span-4 lg:row-span-3" : index === 1 ? "lg:col-span-2 lg:row-span-2" : "lg:col-span-2 lg:row-span-1"} gallery-item-${index}`}
                 >
                   <Image
                     src={image.src}
                     alt={`${room.name} - ${image.caption ?? GALLERY_LABELS[index] ?? "Detail"}`}
                     fill
                     sizes="(max-width: 1024px) 100vw, 55vw"
-                    className="object-cover transition-transform duration-[1.1s] lg:group-hover:scale-125"
+                    className="object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/72 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                  {image.caption ? (
-                    <span className="absolute inset-x-0 bottom-0 bg-emerald-950/75 px-4 py-2.5 text-xs font-bold uppercase tracking-[0.16em] text-cream-50 backdrop-blur opacity-0 transition-all duration-500 group-hover:opacity-100">
-                      {image.caption}
-                    </span>
-                  ) : (
-                    <span className="absolute bottom-5 left-5 translate-y-3 bg-emerald-950/72 px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-cream-50 opacity-0 backdrop-blur transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-                      {GALLERY_LABELS[index] ?? "Detail"}
-                    </span>
-                  )}
                 </button>
               ))}
             </div>
