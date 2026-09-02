@@ -121,38 +121,44 @@ export function SustainabilityContent({ content }: { content: SustainabilityCont
       <MotionConfig reducedMotion="user">
         <HeroSection hero={content.hero} />
 
-        {/* Two-column layout: all content LEFT, one image RIGHT */}
-        <section className="bg-white px-5 py-12 sm:px-8 sm:py-16 lg:px-14 lg:py-24">
-          <div className="mx-auto grid max-w-[1400px] items-start gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
-            <div className="flex flex-col space-y-12">
-              {/* Approach section */}
+        {/* Section 1: Approach + Kitchen text LEFT, image 1 RIGHT */}
+        {kitchenInitiative && (
+          <section className="bg-white px-5 py-12 sm:px-8 sm:py-16 lg:px-14 lg:py-24">
+            <div className="mx-auto grid max-w-[1400px] items-center gap-10 lg:grid-cols-2 lg:gap-16">
               <motion.div
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                className="flex flex-col justify-center space-y-10"
               >
-                <span className="luxe-kicker text-gold-700">{content.approach.kicker}</span>
-                <p className="mt-5 max-w-[48ch] text-base leading-[1.9] text-emerald-900/80 sm:text-lg">
-                  {content.approach.body}
-                </p>
+                <div>
+                  <span className="luxe-kicker text-gold-700">{content.approach.kicker}</span>
+                  <p className="mt-5 max-w-[48ch] text-base leading-[1.9] text-emerald-900/80 sm:text-lg">
+                    {content.approach.body}
+                  </p>
+                </div>
+                <div>
+                  <span className="luxe-kicker text-gold-700">{kitchenInitiative.title}</span>
+                  <p className="mt-5 max-w-[48ch] text-base leading-[1.9] text-emerald-900/80 sm:text-lg">
+                    {kitchenInitiative.body}
+                  </p>
+                </div>
               </motion.div>
-
-              {/* Kitchen initiative */}
-              {kitchenInitiative && (
-                <TextBlock initiative={kitchenInitiative} />
-              )}
-
-              {/* Rain initiative */}
-              {rainInitiative && (
-                <TextBlock initiative={rainInitiative} />
-              )}
+              <ImageCard image={content.featured[0]} priority />
             </div>
+          </section>
+        )}
 
-            {/* Single featured image */}
-            <ImageCard image={content.featured[0]} priority />
-          </div>
-        </section>
+        {/* Section 2: Kitchen text LEFT, image 2 RIGHT */}
+        {kitchenInitiative && (
+          <section className="bg-white px-5 py-12 sm:px-8 sm:py-16 lg:px-14 lg:py-24">
+            <div className="mx-auto grid max-w-[1400px] items-center gap-10 lg:grid-cols-2 lg:gap-16">
+              <TextBlock initiative={kitchenInitiative} />
+              <ImageCard image={content.featured[1]} />
+            </div>
+          </section>
+        )}
 
         <ClosingSection closing={content.closing} />
       </MotionConfig>
