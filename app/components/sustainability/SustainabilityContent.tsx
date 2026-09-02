@@ -112,9 +112,6 @@ export function SustainabilityContent({ content }: { content: SustainabilityCont
   const kitchenInitiative = content.initiatives.find(
     (item) => item.title?.includes("Kitchen")
   );
-  const rainInitiative = content.initiatives.find(
-    (item) => item.title?.includes("Himalayan Rain")
-  );
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-white text-black">
