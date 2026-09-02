@@ -211,7 +211,7 @@ function ClosingSection({ closing }: { closing: SustainabilityClosing }) {
   return (
     <section
       ref={ref}
-      className="relative overflow-hidden bg-white px-5 py-24 text-center text-black sm:px-8 sm:py-32 lg:px-14"
+      className="relative overflow-hidden bg-[#1E3E2B] px-5 py-24 text-center text-cream-50 sm:px-8 sm:py-32 lg:px-14"
     >
       <motion.div
         aria-hidden
