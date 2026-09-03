@@ -148,7 +148,7 @@ export function SustainabilityContent({ content }: { content: SustainabilityCont
         )}
 
         {/* Section 2: Kitchen text LEFT, image 2 RIGHT */}
-        {kitchenInitiative && (
+        {kitchenInitiative && content.featured[1] && (
           <section className="bg-white px-5 py-12 sm:px-8 sm:py-16 lg:px-14 lg:py-24">
             <div className="mx-auto grid max-w-[1400px] items-center gap-10 lg:grid-cols-2 lg:gap-16">
               <TextBlock initiative={kitchenInitiative} />
