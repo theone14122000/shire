@@ -1,0 +1,27 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /auth/
+Disallow: /dashboard
+Disallow: /_next/
+
+# Allow all legitimate search crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+# Sitemap reference
+Sitemap: https://shire-nu.vercel.app/sitemap.xml
+
+# AI/search crawler access — do not block AI discovery
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
