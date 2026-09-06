@@ -4,7 +4,7 @@ import { prisma } from "../lib/prisma";
 
 const DATABASE_URL =
   process.env.DATABASE_URL ||
-  "mysql://root:uleywkvWxQaWImMlHYZkkIPQDFooKwXv@altaria.proxy.rlwy.net:40321/railway";
+  "mysql://root:XrHIUgHRxlxQgyCOPWgzfeqzxPIUPlPU@altaria.proxy.rlwy.net:17360/railway";
 
 async function main() {
   console.log("Seeding database...");

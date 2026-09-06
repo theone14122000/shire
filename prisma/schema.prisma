@@ -132,7 +132,7 @@ model PageContent {
 model Setting {
   id         String @id @default(cuid())
   key        String @unique
-  value      String @default("")
+  value      String   @db.Text
   type       String @default("string")
   group      String @default("general")
   updatedAt  DateTime @updatedAt
