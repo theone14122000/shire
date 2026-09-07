@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
     // DB-backed media can't be optimized on localhost. Dev only.
     unoptimized: process.env.NODE_ENV !== "production",
     remotePatterns: [
+      { protocol: "https", hostname: "www.thehimalayanshire.com" },
+      { protocol: "https", hostname: "thehimalayanshire.com" },
       { protocol: "https", hostname: "images.unsplash.com" },
       { protocol: "https", hostname: "plus.unsplash.com" },
       { protocol: "https", hostname: "**.vercel.app" },

@@ -20,7 +20,9 @@ export async function saveMedia(input: {
   origin: string;
 }): Promise<StoredMedia> {
   const id = crypto.randomUUID();
-  const url = `${input.origin}/api/media/${id}`;
+  const canonicalOrigin =
+    process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, "") || input.origin;
+  const url = `${canonicalOrigin}/api/media/${id}`;
   await prisma.media.create({
     data: {
       id,
