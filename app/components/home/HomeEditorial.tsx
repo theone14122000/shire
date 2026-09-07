@@ -228,7 +228,7 @@ export function HomeEditorial({
                 {t("rooms", "kicker", "Accommodations")}
               </motion.span>
               <motion.h2 variants={fadeUp} className="mt-5 max-w-3xl font-display text-4xl font-semibold leading-[1.05] text-emerald-950 sm:text-5xl lg:text-6xl">
-                {t("rooms", "heading", "Rooms named after the trees around the property.")}
+                {t("rooms", "heading", "Rooms, named after the trees around our property")}
               </motion.h2>
             </div>
             <motion.div variants={fadeUp} className="max-w-2xl lg:justify-self-end">
