@@ -164,7 +164,7 @@ export function HomeEditorial({
             variants={stagger}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, amount: 0.25 }}
+            viewport={{ once: true, amount: 0.1 }}
           >
             <motion.span variants={fadeUp} className="luxe-kicker text-gold-700">
               {t("editorial", "kicker", "Our Story")}
@@ -195,7 +195,7 @@ export function HomeEditorial({
             style={{ y: imageY }}
             initial={{ opacity: 0, scale: 0.96 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
             className="relative"
           >
@@ -223,7 +223,7 @@ export function HomeEditorial({
             variants={stagger}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={{ once: true, amount: 0.1 }}
             className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end"
           >
             <div>
@@ -251,7 +251,7 @@ export function HomeEditorial({
             variants={stagger}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, amount: 0.25 }}
+            viewport={{ once: true, amount: 0.1 }}
             className="mx-auto max-w-3xl text-center"
           >
             <motion.span variants={fadeUp} className="luxe-kicker text-gold-700">
@@ -267,7 +267,7 @@ export function HomeEditorial({
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="mx-auto mt-12 max-w-[1100px] rounded-[1.75rem] border border-emerald-900/10 bg-white/60 p-3 sm:p-5"
           >
@@ -282,7 +282,7 @@ export function HomeEditorial({
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.25 }}
+              viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.75 }}
               className="lg:sticky lg:top-28"
             >
@@ -351,8 +351,8 @@ export function HomeEditorial({
           <motion.div
             variants={stagger}
             initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.25 }}
+whileInView="show"
+            viewport={{ once: true, amount: 0.1 }}
             className="max-w-2xl"
           >
             <motion.span variants={fadeUp} className="luxe-kicker text-gold-400">
@@ -379,7 +379,7 @@ export function HomeEditorial({
             variants={stagger}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, amount: 0.25 }}
+            viewport={{ once: true, amount: 0.1 }}
             className="mx-auto max-w-3xl text-center"
           >
             <motion.span variants={fadeUp} className="luxe-kicker text-gold-700">
@@ -435,7 +435,7 @@ export function HomeEditorial({
                 key={frame.src}
                 initial={{ opacity: 0, y: 34, rotate: 0 }}
                 whileInView={{ opacity: 1, y: 0, rotate: POLAROID_ROTATIONS[index % POLAROID_ROTATIONS.length] }}
-                viewport={{ once: true, amount: 0.25 }}
+                viewport={{ once: true, amount: 0.1 }}
                 transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
                 whileHover={{ rotate: 0, scale: 1.05, zIndex: 30 }}
                 className={index % 2 === 1 ? "lg:mt-12" : "lg:mt-0"}
@@ -495,7 +495,7 @@ export function HomeEditorial({
             variants={stagger}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, amount: 0.25 }}
+            viewport={{ once: true, amount: 0.1 }}
             className="mx-auto max-w-3xl text-center"
           >
             <motion.span variants={fadeUp} className="luxe-kicker text-gold-700">
@@ -511,7 +511,7 @@ export function HomeEditorial({
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="mx-auto mt-12 max-w-[1100px] rounded-[1.75rem] border border-emerald-900/10 bg-white/60 p-3 sm:p-5"
           >

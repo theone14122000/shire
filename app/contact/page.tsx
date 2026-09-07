@@ -242,7 +242,7 @@ export default function ContactPage() {
           variants={fadeUp}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.1 }}
           className="mx-auto max-w-3xl"
         >
           <MessageCircle className="mx-auto text-gold-400" size={28} strokeWidth={1.4} />

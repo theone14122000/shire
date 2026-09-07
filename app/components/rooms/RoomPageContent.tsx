@@ -103,7 +103,7 @@ export function RoomPageContent({
               variants={stagger}
               initial="hidden"
               whileInView="show"
-              viewport={{ once: true, amount: 0.22 }}
+              viewport={{ once: true, amount: 0.1 }}
               className="flex flex-col items-center text-center"
             >
               <motion.span variants={fadeUp} className="luxe-kicker text-gold-700">
@@ -120,7 +120,7 @@ export function RoomPageContent({
             <motion.div
               initial={{ opacity: 0, y: 26 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
+              viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
               className="mt-14 grid grid-cols-1 overflow-hidden rounded-3xl border border-emerald-900/10 bg-white/70 shadow-[0_18px_50px_rgba(3,45,32,0.08)] sm:grid-cols-2 lg:grid-cols-4"
             >
@@ -152,7 +152,7 @@ export function RoomPageContent({
                 variants={stagger}
                 initial="hidden"
                 whileInView="show"
-                viewport={{ once: true, amount: 0.12 }}
+                viewport={{ once: true, amount: 0.1 }}
                 className="grid gap-x-8 gap-y-5 sm:grid-cols-2"
               >
                 {room.facilities.map((facility) => (
@@ -183,7 +183,7 @@ export function RoomPageContent({
               variants={stagger}
               initial="hidden"
               whileInView="show"
-              viewport={{ once: true, amount: 0.15 }}
+              viewport={{ once: true, amount: 0.1 }}
               className="flex w-full justify-center lg:justify-end"
             >
               <motion.div variants={fadeUp} className="flex w-full justify-center lg:justify-end">

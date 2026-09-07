@@ -37,7 +37,7 @@ export function TraditionalRemedies() {
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, amount: 0.25 }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="order-2 lg:order-1 lg:col-span-6"
           >
@@ -63,7 +63,7 @@ export function TraditionalRemedies() {
           <motion.div
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, amount: 0.3 }}
+            viewport={{ once: true, amount: 0.1 }}
             className="order-1 lg:order-2 lg:col-span-6 flex flex-col gap-6"
           >
             <motion.div

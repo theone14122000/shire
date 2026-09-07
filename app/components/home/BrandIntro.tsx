@@ -24,7 +24,7 @@ export function BrandIntro() {
             variants={stagger}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, amount: 0.25 }}
+            viewport={{ once: true, amount: 0.1 }}
             className="lg:col-span-6 flex flex-col gap-6"
           >
             <motion.div variants={fadeUp}>
@@ -73,7 +73,7 @@ export function BrandIntro() {
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.25 }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
             className="lg:col-span-6 relative"
           >

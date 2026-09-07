@@ -13,7 +13,7 @@ export function SpecialOffers() {
       <div aria-hidden className="pointer-events-none absolute -right-32 top-1/4 h-96 w-96 rounded-full bg-gold-200/20 blur-[130px]" />
 
       <Container>
-        <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.15 }}>
+        <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }}>
           <motion.div variants={fadeUp}>
             <SectionHeading
               eyebrow={specialOffers.eyebrow}

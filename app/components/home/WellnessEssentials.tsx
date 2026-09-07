@@ -125,7 +125,7 @@ export function WellnessEssentials() {
               <motion.p
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.4 }}
+                viewport={{ once: true, amount: 0.1 }}
                 transition={{ duration: 0.7, delay: 0.15 }}
                 className="self-end text-sm font-medium leading-7 text-neutral-700 sm:text-base lg:col-span-5"
               >
@@ -200,7 +200,7 @@ export function WellnessEssentials() {
               <motion.div
                 initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.4 }}
+                viewport={{ once: true, amount: 0.1 }}
                 transition={{ duration: 0.6 }}
               >
                 <p className="mb-2 text-xs font-black uppercase tracking-[0.2em] text-emerald-800">
@@ -219,7 +219,7 @@ export function WellnessEssentials() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
+              viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.6 }}
               className="rounded-2xl border border-emerald-200 bg-white p-3 shadow-lg shadow-emerald-950/8 sm:p-5 lg:p-6"
             >

@@ -110,7 +110,7 @@ export function RoomCard({ room }: { room: Room }) {
     <motion.article
       initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] as const }}
       className="group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-ink-900/8 bg-beige-50 shadow-[var(--shadow-soft)] transition-all duration-500 hover:-translate-y-2 hover:border-emerald-600/25 hover:shadow-[0_32px_80px_-20px_rgba(6,95,70,0.35)]"
     >
@@ -260,7 +260,7 @@ export function RoomCard({ room }: { room: Room }) {
           variants={amenityContainer}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, amount: 0.4 }}
+          viewport={{ once: true, amount: 0.1 }}
           className="flex flex-wrap items-center gap-2.5"
         >
           {room.amenities.slice(0, 5).map((a) => {

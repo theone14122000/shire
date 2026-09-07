@@ -59,7 +59,7 @@ export function FadeUp({
       variants={fadeUp}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, amount: 0.3 }}
+      viewport={{ once: true, amount: 0.1 }}
       transition={{ delay, duration: 0.7, ease: EASE_LUXE }}
       className={className}
     >

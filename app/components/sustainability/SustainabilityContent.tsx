@@ -56,7 +56,7 @@ function ImageCard({
       ref={ref as React.RefObject<HTMLDivElement>}
       initial={{ opacity: 0, scale: 0.97 }}
       whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       className="relative"
     >
@@ -94,7 +94,7 @@ function TextBlock({ initiative }: { initiative: SustainabilityPillar }) {
     <motion.div
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
+      viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       className="flex flex-col justify-center"
     >
@@ -125,7 +125,7 @@ export function SustainabilityContent({ content }: { content: SustainabilityCont
               <motion.div
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
+                viewport={{ once: true, amount: 0.1 }}
                 transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                 className="flex flex-col justify-center space-y-10"
               >
@@ -230,7 +230,7 @@ function ClosingSection({ closing }: { closing: SustainabilityClosing }) {
         variants={stagger}
         initial="hidden"
         whileInView="show"
-        viewport={{ once: true, amount: 0.3 }}
+        viewport={{ once: true, amount: 0.1 }}
         className="relative mx-auto max-w-3xl"
       >
         <motion.span variants={fadeUp} className="luxe-kicker justify-center text-gold-300">

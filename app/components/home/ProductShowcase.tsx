@@ -27,7 +27,7 @@ export function ProductShowcase() {
           variants={stagger}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, amount: 0.1 }}
           className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-8"
         >
           {productShowcase.blocks.map((block) => (

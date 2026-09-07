@@ -24,7 +24,7 @@ export function SectionHeading({
     <motion.div
       initial={{ opacity: 0, y: 18 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.4 }}
+      viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       className={`flex flex-col gap-4 sm:gap-5 ${alignment} ${className}`}
     >

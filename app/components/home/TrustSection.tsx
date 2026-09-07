@@ -31,7 +31,7 @@ export function TrustSection() {
           variants={stagger}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.1 }}
           className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-14 lg:mb-20"
         >
           {trustSection.stats.map((stat) => (
@@ -55,7 +55,7 @@ export function TrustSection() {
           variants={stagger}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, amount: 0.25 }}
+          viewport={{ once: true, amount: 0.1 }}
           className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 mb-14 lg:mb-20"
         >
           {trustSection.reviews.map((review) => (
@@ -80,7 +80,7 @@ export function TrustSection() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.7 }}
           className="mx-auto max-w-4xl"
         >
