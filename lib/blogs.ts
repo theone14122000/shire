@@ -1,4 +1,5 @@
 import { prisma } from "./prisma";
+import { normalizeMediaUrl } from "./media-store";
 import { readFile } from "fs/promises";
 import path from "path";
 import type { BlogPost, BlogPostInput, BlogListItem } from "./blog-types";
@@ -14,16 +15,24 @@ function toPrismaStatus(status: unknown): "DRAFT" | "PUBLISHED" {
 }
 
 function normalizePost(post: any): BlogPost {
+  const rawContent = Array.isArray(post.content)
+    ? post.content
+    : JSON.parse(post.content ?? "[]");
+  const content = Array.isArray(rawContent)
+    ? rawContent.map((block: any) =>
+        block && typeof block === "object" && typeof block.src === "string"
+          ? { ...block, src: normalizeMediaUrl(block.src) }
+          : block
+      )
+    : rawContent;
   return {
     ...post,
-    content: Array.isArray(post.content)
-      ? post.content
-      : JSON.parse(post.content ?? "[]"),
+    content,
     status: normalizeStatus(post.status),
     date: post.date ?? "",
     readTime: post.readTime ?? "",
     excerpt: post.excerpt ?? "",
-    image: post.image ?? "",
+    image: normalizeMediaUrl(post.image ?? ""),
     tag: post.tag ?? "",
     createdAt:
       post.createdAt instanceof Date ? post.createdAt.toISOString() : post.createdAt ?? "",
@@ -121,11 +130,22 @@ export async function createBlog(
   }
 
   const now = new Date().toISOString();
+  const normalizedContent = Array.isArray(input.content)
+    ? input.content.map((block: any) =>
+        block && typeof block === "object" && typeof block.src === "string"
+          ? { ...block, src: normalizeMediaUrl(block.src) }
+          : block
+      )
+    : input.content;
   const post = await prisma.blog.create({
     data: {
       ...input,
+      image:
+        input.image === undefined
+          ? undefined
+          : normalizeMediaUrl(input.image),
       slug,
-      content: JSON.stringify(input.content || []),
+      content: JSON.stringify(normalizedContent || []),
       status: toPrismaStatus(input.status),
       createdAt: now,
       updatedAt: now,
@@ -154,13 +174,26 @@ export async function updateBlog(
     }
   }
 
+  const normalizedUpdateContent = input.content
+    ? Array.isArray(input.content)
+      ? input.content.map((block: any) =>
+          block && typeof block === "object" && typeof block.src === "string"
+            ? { ...block, src: normalizeMediaUrl(block.src) }
+            : block
+        )
+      : input.content
+    : undefined;
   const updated = await prisma.blog.update({
     where: { slug },
     data: {
       ...input,
+      image:
+        input.image === undefined
+          ? undefined
+          : normalizeMediaUrl(input.image),
       slug: input.slug || slug,
-      content: input.content
-        ? JSON.stringify(input.content)
+      content: normalizedUpdateContent
+        ? JSON.stringify(normalizedUpdateContent)
         : undefined,
       status: input.status ? toPrismaStatus(input.status) : undefined,
       updatedAt: new Date().toISOString(),

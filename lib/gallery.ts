@@ -1,4 +1,5 @@
 import { prisma } from "./prisma";
+import { normalizeMediaUrl } from "./media-store";
 import type { GalleryItem, GalleryItemInput } from "./gallery-types";
 
 /* ------------------------------------------------------------------ */
@@ -20,7 +21,7 @@ export async function getAllGalleryItems(
     caption: i.caption ?? undefined,
     category: i.category,
     alt: i.alt ?? undefined,
-    src: i.src,
+    src: normalizeMediaUrl(i.src),
     order: i.order,
     status: (i.status as "published" | "hidden") ?? "published",
     createdAt: i.createdAt.toISOString(),
@@ -44,7 +45,7 @@ export async function getGalleryItemById(
     caption: item.caption ?? undefined,
     category: item.category,
     alt: item.alt ?? undefined,
-    src: item.src,
+    src: normalizeMediaUrl(item.src),
     order: item.order,
     status: (item.status as "published" | "hidden") ?? "published",
     createdAt: item.createdAt.toISOString(),
@@ -68,8 +69,9 @@ export async function createGalleryItem(
     throw new Error("Title and image are required");
   }
 
+  const src = normalizeMediaUrl(input.src);
   const existing = await prisma.galleryItem.findUnique({
-    where: { src: input.src },
+    where: { src },
   });
   if (existing) {
     throw new Error(`A gallery item with this image already exists`);
@@ -81,7 +83,7 @@ export async function createGalleryItem(
       caption: input.caption ?? null,
       category: input.category || "Common Spaces",
       alt: input.alt ?? null,
-      src: input.src,
+      src,
       order:
         typeof input.order === "number" ? input.order : await nextOrder(),
       status: (input.status || "published") as string,
@@ -94,7 +96,7 @@ export async function createGalleryItem(
     caption: item.caption ?? undefined,
     category: item.category,
     alt: item.alt ?? undefined,
-    src: item.src,
+    src: normalizeMediaUrl(item.src),
     order: item.order,
     status: (item.status as "published" | "hidden") ?? "published",
     createdAt: item.createdAt.toISOString(),
@@ -112,9 +114,12 @@ export async function updateGalleryItem(
   });
   if (!existing) return null;
 
-  if (input.src && input.src !== existing.src) {
+  if (
+    input.src &&
+    normalizeMediaUrl(input.src) !== normalizeMediaUrl(existing.src)
+  ) {
     const srcExists = await prisma.galleryItem.findUnique({
-      where: { src: input.src },
+      where: { src: normalizeMediaUrl(input.src) },
     });
     if (srcExists) {
       throw new Error(`A gallery item with this image already exists`);
@@ -128,7 +133,7 @@ export async function updateGalleryItem(
       caption: input.caption === undefined ? undefined : input.caption ?? null,
       category: input.category,
       alt: input.alt === undefined ? undefined : input.alt ?? null,
-      src: input.src,
+      src: input.src === undefined ? undefined : normalizeMediaUrl(input.src),
       order: input.order,
       status: input.status as string | undefined,
       updatedAt: new Date(),
@@ -141,7 +146,7 @@ export async function updateGalleryItem(
     caption: updated.caption ?? undefined,
     category: updated.category,
     alt: updated.alt ?? undefined,
-    src: updated.src,
+    src: normalizeMediaUrl(updated.src),
     order: updated.order,
     status: (updated.status as "published" | "hidden") ?? "published",
     createdAt: updated.createdAt.toISOString(),

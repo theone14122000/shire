@@ -1,4 +1,5 @@
 import { prisma } from "./prisma";
+import { normalizeMediaUrlsInData } from "./media-store";
 
 export async function getHomepageSections(): Promise<Record<string, any>> {
   try {
@@ -9,7 +10,7 @@ export async function getHomepageSections(): Promise<Record<string, any>> {
     const data: Record<string, any> = {};
     for (const section of sections) {
       try {
-        data[section.section] = JSON.parse(section.data);
+        data[section.section] = normalizeMediaUrlsInData(JSON.parse(section.data));
       } catch {
         data[section.section] = {};
       }

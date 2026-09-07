@@ -7,9 +7,45 @@ export interface StoredMedia {
 }
 
 /**
+ * Convert any stored media URL to a relative path.
+ * Absolute URLs bake in the deployment domain (e.g. shire-nu.vercel.app),
+ * which breaks the moment the domain changes. Relative paths work on
+ * every domain and are treated as same-origin by the Next.js optimizer
+ * (no remotePatterns entry needed, no 400s).
+ */
+export function normalizeMediaUrl(url: unknown): string {
+  if (typeof url !== "string" || !url) return (url as string) ?? "";
+  const m = url.match(/\/api\/media\/([A-Za-z0-9_-]+)/);
+  if (m) return `/api/media/${m[1]}`;
+  return url;
+}
+
+/**
+ * Deep-walk any parsed JSON content and normalize every string value
+ * that references /api/media/*. Safe to run on already-relative data.
+ */
+export function normalizeMediaUrlsInData<T>(data: T): T {
+  if (typeof data === "string") {
+    return normalizeMediaUrl(data) as T;
+  }
+  if (Array.isArray(data)) {
+    return data.map((v) => normalizeMediaUrlsInData(v)) as T;
+  }
+  if (data && typeof data === "object") {
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(data as Record<string, unknown>)) {
+      out[k] = normalizeMediaUrlsInData(v);
+    }
+    return out as T;
+  }
+  return data;
+}
+
+/**
  * Persist an uploaded file's bytes in the database (durable on every
  * platform, including Vercel where the filesystem is read-only).
- * The returned URL is an absolute, publicly streamable URL.
+ * The returned URL is a relative path (/api/media/{id}) so it works
+ * on every domain — localhost, previews, and production.
  */
 export async function saveMedia(input: {
   buffer: Buffer;
@@ -20,9 +56,7 @@ export async function saveMedia(input: {
   origin: string;
 }): Promise<StoredMedia> {
   const id = crypto.randomUUID();
-  const canonicalOrigin =
-    process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, "") || input.origin;
-  const url = `${canonicalOrigin}/api/media/${id}`;
+  const url = `/api/media/${id}`;
   await prisma.media.create({
     data: {
       id,

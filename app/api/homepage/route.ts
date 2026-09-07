@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { verifyToken, COOKIE_NAME } from "@/lib/auth";
 import { getHomepageSections } from "@/lib/homepage-content";
+import { normalizeMediaUrlsInData } from "@/lib/media-store";
 
 export const maxDuration = 60;
 
@@ -22,8 +23,8 @@ export async function PUT(req: NextRequest) {
     for (const [section, sectionData] of Object.entries(body)) {
       await prisma.homepageContent.upsert({
         where: { section },
-        update: { data: JSON.stringify(sectionData) },
-        create: { section, data: JSON.stringify(sectionData) },
+        update: { data: JSON.stringify(normalizeMediaUrlsInData(sectionData)) },
+        create: { section, data: JSON.stringify(normalizeMediaUrlsInData(sectionData)) },
       });
     }
 

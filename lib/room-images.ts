@@ -1,5 +1,6 @@
 // lib/room-images.ts
 import { prisma } from "./prisma";
+import { normalizeMediaUrl } from "./media-store";
 import { rooms } from "./rooms";
 
 export interface RoomImageRecord {
@@ -25,7 +26,7 @@ export async function getRoomImageRows(slug: string): Promise<RoomImageRecord[]>
   return rows.map((r) => ({
     id: r.id,
     roomSlug: r.roomSlug,
-    src: r.src,
+    src: normalizeMediaUrl(r.src),
     alt: r.alt,
     caption: r.caption,
     order: r.order,
@@ -46,10 +47,10 @@ export interface PublicRoomImage {
 export async function getPublicRoomImages(slug: string): Promise<PublicRoomImage[]> {
   const rows = await getRoomImageRows(slug);
   if (rows.length > 0) {
-    return rows.map((r) => ({ src: r.src, caption: r.caption }));
+    return rows.map((r) => ({ src: normalizeMediaUrl(r.src), caption: r.caption }));
   }
   const room = rooms.find((r) => r.slug === slug);
-  return (room?.images ?? []).map((src) => ({ src, caption: null }));
+  return (room?.images ?? []).map((src) => ({ src: normalizeMediaUrl(src), caption: null }));
 }
 
 /** Get the number of default (hardcoded) images for a room. */
@@ -72,7 +73,7 @@ export async function createRoomImage(
   const row = await prisma.roomImage.create({
     data: {
       roomSlug: slug,
-      src: input.src,
+      src: normalizeMediaUrl(input.src),
       alt: input.alt ?? null,
       caption: input.caption ?? null,
       order: (max._max.order ?? -1) + 1,
@@ -81,7 +82,7 @@ export async function createRoomImage(
   return {
     id: row.id,
     roomSlug: row.roomSlug,
-    src: row.src,
+    src: normalizeMediaUrl(row.src),
     alt: row.alt,
     caption: row.caption,
     order: row.order,
@@ -100,7 +101,7 @@ export async function updateRoomImage(
   const row = await prisma.roomImage.update({
     where: { id },
     data: {
-      src: input.src,
+      src: input.src === undefined ? undefined : normalizeMediaUrl(input.src),
       alt: input.alt === undefined ? undefined : input.alt || null,
       caption: input.caption === undefined ? undefined : input.caption || null,
       updatedAt: new Date(),
@@ -109,7 +110,7 @@ export async function updateRoomImage(
   return {
     id: row.id,
     roomSlug: row.roomSlug,
-    src: row.src,
+    src: normalizeMediaUrl(row.src),
     alt: row.alt,
     caption: row.caption,
     order: row.order,
