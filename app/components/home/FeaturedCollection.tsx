@@ -65,7 +65,13 @@ export function FeaturedCollection() {
           className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8"
         >
           {rooms.map((room, idx) => (
-            <motion.div key={room.id} variants={fadeUp}>
+            <motion.div
+              key={room.id}
+              initial={{ y: 24 }}
+              whileInView={{ y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+            >
               <Link
                 href={`/rooms/${room.slug}`}
                 className="group block h-full"

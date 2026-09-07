@@ -35,8 +35,8 @@ export function TraditionalRemedies() {
       <Container>
         <div className="relative grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-20">
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ scale: 0.95 }}
+            whileInView={{ scale: 1 }}
             viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="order-2 lg:order-1 lg:col-span-6"

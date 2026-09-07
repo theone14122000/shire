@@ -71,8 +71,8 @@ export function BrandIntro() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ x: 40 }}
+            whileInView={{ x: 0 }}
             viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
             className="lg:col-span-6 relative"

@@ -193,10 +193,6 @@ export function HomeEditorial({
 
           <motion.div
             style={{ y: imageY }}
-            initial={{ opacity: 0, scale: 0.96 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
             className="relative"
           >
             <div className="relative ml-auto aspect-[4/5] max-w-[620px] overflow-hidden rounded-[1.5rem]">
@@ -433,8 +429,8 @@ whileInView="show"
             {(galleryFrames && galleryFrames.length > 0 ? galleryFrames : GALLERY_FRAMES).map((frame, index) => (
               <motion.div
                 key={frame.src}
-                initial={{ opacity: 0, y: 34, rotate: 0 }}
-                whileInView={{ opacity: 1, y: 0, rotate: POLAROID_ROTATIONS[index % POLAROID_ROTATIONS.length] }}
+                initial={{ rotate: 0 }}
+                whileInView={{ rotate: POLAROID_ROTATIONS[index % POLAROID_ROTATIONS.length] }}
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
                 whileHover={{ rotate: 0, scale: 1.05, zIndex: 30 }}

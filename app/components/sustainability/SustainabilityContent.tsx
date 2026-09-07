@@ -54,8 +54,8 @@ function ImageCard({
   return (
     <motion.div
       ref={ref as React.RefObject<HTMLDivElement>}
-      initial={{ opacity: 0, scale: 0.97 }}
-      whileInView={{ opacity: 1, scale: 1 }}
+      initial={{ scale: 0.97 }}
+      whileInView={{ scale: 1 }}
       viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       className="relative"
@@ -123,8 +123,8 @@ export function SustainabilityContent({ content }: { content: SustainabilityCont
           <section className="bg-white px-5 py-12 sm:px-8 sm:py-16 lg:px-14 lg:py-24">
             <div className="mx-auto grid max-w-[1400px] items-center gap-10 lg:grid-cols-2 lg:gap-16">
               <motion.div
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ y: 24 }}
+                whileInView={{ y: 0 }}
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                 className="flex flex-col justify-center space-y-10"

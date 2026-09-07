@@ -279,9 +279,8 @@ function GalleryTile({
   return (
     <motion.div
       layout
-      variants={fadeUp}
-      initial="hidden"
-      animate="show"
+      initial={{ y: 24 }}
+      animate={{ y: 0 }}
       exit={{ opacity: 0, scale: 0.96 }}
       style={{ rotate: POLAROID_ROTATIONS[index % POLAROID_ROTATIONS.length] }}
       whileHover={{ rotate: 0, scale: 1.04, zIndex: 20 }}
