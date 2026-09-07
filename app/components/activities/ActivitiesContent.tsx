@@ -70,17 +70,12 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
             </p>
           </div>
 
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.1 }}
+          <div
             className="mt-14 grid gap-x-12 gap-y-7 border-t border-emerald-900/10 pt-10 lg:mt-16 lg:grid-cols-2"
           >
             {content.propertyPoints.map((activity, index) => (
-              <motion.div
+              <div
                 key={`${activity.title}-${index}`}
-                variants={fadeUp}
                 className="flex gap-5"
               >
                 <span className="font-display text-2xl font-semibold text-gold-700">
@@ -94,18 +89,13 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
                     {activity.body}
                   </p>
                 </div>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
 
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.1 }}
-          >
+          <div>
             <PropertyCardSlider cards={content.propertyCards} />
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -123,17 +113,12 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
             </p>
           </div>
 
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.05 }}
+          <div
             className="mt-14 grid gap-6 sm:grid-cols-2 lg:mt-20 lg:grid-cols-3"
           >
             {content.destinations.map((place, index) => (
-              <motion.article
+              <article
                 key={`${place.name}-${index}`}
-                variants={fadeUp}
                 className="group flex h-full flex-col overflow-hidden rounded-2xl border border-emerald-900/10 bg-white shadow-[0_14px_40px_rgba(3,45,32,0.07)]"
               >
                 <div className="relative aspect-[16/10] overflow-hidden">
@@ -166,9 +151,9 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
                     {place.highlight} <a href="/activities" className="font-display font-medium text-emerald-950 hover:text-gold-700 transition-colors">— explore activities</a>
                   </p>
                 </div>
-              </motion.article>
+              </article>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
