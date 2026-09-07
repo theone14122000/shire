@@ -56,7 +56,7 @@ export default function BlogListingClient({ blogs }: { blogs: BlogListItem[] }) 
             className="mx-auto max-w-[1400px]"
           >
             <Link href={`/blog/${featured.slug}`} className="group grid border-y border-emerald-900/15 py-8 lg:grid-cols-[1.12fr_0.88fr] lg:gap-12 lg:py-10">
-              <div className="relative min-h-[360px] overflow-hidden lg:min-h-[580px]">
+              <div className="relative h-[360px] overflow-hidden lg:h-[580px]">
                 <Image
                   src={featured.image}
                   alt={featured.title}

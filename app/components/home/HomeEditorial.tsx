@@ -200,6 +200,7 @@ export function HomeEditorial({
                 src={t("editorial", "image", "/images/brand-lifestyle.jpg")}
                 alt="The Himalayan Shire property"
                 fill
+                priority
                 sizes="(max-width: 1024px) 100vw, 48vw"
                 className="object-cover"
               />
@@ -334,7 +335,7 @@ export function HomeEditorial({
       </section>
 
       <section className="grid bg-[#1E3E2B] lg:grid-cols-2">
-        <div className="relative min-h-[430px] overflow-hidden lg:min-h-[720px]">
+        <div className="relative h-[430px] overflow-hidden lg:h-[720px]">
           <Image
             src={t("setting", "image", "/images/setting-view.jpg")}
             alt="Mountain view from The Himalayan Shire"

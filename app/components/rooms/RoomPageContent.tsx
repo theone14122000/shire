@@ -60,7 +60,7 @@ export function RoomPageContent({
 
   return (
     <>
-      <section ref={heroRef} className="relative flex min-h-[82vh] items-end overflow-hidden bg-emerald-950">
+      <section ref={heroRef} className="relative flex h-[82vh] items-end overflow-hidden bg-emerald-950">
         <motion.div style={{ scale: imageScale }} className="absolute inset-0">
           <Image
             src={images[0].src}

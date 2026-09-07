@@ -112,7 +112,7 @@ export function GalleryPageContent({
 
   return (
     <section className="overflow-hidden bg-[#f7f1e6]">
-      <div className="relative min-h-[70vh] overflow-hidden sm:min-h-[72vh]">
+      <div className="relative h-[70vh] overflow-hidden sm:h-[72vh]">
         <Image
           src={heroSrc}
           alt="The Enchanting Winter Views"

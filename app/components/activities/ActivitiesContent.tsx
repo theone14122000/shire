@@ -28,7 +28,7 @@ const stagger: Variants = {
 export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
   return (
     <>
-      <section className="relative min-h-[78vh] overflow-hidden">
+      <section className="relative h-[78vh] min-h-[480px] overflow-hidden">
         <Image
           src={content.hero.bgImage}
           alt={content.hero.bgAlt}
@@ -159,7 +159,7 @@ export function ActivitiesContent({ content }: { content: ActivitiesContent }) {
 
       <section className="bg-emerald-950 px-5 py-20 text-cream-50 sm:px-8 sm:py-28 lg:px-14">
         <div className="mx-auto grid max-w-[1400px] gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div className="relative min-h-[360px] overflow-hidden lg:min-h-[560px]">
+          <div className="relative h-[360px] overflow-hidden lg:h-[560px]">
             <Image
               src={content.trails.image}
               alt={content.trails.imageAlt}

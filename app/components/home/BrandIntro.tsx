@@ -82,6 +82,7 @@ export function BrandIntro() {
                 src="/images/brand-lifestyle.jpg"
                 alt="The Himalayan Shire property"
                 fill
+                priority
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
