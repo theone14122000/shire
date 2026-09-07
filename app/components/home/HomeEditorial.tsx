@@ -74,7 +74,7 @@ const AMENITY_ITEMS: AmenityItem[] = [
     icon: ChefHat,
   },
   {
-    title: "Barbeque & Bonfire",
+    title: "Barbecue & Bonfire",
     note: "available on order",
     href: "/activities",
     icon: Flame,
@@ -359,7 +359,7 @@ whileInView="show"
               {t("setting", "heading", "A serene, beautiful countryside surrounded by apple orchards.")}
             </motion.h2>
             <motion.p variants={fadeUp} className="mt-7 text-base leading-[1.9] text-cream-100/78 sm:text-lg">
-              {t("setting", "description", "A serene, beautiful countryside location - surrounded by apple orchards and tall pine trees, with an unparallelled view of the Kinnaur Kailash range.")}
+              {t("setting", "description", "A serene, beautiful countryside location - surrounded by apple orchards and tall pine trees, with an unparalleled view of the Kinnaur Kailash range.")}
             </motion.p>
             <motion.div variants={fadeUp} className="mt-9 flex flex-col gap-4 sm:flex-row">
               <Link href={t("setting", "ctaHref", "/activities")} className="luxe-button">

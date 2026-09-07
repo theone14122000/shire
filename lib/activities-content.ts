@@ -96,7 +96,7 @@ export const ACTIVITIES_DEFAULTS: ActivitiesContent = {
     },
     {
       title: "Nature Trails & Orchard Walks",
-      body: "Step into apple orchards and deodar forests right outside. Stroll through orchards, meet locals, or explore jungle trails steps from the property. Bonfire and barbeque available on request.",
+      body: "Step into apple orchards and deodar forests right outside. Stroll through orchards, meet locals, or explore jungle trails steps from the property. Bonfire and barbecue available on request.",
       image: "/images/activity/activity-10.jpg",
     },
   ],
@@ -119,7 +119,7 @@ export const ACTIVITIES_DEFAULTS: ActivitiesContent = {
     },
     {
       title: "Nature Trails & Orchard Walks",
-      body: "Step into apple orchards and deodar forests right outside. Stroll through orchards, meet locals, or explore jungle trails steps from the property. Bonfire and barbeque available on request.",
+      body: "Step into apple orchards and deodar forests right outside. Stroll through orchards, meet locals, or explore jungle trails steps from the property. Bonfire and barbecue available on request.",
     },
   ],
   nearby: {

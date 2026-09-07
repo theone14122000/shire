@@ -175,7 +175,7 @@ export default async function BlogPostPage({
 
           <div className="mt-14 border-t border-emerald-100 pt-10 text-center">
 <p className="text-sm font-medium text-emerald-950/70">
-              Enjoyed this story? <a href="https://letsbook.me/booking/thehimalayanshire" className="font-medium text-gold-600 underline">plan your stay at Fagu</a>.
+              Enjoyed this story? <a href="https://letsbook.me/booking/thehimalayanshire" className="font-medium text-gold-600 underline">Plan your stay at Fagu</a>.
             </p>
             <Link
               href="https://letsbook.me/booking/thehimalayanshire"

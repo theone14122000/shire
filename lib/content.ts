@@ -302,7 +302,7 @@ export const whyChooseUs: {
 export const traditionalRemedies = {
   eyebrow: "The Setting",
   heading: "A serene, beautiful countryside surrounded by apple orchards.",
-  body: `A serene, beautiful countryside location — surrounded by apple orchards and tall pine trees, with an unparallelled view of the Kinnaur Kailash range. The hills here are stunning in every season: white with snow in winter, blooming in spring, and golden in autumn.
+  body: `A serene, beautiful countryside location — surrounded by apple orchards and tall pine trees, with an unparalleled view of the Kinnaur Kailash range. The hills here are stunning in every season: white with snow in winter, blooming in spring, and golden in autumn.
 
 You can choose to spend your days walking the orchard, sitting by the fire, or going on a snow trek with our local team. We will help you plan, and we will sit with you in the evening over a hot meal when you come back.`,
   cta: { label: "Read the full story", href: "#story" },

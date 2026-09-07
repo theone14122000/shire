@@ -10,8 +10,8 @@ const SETTING_DATA = {
   eyebrow: "The Setting",
   heading: "A Serene Sanctuary Near Shimla",
   body: [
-    "A serene, peaceful countryside location, surrounded by apple orchards on all sides, with an exceptionally beautiful view of the Himalayan range. You will hear nothing but the chirpings of the birds all day and can easily spot some rare and beautiful bird species hanging around our gardens and balcony.",
-    "The sunrise view from our property is to die for. Sit outside in our lawn and enjoy some deliciously cooked meals prepared by our chef. Have the time of your life in our recreational space with TT table, carrom and plenty of board games or pick a book from our book shelf and enjoy quiet reading time on our double seater swing placed in our balcony.",
+    "A serene, peaceful countryside location, surrounded by apple orchards on all sides, with an exceptionally beautiful view of the Himalayan range. You will hear nothing but the chirping of the birds all day and can easily spot some rare and beautiful bird species hanging around our gardens and balcony.",
+    "The sunrise view from our property is to die for. Sit outside on our lawn and enjoy some deliciously cooked meals prepared by our chef. Have the time of your life in our recreational space with TT table, carrom and plenty of board games or pick a book from our bookshelf and enjoy quiet reading time on our double-seater swing placed in our balcony.",
   ],
   cta: { label: "View Our Gallery", href: "/gallery" },
   image: { src: "/images/setting-view.jpg", alt: "Sunrise view over apple orchards near Shimla" },

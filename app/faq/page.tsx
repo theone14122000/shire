@@ -57,7 +57,7 @@ const FAQS: Faq[] = [
   },
   {
     question: "Do you have an outdoor sitting area?",
-    answer: "Yes, we have a big lawn with outdoor sofa seating. We can light bonfires and barbeque on request. We also have a terrace balcony on the 2nd floor with a 2-seater swing and additional seating for 5-6 people. This balcony is common for all the guests and has an amazing view on all sides.",
+    answer: "Yes, we have a big lawn with outdoor sofa seating. We can light bonfires and barbecue on request. We also have a terrace balcony on the 2nd floor with a 2-seater swing and additional seating for 5-6 people. This balcony is common for all the guests and has an amazing view on all sides.",
   },
   {
     question: "Do you have housekeeping service?",

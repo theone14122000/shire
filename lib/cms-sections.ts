@@ -119,7 +119,7 @@ We will make your stay a truly delightful one, and hope to send you back with me
   },
   rooms: {
     kicker: "Accommodations",
-    heading: "Rooms named after the trees around the property.",
+    heading: "Rooms, named after the trees around our property",
     description:
       "We have lovingly prepared seven rooms, each with its own uniqueness - named after the tree species that surround our property.",
   },
@@ -133,7 +133,7 @@ We will make your stay a truly delightful one, and hope to send you back with me
     kicker: "The Setting",
     heading: "A serene, beautiful countryside surrounded by apple orchards.",
     description:
-      "A serene, beautiful countryside location - surrounded by apple orchards and tall pine trees, with an unparallelled view of the Kinnaur Kailash range.",
+      "A serene, beautiful countryside location - surrounded by apple orchards and tall pine trees, with an unparalleled view of the Kinnaur Kailash range.",
     ctaLabel: "Explore activities",
     ctaHref: "/activities",
     image: "/images/setting-view.jpg",

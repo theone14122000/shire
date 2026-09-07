@@ -24,7 +24,7 @@ export const rooms: RoomData[] = [
     view: "Mountain View",
     floor: "Ground Floor",
     description:
-      "Deo means God and Dar means a tree, in other words; the celestial tree or the tree of the gods, which only makes it befitting that we name our most premium room after this magnificent tree. A very spacious room with cool things like bay windows for you to sit and soak the winter sun while enjoying the view of the snow-capped mountains, an electric fireplace, and a very spacious and modern washroom make this a truly luxurious room to stay in.",
+      "Deo means God and Dar means a tree, in other words, the celestial tree or the tree of the gods, which only makes it befitting that we name our most premium room after this magnificent tree. A very spacious room with cool things like bay windows for you to sit and soak the winter sun while enjoying the view of the snow-capped mountains, an electric fireplace, and a very spacious and modern washroom make this a truly luxurious room to stay in.",
     facilities: [
       "Three-seater sofa",
       "Glass cubicle for bathing",
@@ -51,7 +51,7 @@ export const rooms: RoomData[] = [
     view: "Mountain View",
     floor: "First Floor",
     description:
-      "This room truly represents the experience that is Himalayan Shire. With an electric fireplace, bay windows and sofa lounge, handpicked carpets and fabrics, Buransh is as vibrant as the flower it’s named after. The most spacious room of our property it’s perfect for those who live life king size.",
+      "This room truly represents the experience that is Himalayan Shire. With an electric fireplace, bay windows and sofa lounge, handpicked carpets and fabrics, Buransh is as vibrant as the flower it’s named after. The most spacious room of our property — it’s perfect for those who live life king size.",
     facilities: [
       "Electric fireplace",
       "Glass cubicle for bathing",
@@ -78,7 +78,7 @@ export const rooms: RoomData[] = [
     view: "Mountain View",
     floor: "First Floor",
     description:
-      "Located on the first floor, this deluxe room offers the best view of the mountains. Offering a bay window, sofa chairs, luggage stand, big cupboard, and a very stylish washroom with shower the room is a truly premium one. The view from this rooms will make you an early riser, if only to watch the beautiful sunrise.",
+      "Located on the first floor, this deluxe room offers the best view of the mountains. Offering a bay window, sofa chairs, luggage stand, big cupboard, and a very stylish washroom with shower the room is a truly premium one. The view from this room will make you an early riser, if only to watch the beautiful sunrise.",
     facilities: [
       "Bay windows with seating",
       "Space for extra beddings",
@@ -104,7 +104,7 @@ export const rooms: RoomData[] = [
     view: "Valley View",
     floor: "Ground Floor",
     description:
-      "Named after the most pre-dominant pine species found around our property, this room offer a valley-view right from your bed. Spacious room with a king size bed, cupboards, luggage stand, and a very beautiful bathroom, this room will make your stay a more joyful one.",
+      "Named after the most predominant pine species found around our property, this room offers a valley-view right from your bed. Spacious room with a king size bed, cupboards, luggage stand, and a very beautiful bathroom, this room will make your stay a more joyful one.",
     facilities: [
       "Space for extra beddings",
       "Handrails in washroom for elderly",

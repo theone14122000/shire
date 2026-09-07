@@ -7,12 +7,12 @@ import { SiteNav } from "../components/SiteNav";
 import { SiteFooter } from "../components/SiteFooter";
 
 const POLICIES = [
-  "Pre-Approval is required from the property management before guests can bring the pets along. The management reserves the right to refuse to allow pet on property if they deem necessary.",
-  "Pets must not be left unattended, and must be leashed at all time in common spaces, especially with other guests around.",
+  "Pre-Approval is required from the property management before guests can bring the pets along. The management reserves the right to refuse to allow pets on the property if they deem necessary.",
+  "Pets must not be left unattended, and must be leashed at all times in common spaces, especially with other guests around.",
   "Guests are responsible for cleaning up after their pet on hotel property and in the neighbourhood.",
   "Any disturbances such as barking must be curtailed to ensure other guests or staff are not inconvenienced.",
   "Guests are responsible for all property damages and/or personal injuries resulting from their pet.",
-  "In case of pet droppings in the hotel premises (including lawn), urination inside the premises, soiling of any bed linens or carpets, etc, or any other damage including but not limited to scratch marks, tearing etc, whether permanent or temporary in nature, appropriate charges/fines shall be paid by the guests.",
+  "In case of pet droppings in the hotel premises (including lawn), urination inside the premises, soiling of any bed linens or carpets, etc, or any other damage including but not limited to scratch marks, tearing, etc., whether permanent or temporary in nature, appropriate charges/fines shall be paid by the guests.",
   "Guests agree to indemnify and hold harmless the hotel, its owners and its operator from all liability and damage suffered as a result of the guest's pet.",
   "We charge a Rs. 500 per day pet fee.",
 ];
