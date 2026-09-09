@@ -32,9 +32,9 @@ export const brand = {
   mapsUrl:
     "https://www.google.com/maps?ll=31.066671,77.309332&z=13&t=m&hl=en&gl=IN&mapclient=embed&cid=4674173627328913394",
   socials: [
-    { label: "Instagram", href: "#" },
-    { label: "Facebook", href: "#" },
-    { label: "YouTube", href: "#" },
+    { label: "Instagram", href: "https://www.instagram.com/thehimalayanshire/?hl=en" },
+    { label: "Facebook", href: "https://www.facebook.com/p/The-Himalayan-Shire-100089353303601/" },
+    { label: "YouTube", href: "https://www.youtube.com/channel/UCtwdXgLf4WsFtloqPWL23kw" },
   ],
 } as const;
 

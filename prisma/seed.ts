@@ -75,7 +75,7 @@ async function main() {
     { section: "services", data: JSON.stringify([]) },
     { section: "features", data: JSON.stringify([]) },
     { section: "testimonials", data: JSON.stringify([]) },
-    { section: "footer", data: JSON.stringify({ copyright: "© 2026 The Himalayan Shire. All rights reserved.", socials: [{ label: "Instagram", href: "#" }, { label: "Facebook", href: "#" }, { label: "YouTube", href: "#" }] }) },
+    { section: "footer", data: JSON.stringify({ copyright: "© 2026 The Himalayan Shire. All rights reserved.", socials: [{ label: "Instagram", href: "https://www.instagram.com/thehimalayanshire/?hl=en" }, { label: "Facebook", href: "https://www.facebook.com/p/The-Himalayan-Shire-100089353303601/" }, { label: "YouTube", href: "https://www.youtube.com/channel/UCtwdXgLf4WsFtloqPWL23kw" }] }) },
   ];
 
   for (const section of homepageSections) {
