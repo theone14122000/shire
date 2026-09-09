@@ -163,7 +163,8 @@ export function SiteFooter() {
           <p>Copyright 2026 The Himalayan Shire. All rights reserved.</p>
           <div className="flex items-center gap-5">
             {brand.socials.map((social) => (
-              <a key={social.label} href={social.href} className="transition-colors hover:text-gold-400">
+              <a key={social.label} href={social.href} className="inline-flex items-center gap-1.5 transition-colors hover:text-gold-400">
+                <SocialIcon label={social.label} />
                 {social.label}
               </a>
             ))}
@@ -196,8 +197,46 @@ export function SiteFooter() {
   );
 }
 
-function FooterLink({
-  href,
+function SocialIcon({ label }: { label: string }) {
+  const common = {
+    width: 14,
+    height: 14,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 2,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    "aria-hidden": true,
+  };
+  if (label === "Instagram") {
+    return (
+      <svg {...common}>
+        <rect x="2" y="2" width="20" height="20" rx="5" />
+        <circle cx="12" cy="12" r="4" />
+        <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" />
+      </svg>
+    );
+  }
+  if (label === "Facebook") {
+    return (
+      <svg {...common}>
+        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+      </svg>
+    );
+  }
+  if (label === "YouTube") {
+    return (
+      <svg {...common}>
+        <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
+        <path d="m10 15 5-3-5-3z" />
+      </svg>
+    );
+  }
+  return null;
+}
+
+function FooterLink({  href,
   className,
   style,
   children,
