@@ -10,9 +10,13 @@ import { getMergedRooms } from "@/lib/room-content";
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const content = await getHomepageSections();
-  const galleryItems = await getPublishedGalleryItems();
-  const rooms = await getMergedRooms();
+  // Independent queries — fetch in parallel instead of three sequential
+  // DB round-trips. Same data, lower TTFB.
+  const [content, galleryItems, rooms] = await Promise.all([
+    getHomepageSections(),
+    getPublishedGalleryItems(),
+    getMergedRooms(),
+  ]);
   const galleryFrames = galleryItems.slice(0, 4).map((item) => ({
     title: item.title,
     src: item.src,

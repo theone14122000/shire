@@ -152,7 +152,18 @@ export function InstagramFeed() {
     };
 
     apply();
-    const timer = setInterval(apply, 800);
+    // The widget hydrates asynchronously, so retry until its shadow root
+    // appears — then stop polling. Previously this interval ran forever
+    // (DOM-wide queries every 800ms for the life of the page). Cap the
+    // retries as a fallback so a blocked widget can't poll indefinitely.
+    let attempts = 0;
+    const timer = setInterval(() => {
+      attempts += 1;
+      apply();
+      if (feedHostRef.current || attempts >= 75) {
+        clearInterval(timer);
+      }
+    }, 800);
     return () => clearInterval(timer);
   }, []);
 

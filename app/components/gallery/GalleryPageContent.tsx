@@ -292,11 +292,14 @@ function GalleryTile({
         className="group block w-full bg-cream-50 p-3 pb-4 text-left shadow-[0_18px_50px_-18px_rgba(6,40,25,0.4)] transition-shadow duration-500 hover:shadow-[0_32px_70px_-20px_rgba(6,40,25,0.5)]"
       >
         <div className={`relative ${aspectFor(index)} w-full overflow-hidden bg-emerald-950`}>
-          <Image
-            src={item.src}
-            alt={item.title}
-            fill
-            priority={index < 4}
+            <Image
+              src={item.src}
+              alt={item.title}
+              fill
+              // Only the first tile is eager: the page hero already carries
+              // `priority`, and eager-loading the whole grid only contends
+              // with the LCP image. Visual result is identical.
+              priority={index === 0}
             sizes="(max-width: 1024px) 100vw, 50vw"
             className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-110"
           />

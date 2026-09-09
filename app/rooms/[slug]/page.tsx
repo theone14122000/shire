@@ -70,13 +70,15 @@ export default async function RoomPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const room = await getMergedRoom(slug);
+  // Independent queries for the same room — fetch in parallel.
+  const [room, images] = await Promise.all([
+    getMergedRoom(slug),
+    getPublicRoomImages(slug),
+  ]);
 
   if (!room) {
     notFound();
   }
-
-  const images = await getPublicRoomImages(slug);
 
   return (
     <main className="min-h-screen flex flex-col font-sans selection:bg-gold-200/30">

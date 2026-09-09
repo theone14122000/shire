@@ -15,8 +15,11 @@ export const metadata: Metadata = {
 };
 
 export default async function GalleryPage() {
-  const items = await getPublishedGalleryItems();
-  const content = await getHomepageSections();
+  // Independent queries — fetch in parallel. Same data, lower TTFB.
+  const [items, content] = await Promise.all([
+    getPublishedGalleryItems(),
+    getHomepageSections(),
+  ]);
   const heroImage =
     typeof content?.gallery?.heroImage === "string"
       ? content.gallery.heroImage

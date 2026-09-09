@@ -9,7 +9,9 @@ const raleway = Raleway({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-raleway", // This injects the CSS variable --font-raleway
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  // Only weights actually used on the site (400/500/600/700/800/900).
+  // 100/200/300 were never requested — dropping them shrinks the font payload.
+  weight: ["400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -137,8 +139,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const gtmId = await getGtmId();
-  const gaId = await getGaId();
+  // The two ID lookups are independent — run them in parallel so the
+  // layout never pays for two sequential DB round-trips on every page.
+  const [gtmId, gaId] = await Promise.all([getGtmId(), getGaId()]);
 
   return (
     <html lang="en" className={raleway.variable}>
@@ -147,6 +150,11 @@ export default async function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(JSONLD) }}
         />
+        {/* Early connection setup for the only third-party hosts used on
+            public pages. No preloads — just cheaper handshakes when the
+            deferred scripts/widgets request them. */}
+        <link rel="preconnect" href="https://elfsightcdn.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
       </head>
       <body className="bg-forest-900 text-parchment/90 min-h-screen font-sans antialiased">
         {gtmId && (
