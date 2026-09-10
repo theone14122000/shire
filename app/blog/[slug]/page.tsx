@@ -22,6 +22,16 @@ export async function generateMetadata({
   return {
     title: seoTitle,
     description: seoDescription,
+    keywords: [
+      "Himalayan Shire",
+      post.title,
+      "Shimla travel guide",
+      "Fagu homestay blog",
+      "Kufri travel tips",
+      "Himachal travel",
+      "offbeat homestay Shimla",
+    ],
+    alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
       title: seoTitle,
       description: seoDescription,
@@ -29,6 +39,7 @@ export async function generateMetadata({
       type: "article",
       publishedTime: post.createdAt,
       authors: [post.author],
+      url: `https://www.thehimalayanshire.com/blog/${post.slug}`,
     },
     twitter: {
       card: "summary_large_image",
