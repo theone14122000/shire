@@ -48,7 +48,11 @@ export default function PetPolicyPage() {
               Policy for Pets.
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-[1.9] text-emerald-950/65 sm:text-lg">
-              Please read the following terms carefully before bringing your pet to The Himalayan Shire. We love having four-legged guests - these guidelines ensure a safe and harmonious stay for everyone.
+              Please read the following terms carefully before bringing your pet to The Himalayan Shire. We love having four-legged guests - these guidelines ensure a safe and harmonious stay for everyone. Curious about staying with your pet? See our{" "}
+              <Link href="/pet-friendly-stay" className="font-bold text-emerald-800 underline decoration-gold-500/50 underline-offset-4 transition-colors hover:text-gold-700">
+                pet-friendly stay
+              </Link>{" "}
+              in Fagu, near Shimla.
             </p>
           </motion.div>
         </div>

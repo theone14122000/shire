@@ -147,19 +147,6 @@ export function SustainabilityContent({ content }: { content: SustainabilityCont
           </section>
         )}
 
-        {/* Section 2: Kitchen text LEFT, image 2 RIGHT */}
-        {kitchenInitiative && content.featured[1] && (
-          <section className="bg-white px-5 py-12 sm:px-8 sm:py-16 lg:px-14 lg:py-24">
-            <div className="mx-auto grid max-w-[1400px] items-center gap-10 lg:grid-cols-2 lg:gap-16">
-              <TextBlock initiative={kitchenInitiative} />
-              {/* Harvesting card rendered at 80% width, centered in its column */}
-              <div className="mx-auto w-full max-w-[80%]">
-                <ImageCard image={content.featured[1]} />
-              </div>
-            </div>
-          </section>
-        )}
-
         <ClosingSection closing={content.closing} />
       </MotionConfig>
     </div>

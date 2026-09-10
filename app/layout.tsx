@@ -16,15 +16,19 @@ const raleway = Raleway({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.thehimalayanshire.com"),
-  title: "The Himalayan Shire | Offbeat Luxury Homestay in Fagu, Near Kufri & Shimla",
+  title: "The Himalayan Shire | Pet-Friendly Stay in Fagu, Near Shimla",
   description:
-    "A family-run offbeat homestay in Fagu, near Kufri, a short drive from Shimla. Seven warm rooms, a private-villa calm, apple orchards, and pine views — one of the most loved luxury stays around Himachal.",
+    "A pet-friendly, family-run homestay in Fagu, near Shimla. Seven warm rooms, apple orchards, and pine views at 7,500 ft — a quiet Himalayan stay for travelers with dogs.",
   keywords: [
     "The Himalayan Shire",
+    "pet friendly stay in Fagu",
+    "pet friendly stay near Shimla",
+    "pet friendly homestay Shimla",
+    "dog friendly stay Shimla",
+    "pet friendly accommodation Himachal Pradesh",
     "homestay in Fagu",
     "Fagu homestay",
     "homestay near Kufri",
-    "Kufri homestay",
     "offbeat homestay Shimla",
     "offbeat homestay near Shimla",
     "private villa Shimla",
@@ -38,9 +42,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "The Himalayan Shire" }],
   openGraph: {
-    title: "The Himalayan Shire — Offbeat Luxury Homestay in Fagu, Near Kufri & Shimla",
+    title: "The Himalayan Shire — Pet-Friendly Homestay in Fagu, Near Shimla",
     description:
-      "A family-run offbeat homestay in Fagu, near Kufri and Shimla. Heritage rooms, warm hospitality, and a view that stays with you.",
+      "A pet-friendly, family-run homestay in Fagu, near Shimla and Kufri. Seven warm rooms, heritage interiors, and a Himalayan view that stays with you.",
     type: "website",
     url: "https://www.thehimalayanshire.com/",
     images: ["/images/hero-1.jpg"],
@@ -49,9 +53,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "The Himalayan Shire — Offbeat Luxury Homestay in Fagu, Near Kufri & Shimla",
+    title: "The Himalayan Shire — Pet-Friendly Homestay in Fagu, Near Shimla",
     description:
-      "A family-run offbeat homestay in Fagu, near Kufri and Shimla. Heritage rooms, warm hospitality, and a view that stays with you.",
+      "A pet-friendly, family-run homestay in Fagu, near Shimla and Kufri. Heritage rooms, warm hospitality, and a view that stays with you.",
     images: ["/images/hero-1.jpg"],
   },
   alternates: {
@@ -126,6 +130,26 @@ const JSONLD = {
   },
 };
 
+const WEBSITE_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://www.thehimalayanshire.com/#website",
+  name: "The Himalayan Shire",
+  url: "https://www.thehimalayanshire.com/",
+  description:
+    "A pet-friendly, family-run homestay in Fagu, near Shimla and Kufri, Himachal Pradesh.",
+  publisher: {
+    "@type": "Organization",
+    name: "The Himalayan Shire",
+    url: "https://www.thehimalayanshire.com/",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://www.thehimalayanshire.com/images/logo2.jpg",
+    },
+  },
+  inLanguage: "en-IN",
+};
+
 async function getGtmId(): Promise<string | null> {
   try {
     const row = await prisma.setting.findUnique({ where: { key: "google_tag_manager_id" } });
@@ -159,6 +183,10 @@ export default async function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(JSONLD) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(WEBSITE_JSONLD) }}
         />
         {/* Early connection setup for the only third-party hosts used on
             public pages. No preloads — just cheaper handshakes when the

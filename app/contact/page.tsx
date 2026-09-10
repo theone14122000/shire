@@ -74,9 +74,11 @@ export default function ContactPage() {
     };
   }
 
-  async function submit(event: FormEvent) {
-    event.preventDefault();
-    if (!validate()) return;
+      const isSubmitting = status === "sending";
+
+      async function submit(event: FormEvent) {
+        event.preventDefault();
+        if (!validate() || isSubmitting) return;
 
     setStatus("sending");
     setStatusMessage("");
@@ -222,9 +224,23 @@ export default function ContactPage() {
                 onChange={handleInput("children")}
                 required
               />
-              <button type="submit" className="luxe-button w-full">
-                Submit Inquiry
+              <button
+                type="submit"
+                className="luxe-button w-full"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Submitting..." : "Submit Inquiry"}
               </button>
+              {status === "sent" && (
+                <p className="mt-4 rounded-xl bg-emerald-100 px-4 py-3 text-sm font-semibold text-emerald-800">
+                  Your enquiry has been submitted successfully. We’ll get back to you soon.
+                </p>
+              )}
+              {status === "error" && (
+                <p className="mt-4 rounded-xl bg-red-100 px-4 py-3 text-sm font-semibold text-red-800">
+                  We couldn’t submit your enquiry right now. Please try again or contact us directly.
+                </p>
+              )}
               {errors.name && <p className="text-red-600 text-xs">{errors.name}</p>}
               {errors.phone && <p className="text-red-600 text-xs">{errors.phone}</p>}
               {errors.email && <p className="text-red-600 text-xs">{errors.email}</p>}

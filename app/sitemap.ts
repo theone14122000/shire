@@ -14,6 +14,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/contact`, changeFrequency: "yearly", priority: 0.6 },
     { url: `${base}/faq`, changeFrequency: "yearly", priority: 0.6 },
     { url: `${base}/pet-policy`, changeFrequency: "yearly", priority: 0.5 },
+    { url: `${base}/pet-friendly-stay`, changeFrequency: "monthly", priority: 0.8 },
   ];
 
   const roomRoutes: MetadataRoute.Sitemap = rooms.map((room) => ({

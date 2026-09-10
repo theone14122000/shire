@@ -65,7 +65,11 @@ const FAQS: Faq[] = [
   },
   {
     question: "Is it a pet-friendly property?",
-    answer: "In certain cases we do allow pets. Pets weighing up to 6 kgs are mostly welcomed, unless they are untrained or might be a hazard to other guests or staff. Larger breeds are also allowed if you are booking the entire villa, or you come on a day with fewer guests around. Please ask us for our complete pet policy before booking - guests have to sign the pet policy before check-in. We charge a Rs. 500 per day pet fee.",
+    answer: (
+      <>
+        In certain cases we do allow pets. Pets weighing up to 6 kgs are mostly welcomed, unless they are untrained or might be a hazard to other guests or staff. Larger breeds are also allowed if you are booking the entire villa, or you come on a day with fewer guests around. Please ask us for our complete pet policy before booking - guests have to sign the pet policy before check-in. We charge a Rs. 500 per day pet fee. Read more about our <Link href="/pet-friendly-stay" className={linkClass}>pet-friendly stay in Fagu</Link>.
+      </>
+    ),
   },
 ];
 

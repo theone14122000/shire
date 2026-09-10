@@ -1,0 +1,27 @@
+The Himalayan Shire — Machine-Readable Overview
+
+Property: The Himalayan Shire
+Type: Family-run luxury homestay / offbeat accommodation
+Location: Fagu, near Kufri and Shimla, Himachal Pradesh, India
+Altitude: 7,500 ft
+Rooms: 7 rooms (Deluxe and Standard categories)
+Pet-friendly: Yes — pets welcome with a Rs. 500/day pet fee. Pre-approval from property management is required.
+Website: https://www.thehimalayanshire.com/
+Contact: himalayanshire@gmail.com | +91 85804 11998 | +91 81686 98066
+Booking: https://letsbook.me/booking/thehimalayanshire
+
+Key pages:
+- Home: /
+- Rooms: /#rooms
+- Activities: /activities
+- Pet-Friendly Stay: /pet-friendly-stay
+- Pet Policy: /pet-policy
+- Sustainability: /sustainability
+- Gallery: /gallery
+- Blog: /blog
+- FAQ: /faq
+- Contact: /contact
+
+About: A family-run offbeat homestay in Fagu, Himachal Pradesh, near Kufri on the Shimla ridge. Seven warm rooms with mountain views, apple orchards, pine forests, and a private-villa calm. Heritage rooms, warm hospitality, and a view of the Kinnaur Kailash range.
+
+Last updated: 2026-09-10

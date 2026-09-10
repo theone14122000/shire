@@ -119,9 +119,41 @@ export default async function BlogPostPage({
 
   if (!post || post.status !== "published") notFound();
 
+  const ARTICLE_JSONLD = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt,
+    image: post.image,
+    datePublished: post.createdAt,
+    dateModified: post.updatedAt,
+    author: {
+      "@type": "Organization",
+      name: "The Himalayan Shire",
+      url: "https://www.thehimalayanshire.com/",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "The Himalayan Shire",
+      url: "https://www.thehimalayanshire.com/",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://www.thehimalayanshire.com/images/logo2.jpg",
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `https://www.thehimalayanshire.com/blog/${post.slug}`,
+    },
+  };
+
   return (
     <main className="min-h-screen font-sans selection:bg-gold-200/30">
       <SiteNav />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ARTICLE_JSONLD) }}
+      />
 
       <section className="relative">
         <div className="relative h-[50vh] min-h-[360px] overflow-hidden sm:h-[56vh] lg:h-[62vh]">

@@ -28,6 +28,7 @@ const FOOTER_COLUMNS: FooterColumn[] = [
     title: "Stay",
     links: [
       { label: "Rooms", href: "/#rooms" },
+      { label: "Pet-Friendly Stay", href: "/pet-friendly-stay" },
       { label: "Pet Policy", href: "/pet-policy" },
     ],
   },
