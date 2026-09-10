@@ -135,7 +135,13 @@ export default async function BlogPostPage({
     "@type": "BlogPosting",
     headline: post.title,
     description: post.excerpt,
-    image: post.image,
+    image: {
+      "@type": "ImageObject",
+      url: post.image.startsWith("http")
+        ? post.image
+        : `https://www.thehimalayanshire.com${post.image.startsWith("/") ? post.image : `/${post.image}`}`,
+      caption: post.title,
+    },
     datePublished: post.createdAt,
     dateModified: post.updatedAt,
     author: {

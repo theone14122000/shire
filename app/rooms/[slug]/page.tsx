@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getMergedRoom } from "@/lib/room-content";
+import { getMergedRoom, type Room } from "@/lib/room-content";
 import { getPublicRoomImages } from "@/lib/room-images";
 import { notFound } from "next/navigation";
 
@@ -64,6 +64,50 @@ export async function generateMetadata({
   };
 }
 
+function getImageUrl(src: string): string {
+  if (src.startsWith("http")) return src;
+  return `https://www.thehimalayanshire.com${src.startsWith("/") ? src : `/${src}`}`;
+}
+
+function getRoomSchema(room: { name: string; description: string; size: string; slug: string; facilities: string[] }, images: { src: string }[]): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HotelRoom",
+    name: `${room.name} Room — The Himalayan Shire`,
+    description: room.description,
+    image: images.length > 0 ? getImageUrl(images[0].src) : undefined,
+    url: `https://www.thehimalayanshire.com/rooms/${room.slug}`,
+    floorSize: {
+      "@type": "QuantitativeValue",
+      value: parseInt(room.size) || undefined,
+      unitCode: "FTK",
+    },
+    occupancy: {
+      "@type": "QuantitativeValue",
+      value: 2,
+      unitCode: "ADO",
+    },
+    amenityFeature: (room.facilities || []).map((f) => ({
+      "@type": "LocationFeatureSpecification",
+      name: f,
+      value: true,
+    })),
+    containedInPlace: {
+      "@type": "LodgingBusiness",
+      name: "The Himalayan Shire",
+      url: "https://www.thehimalayanshire.com/",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Dehna Road, near Talayi Village",
+        addressLocality: "Fagu",
+        addressRegion: "Himachal Pradesh",
+        postalCode: "171209",
+        addressCountry: "IN",
+      },
+    },
+  };
+}
+
 export default async function RoomPage({
   params,
 }: {
@@ -80,9 +124,15 @@ export default async function RoomPage({
     notFound();
   }
 
+  const roomSchema = getRoomSchema(room, images);
+
   return (
     <main className="min-h-screen flex flex-col font-sans selection:bg-gold-200/30">
       <SiteNav />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(roomSchema) }}
+      />
       <div className="flex-1">
         <RoomPageContent room={room} images={images} />
       </div>

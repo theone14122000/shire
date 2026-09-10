@@ -130,6 +130,20 @@ const JSONLD = {
   },
 };
 
+const HERO_IMAGE_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "ImageObject",
+  "@id": "https://www.thehimalayanshire.com/images/hero-1.jpg",
+  contentUrl: "https://www.thehimalayanshire.com/images/hero-1.jpg",
+  name: "The Himalayan Shire — Mountain Homestay in Fagu, Near Shimla",
+  description:
+    "A family-run offbeat homestay in Fagu, near Kufri. Pine views, apple orchards, and seven heritage rooms at 7,500 ft.",
+  caption: "The Himalayan Shire — Fagu, Himachal Pradesh",
+  width: 1920,
+  height: 1080,
+  inLanguage: "en-IN",
+};
+
 const WEBSITE_JSONLD = {
   "@context": "https://schema.org",
   "@type": "WebSite",
@@ -187,6 +201,10 @@ export default async function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(WEBSITE_JSONLD) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(HERO_IMAGE_JSONLD) }}
         />
         {/* Early connection setup for the only third-party hosts used on
             public pages. No preloads — just cheaper handshakes when the
