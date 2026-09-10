@@ -58,9 +58,13 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   icons: {
-    icon: "/icon.png",
+    icon: [
+      { url: "/favicon-96.png", sizes: "96x96", type: "image/png" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
     shortcut: "/favicon.ico",
-    apple: "/apple-icon.png",
+    apple: "/apple-touch-icon.png",
   },
   robots: {
     index: true,
@@ -118,6 +122,7 @@ const JSONLD = {
     "@type": "Organization",
     name: "The Himalayan Shire",
     url: "https://www.thehimalayanshire.com/",
+    logo: "https://www.thehimalayanshire.com/images/logo2.jpg",
   },
 };
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { Container } from "./ui/Container";
 import { brand } from "@/lib/content";
@@ -90,12 +91,13 @@ export function SiteFooter() {
             className="flex flex-col gap-5 lg:col-span-5"
           >
             <div className="flex items-center gap-3">
-              <span aria-hidden className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-cream-50 text-emerald-950">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
-                  <path d="M3 19h18M5 19l1-7h12l1 7M9 12V8a3 3 0 0 1 6 0v4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                  <circle cx="12" cy="6" r="1.5" fill="currentColor" />
-                </svg>
-              </span>
+              <Image
+                src="/images/logo2.jpg"
+                alt="The Himalayan Shire Logo"
+                width={80}
+                height={48}
+                className="h-10 w-auto rounded-sm object-contain"
+              />
               <span className="font-display text-lg font-semibold text-cream-50">{brand.name}</span>
             </div>
             <p className="max-w-[42ch] text-sm font-medium leading-relaxed text-cream-200/60">
