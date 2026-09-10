@@ -92,8 +92,7 @@ export function Hero({ content }: { content?: any }) {
               playsInline
               preload="auto"
               poster={poster}
-              className="absolute inset-0 h-full w-full object-cover object-center max-sm:!object-contain max-sm:!object-top"
-              style={{ backgroundColor: "#081212" }}
+              className="absolute inset-0 h-full w-full object-cover object-center max-sm:object-top"
               aria-hidden="true"
             >
               <source src={videoUrl} type="video/mp4" />
