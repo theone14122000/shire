@@ -37,7 +37,7 @@ export const SUSTAINABILITY_DEFAULTS: SustainabilityContent = {
       caption: "From Kitchen to Garden",
     },
     {
-      src: "/sust/Sustainability2.png",
+      src: "/sust/Sustainability2.jpeg",
       title: "Harvesting the Himalayan Rain",
       caption: "Harvesting the Himalayan Rain",
     },
