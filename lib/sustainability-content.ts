@@ -32,12 +32,12 @@ export const SUSTAINABILITY_DEFAULTS: SustainabilityContent = {
   },
   featured: [
     {
-      src: "/sust/Sustainability1.png",
+      src: "/sust/Sustainability1.jpeg",
       title: "From Kitchen to Garden",
       caption: "From Kitchen to Garden",
     },
     {
-      src: "/sust/Sustainability2.jpeg",
+      src: "/sust/Sustainability2.png",
       title: "Harvesting the Himalayan Rain",
       caption: "Harvesting the Himalayan Rain",
     },
