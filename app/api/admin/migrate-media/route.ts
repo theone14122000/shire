@@ -6,7 +6,7 @@ import { normalizeMediaUrl } from "@/lib/media-store";
  * GET /api/admin/migrate-media?key=<ADMIN_PASSWORD>
  *
  * One-time cleanup: rewrites every stored media reference from absolute
- * URLs (which bake in a deployment domain like shire-nu.vercel.app and
+ * URLs (which bake in a deployment domain like a preview deployment hostname and
  * break on domain changes) to relative /api/media/{id} paths, which work
  * on every domain. Also reports media rows with missing blob data.
  *

@@ -57,5 +57,5 @@ This file documents the before/after state of key SEO areas. All changes preserv
 ---
 
 *Comparison generated as part of complete AI SEO + GEO + Technical SEO optimization for Himalayan Shire.*
-*Website: https://shire-nu.vercel.app*
+*Website: https://www.thehimalayanshire.com*
 *Date: August 2026*

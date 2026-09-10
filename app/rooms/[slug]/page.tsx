@@ -52,7 +52,7 @@ export async function generateMetadata({
       title,
       description,
       type: "website",
-      url: `https://shire-nu.vercel.app/rooms/${room.slug}`,
+      url: `https://www.thehimalayanshire.com/rooms/${room.slug}`,
       images: room.images.length > 0 ? [room.images[0]] : undefined,
     },
     twitter: {

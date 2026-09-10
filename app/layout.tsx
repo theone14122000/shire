@@ -15,7 +15,7 @@ const raleway = Raleway({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://shire-nu.vercel.app"),
+  metadataBase: new URL("https://www.thehimalayanshire.com"),
   title: "The Himalayan Shire | Offbeat Luxury Homestay in Fagu, Near Kufri & Shimla",
   description:
     "A family-run offbeat homestay in Fagu, near Kufri, a short drive from Shimla. Seven warm rooms, a private-villa calm, apple orchards, and pine views — one of the most loved luxury stays around Himachal.",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     description:
       "A family-run offbeat homestay in Fagu, near Kufri and Shimla. Heritage rooms, warm hospitality, and a view that stays with you.",
     type: "website",
-    url: "https://shire-nu.vercel.app/",
+    url: "https://www.thehimalayanshire.com/",
     images: ["/images/hero-1.jpg"],
     siteName: "The Himalayan Shire",
     locale: "en_IN",
@@ -66,16 +66,16 @@ export const metadata: Metadata = {
 const JSONLD = {
   "@context": "https://schema.org",
   "@type": "LodgingBusiness",
-  "@id": "https://shire-nu.vercel.app/#business",
+  "@id": "https://www.thehimalayanshire.com/#business",
   name: "The Himalayan Shire",
   alternateName: "Himalayan Shire Homestay Fagu",
   description:
     "A family-run offbeat homestay in Fagu, near Kufri, a short drive from Shimla. Seven warm rooms with a private-villa calm — one of the most loved luxury stays around Shimla.",
-  url: "https://shire-nu.vercel.app/",
+  url: "https://www.thehimalayanshire.com/",
   telephone: "+918580411998",
   email: "himalayanshire@gmail.com",
   priceRange: "₹₹",
-  image: "https://shire-nu.vercel.app/images/hero-1.jpg",
+  image: "https://www.thehimalayanshire.com/images/hero-1.jpg",
   address: {
     "@type": "PostalAddress",
     streetAddress: "Dehna Road, near Talayi Village",
@@ -107,12 +107,12 @@ const JSONLD = {
   containsPlace: {
     "@type": "TouristAttraction",
     name: "Kufri",
-    url: "https://shire-nu.vercel.app/activities",
+    url: "https://www.thehimalayanshire.com/activities",
   },
   author: {
     "@type": "Organization",
     name: "The Himalayan Shire",
-    url: "https://shire-nu.vercel.app/",
+    url: "https://www.thehimalayanshire.com/",
   },
 };
 

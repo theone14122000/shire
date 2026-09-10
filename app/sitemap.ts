@@ -3,7 +3,7 @@ import { rooms } from "@/lib/rooms";
 import { getPublishedBlogs } from "@/lib/blogs";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const base = "https://shire-nu.vercel.app";
+  const base = "https://www.thehimalayanshire.com";
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: base, changeFrequency: "weekly", priority: 1 },

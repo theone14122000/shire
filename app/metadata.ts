@@ -20,7 +20,7 @@ export function contactMetadata(): Metadata {
       description:
         "Get in touch with The Himalayan Shire - book a stay, ask about availability, or reach us for directions and travel planning.",
       type: "website",
-      url: "https://shire-nu.vercel.app/contact",
+      url: "https://www.thehimalayanshire.com/contact",
       images: ["/images/hero-1.jpg"],
     },
     twitter: {
@@ -55,7 +55,7 @@ export function faqMetadata(): Metadata {
       description:
         "Frequently asked questions about staying at The Himalayan Shire - room bookings, pet policy, amenities, location, and more.",
       type: "website",
-      url: "https://shire-nu.vercel.app/faq",
+      url: "https://www.thehimalayanshire.com/faq",
       images: ["/images/hero-1.jpg"],
     },
     twitter: {
@@ -89,7 +89,7 @@ export function activitiesMetadata(): Metadata {
       description:
         "From quiet corners on the property to peaks in the Himalayas - there is always something waiting for you.",
       type: "website",
-      url: "https://shire-nu.vercel.app/activities",
+      url: "https://www.thehimalayanshire.com/activities",
       images: ["/images/hero-1.jpg"],
     },
     twitter: {
@@ -124,7 +124,7 @@ export function sustainabilityMetadata(): Metadata {
       description:
         "We care for the mountains we call home. Here's how we tread lightly: waste segregation, recycling, and eco-friendly hospitality.",
       type: "website",
-      url: "https://shire-nu.vercel.app/sustainability",
+      url: "https://www.thehimalayanshire.com/sustainability",
       images: ["/sust/Sustainability1.jpeg"],
     },
     twitter: {

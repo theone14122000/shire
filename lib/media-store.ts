@@ -8,7 +8,8 @@ export interface StoredMedia {
 
 /**
  * Convert any stored media URL to a relative path.
- * Absolute URLs bake in the deployment domain (e.g. shire-nu.vercel.app),
+ * Absolute URLs bake in the deployment domain (e.g. a preview deployment
+ * hostname),
  * which breaks the moment the domain changes. Relative paths work on
  * every domain and are treated as same-origin by the Next.js optimizer
  * (no remotePatterns entry needed, no 400s).

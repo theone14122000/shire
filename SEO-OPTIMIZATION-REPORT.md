@@ -59,7 +59,7 @@ This report documents the SEO, AI Search (GEO), and Technical SEO optimizations 
   - `User-agent: OAI-SearchBot` / `Allow: /`
   - `User-agent: GPTBot` / `Allow: /`
   - `User-agent: ClaudeBot` / `Allow: /`
-  - Sitemap reference: `Sitemap: https://shire-nu.vercel.app/sitemap.xml`
+  - Sitemap reference: `Sitemap: https://www.thehimalayanshire.com/sitemap.xml`
 - **Result**: Legitimate crawlers allowed; admin/private routes blocked; AI search crawlers not blocked.
 
 ### sitemap.xml
@@ -71,7 +71,7 @@ This report documents the SEO, AI Search (GEO), and Technical SEO optimizations 
 - **Sustainability page**: Added `generateMetadata()` with title, description, keywords, OG, and Twitter data targeting "sustainability", "eco-friendly", "green hotel Shimla".
 - **Contact page**: Added `generateMetadata()` with title, description, keywords, OG, and Twitter data.
 - **FAQ page**: Added `generateMetadata()` with title, description, keywords, OG, and Twitter data.
-- All pages use the production domain `https://shire-nu.vercel.app` and canonical URLs.
+- All pages use the production domain `https://www.thehimalayanshire.com` and canonical URLs.
 
 ### Structured Data (JSON-LD)
 - **Enhanced** homepage `LodgingBusiness` schema in `app/layout.tsx`:
@@ -209,6 +209,6 @@ This report documents the SEO, AI Search (GEO), and Technical SEO optimizations 
 
 ---
 *Report generated as part of complete AI SEO + GEO + Technical SEO optimization for Himalayan Shire.*
-*Website: https://shire-nu.vercel.app*
+*Website: https://www.thehimalayanshire.com*
 *Deployment: Vercel*
 *Date: August 2026*
