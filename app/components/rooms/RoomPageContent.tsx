@@ -125,7 +125,9 @@ export function RoomPageContent({
               className="mt-14 grid grid-cols-1 overflow-hidden rounded-3xl border border-emerald-900/10 bg-white/70 shadow-[0_18px_50px_rgba(3,45,32,0.08)] sm:grid-cols-2 lg:grid-cols-4"
             >
               <StatCell icon={Maximize2} label="Size" value={room.size} />
-              <StatCell icon={Layers} label="Floor" value={room.floor} />
+              {room.slug !== "walnut" && (
+                <StatCell icon={Layers} label="Floor" value={room.floor} />
+              )}
               <StatCell icon={Mountain} label={room.viewLabel ?? "View"} value={room.view} />
               <div className="flex items-center justify-center px-6 py-3.5 lg:border-l lg:border-emerald-900/10">
                 <Link
