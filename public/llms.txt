@@ -4,7 +4,7 @@ Property: The Himalayan Shire
 Type: Premium boutique homestay / private villa experience in the Himalayas
 Location: Fagu, near Kufri and Shimla, Himachal Pradesh, India
 Altitude: 7,500 ft
-Rooms: 7 rooms (Deluxe and Standard categories)
+Rooms: 7 rooms (Premium, Deluxe and Standard categories; entire villa bookable)
 Pet-friendly: Yes — pets welcome with a Rs. 500/day pet fee. Pre-approval from property management is required.
 Website: https://www.thehimalayanshire.com/
 Contact: himalayanshire@gmail.com | +91 85804 11998 | +91 81686 98066
@@ -13,6 +13,7 @@ Booking: https://letsbook.me/booking/thehimalayanshire
 Key pages:
 - Home: /
 - Rooms: /#rooms
+- Private Villa: /private-villa
 - Activities: /activities
 - Pet-Friendly Stay: /pet-friendly-stay
 - Pet Policy: /pet-policy
