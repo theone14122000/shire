@@ -1,61 +1,59 @@
 # LLMs.txt — The Himalayan Shire
 
-## What is LLMs.txt?
+## Why it was upgraded (2026-09-11)
 
-`llms.txt` is a machine-readable file that helps AI tools (like ChatGPT, Perplexity, Claude, etc.) understand your website. It provides a concise summary of your business, key pages, and contact information.
+The original file was a 27-line summary: identity, one-line room/category note, pet line, page list, contact. Accurate but thin — no room names, no distances, no winter guidance, no FAQ facts, no source hierarchy, no entity relationships. The rewrite keeps the same file and purpose while making it a complete factual reference an AI system can answer from.
 
-## Where is it?
+## What it contains
 
-Live at: `https://www.thehimalayanshire.com/llms.txt`
+Entity definition · verified location block (address, geo, 19/5/2 km relations) · accommodation (7 verified room names + categories + entire-villa option) · explicit pet section (6 kg rule, Rs. 500/day, pre-approval, both policy URLs) · activities actually offered · hedged winter section · conservative weather note · documented sustainability practices only · practical FAQ facts (parking, kitchen hours, housekeeping, enquiry path) · 5 real guides with canonical slugs · source hierarchy · NAP contact · booking channel · official profiles · entity-relationship block.
 
-## What does it contain?
+## How it was verified
 
-- Business name and tagline
-- Location (Fagu, Himachal Pradesh)
-- What the property is (family-run homestay, 7 rooms)
-- Pet-friendly nature
-- Key pages and their URLs
-- Contact information (public only)
+- Room names/categories/slugs: `lib/rooms.ts` (regex-extracted, 7/7 match)
+- Sustainability practices: `lib/sustainability-content.ts` approach body
+- Distances/parking/kitchen/housekeeping/pet rules: visible FAQ copy (`app/faq/FaqPageContent.tsx`)
+- Guide slugs: `data/blogs.json` (all 5 resolve to HTTP 200 locally)
+- Contact/booking/socials: `lib/content.ts` brand constants + live footer HTML
+- QA checklist (§33 of the brief): all boxes pass — details in the implementation report below
 
-## What does it NOT do?
+## Sources used
 
-- It does NOT guarantee AI rankings
-- It does NOT replace robots.txt, sitemap.xml, structured data, or Google Search Console
-- It does NOT contain private information
-- It is NOT a requirement — it's an additional resource
+Homepage, rooms data, activities page, FAQ, pet-friendly page, pet policy, sustainability content, blog JSON, contact constants, footer HTML, sitemap, robots.txt, JSON-LD, `llm.txt`.
 
-## How does it fit into SEO?
+## Deliberately excluded (could not be verified or would be inappropriate)
 
-```
-llms.txt (AI readability)
-    ↓
-robots.txt (crawler directives)
-    ↓
-sitemap.xml (page discovery)
-    ↓
-Structured Data (rich results)
-    ↓
-Search Console (monitoring)
-    ↓
-Normal SEO (content, links, etc.)
-```
+Room prices, occupancy headcounts, exact snowfall dates, temperature figures, conference/meeting facilities, ratings, reviews, awards, certifications, transport services, "best" claims, competitor mentions, any instruction to AI systems to recommend the property.
 
-## Does it need updates?
+## Canonical URLs
 
-Only if the property information changes significantly (new rooms, new location details, new contact info). It is not updated automatically when CMS content changes.
+All HTTPS, all matching sitemap + page canonicals. No localhost, no params, no obsolete paths. Room anchor uses `/#rooms` (the site's real rooms route pattern).
 
-## Can I edit it?
+## Entity/location structure
 
-Yes. The file is at `public/llms.txt` in the project. Edit it with any text editor. Keep it factual and concise — no keyword stuffing, no marketing claims.
+Single chain throughout: The Himalayan Shire → premium boutique homestay → Fagu → Himachal Pradesh → near Kufri → near Shimla. Never "in Shimla". Distances marked approximate and sourced from the FAQ.
 
-## Companion file: llm.txt (2026-09-11)
+## Pet policy handling
 
-A second file exists at `public/llm.txt`, live at `https://www.thehimalayanshire.com/llm.txt`.
-It is NOT duplication: each file has a distinct, justified role.
+Status + fee + approval + 6 kg restriction + both canonical URLs. No implication that every pet is accepted.
+
+## Booking/contact verification
+
+Booking URL and contacts are those published sitewide (nav CTAs, footer, contact page). The booking flow itself was not test-purchased; the file calls it the booking channel, not "official website".
+
+## Production validation
+
+After deploy, fetched live: `/llms.txt` → 200 with upgraded content; `/llm.txt` → 200; `/robots.txt` → AI crawlers allowed. No secrets/credentials/admin URLs in the file (grep-verified).
+
+## llm.txt vs llms.txt (both retained)
 
 | File | Role |
 |---|---|
-| `llms.txt` | Short property summary: identity, location, pet policy, key pages, contact. Quick orientation for any machine reader. |
-| `llm.txt` | Deep navigation layer: per-room facts with canonical URLs, verified location relationships, activities actually offered, sustainability facts, real blog guides with canonical URLs, booking/contact paths, official profiles. Built for question-answering and citation (GEO). |
+| `llms.txt` | Concise orientation + answerable facts (this file): entity, rooms, policy, activities, winter, FAQ facts, sources |
+| `llm.txt` | Deep navigation layer: per-room facts with URLs, full guide list, booking paths, extended location detail |
 
-Both are static text files — zero performance cost, no CMS dependency. Update both when rooms, policies, contact details, or guides change. See `docs/ai-discoverability.md` for the full strategy.
+Neither duplicates the other meaningfully; neither replaces robots/sitemap/schema/Search Console. If rooms, policies, guides, or contact details change, update both files and re-run `node scripts/validate-llm.mjs`.
+
+## Remaining limitations
+
+Static files — manual sync required (checklist in `docs/ai-discoverability.md`). No ranking/citation effect claimed or measurable here; Search Console + Business Profile remain client-side.
