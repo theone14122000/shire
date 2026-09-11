@@ -112,6 +112,9 @@ export function SustainabilityContent({ content }: { content: SustainabilityCont
   const kitchenInitiative = content.initiatives.find(
     (item) => item.title?.includes("Kitchen")
   );
+  const rainInitiative =
+    content.initiatives.find((item) => !item.title?.includes("Kitchen")) ??
+    content.initiatives[1];
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-white text-black">
@@ -143,6 +146,26 @@ export function SustainabilityContent({ content }: { content: SustainabilityCont
                 </div>
               </motion.div>
               <ImageCard image={content.featured[0]} priority />
+            </div>
+          </section>
+        )}
+
+        {/* Section 2: image 2 LEFT, rainwater text RIGHT */}
+        {rainInitiative && content.featured[1] && (
+          <section className="bg-white px-5 py-12 sm:px-8 sm:py-16 lg:px-14 lg:py-24">
+            <div className="mx-auto grid max-w-[1400px] items-center gap-10 lg:grid-cols-2 lg:gap-16">
+              <div className="order-2 lg:order-1">
+                <ImageCard image={content.featured[1]} />
+              </div>
+              <motion.div
+                initial={{ y: 24 }}
+                whileInView={{ y: 0 }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                className="order-1 flex flex-col justify-center lg:order-2"
+              >
+                <TextBlock initiative={rainInitiative} />
+              </motion.div>
             </div>
           </section>
         )}
