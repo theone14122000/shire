@@ -47,3 +47,15 @@ Only if the property information changes significantly (new rooms, new location 
 ## Can I edit it?
 
 Yes. The file is at `public/llms.txt` in the project. Edit it with any text editor. Keep it factual and concise — no keyword stuffing, no marketing claims.
+
+## Companion file: llm.txt (2026-09-11)
+
+A second file exists at `public/llm.txt`, live at `https://www.thehimalayanshire.com/llm.txt`.
+It is NOT duplication: each file has a distinct, justified role.
+
+| File | Role |
+|---|---|
+| `llms.txt` | Short property summary: identity, location, pet policy, key pages, contact. Quick orientation for any machine reader. |
+| `llm.txt` | Deep navigation layer: per-room facts with canonical URLs, verified location relationships, activities actually offered, sustainability facts, real blog guides with canonical URLs, booking/contact paths, official profiles. Built for question-answering and citation (GEO). |
+
+Both are static text files — zero performance cost, no CMS dependency. Update both when rooms, policies, contact details, or guides change. See `docs/ai-discoverability.md` for the full strategy.

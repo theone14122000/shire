@@ -75,6 +75,7 @@ function getRoomSchema(room: { name: string; description: string; size: string; 
   return {
     "@context": "https://schema.org",
     "@type": "HotelRoom",
+    "@id": `https://www.thehimalayanshire.com/rooms/${room.slug}#room`,
     name: `${room.name} Room — The Himalayan Shire`,
     description: room.description,
     image: images.length > 0 ? getImageUrl(images[0].src) : undefined,
@@ -95,17 +96,7 @@ function getRoomSchema(room: { name: string; description: string; size: string; 
       value: true,
     })),
     containedInPlace: {
-      "@type": "LodgingBusiness",
-      name: "The Himalayan Shire",
-      url: "https://www.thehimalayanshire.com/",
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: "Dehna Road, near Talayi Village",
-        addressLocality: "Fagu",
-        addressRegion: "Himachal Pradesh",
-        postalCode: "171209",
-        addressCountry: "IN",
-      },
+      "@id": "https://www.thehimalayanshire.com/#business",
     },
   };
 }

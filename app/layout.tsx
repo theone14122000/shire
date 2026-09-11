@@ -101,9 +101,9 @@ const JSONLD = {
     longitude: 77.309332,
   },
   sameAs: [
-    "https://www.instagram.com/thehimalayanshire",
-    "https://facebook.com/thehimalayanshire",
-    "https://www.youtube.com/@thehimalayanshire",
+    "https://www.instagram.com/thehimalayanshire/?hl=en",
+    "https://www.facebook.com/p/The-Himalayan-Shire-100089353303601/",
+    "https://www.youtube.com/channel/UCtwdXgLf4WsFtloqPWL23kw",
   ],
   amenityFeature: [
     { "@type": "LocationFeatureSpecification", name: "Mountain view", value: true },
@@ -151,6 +151,7 @@ const WEBSITE_JSONLD = {
     "A premium boutique homestay in Fagu, near Kufri and Shimla, Himachal Pradesh — spacious rooms, private villa calm, and Himalayan views.",
   publisher: {
     "@type": "Organization",
+    "@id": "https://www.thehimalayanshire.com/#business",
     name: "The Himalayan Shire",
     url: "https://www.thehimalayanshire.com/",
     logo: {

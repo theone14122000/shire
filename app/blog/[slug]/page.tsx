@@ -132,12 +132,14 @@ export default async function BlogPostPage({
 
   const authorName = (post.author || "").trim();
   // Person for a genuine named author credited by the CMS; Organization
-  // when the property itself is credited (never invent author names).
+  // (same #business entity as the site) when the property itself is credited.
+  // Never invent author names, URLs, images, or sameAs profiles.
   const authorSchema =
     authorName && !/himalayan shire/i.test(authorName)
       ? { "@type": "Person", name: authorName }
       : {
           "@type": "Organization",
+          "@id": "https://www.thehimalayanshire.com/#business",
           name: "The Himalayan Shire",
           url: "https://www.thehimalayanshire.com/",
         };
@@ -145,6 +147,7 @@ export default async function BlogPostPage({
   const ARTICLE_JSONLD = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
+    "@id": `https://www.thehimalayanshire.com/blog/${post.slug}#article`,
     headline: post.title,
     description: post.excerpt,
     image: {
@@ -159,6 +162,7 @@ export default async function BlogPostPage({
     author: authorSchema,
     publisher: {
       "@type": "Organization",
+      "@id": "https://www.thehimalayanshire.com/#business",
       name: "The Himalayan Shire",
       url: "https://www.thehimalayanshire.com/",
       logo: {

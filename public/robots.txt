@@ -4,7 +4,9 @@ Disallow: /admin/
 Disallow: /api/
 Disallow: /auth/
 Disallow: /dashboard
-Disallow: /_next/
+
+# NOTE: /_next/ (JS/CSS) is intentionally NOT disallowed — crawlers need
+# these resources to render pages correctly.
 
 # Allow all legitimate search crawlers
 User-agent: Googlebot
@@ -23,5 +25,14 @@ Sitemap: https://www.thehimalayanshire.com/sitemap.xml
 User-agent: GPTBot
 Allow: /
 
+User-agent: ChatGPT-User
+Allow: /
+
 User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
 Allow: /
