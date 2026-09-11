@@ -130,7 +130,7 @@ export function RoomPageContent({
               <div className="flex items-center justify-center px-6 py-3.5 lg:border-l lg:border-emerald-900/10">
                 <Link
                   href="https://letsbook.me/booking/thehimalayanshire?checkin=2026-08-04&checkout=2026-08-05&adults=2&children=0"
-                  className="w-full whitespace-nowrap rounded-full bg-gold-500 px-6 py-2 text-sm font-bold tracking-wide text-emerald-950 transition-all duration-300 hover:bg-gold-400 lg:w-auto"
+                  className="inline-flex w-full items-center justify-center whitespace-nowrap rounded-full bg-gold-500 px-6 py-2 text-center text-sm font-bold tracking-wide text-emerald-950 transition-all duration-300 hover:bg-gold-400 lg:w-auto"
                 >
                   Book This Room
                 </Link>
