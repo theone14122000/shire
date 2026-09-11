@@ -55,6 +55,12 @@ export function SiteNav() {
   const [hoveredLabel, setHoveredLabel] = useState<string | null>(null);
   const [logo, setLogo] = useState("/images/logo2.jpg");
 
+  // Dropdown order only — Walnut appears last. CMS content is untouched.
+  const navRooms = [
+    ...rooms.filter((room) => room.slug !== "walnut"),
+    ...rooms.filter((room) => room.slug === "walnut"),
+  ];
+
   useEffect(() => {
     fetch("/api/public/settings")
       .then((res) => (res.ok ? res.json() : null))
@@ -164,7 +170,7 @@ export function SiteNav() {
                         className="absolute top-full right-0 pt-3 w-64"
                       >
                         <div className="bg-white border border-emerald-200/50 rounded-xl shadow-lg overflow-hidden py-2">
-                          {rooms.map((room) => (
+                          {navRooms.map((room) => (
                             <Link
                               key={room.id}
                               href={`/rooms/${room.slug}`}
@@ -293,7 +299,7 @@ export function SiteNav() {
                           transition={{ duration: 0.2 }}
                           className="overflow-hidden bg-emerald-50 rounded-lg my-1"
                         >
-                          {rooms.map((room) => (
+                          {navRooms.map((room) => (
                             <Link
                               key={room.id}
                               href={`/rooms/${room.slug}`}
