@@ -6,16 +6,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = "https://www.thehimalayanshire.com";
 
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: base, changeFrequency: "weekly", priority: 1 },
-    { url: `${base}/activities`, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${base}/sustainability`, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${base}/gallery`, changeFrequency: "weekly", priority: 0.8 },
-    { url: `${base}/blog`, changeFrequency: "weekly", priority: 0.7 },
-    { url: `${base}/contact`, changeFrequency: "yearly", priority: 0.6 },
-    { url: `${base}/faq`, changeFrequency: "yearly", priority: 0.6 },
-    { url: `${base}/pet-policy`, changeFrequency: "yearly", priority: 0.5 },
-    { url: `${base}/pet-friendly-stay`, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${base}/private-villa`, changeFrequency: "monthly", priority: 0.8 },
+    { url: base, lastModified: "2026-09-11", changeFrequency: "weekly", priority: 1 },
+    { url: `${base}/activities`, lastModified: "2026-09-11", changeFrequency: "monthly", priority: 0.8 },
+    { url: `${base}/sustainability`, lastModified: "2026-09-11", changeFrequency: "monthly", priority: 0.7 },
+    { url: `${base}/gallery`, lastModified: "2026-09-11", changeFrequency: "weekly", priority: 0.8 },
+    { url: `${base}/blog`, lastModified: "2026-09-11", changeFrequency: "weekly", priority: 0.7 },
+    { url: `${base}/contact`, lastModified: "2026-09-11", changeFrequency: "yearly", priority: 0.6 },
+    { url: `${base}/faq`, lastModified: "2026-09-11", changeFrequency: "yearly", priority: 0.6 },
+    { url: `${base}/pet-policy`, lastModified: "2026-09-11", changeFrequency: "yearly", priority: 0.5 },
+    { url: `${base}/pet-friendly-stay`, lastModified: "2026-09-11", changeFrequency: "monthly", priority: 0.8 },
+    { url: `${base}/private-villa`, lastModified: "2026-09-11", changeFrequency: "monthly", priority: 0.8 },
   ];
 
   const roomRoutes: MetadataRoute.Sitemap = rooms.map((room) => ({
