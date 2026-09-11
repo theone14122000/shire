@@ -96,10 +96,10 @@ function TextBlock({ initiative }: { initiative: SustainabilityPillar }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      className="flex flex-col justify-center"
+      className="flex flex-col items-center justify-center text-center"
     >
       <span className="luxe-kicker text-gold-700">{initiative.title}</span>
-      <p className="mt-5 max-w-[48ch] text-base leading-[1.9] text-emerald-900/80 sm:text-lg">
+      <p className="mx-auto mt-5 max-w-[48ch] text-base leading-[1.9] text-emerald-900/80 sm:text-lg">
         {initiative.body}
       </p>
     </motion.div>
@@ -159,7 +159,7 @@ export function SustainabilityContent({ content }: { content: SustainabilityCont
                 whileInView={{ y: 0 }}
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                className="flex flex-col justify-center"
+                className="mx-auto flex max-w-3xl flex-col items-center justify-center"
               >
                 <TextBlock initiative={rainInitiative} />
               </motion.div>
