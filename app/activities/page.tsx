@@ -3,8 +3,13 @@ import { SiteFooter } from "../components/SiteFooter";
 import { ActivitiesContent as ActivitiesView } from "../components/activities/ActivitiesContent";
 import { getPageContent } from "@/lib/page-content";
 import { ACTIVITIES_PAGE_KEY, mergeActivities } from "@/lib/activities-content";
+import { activitiesMetadata } from "../metadata";
 
 export const dynamic = "force-dynamic";
+
+export function generateMetadata() {
+  return activitiesMetadata();
+}
 
 export default async function ActivitiesPage() {
   const db = await getPageContent(ACTIVITIES_PAGE_KEY);

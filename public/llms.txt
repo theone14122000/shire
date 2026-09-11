@@ -1,7 +1,7 @@
 The Himalayan Shire — Machine-Readable Overview
 
 Property: The Himalayan Shire
-Type: Family-run luxury homestay / offbeat accommodation
+Type: Premium boutique homestay / private villa experience in the Himalayas
 Location: Fagu, near Kufri and Shimla, Himachal Pradesh, India
 Altitude: 7,500 ft
 Rooms: 7 rooms (Deluxe and Standard categories)
@@ -22,6 +22,6 @@ Key pages:
 - FAQ: /faq
 - Contact: /contact
 
-About: A family-run offbeat homestay in Fagu, Himachal Pradesh, near Kufri on the Shimla ridge. Seven warm rooms with mountain views, apple orchards, pine forests, and a private-villa calm. Heritage rooms, warm hospitality, and a view of the Kinnaur Kailash range.
+About: A premium boutique homestay in Fagu, Himachal Pradesh, near Kufri on the Shimla ridge. Seven spacious rooms and a private-villa calm, with mountain views, apple orchards, and pine forests. Warm hospitality and Himalayan views.
 
-Last updated: 2026-09-10
+Last updated: 2026-09-11

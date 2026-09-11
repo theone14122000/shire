@@ -11,7 +11,29 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "Gallery | The Himalayan Shire",
   description:
-    "Take a look inside The Himalayan Shire — winter views, common spaces, bonfire nights, and mountain sunrises.",
+    "Photos of The Himalayan Shire — premium rooms, apple orchards, mountain sunrises, bonfire nights, and common spaces at our Fagu homestay near Shimla.",
+  keywords: [
+    "Himalayan Shire gallery",
+    "Fagu homestay photos",
+    "Shimla homestay images",
+    "homestay rooms photos Himachal",
+  ],
+  alternates: { canonical: "/gallery" },
+  openGraph: {
+    title: "Gallery | The Himalayan Shire",
+    description:
+      "Take a look inside The Himalayan Shire — winter views, common spaces, bonfire nights, and mountain sunrises.",
+    type: "website",
+    url: "https://www.thehimalayanshire.com/gallery",
+    images: ["/images/hero-1.jpg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Gallery | The Himalayan Shire",
+    description:
+      "Take a look inside The Himalayan Shire — winter views, common spaces, bonfire nights, and mountain sunrises.",
+    images: ["/images/hero-1.jpg"],
+  },
 };
 
 export default async function GalleryPage() {

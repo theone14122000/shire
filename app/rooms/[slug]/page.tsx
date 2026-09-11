@@ -41,6 +41,8 @@ export async function generateMetadata({
     keywords: [
       "Fagu homestay",
       "homestay near Kufri",
+      "premium rooms in Fagu",
+      "premium rooms near Shimla",
       "offbeat homestay Shimla",
       "luxury stay Shimla",
       `${room.name} room Fagu`,
@@ -126,12 +128,41 @@ export default async function RoomPage({
 
   const roomSchema = getRoomSchema(room, images);
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: "https://www.thehimalayanshire.com/",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Rooms",
+        item: "https://www.thehimalayanshire.com/#rooms",
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: `${room.name} Room`,
+        item: `https://www.thehimalayanshire.com/rooms/${room.slug}`,
+      },
+    ],
+  };
+
   return (
     <main className="min-h-screen flex flex-col font-sans selection:bg-gold-200/30">
       <SiteNav />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(roomSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <div className="flex-1">
         <RoomPageContent room={room} images={images} />

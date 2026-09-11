@@ -26,6 +26,9 @@ export default async function Home() {
     <>
       <SiteNav />
       <main id="main" className="relative">
+        <h1 className="sr-only">
+          Luxury Boutique Homestay in Fagu, Near Shimla — The Himalayan Shire
+        </h1>
         <Hero content={content} />
         <HomeEditorial content={content} galleryFrames={galleryFrames} rooms={rooms} />
       </main>

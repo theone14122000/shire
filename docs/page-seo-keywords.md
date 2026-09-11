@@ -1,6 +1,29 @@
-# Page SEO Keywords — The Himalayan Shire
+# Page SEO Map — The Himalayan Shire
 
-Complete SEO metadata structure for every public/indexable page.
+Positioning: **premium boutique homestay / private villa experience in Fagu, near Kufri & Shimla.**
+Pet-friendly targeting lives ONLY on pet-specific pages. No keyword stuffing — each page owns one primary topic.
+
+Last updated: 2026-09-11 (luxury/boutique repositioning).
+
+---
+
+## Cannibalization map (one primary keyword per page)
+
+| Page | URL | Primary keyword |
+|---|---|---|
+| Home | `/` | luxury homestay in Fagu |
+| Rooms (each) | `/rooms/[slug]` | [room name] room Fagu (+ premium rooms in Fagu) |
+| Pet-Friendly Stay | `/pet-friendly-stay` | pet-friendly homestay near Shimla |
+| Pet Policy | `/pet-policy` | pet policy homestay Shimla |
+| Experiences | `/activities` | things to do in Fagu |
+| Sustainability | `/sustainability` | eco-friendly hotel Shimla |
+| Gallery | `/gallery` | Himalayan Shire gallery |
+| Blog | `/blog` | Shimla travel guide |
+| Blog posts | `/blog/[slug]` | post topic (long-tail informational) |
+| FAQ | `/faq` | Himalayan Shire FAQs |
+| Contact | `/contact` | Himalayan Shire contact |
+
+Future pages (create only with genuine content): Private Villa → private villa near Shimla; Retreat/Groups → retreat venue near Shimla.
 
 ---
 
@@ -8,251 +31,148 @@ Complete SEO metadata structure for every public/indexable page.
 
 | Field | Value |
 |---|---|
-| URL | `/` |
-| SEO Title | The Himalayan Shire \| Pet-Friendly Stay in Fagu, Near Shimla |
-| Meta Description | A pet-friendly, family-run homestay in Fagu, near Shimla. Seven warm rooms, apple orchards, and pine views at 7,500 ft — a quiet Himalayan stay for travelers with dogs. |
-| Primary Keyword | pet friendly stay in Fagu |
-| Secondary Keywords | homestay near Shimla, offbeat homestay Shimla, luxury stay Shimla, Fagu homestay, pet friendly accommodation Himachal Pradesh |
-| Search Intent | Informational + Transactional — "pet friendly stay near Shimla" |
-| H1 | The Himalayan Shire |
+| SEO Title | The Himalayan Shire \| Luxury Boutique Homestay in Fagu, Near Shimla |
+| Meta Description | A premium boutique homestay in Fagu, near Kufri and Shimla. Seven spacious rooms and a private villa experience amid apple orchards, with Himalayan views at 7,500 ft. |
+| Secondary | homestay in Fagu, luxury homestay near Shimla, boutique/premium homestay Fagu, private villa near Shimla, homestay near Kufri, Fagu homestay with Himalayan views |
+| Intent | Broad discovery + transactional |
+| H1 | Luxury Boutique Homestay in Fagu, Near Shimla — The Himalayan Shire (sr-only, visual unchanged) |
 | Canonical | `/` |
+| Schema | LodgingBusiness, WebSite, ImageObject |
 
 ---
 
-## Rooms (Listing)
+## Individual room pages
 
 | Field | Value |
 |---|---|
-| URL | `/rooms/[slug]` |
 | SEO Title | [Room Name] Room — Luxury Offbeat Homestay in Fagu, Near Kufri & Shimla |
-| Meta Description | [Room Name]: a [category] with [size] of space, set in The Himalayan Shire — a family-run offbeat homestay in Fagu, near Kufri, a short drive from Shimla. |
-| Primary Keyword | [room name] room Fagu |
-| Secondary Keywords | Fagu homestay, homestay near Kufri, offbeat homestay Shimla, luxury stay Shimla |
-| Search Intent | Transactional — "book [room name] Shimla" |
+| Meta Description | Dynamic per room: category + size + view + Fagu/Kufri/Shimla setting |
+| Secondary | premium rooms in Fagu, premium rooms near Shimla, Fagu homestay, homestay near Kufri, [room name] room Shimla |
+| Intent | Transactional (book/enquiry) |
 | H1 | [Room Name] |
 | Canonical | `/rooms/[slug]` |
-| Schema | HotelRoom (dynamic from CMS) |
+| Schema | HotelRoom (dynamic from CMS) + BreadcrumbList |
+
+Per-room primaries: Deodar room Fagu · Buransh room Fagu · Chir Pine room Fagu · Blue Pine room Fagu · Walnut room Fagu · Mohru room Fagu · Tosh room Fagu. Standard rooms may use budget-friendly/pocket-friendly wording; never "cheap hotel".
 
 ---
 
-## Individual Room Pages
-
-### Deodar
+## Pet-Friendly Stay (pet cluster — only pet-targeted page besides policy/FAQ answer)
 
 | Field | Value |
 |---|---|
-| URL | `/rooms/deodar` |
-| SEO Title | Deodar Room — Luxury Offbeat Homestay in Fagu, Near Kufri & Shimla |
-| Primary Keyword | Deodar room Fagu |
-| Secondary Keywords | premium room Shimla, luxury homestay Kufri, mountain view room Fagu |
-
-### Buransh
-
-| Field | Value |
-|---|---|
-| URL | `/rooms/buransh` |
-| SEO Title | Buransh Room — Luxury Offbeat Homestay in Fagu, Near Kufri & Shimla |
-| Primary Keyword | Buransh room Fagu |
-| Secondary Keywords | premium room Shimla, most spacious room Fagu, luxury homestay Kufri |
-
-### Chir Pine
-
-| Field | Value |
-|---|---|
-| URL | `/rooms/chir-pine` |
-| SEO Title | Chir Pine Room — Luxury Offbeat Homestay in Fagu, Near Kufri & Shimla |
-| Primary Keyword | Chir Pine room Fagu |
-| Secondary Keywords | deluxe room Shimla, mountain view room Fagu, sunrise view homestay |
-
-### Blue Pine
-
-| Field | Value |
-|---|---|
-| URL | `/rooms/blue-pine` |
-| SEO Title | Blue Pine Room — Luxury Offbeat Homestay in Fagu, Near Kufri & Shimla |
-| Primary Keyword | Blue Pine room Fagu |
-| Secondary Keywords | deluxe room Shimla, valley view room Fagu, king size bed homestay |
-
-### Walnut
-
-| Field | Value |
-|---|---|
-| URL | `/rooms/walnut` |
-| SEO Title | Walnut Room — Luxury Offbeat Homestay in Fagu, Near Kufri & Shimla |
-| Primary Keyword | Walnut room Fagu |
-| Secondary Keywords | standard room Shimla, garden view room Fagu, accessible room homestay |
-
-### Mohru
-
-| Field | Value |
-|---|---|
-| URL | `/rooms/mohru` |
-| SEO Title | Mohru Room — Luxury Offbeat Homestay in Fagu, Near Kufri & Shimla |
-| Primary Keyword | Mohru room Fagu |
-| Secondary Keywords | standard room Shimla, extra bedding room Fagu, cozy room homestay |
-
-### Tosh
-
-| Field | Value |
-|---|---|
-| URL | `/rooms/tosh` |
-| SEO Title | Tosh Room — Luxury Offbeat Homestay in Fagu, Near Kufri & Shimla |
-| Primary Keyword | Tosh room Fagu |
-| Secondary Keywords | standard room Shimla, forest view room Fagu, budget homestay Fagu |
-
----
-
-## Pet-Friendly Stay
-
-| Field | Value |
-|---|---|
-| URL | `/pet-friendly-stay` |
 | SEO Title | Pet-Friendly Stay in Fagu, Near Shimla \| The Himalayan Shire |
-| Meta Description | The Himalayan Shire welcomes dogs. A pet-friendly homestay in Fagu, near Shimla — spacious rooms, open gardens, and mountain views for you and your pet. |
-| Primary Keyword | pet friendly stay in Fagu |
-| Secondary Keywords | dog friendly stay Shimla, pet friendly homestay Himachal Pradesh, pet policy Fagu |
-| Search Intent | Informational — "pet friendly stay near Shimla" |
-| H1 | Pet-Friendly Stay in Fagu, Near Shimla |
+| Primary | pet-friendly homestay near Shimla |
+| Secondary | pet-friendly stay in Fagu, dog friendly stay Shimla, pet-friendly accommodation Himachal Pradesh |
+| Intent | Informational + transactional (pet owners) |
+| H1 | Bring your pet to the Himalayas. |
 | Canonical | `/pet-friendly-stay` |
-
----
+| Schema | FAQPage + BreadcrumbList |
 
 ## Pet Policy
 
 | Field | Value |
 |---|---|
-| URL | `/pet-policy` |
 | SEO Title | Pet Policy \| The Himalayan Shire |
-| Meta Description | Our pet policy at The Himalayan Shire — what to expect when traveling with your dog to Fagu, near Shimla. |
-| Primary Keyword | pet policy homestay Shimla |
-| Secondary Keywords | dog rules Fagu, traveling with pets Himachal Pradesh |
-| Search Intent | Informational |
-| H1 | Pet Policy |
+| Primary | pet policy homestay Shimla |
+| Secondary | pet rules Fagu, dog policy Himachal, pet fee Shimla homestay |
+| Intent | Informational (pre-booking reassurance) |
+| H1 | Policy for Pets. |
 | Canonical | `/pet-policy` |
 
----
-
-## Contact
+## Experiences
 
 | Field | Value |
 |---|---|
-| URL | `/contact` |
-| SEO Title | Contact \| The Himalayan Shire |
-| Meta Description | Get in touch with The Himalayan Shire — book a stay, ask about availability, or reach us for directions and travel planning. Fagu, Shimla, Himachal Pradesh. |
-| Primary Keyword | Himalayan Shire contact |
-| Secondary Keywords | hotel contact Shimla, Fagu Shimla contact, booking inquiries Himachal Pradesh |
-| Search Intent | Transactional — "contact Himalayan Shire" |
-| H1 | Contact |
-| Canonical | `/contact` |
-
----
-
-## FAQ
-
-| Field | Value |
-|---|---|
-| URL | `/faq` |
-| SEO Title | FAQs \| The Himalayan Shire |
-| Meta Description | Frequently asked questions about staying at The Himalayan Shire — room bookings, pet policy, amenities, location, and more. Fagu, Shimla, Himachal Pradesh. |
-| Primary Keyword | Himalayan Shire FAQs |
-| Secondary Keywords | hotel FAQs Shimla, Fagu accommodation questions, Himachal Pradesh stay information |
-| Search Intent | Informational |
-| H1 | Frequently Asked Questions |
-| Canonical | `/faq` |
-
----
-
-## Activities / Experiences
-
-| Field | Value |
-|---|---|
-| URL | `/activities` |
-| SEO Title | Experiences \| The Himalayan Shire |
-| Meta Description | From quiet corners on the property to peaks in the Himalayas — there is always something waiting for you. |
-| Primary Keyword | things to do in Shimla |
-| Secondary Keywords | activities Fagu, mountain activities Himachal Pradesh, premium experiences Shimla |
-| Search Intent | Informational — "things to do near Shimla" |
-| H1 | Experiences |
+| SEO Title | Experiences & Things to Do in Fagu \| The Himalayan Shire |
+| Primary | things to do in Fagu |
+| Secondary | things to do near Kufri/Shimla, Fagu experiences, mountain activities Himachal, apple orchards Fagu |
+| Intent | Informational (destination) — light accommodation targeting |
+| H1 | Things to do around Fagu & Shimla |
 | Canonical | `/activities` |
 
----
-
-## Sustainability
+## Sustainability (topical authority, no accommodation stuffing)
 
 | Field | Value |
 |---|---|
-| URL | `/sustainability` |
 | SEO Title | Sustainability \| The Himalayan Shire |
-| Meta Description | We care for the mountains we call home. Here's how we tread lightly: waste segregation, recycling, and eco-friendly hospitality. |
-| Primary Keyword | eco-friendly hotel Shimla |
-| Secondary Keywords | sustainable stay Himachal Pradesh, green hotel Fagu, environmental responsibility |
-| Search Intent | Informational |
-| H1 | Sustainability |
+| Primary | eco-friendly hotel Shimla |
+| Secondary | sustainable stay Himachal Pradesh, green hotel Fagu |
+| Intent | Informational (brand trust) |
+| H1 | Sustainability at The Himalayan Shire |
 | Canonical | `/sustainability` |
-
----
 
 ## Gallery
 
 | Field | Value |
 |---|---|
-| URL | `/gallery` |
 | SEO Title | Gallery \| The Himalayan Shire |
-| Meta Description | Photos of The Himalayan Shire — rooms, gardens, mountain views, and life at our Fagu homestay near Shimla. |
-| Primary Keyword | Himalayan Shire gallery |
-| Secondary Keywords | Fagu homestay photos, Shimla stay images |
-| Search Intent | Informational — "see Himalayan Shire" |
+| Primary | Himalayan Shire gallery |
+| Secondary | Fagu homestay photos, Shimla homestay images |
+| Intent | Commercial investigation (visual proof) |
 | H1 | Gallery |
 | Canonical | `/gallery` |
 
----
-
-## Blog (Listing)
+## Blog (listing)
 
 | Field | Value |
 |---|---|
-| URL | `/blog` |
 | SEO Title | Blog \| The Himalayan Shire |
-| Meta Description | Travel guides and honest notes from The Himalayan Shire — a family-run offbeat homestay in Fagu, near Kufri & Shimla. Weather by month, driving directions, and local experiences in Himachal Pradesh. |
-| Primary Keyword | Shimla travel guide |
-| Secondary Keywords | Fagu homestay blog, Kufri travel tips, Himachal travel, offbeat homestay Shimla |
-| Search Intent | Informational — "Shimla travel guide" |
-| H1 | Blog |
+| Primary | Shimla travel guide |
+| Secondary | Fagu homestay blog, Kufri travel tips, Himachal travel |
+| Intent | Informational |
+| H1 | Stories From The Shire |
 | Canonical | `/blog` |
 
----
-
-## Blog Posts (Individual)
+## Blog posts
 
 | Field | Value |
 |---|---|
-| URL | `/blog/[slug]` |
-| SEO Title | [Post Title] \| The Himalayan Shire Blog (or custom SEO title from CMS) |
-| Meta Description | [Post excerpt] (or custom SEO description from CMS) |
-| Primary Keyword | [Post title/topic] |
-| Secondary Keywords | Shimla travel, Fagu homestay, Himachal Pradesh |
-| Search Intent | Informational |
+| SEO Title | [SEO Title or post title] \| The Himalayan Shire Blog |
+| Meta Description | [SEO description or excerpt] |
+| Primary | Post topic (Fagu weather/snow, Kufri guides, homestay-vs-hotel, pet travel, retreat planning) |
+| Intent | Informational (topical authority engine) |
 | H1 | [Post title] |
 | Canonical | `/blog/[slug]` |
-| Schema | BlogPosting + ImageObject |
+| Schema | BlogPosting (Person author when a real name is credited, else Organization) + ImageObject + BreadcrumbList |
+
+## FAQ
+
+| Field | Value |
+|---|---|
+| SEO Title | FAQs \| The Himalayan Shire |
+| Primary | Himalayan Shire FAQs |
+| Secondary | Fagu accommodation questions, hotel FAQs Shimla |
+| Intent | Informational (pre-booking objections) |
+| H1 | Frequently asked questions. |
+| Canonical | `/faq` |
+| Schema | FAQPage (9 genuine Q&As incl. location, parking, pets, food) |
+
+## Contact
+
+| Field | Value |
+|---|---|
+| SEO Title | Contact \| The Himalayan Shire |
+| Primary | Himalayan Shire contact |
+| Secondary | Fagu Shimla contact, booking enquiries Himachal Pradesh |
+| Intent | Transactional |
+| H1 | Get in touch. |
+| Canonical | `/contact` |
 
 ---
 
-## Keyword Cannibalization Prevention
+## Internal linking (existing deliberate structure)
 
-Each page targets a distinct primary keyword:
+- Home → rooms (carousel + nav dropdown), activities, gallery, blog, contact, FAQ (footer)
+- FAQ → rooms section, activities page, pet-friendly page, contact CTA
+- Pet Policy → pet-friendly page; Pet-Friendly → booking/contact
+- Blog posts → booking CTA + Fagu context
+- Rooms → booking + /contact (Enquire)
+- Footer → Stay (rooms, pet-friendly), Explore, Contact on every page
+- Anchor text varies naturally; no repeated exact-match anchors.
 
-| Page | Primary Keyword |
-|---|---|
-| Home | pet friendly stay in Fagu |
-| Pet-Friendly Stay | pet friendly stay in Fagu (deeper content) |
-| Pet Policy | pet policy homestay Shimla |
-| Rooms | [room name] room Fagu (unique per room) |
-| Contact | Himalayan Shire contact |
-| FAQ | Himalayan Shire FAQs |
-| Activities | things to do in Shimla |
-| Sustainability | eco-friendly hotel Shimla |
-| Gallery | Himalayan Shire gallery |
-| Blog | Shimla travel guide |
+## Notes
 
-The homepage and pet-friendly page share the primary keyword intentionally — the homepage is the main entry point and the pet-friendly page is a supporting deep page. They target slightly different search intents (general vs specific).
+- No Rooms index, Private Villa, or Retreat page exists — map covers actual pages only. Villa/retreat pages recommended as future builds with genuine content (entire-villa booking + group capacity already referenced in Our Story).
+- Visible UI copy was NOT keyword-rewritten; SEO layer (titles/descriptions/schema) carries targeting. Brand voice preserved.
+- Never claim rankings; verify in Google Search Console.

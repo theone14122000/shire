@@ -92,26 +92,26 @@ The website uses JSON-LD structured data to help Google understand the property,
 
 **Purpose:** Helps Google show FAQ rich results for pet-policy questions.
 
-## Author implementation
+## Author implementation (updated 2026-09-11)
 
-**Rule:** The Himalayan Shire publishes its own blog posts. So the author is **Organization** "The Himalayan Shire" — never a fake person.
+**Rule:** author is dynamic, never invented. When the CMS credits a real named individual (e.g. "Rishabh Goel"), schema uses `"@type": "Person"` with that exact name. When the property itself is credited, it uses `"@type": "Organization"` "The Himalayan Shire".
 
 ```json
-"author": {
-  "@type": "Organization",
-  "name": "The Himalayan Shire"
-}
+"author": { "@type": "Person", "name": "Rishabh Goel" }
 ```
 
 ## Rules followed
 
 - No fake reviews, ratings, offers, prices, or awards.
 - All property details are accurate (address, phone, location).
-- Pet-friendly information is accurately represented (amenityFeature + FAQ).
-- Author is always Organization (property publishes all content).
+- Pet-friendly appears only on pet-specific pages (pet-friendly-stay, pet-policy, FAQ pet answer).
+- Author is Person (genuine CMS-credited name) or Organization — never invented.
 - All JSON-LD is server-side rendered and indexable.
 
-## Recommended additions
+## Implemented 2026-09-11
 
-- Add `FAQPage` schema to the FAQ page (`/faq`) — it has real FAQs.
-- Consider `LocalBusiness` schema as a separate entity alongside LodgingBusiness for local pack eligibility.
+- `FAQPage` on `/faq` (9 genuine visible Q&As, plain-text mirrors of page content).
+- `BreadcrumbList` on `/rooms/[slug]` (Home → Rooms → Room) and `/blog/[slug]` (Home → Blog → Post).
+- Dynamic Person/Organization blog author.
+- `ImageObject` for homepage hero + blog post images (absolute URLs).
+- `HotelRoom` per room (dynamic from CMS: name, description, image, floorSize, occupancy, facilities, containedInPlace).

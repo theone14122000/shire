@@ -130,6 +130,18 @@ export default async function BlogPostPage({
 
   if (!post || post.status !== "published") notFound();
 
+  const authorName = (post.author || "").trim();
+  // Person for a genuine named author credited by the CMS; Organization
+  // when the property itself is credited (never invent author names).
+  const authorSchema =
+    authorName && !/himalayan shire/i.test(authorName)
+      ? { "@type": "Person", name: authorName }
+      : {
+          "@type": "Organization",
+          name: "The Himalayan Shire",
+          url: "https://www.thehimalayanshire.com/",
+        };
+
   const ARTICLE_JSONLD = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -144,11 +156,7 @@ export default async function BlogPostPage({
     },
     datePublished: post.createdAt,
     dateModified: post.updatedAt,
-    author: {
-      "@type": "Organization",
-      name: "The Himalayan Shire",
-      url: "https://www.thehimalayanshire.com/",
-    },
+    author: authorSchema,
     publisher: {
       "@type": "Organization",
       name: "The Himalayan Shire",
@@ -164,12 +172,41 @@ export default async function BlogPostPage({
     },
   };
 
+  const BREADCRUMB_JSONLD = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: "https://www.thehimalayanshire.com/",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Blog",
+        item: "https://www.thehimalayanshire.com/blog",
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: post.title,
+        item: `https://www.thehimalayanshire.com/blog/${post.slug}`,
+      },
+    ],
+  };
+
   return (
     <main className="min-h-screen font-sans selection:bg-gold-200/30">
       <SiteNav />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(ARTICLE_JSONLD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_JSONLD) }}
       />
 
       <section className="relative">

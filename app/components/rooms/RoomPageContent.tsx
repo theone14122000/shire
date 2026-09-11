@@ -64,7 +64,7 @@ export function RoomPageContent({
         <motion.div style={{ scale: imageScale }} className="absolute inset-0">
           <Image
             src={images[0].src}
-            alt={room.name}
+            alt={`${room.name} room with Himalayan views at The Himalayan Shire, Fagu`}
             fill
             priority
             sizes="100vw"

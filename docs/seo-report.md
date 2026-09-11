@@ -124,17 +124,25 @@ See the Logo section of this report (separate). Favicon assets are deployed and 
 
 - Submit sitemap to Google Search Console
 - Request indexing for key URLs
-- Set up Google Business Profile pet-friendly attributes
-- Add FAQPage schema to the FAQ page (currently none — only pet-friendly-stay has it)
+- Set up Google Business Profile with boutique/luxury homestay categories + pet-friendly attribute
+- Future pages (only with genuine content): Private Villa (entire-villa booking), Retreat/Groups (group capacity)
 
 ## Client action required
 
 - Google Search Console verification & indexing requests
 - Google Business Profile setup/update
 - Confirm the GBP pet-friendly attribute if supported
+- Review recommended future blog topics: best time to visit Fagu, Fagu vs Shimla for a peaceful stay, homestay vs hotel near Shimla, travelling to Himachal with pets, planning a corporate retreat near Shimla
 
 ---
 
+## Update 2026-09-11 — luxury/boutique repositioning + duplicate-title fix
+
+- Homepage repositioned from pet-first to **luxury boutique homestay in Fagu** (title, description, keywords, OG/Twitter, LodgingBusiness + WebSite descriptions). Pet targeting now lives only on pet-specific pages.
+- Fixed 5 duplicate titles: /contact, /faq, /activities, /sustainability, /pet-policy each have unique titles, descriptions, canonicals (contact/faq/pet-policy split into server pages; activities/sustainability/gallery metadata wired).
+- Added FAQPage schema to /faq (9 genuine Q&As), BreadcrumbList to room + blog pages, dynamic Person/Organization blog author, homepage H1 (screen-reader only, visual unchanged), descriptive room hero alt text.
+- Full keyword map: docs/page-seo-keywords.md.
+
 ## Important
 
-SEO cannot guarantee rankings. The objective is to make Google clearly understand that The Himalayan Shire is a legitimate, relevant, indexable pet-friendly accommodation in Fagu near Shimla. Google controls when it recrawls and updates results.
+SEO cannot guarantee rankings. The objective is to make Google clearly understand that The Himalayan Shire is a legitimate, relevant, indexable premium boutique homestay and private villa experience in Fagu near Kufri and Shimla (pet-friendly where relevant). Google controls when it recrawls and updates results.

@@ -73,30 +73,32 @@ export function faqMetadata(): Metadata {
  * Generates metadata for the Activities page.
  */
 export function activitiesMetadata(): Metadata {
+  const description =
+    "Things to do in Fagu, near Kufri and Shimla — mountain walks, apple orchards, snow experiences in season, bonfire evenings, and local Himalayan experiences around The Himalayan Shire.";
   return {
-    title: "Experiences | The Himalayan Shire",
-    description:
-      "From quiet corners on the property to peaks in the Himalayas - there is always something waiting for you.",
+    title: "Experiences & Things to Do in Fagu | The Himalayan Shire",
+    description,
     keywords: [
       "Himalayan Shire",
-      "activities",
-      "things to do in Shimla",
-      "premium experiences Shimla",
+      "things to do in Fagu",
+      "things to do near Kufri",
+      "things to do near Shimla",
+      "Fagu experiences",
       "mountain activities Himachal Pradesh",
+      "apple orchards Fagu",
+      "Himalayan experiences",
     ],
     openGraph: {
-      title: "Experiences | The Himalayan Shire",
-      description:
-        "From quiet corners on the property to peaks in the Himalayas - there is always something waiting for you.",
+      title: "Experiences & Things to Do in Fagu | The Himalayan Shire",
+      description,
       type: "website",
       url: "https://www.thehimalayanshire.com/activities",
       images: ["/images/hero-1.jpg"],
     },
     twitter: {
       card: "summary_large_image",
-      title: "Experiences | The Himalayan Shire",
-      description:
-        "From quiet corners on the property to peaks in the Himalayas - there is always something waiting for you.",
+      title: "Experiences & Things to Do in Fagu | The Himalayan Shire",
+      description,
       images: ["/images/hero-1.jpg"],
     },
     alternates: { canonical: "/activities" },

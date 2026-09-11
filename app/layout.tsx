@@ -16,35 +16,33 @@ const raleway = Raleway({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.thehimalayanshire.com"),
-  title: "The Himalayan Shire | Pet-Friendly Stay in Fagu, Near Shimla",
+  title: "The Himalayan Shire | Luxury Boutique Homestay in Fagu, Near Shimla",
   description:
-    "A pet-friendly, family-run homestay in Fagu, near Shimla. Seven warm rooms, apple orchards, and pine views at 7,500 ft — a quiet Himalayan stay for travelers with dogs.",
+    "A premium boutique homestay in Fagu, near Kufri and Shimla. Seven spacious rooms and a private villa experience amid apple orchards, with Himalayan views at 7,500 ft.",
   keywords: [
     "The Himalayan Shire",
-    "pet friendly stay in Fagu",
-    "pet friendly stay near Shimla",
-    "pet friendly homestay Shimla",
-    "dog friendly stay Shimla",
-    "pet friendly accommodation Himachal Pradesh",
+    "luxury homestay in Fagu",
     "homestay in Fagu",
-    "Fagu homestay",
+    "luxury homestay near Shimla",
+    "homestay near Shimla",
+    "boutique homestay in Fagu",
+    "premium homestay in Fagu",
+    "premium stay near Shimla",
+    "luxury stay in Fagu",
+    "private villa near Shimla",
     "homestay near Kufri",
+    "Fagu homestay",
+    "Fagu homestay with Himalayan views",
     "offbeat homestay Shimla",
-    "offbeat homestay near Shimla",
-    "private villa Shimla",
-    "luxury stays in Shimla",
-    "luxury homestay Shimla",
-    "homestay in Shimla",
+    "mountain retreat near Shimla",
     "Shimla cottage stay",
-    "Fagu Shimla stay",
     "heritage homestay Himachal",
-    "heritage hospitality",
   ],
   authors: [{ name: "The Himalayan Shire" }],
   openGraph: {
-    title: "The Himalayan Shire — Pet-Friendly Homestay in Fagu, Near Shimla",
+    title: "The Himalayan Shire — Luxury Boutique Homestay in Fagu, Near Shimla",
     description:
-      "A pet-friendly, family-run homestay in Fagu, near Shimla and Kufri. Seven warm rooms, heritage interiors, and a Himalayan view that stays with you.",
+      "A premium boutique homestay in Fagu, near Kufri and Shimla. Seven spacious rooms, a private villa experience, apple orchards, and Himalayan views.",
     type: "website",
     url: "https://www.thehimalayanshire.com/",
     images: ["/images/hero-1.jpg"],
@@ -53,9 +51,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "The Himalayan Shire — Pet-Friendly Homestay in Fagu, Near Shimla",
+    title: "The Himalayan Shire — Luxury Boutique Homestay in Fagu, Near Shimla",
     description:
-      "A pet-friendly, family-run homestay in Fagu, near Shimla and Kufri. Heritage rooms, warm hospitality, and a view that stays with you.",
+      "A premium boutique homestay in Fagu, near Kufri and Shimla. Spacious rooms, private villa calm, and Himalayan views.",
     images: ["/images/hero-1.jpg"],
   },
   alternates: {
@@ -83,7 +81,7 @@ const JSONLD = {
   name: "The Himalayan Shire",
   alternateName: "Himalayan Shire Homestay Fagu",
   description:
-    "A family-run offbeat homestay in Fagu, near Kufri, a short drive from Shimla. Seven warm rooms with a private-villa calm — one of the most loved luxury stays around Shimla.",
+    "A premium boutique homestay in Fagu, near Kufri, a short drive from Shimla. Seven spacious rooms with a private-villa calm, apple orchards, and Himalayan views — a peaceful mountain retreat in Himachal Pradesh.",
   url: "https://www.thehimalayanshire.com/",
   telephone: "+918580411998",
   email: "himalayanshire@gmail.com",
@@ -113,7 +111,6 @@ const JSONLD = {
     { "@type": "LocationFeatureSpecification", name: "In-house kitchen", value: true },
     { "@type": "LocationFeatureSpecification", name: "Electric fireplace", value: true },
     { "@type": "LocationFeatureSpecification", name: "Lawn and orchard gardens", value: true },
-    { "@type": "LocationFeatureSpecification", name: "Pet-friendly", value: true },
     { "@type": "LocationFeatureSpecification", name: "Wi-Fi", value: true },
     { "@type": "LocationFeatureSpecification", name: "24/7 Hot water", value: true },
   ],
@@ -151,7 +148,7 @@ const WEBSITE_JSONLD = {
   name: "The Himalayan Shire",
   url: "https://www.thehimalayanshire.com/",
   description:
-    "A pet-friendly, family-run homestay in Fagu, near Shimla and Kufri, Himachal Pradesh.",
+    "A premium boutique homestay in Fagu, near Kufri and Shimla, Himachal Pradesh — spacious rooms, private villa calm, and Himalayan views.",
   publisher: {
     "@type": "Organization",
     name: "The Himalayan Shire",
