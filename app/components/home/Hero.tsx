@@ -85,6 +85,12 @@ export function Hero({ content }: { content?: any }) {
             }}
             className="absolute inset-0"
           >
+            <img
+              src={poster}
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 hidden h-full w-full scale-125 object-cover brightness-125 blur-2xl max-sm:block"
+            />
             <video
               autoPlay
               loop
@@ -92,7 +98,7 @@ export function Hero({ content }: { content?: any }) {
               playsInline
               preload="auto"
               poster={poster}
-              className="absolute inset-0 h-full w-full object-cover object-center brightness-125"
+              className="absolute inset-0 h-full w-full object-cover object-center brightness-125 max-sm:object-contain"
               aria-hidden="true"
             >
               <source src={videoUrl} type="video/mp4" />
