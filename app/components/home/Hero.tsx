@@ -60,7 +60,7 @@ export function Hero({ content }: { content?: any }) {
       ref={ref}
       id="top"
       onMouseMove={handleMouseMove}
-      className="relative h-[70vh] min-h-[480px] w-full overflow-hidden bg-pine-100 sm:h-[80vh] sm:min-h-[560px] lg:h-[92vh]"
+      className="relative h-[70vh] min-h-[480px] w-full overflow-hidden bg-pine-100 max-sm:aspect-[16/10] max-sm:h-auto max-sm:min-h-0 sm:h-[80vh] sm:min-h-[560px] lg:h-[92vh]"
     >
       {/*
         Full-bleed cinematic video frame — edge to edge on every screen
@@ -92,7 +92,7 @@ export function Hero({ content }: { content?: any }) {
               playsInline
               preload="auto"
               poster={poster}
-              className="absolute inset-0 h-full w-full object-cover object-center max-sm:object-top"
+              className="absolute inset-0 h-full w-full object-cover object-center"
               aria-hidden="true"
             >
               <source src={videoUrl} type="video/mp4" />
@@ -129,7 +129,7 @@ export function Hero({ content }: { content?: any }) {
 
       {/* Bottom gradient to lift meta strip — sits above the frame margin */}
       <div
-        className="absolute inset-x-0 bottom-0 z-[5] h-40 pointer-events-none sm:h-48 lg:h-56"
+        className="absolute inset-x-0 bottom-0 z-[5] h-40 max-sm:h-20 pointer-events-none sm:h-48 lg:h-56"
         style={{
           background: "linear-gradient(to top, rgba(8,18,18,0.95), transparent)",
         }}
