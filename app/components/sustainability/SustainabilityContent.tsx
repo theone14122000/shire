@@ -150,19 +150,16 @@ export function SustainabilityContent({ content }: { content: SustainabilityCont
           </section>
         )}
 
-        {/* Section 2: image 2 LEFT, rainwater text RIGHT */}
-        {rainInitiative && content.featured[1] && (
+        {/* Section 2: rainwater text only (no image) */}
+        {rainInitiative && (
           <section className="bg-white px-5 py-12 sm:px-8 sm:py-16 lg:px-14 lg:py-24">
-            <div className="mx-auto grid max-w-[1400px] items-center gap-10 lg:grid-cols-2 lg:gap-16">
-              <div className="order-2 lg:order-1">
-                <ImageCard image={content.featured[1]} />
-              </div>
+            <div className="mx-auto max-w-[1400px]">
               <motion.div
                 initial={{ y: 24 }}
                 whileInView={{ y: 0 }}
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                className="order-1 flex flex-col justify-center lg:order-2"
+                className="flex flex-col justify-center"
               >
                 <TextBlock initiative={rainInitiative} />
               </motion.div>
