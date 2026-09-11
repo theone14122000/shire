@@ -23,11 +23,22 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const room = await getMergedRoom(slug);
+  const [room, managedImages] = await Promise.all([
+    getMergedRoom(slug),
+    getPublicRoomImages(slug),
+  ]);
   if (!room) return {};
 
+  // OG/Twitter must reflect the CMS-managed photos (which replace the
+  // static defaults when configured), not the stale base set.
+
   const title = `${room.name} Room — Luxury Offbeat Homestay in Fagu, Near Kufri & Shimla`;
-  const viewText =
+  const ogImage =
+    managedImages.length > 0
+      ? getImageUrl(managedImages[0].src)
+      : room.images.length > 0
+        ? getImageUrl(room.images[0])
+        : undefined;  const viewText =
     room.viewLabel === "Location"
       ? `located on the ${room.view.toLowerCase()}`
       : room.viewLabel === "Bedding"
@@ -55,13 +66,13 @@ export async function generateMetadata({
       description,
       type: "website",
       url: `https://www.thehimalayanshire.com/rooms/${room.slug}`,
-      images: room.images.length > 0 ? [room.images[0]] : undefined,
+      images: ogImage ? [ogImage] : undefined,
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: room.images.length > 0 ? [room.images[0]] : undefined,
+      images: ogImage ? [ogImage] : undefined,
     },
   };
 }

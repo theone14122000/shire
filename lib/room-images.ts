@@ -37,6 +37,7 @@ export async function getRoomImageRows(slug: string): Promise<RoomImageRecord[]>
 export interface PublicRoomImage {
   src: string;
   caption: string | null;
+  alt: string | null;
 }
 
 /**
@@ -47,10 +48,10 @@ export interface PublicRoomImage {
 export async function getPublicRoomImages(slug: string): Promise<PublicRoomImage[]> {
   const rows = await getRoomImageRows(slug);
   if (rows.length > 0) {
-    return rows.map((r) => ({ src: normalizeMediaUrl(r.src), caption: r.caption }));
+    return rows.map((r) => ({ src: normalizeMediaUrl(r.src), caption: r.caption, alt: r.alt }));
   }
   const room = rooms.find((r) => r.slug === slug);
-  return (room?.images ?? []).map((src) => ({ src: normalizeMediaUrl(src), caption: null }));
+  return (room?.images ?? []).map((src) => ({ src: normalizeMediaUrl(src), caption: null, alt: null }));
 }
 
 /** Get the number of default (hardcoded) images for a room. */

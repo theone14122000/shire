@@ -30,7 +30,7 @@ export function RoomPageContent({
   room: Room;
   images: PublicRoomImage[];
 }) {
-  const images = managedImages.length > 0 ? managedImages : room.images.map((src) => ({ src, caption: null }));
+  const images = managedImages.length > 0 ? managedImages : room.images.map((src) => ({ src, caption: null, alt: null }));
   const heroRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -64,7 +64,7 @@ export function RoomPageContent({
         <motion.div style={{ scale: imageScale }} className="absolute inset-0">
           <Image
             src={images[0].src}
-            alt={`${room.name} room with Himalayan views at The Himalayan Shire, Fagu`}
+            alt={images[0].alt ?? `${room.name} room at The Himalayan Shire, Fagu`}
             fill
             priority
             sizes="100vw"
@@ -220,7 +220,7 @@ export function RoomPageContent({
                 >
                   <Image
                     src={image.src}
-                    alt={`${room.name} - ${image.caption ?? GALLERY_LABELS[index] ?? "Detail"}`}
+                    alt={`${room.name} - ${image.alt ?? image.caption ?? GALLERY_LABELS[index] ?? "Detail"}`}
                     fill
                     sizes="(max-width: 1024px) 100vw, 55vw"
                     className="object-cover"
@@ -281,7 +281,7 @@ export function RoomPageContent({
             >
               <Image
                 src={images[lightboxIndex].src}
-                alt={`${room.name} - ${images[lightboxIndex].caption ?? GALLERY_LABELS[lightboxIndex] ?? "Detail"}`}
+                alt={`${room.name} - ${images[lightboxIndex].alt ?? images[lightboxIndex].caption ?? GALLERY_LABELS[lightboxIndex] ?? "Detail"}`}
                 fill
                 sizes="92vw"
                 className="object-contain"

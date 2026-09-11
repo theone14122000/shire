@@ -788,6 +788,17 @@ export default function AdminRoomImagesPage({
                         )
                       }
                     />
+                    <AltField
+                      row={row}
+                      slug={currentRoom.slug}
+                      onSaved={(savedRow, alt) =>
+                        setImages((prev) =>
+                          prev.map((i) =>
+                            i.id === savedRow.id ? { ...i, alt } : i
+                          )
+                        )
+                      }
+                    />
                     <div className="flex items-center justify-between gap-1">
                       <div className="flex items-center gap-1">
                         <button
@@ -869,6 +880,52 @@ function CaptionField({
       }}
       disabled={saving}
       placeholder="Name below photo"
+      className="mb-3 w-full rounded-lg border border-emerald-200 bg-cream-50 px-2.5 py-1.5 text-xs text-emerald-900 placeholder:text-emerald-800/40 focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20"
+    />
+  );
+}
+
+function AltField({
+  row,
+  slug,
+  onSaved,
+}: {
+  row: RoomImageRow;
+  slug: string;
+  onSaved: (row: RoomImageRow, alt: string) => void;
+}) {
+  const [value, setValue] = useState(row.alt ?? "");
+  const [saving, setSaving] = useState(false);
+
+  async function save() {
+    if (saving) return;
+    setSaving(true);
+    try {
+      const res = await fetch(`/api/rooms/${slug}/images/${row.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ alt: value }),
+      });
+      if (res.ok) onSaved(row, value);
+    } catch {
+      // ignore
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <input
+      type="text"
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+      onBlur={save}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") (e.target as HTMLInputElement).blur();
+      }}
+      disabled={saving}
+      placeholder="Alt text for SEO (blank = auto)"
+      aria-label="Image alt text for SEO"
       className="mb-3 w-full rounded-lg border border-emerald-200 bg-cream-50 px-2.5 py-1.5 text-xs text-emerald-900 placeholder:text-emerald-800/40 focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20"
     />
   );
