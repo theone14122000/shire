@@ -47,8 +47,8 @@ async function main() {
     { key: "google_tag_manager_id", value: "GTM-KNHVLMTK", type: "string", group: "seo" },
     { key: "google_analytics_id", value: "G-WQXYHL162K", type: "string", group: "seo" },
     { key: "meta_pixel_id", value: "", type: "string", group: "seo" },
-    { key: "seo_title", value: "The Himalayan Shire | Offbeat Luxury Homestay in Fagu, Near Kufri & Shimla", type: "string", group: "seo" },
-    { key: "seo_description", value: "A family-run offbeat homestay in Fagu, near Kufri, a short drive from Shimla. Seven warm rooms, a private-villa calm, apple orchards, and pine views — one of the most loved luxury stays around Himachal.", type: "string", group: "seo" },
+    { key: "seo_title", value: "The Himalayan Shire | Luxury Boutique Homestay in Fagu, Near Shimla", type: "string", group: "seo" },
+    { key: "seo_description", value: "A premium boutique homestay in Fagu, near Kufri and Shimla. Seven spacious rooms and a private villa experience amid apple orchards, with Himalayan views at 7,500 ft.", type: "string", group: "seo" },
   ];
 
   for (const setting of defaultSettings) {
