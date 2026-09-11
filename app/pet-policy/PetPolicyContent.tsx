@@ -87,6 +87,13 @@ export default function PetPolicyContent() {
                 </p>
               </motion.div>
             ))}
+            <p className="border-t border-emerald-900/15 pt-6 text-base leading-[1.85] text-emerald-950/68">
+              Questions about travelling with your pet?{" "}
+              <Link href="/contact" className="font-bold text-emerald-800 underline decoration-gold-500/50 underline-offset-4 transition-colors hover:text-gold-700">
+                Contact us before booking
+              </Link>
+              .
+            </p>
           </motion.div>
         </div>
       </section>

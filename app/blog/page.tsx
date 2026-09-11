@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Blog | The Himalayan Shire",
+  title: "Fagu Travel Guides & Stories | The Himalayan Shire",
   description:
     "Travel guides and honest notes from The Himalayan Shire - a family-run offbeat homestay in Fagu, near Kufri & Shimla. Weather by month, driving directions, and local experiences in Himachal Pradesh.",
   keywords: [
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/blog" },
   openGraph: {
-    title: "Blog | The Himalayan Shire",
+    title: "Fagu Travel Guides & Stories | The Himalayan Shire",
     description:
       "Travel guides and honest notes from The Himalayan Shire - a family-run offbeat homestay in Fagu, near Kufri & Shimla.",
     type: "website",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Blog | The Himalayan Shire",
+    title: "Fagu Travel Guides & Stories | The Himalayan Shire",
     description:
       "Travel guides and honest notes from The Himalayan Shire - a family-run offbeat homestay in Fagu, near Kufri & Shimla.",
     images: ["/images/hero-1.jpg"],
