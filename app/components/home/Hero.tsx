@@ -60,7 +60,7 @@ export function Hero({ content }: { content?: any }) {
       ref={ref}
       id="top"
       onMouseMove={handleMouseMove}
-      className="relative h-[70vh] min-h-[480px] w-full overflow-hidden bg-pine-100 max-sm:aspect-[32/25] max-sm:h-auto max-sm:min-h-0 sm:h-[80vh] sm:min-h-[560px] lg:h-[92vh]"
+      className="relative h-[70vh] min-h-[480px] w-full overflow-hidden bg-pine-100 max-sm:aspect-[128/125] max-sm:h-auto max-sm:min-h-0 sm:h-[80vh] sm:min-h-[560px] lg:h-[92vh]"
     >
       {/*
         Full-bleed cinematic video frame — edge to edge on every screen
