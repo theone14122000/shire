@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, type ChangeEvent, type FormEvent } from "react";
-import { motion, type Variants } from "framer-motion";
-import { ArrowUpRight, Mail, MapPin, MessageCircle, Phone, Send } from "lucide-react";
+import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
+import { AnimatePresence, motion, type Variants } from "framer-motion";
+import { ArrowUpRight, Check, Mail, MapPin, MessageCircle, Phone, Send, X } from "lucide-react";
 import { SiteNav } from "../components/SiteNav";
 import { SiteFooter } from "../components/SiteFooter";
 import { brand } from "@/lib/content";
@@ -45,6 +45,24 @@ export default function ContactPageContent() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [statusMessage, setStatusMessage] = useState("");
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  function closeSuccess() {
+    setShowSuccess(false);
+  }
+
+  useEffect(() => {
+    if (!showSuccess) return;
+    document.body.style.overflow = "hidden";
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setShowSuccess(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [showSuccess]);
 
   function validate(): boolean {
     const next: Record<string, string> = {};
@@ -101,6 +119,7 @@ export default function ContactPageContent() {
 
       setStatus("sent");
       setStatusMessage(`Inquiry sent to ${brand.email}.`);
+      setShowSuccess(true);
       setForm(initialForm);
       setErrors({});
     } catch {
@@ -278,6 +297,50 @@ export default function ContactPageContent() {
       </section>
 
       <SiteFooter />
+
+      <AnimatePresence>
+        {showSuccess && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            onClick={closeSuccess}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-emerald-950/60 p-5 backdrop-blur-sm sm:p-8"
+          >
+            <motion.div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="inquiry-success-title"
+              initial={{ opacity: 0, scale: 0.94, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96, y: 10 }}
+              transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+              onClick={(event) => event.stopPropagation()}
+              className="relative w-full max-w-sm rounded-[1.75rem] border border-emerald-900/10 bg-[#fffdf7] px-8 py-10 text-center shadow-[0_32px_80px_rgba(3,45,32,0.28)]"
+            >
+              <button
+                type="button"
+                onClick={closeSuccess}
+                autoFocus
+                aria-label="Close confirmation"
+                className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full text-emerald-900/50 transition-colors hover:bg-emerald-900/5 hover:text-emerald-950"
+              >
+                <X size={17} strokeWidth={2} />
+              </button>
+              <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-800">
+                <Check size={30} strokeWidth={2.2} className="text-cream-50" />
+              </span>
+              <h2 id="inquiry-success-title" className="mt-6 font-display text-2xl font-semibold leading-snug text-emerald-950">
+                Thank you for reaching out, we will get back to you soon! 🙂
+              </h2>
+              <p className="mx-auto mt-4 max-w-[32ch] text-sm leading-[1.8] text-emerald-950/60">
+                Your inquiry has been received by The Himalayan Shire.
+              </p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
 }
