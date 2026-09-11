@@ -56,12 +56,10 @@ export const hero = {
 /* -------------------------------------------------------------------------- */
 export const brandIntro = {
   eyebrow: "Our Story",
-  heading: "A place to slow down, breathe, and stay a little longer.",
-  body: `Looking for a relaxing vacation — away from the crowds and the noise of everyday life — in the quiet of the Himalayas? The Himalayan Shire is a family-run offbeat homestay in Fagu, near Kufri on the Shimla ridge — close enough for a day trip, far enough to leave the rush behind. This is what private-villa stays feel like when they are done right: unhurried, warm, and quietly luxurious.
+  heading: "Not a hotel.\nA home\nheld by the\nmountains.",
+  body: `Looking for a relaxing vacation, away from the crowds and in the tranquility of the Himalayas? The Himalayan Shire located in Fagu near Kufri and Shimla is just the right place for you. It is a boutique homestay surrounded by apple orchards, perfect for couples or families who want to enjoy a vacation with the privacy and comfort of a home. You could either book the entire villa if you are travelling in a group, but we also rent on per room basis.
 
-If you are looking for a quiet place far from the rush, surrounded by apple orchards and pine, this is a place for escapists and travellers who simply want to enjoy a vacation on their own terms. You can book the entire shire if you are travelling in a group, or choose a single room. Every detail — from the warm wood interiors to the small, considered amenities — has been built to make you feel at home.
-
-We will make your stay a truly delightful one, and hope to send you back with memories to cherish and an eagerness to return.`,
+We pride ourselves not just with amazingly spacious rooms and washrooms that are unlike any other but more so with our loving and caring hospitality that will make your stay a truly delightful one. We aim and hope to send you back with lots of memories to cherish with an eagerness to visit us again soon.`,
   signature: "— The Shire family",
   theme: { bg: "bg-green-50", text: "text-black" },
 } as const;

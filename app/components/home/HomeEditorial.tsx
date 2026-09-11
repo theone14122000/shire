@@ -169,7 +169,7 @@ export function HomeEditorial({
             <motion.span variants={fadeUp} className="luxe-kicker text-gold-700">
               {t("editorial", "kicker", "Our Story")}
             </motion.span>
-            <motion.h2 variants={fadeUp} className="mt-5 max-w-4xl font-display text-4xl font-semibold leading-[1.05] text-emerald-950 sm:text-5xl lg:text-6xl">
+            <motion.h2 variants={fadeUp} className="mt-5 max-w-4xl whitespace-pre-line font-display text-4xl font-semibold leading-[1.05] text-emerald-950 sm:text-5xl lg:text-6xl">
               {t("editorial", "heading", brandIntro.heading)}
             </motion.h2>
             <motion.div variants={fadeUp} className="mt-8 max-w-[68ch] space-y-5 text-base leading-[1.9] text-emerald-950/68 sm:text-lg">
