@@ -122,32 +122,6 @@ export const rooms: RoomData[] = [
     tourVideoId: "skMEhkuOk0g",
   },
   {
-    id: 5,
-    slug: "walnut",
-    name: "Walnut",
-    category: "Standard Room",
-    size: "300 sq ft.",
-    view: "Garden View",
-    floor: "Ground Floor",
-    description:
-      "Located on the ground floor, this room is easily accessible even by those who have trouble climbing stairs. Having a very cozy interior, with handpicked carpets, big cupboards, and a very stylish bathroom, this room feels like home.",
-    facilities: [
-      "Space for extra bedding",
-      "King size bed",
-      "Luggage stand",
-      "Stylish bathroom",
-      "Easily accessible",
-    ],
-    images: [
-      "/images/rooms/walnut-1.jpg",
-      "/images/rooms/walnut-2.jpg",
-      "/images/rooms/walnut-3.jpg",
-      "/images/rooms/walnut-4.jpg",
-      "/images/rooms/walnut-5.jpg",
-    ],
-    tourVideoId: "Cris9O7duNw",
-  },
-  {
     id: 6,
     slug: "mohru",
     name: "Mohru",
@@ -197,6 +171,32 @@ export const rooms: RoomData[] = [
       "/images/rooms/tosh-5.jpg",
     ],
     tourVideoId: "c9Vjfc6OWNw",
+  },
+  {
+    id: 5,
+    slug: "walnut",
+    name: "Walnut",
+    category: "Standard Room",
+    size: "300 sq ft.",
+    view: "Garden View",
+    floor: "Ground Floor",
+    description:
+      "Located on the ground floor, this room is easily accessible even by those who have trouble climbing stairs. Having a very cozy interior, with handpicked carpets, big cupboards, and a very stylish bathroom, this room feels like home.",
+    facilities: [
+      "Space for extra bedding",
+      "King size bed",
+      "Luggage stand",
+      "Stylish bathroom",
+      "Easily accessible",
+    ],
+    images: [
+      "/images/rooms/walnut-1.jpg",
+      "/images/rooms/walnut-2.jpg",
+      "/images/rooms/walnut-3.jpg",
+      "/images/rooms/walnut-4.jpg",
+      "/images/rooms/walnut-5.jpg",
+    ],
+    tourVideoId: "Cris9O7duNw",
   },
 ];
 
