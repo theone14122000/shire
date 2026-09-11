@@ -25,6 +25,24 @@ Last updated: 2026-09-11 (luxury/boutique repositioning).
 
 Future pages (create only with genuine content): Private Villa → private villa near Shimla; Retreat/Groups → retreat venue near Shimla.
 
+> Update 2026-09-11: `/private-villa` created (entire-villa booking is genuine — cited in FAQ + Our Story). Snow hub created as `/blog/fagu-snowfall-winter-guide`. Retreat/conference page still NOT created (no verified conference facilities — do not manufacture).
+
+---
+
+## Private Villa
+
+| Field | Value |
+|---|---|
+| URL | `/private-villa` |
+| SEO Title | Private Villa in Fagu, Near Shimla \| The Himalayan Shire |
+| Meta Description | Book the entire Himalayan Shire as a private villa in Fagu, near Shimla — seven bedrooms, lawns, terrace views, and shared spaces for groups and families. |
+| Primary Keyword | private villa near Shimla |
+| Secondary Keywords | private villa in Fagu, entire villa Shimla, group stay near Shimla, family villa near Shimla |
+| Search Intent | Transactional (groups/families) |
+| H1 | The entire shire, all to yourselves. |
+| Canonical | `/private-villa` |
+| Schema | BreadcrumbList + FAQPage (4 genuine villa FAQs) |
+
 ---
 
 ## Homepage
@@ -135,6 +153,7 @@ Per-room primaries: Deodar room Fagu · Buransh room Fagu · Chir Pine room Fagu
 | H1 | [Post title] |
 | Canonical | `/blog/[slug]` |
 | Schema | BlogPosting (Person author when a real name is credited, else Organization) + ImageObject + BreadcrumbList |
+| New 2026-09-11 | `/blog/fagu-snowfall-winter-guide` — Snowfall in Fagu winter hub (season, roads, packing, snow days; in-post links to activities/rooms/contact) |
 
 ## FAQ
 

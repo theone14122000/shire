@@ -136,6 +136,14 @@ See the Logo section of this report (separate). Favicon assets are deployed and 
 
 ---
 
+## Update 2026-09-11 (part 2) — toward 100/100
+
+- **New page `/private-villa`** (genuine service: entire-villa booking cited in FAQ + Our Story): unique title/desc/keywords/canonical/OG, BreadcrumbList + FAQPage (4 genuine FAQs), plan-your-stay cards, booking CTAs. Added to sitemap + llm.txt + keyword map.
+- **New snow/winter hub `/blog/fagu-snowfall-winter-guide`** (legacy JSON, ships with code): snowfall season (hedged, Dec–Feb typical), roads/access, packing, snow-day activities, winter stay guidance, live-forecast advice — no fabricated temps/dates. In-post contextual links to /activities, /#rooms, /contact (Blog→commercial linking). Auto-included in sitemap.
+- **FAQ expanded 9 → 12**: snowfall, room lineup (+villa link), booking/how-to-enquire. Schema mirrors updated identically.
+- **Hero video preload `auto` → `metadata`** (only performance change; visuals identical). No new JS/third-parties. Production homepage response measured ~1.1–2.2s total (network+server+transfer from test location; lab CWV still requires PageSpeed/GSC — client action).
+- **Retreat/conference page deliberately NOT created** — no verified conference facilities; manufacturing it would violate the no-fake-claims rule.
+
 ## Update 2026-09-11 — luxury/boutique repositioning + duplicate-title fix
 
 - Homepage repositioned from pet-first to **luxury boutique homestay in Fagu** (title, description, keywords, OG/Twitter, LodgingBusiness + WebSite descriptions). Pet targeting now lives only on pet-specific pages.

@@ -46,11 +46,11 @@ Last updated: 2026-09-11.
 | rooms in Fagu near Shimla | `/rooms/[slug]` | HotelRoom + per-room titles + BreadcrumbList |
 | stay near Shimla / peaceful stay near Shimla | `/` + `/blog/why-choose-fagu-for-your-next-holiday` | Geographic context + guide |
 | stay near Kufri / between Shimla and Kufri | `/` + Fagu guide post | 5km/19km verified facts in FAQ + guides |
-| snow stay near Shimla / snow in Fagu / snow time | `/blog/best-time-to-visit-fagu` | Seasonal guide (Dec–Feb per site content) |
-| weather in Fagu / best time to visit Fagu | `/blog/best-time-to-visit-fagu` | Informational guide |
+| snow stay near Shimla / snow in Fagu / snow time | `/blog/fagu-snowfall-winter-guide` (winter hub, 2026-09-11) + seasonal guide | Season, roads, packing, snow days |
+| weather in Fagu / best time to visit Fagu | `/blog/best-time-to-visit-fagu` + winter-hub season sections | Covered 2026-09-11 |
 | things to do in Fagu | `/activities` | Destination-intent metadata + CMS activities |
 | pet friendly stay in Fagu / near Shimla | `/pet-friendly-stay` + `/pet-policy` | Dedicated pet cluster only |
-| private villa in Fagu | `/` (entire-villa booking) + llm.txt | No dedicated page yet — documented gap (build with genuine content) |
+| private villa in Fagu | `/private-villa` (dedicated page; entire-villa booking is genuine) | Covered 2026-09-11 |
 | standard rooms / budget-friendly stay | `/rooms/mohru`, `/rooms/tosh`, `/blog/discover-our-standard-rooms` | Category-specific terms, never "cheap hotel" |
 | contact / book / availability | `/contact` + booking URL | Transactional intent, NAP |
 
@@ -74,10 +74,24 @@ Links use natural varied anchors; breadcrumbs mirror the hierarchy in schema.
 - No SEO content differs between mobile/desktop; responsive CSS only.
 - Performance untouched: no new JS, no new third-party calls; llm.txt/llms.txt are static text.
 
-## 7. Remaining opportunities
+## 7. Remaining opportunities (updated 2026-09-11)
 
 - Google Business Profile + legitimate citations (client-side).
-- Dedicated Private Villa + Retreat/Group pages with genuine content.
+- ~~Dedicated Private Villa page~~ — DONE (`/private-villa`).
+- Retreat/conference page — deliberately NOT built (no verified facilities).
 - First-party reviews system (only then consider review markup).
 - Author profile pages if the publication grows multiple writers (enables Person URLs/sameAs).
-- Ongoing guides: snowfall guide, homestay-vs-hotel, corporate retreat planning.
+- Ongoing guides: homestay-vs-hotel, corporate retreat planning.
+
+## 8. llm.txt maintenance checklist
+
+Full auto-generation was evaluated and rejected: room data is safely generatable from `lib/rooms.ts`, but blog/policy copy lives in CMS + DB (and local DB ≠ production DB), and tone/fact selection needs human review. Decision: **static file + this checklist.**
+
+Update `public/llm.txt` (and `public/llms.txt` About line) whenever:
+- [ ] A room is added/removed/renamed (sync Accommodation section + URLs)
+- [ ] Pet policy, fees, parking, or housekeeping facts change
+- [ ] Contact/booking/WhatsApp details change
+- [ ] A guide is published (add title + canonical URL) or removed
+- [ ] Activities or sustainability practices change
+- [ ] Social profile URLs change (also update layout `sameAs` + footer)
+- After editing, verify: `npm run build`, fetch `/llm.txt` (200), confirm new URLs return 200.

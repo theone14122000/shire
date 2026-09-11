@@ -90,7 +90,7 @@ export function Hero({ content }: { content?: any }) {
               loop
               muted
               playsInline
-              preload="auto"
+              preload="metadata"
               poster={poster}
               className="absolute inset-0 h-full w-full object-cover object-center brightness-125"
               aria-hidden="true"

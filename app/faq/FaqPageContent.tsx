@@ -71,6 +71,27 @@ const FAQS: Faq[] = [
       </>
     ),
   },
+  {
+    question: "Does Fagu receive snowfall?",
+    answer:
+      "Yes. Fagu typically receives snowfall during the winter months of December to February, although timing and intensity vary from year to year. If you are travelling in peak winter, do ask us about the current road and snow situation before you start.",
+  },
+  {
+    question: "What rooms are available at the property?",
+    answer: (
+      <>
+        We have seven bedrooms across Premium, Deluxe, and Standard categories — including Deodar, Buransh, Chir Pine, Blue Pine, Walnut, Mohru, and Tosh. See all seven in the <Link href="/#rooms" className={linkClass}>rooms section</Link>, or read about our <Link href="/private-villa" className={linkClass}>private villa option</Link> if you are travelling as a group.
+      </>
+    ),
+  },
+  {
+    question: "How can we enquire or book a stay?",
+    answer: (
+      <>
+        Send us your dates and group size through our <Link href="/contact" className={linkClass}>enquiry form</Link>, message us on WhatsApp, or check availability on our online booking page. We reply with availability and a simple plan for your stay.
+      </>
+    ),
+  },
 ];
 
 const fadeUp: Variants = {

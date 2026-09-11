@@ -58,6 +58,21 @@ const FAQ_ENTITIES = [
     answer:
       "In certain cases we do allow pets. Pets weighing up to 6 kgs are mostly welcomed, unless they are untrained or might be a hazard to other guests or staff. Larger breeds are also allowed if you are booking the entire villa, or you come on a day with fewer guests around. Please ask us for our complete pet policy before booking — guests have to sign the pet policy before check-in. We charge a Rs. 500 per day pet fee. Read more about our pet-friendly stay in Fagu (https://www.thehimalayanshire.com/pet-friendly-stay).",
   },
+  {
+    question: "Does Fagu receive snowfall?",
+    answer:
+      "Yes. Fagu typically receives snowfall during the winter months of December to February, although timing and intensity vary from year to year. If you are travelling in peak winter, do ask us about the current road and snow situation before you start.",
+  },
+  {
+    question: "What rooms are available at the property?",
+    answer:
+      "We have seven bedrooms across Premium, Deluxe, and Standard categories — including Deodar, Buransh, Chir Pine, Blue Pine, Walnut, Mohru, and Tosh. See all seven in the rooms section (https://www.thehimalayanshire.com/#rooms), or read about our private villa option (https://www.thehimalayanshire.com/private-villa) if you are travelling as a group.",
+  },
+  {
+    question: "How can we enquire or book a stay?",
+    answer:
+      "Send us your dates and group size through our enquiry form (https://www.thehimalayanshire.com/contact), message us on WhatsApp, or check availability on our online booking page. We reply with availability and a simple plan for your stay.",
+  },
 ];
 
 const FAQ_JSONLD = {
