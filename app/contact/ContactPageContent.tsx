@@ -92,6 +92,18 @@ export default function ContactPageContent() {
 
       const isSubmitting = status === "sending";
 
+      // The submit button (and its "Submit Inquiry" click text tracked in
+      // GTM) only exists once every field is filled, filtering out empty
+      // bot/fake submissions at the source.
+      const isFormComplete =
+        form.name.trim() !== "" &&
+        form.phone.trim() !== "" &&
+        form.email.trim() !== "" &&
+        form.checkInDate !== "" &&
+        form.checkOutDate !== "" &&
+        form.adults !== "" &&
+        form.children !== "";
+
       async function submit(event: FormEvent) {
         event.preventDefault();
         if (!validate() || isSubmitting) return;
@@ -241,13 +253,15 @@ export default function ContactPageContent() {
                 onChange={handleInput("children")}
                 required
               />
-              <button
-                type="submit"
-                className="luxe-button w-full"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? "Submitting..." : "Submit Inquiry"}
-              </button>
+              {isFormComplete && (
+                <button
+                  type="submit"
+                  className="luxe-button w-full"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Submitting..." : "Submit Inquiry"}
+                </button>
+              )}
               {status === "sent" && (
                 <p className="mt-4 rounded-xl bg-emerald-100 px-4 py-3 text-sm font-semibold text-emerald-800">
                   Your enquiry has been submitted successfully. We’ll get back to you soon.
