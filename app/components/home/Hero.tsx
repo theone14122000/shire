@@ -60,7 +60,7 @@ export function Hero({ content }: { content?: any }) {
       ref={ref}
       id="top"
       onMouseMove={handleMouseMove}
-      className="relative h-[70vh] min-h-[480px] w-full overflow-hidden bg-pine-100 max-sm:aspect-[16/10] max-sm:h-auto max-sm:min-h-0 sm:h-[80vh] sm:min-h-[560px] lg:h-[92vh]"
+      className="relative h-[70vh] min-h-[480px] w-full overflow-hidden bg-pine-100 max-sm:aspect-[32/25] max-sm:h-auto max-sm:min-h-0 sm:h-[80vh] sm:min-h-[560px] lg:h-[92vh]"
     >
       {/*
         Full-bleed cinematic video frame — edge to edge on every screen
@@ -92,7 +92,7 @@ export function Hero({ content }: { content?: any }) {
               playsInline
               preload="auto"
               poster={poster}
-              className="absolute inset-0 h-full w-full object-cover object-center"
+              className="absolute inset-0 h-full w-full object-cover object-center brightness-110"
               aria-hidden="true"
             >
               <source src={videoUrl} type="video/mp4" />
