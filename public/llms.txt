@@ -6,7 +6,7 @@
 ## Entity
 
 - Name: The Himalayan Shire
-- Entity type: Premium boutique homestay (family-run accommodation; not a hotel chain or resort)
+- Entity type: Premium homestay/ bed and breakfast (family-run accommodation; not a hotel chain or resort)
 - Country: India
 - State: Himachal Pradesh
 - Location: Fagu
@@ -19,9 +19,7 @@
 
 - Address: Dehna Road, near Talayi Village, Fagu, Himachal Pradesh 171209, India
 - Coordinates: 31.066671, 77.309332
-- Setting: Apple orchards and pine surroundings at 7,500 ft, with Himalayan views
-- Fagu sits approximately 19 km ahead of Shimla and 5 km ahead of Kufri; the property is about 2 km off the main highway on a link road from Fagu
-- Always describe the location as "in Fagu, near Kufri and Shimla" — the property is not in Shimla itself
+- Setting: peaceful location with mountain views. Apple orchards and pine forests surroundings at 7,500 ft, with Himalayan views
 
 ## Accommodation
 
@@ -35,10 +33,9 @@
 
 ## Pet policy
 
-- Pet-friendly: yes, subject to the official policy
+- Pet-friendly: The Himalayan Shire is a pet-friendly property.
 - Prior approval from property management is required before bringing a pet
 - Pets up to 6 kg are generally welcomed; larger breeds are allowed when booking the entire villa or on low-occupancy days
-- Pets must be leashed in common areas, never left unattended, and kept quiet
 - Fee: Rs. 500 per day, per pet; guests are responsible for damage or soiling
 - Complete rules: https://www.thehimalayanshire.com/pet-policy
 - Overview: https://www.thehimalayanshire.com/pet-friendly-stay
@@ -53,6 +50,7 @@ Only activities stated on the website. Details: https://www.thehimalayanshire.co
 - Guided hiking tours for adventurous guests
 - Apple-orchard and pine surroundings; bird watching around the gardens
 - Day trips toward Kufri and Shimla along the main highway
+- power back up is available at the property
 
 ## Winter and snow
 
@@ -63,7 +61,7 @@ Only activities stated on the website. Details: https://www.thehimalayanshire.co
 ## Weather
 
 - High-altitude Himalayan setting (7,500 ft) with distinct seasons: cold winters with possible snow, blooming-orchard springs, mild summers
-- No live or forecast data is published here; travellers should check a current weather forecast before visiting
+- Even in summers the weather remains cool and there is no requirement of using an air conditioner.
 - Seasonal guide: https://www.thehimalayanshire.com/blog/best-time-to-visit-fagu
 
 ## Sustainability (documented practices only)
@@ -75,7 +73,7 @@ Only activities stated on the website. Details: https://www.thehimalayanshire.co
 
 ## Practical facts (from the property FAQ: https://www.thehimalayanshire.com/faq)
 
-- Drive-in property on a metalled road with private parking for up to 10 SUVs
+- Drive-in property on a metalled road with private parking for up to 10 SUVs/ cars
 - In-house kitchen serving 9am–9pm; orders need advance notice as food is made fresh
 - Daily housekeeping 11am–5pm; bedsheet change every alternate day
 - Enquiries: share dates and group size via https://www.thehimalayanshire.com/contact or WhatsApp https://wa.me/918580411998; the property replies with availability and a plan
