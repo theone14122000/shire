@@ -253,15 +253,13 @@ export default function ContactPageContent() {
                 onChange={handleInput("children")}
                 required
               />
-              {isFormComplete && (
-                <button
-                  type="submit"
-                  className="luxe-button w-full"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? "Submitting..." : "Submit Inquiry"}
-                </button>
-              )}
+              <button
+                type="submit"
+                className="luxe-button w-full disabled:cursor-not-allowed disabled:opacity-50"
+                disabled={!isFormComplete || isSubmitting}
+              >
+                {isSubmitting ? "Submitting..." : "Submit Inquiry"}
+              </button>
               {status === "sent" && (
                 <p className="mt-4 rounded-xl bg-emerald-100 px-4 py-3 text-sm font-semibold text-emerald-800">
                   Your enquiry has been submitted successfully. We’ll get back to you soon.
