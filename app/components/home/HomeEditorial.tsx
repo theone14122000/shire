@@ -255,7 +255,16 @@ export function HomeEditorial({
               Moments from the shire.
             </motion.h2>
             <motion.p variants={fadeUp} className="mx-auto mt-6 max-w-2xl text-base leading-[1.9] text-emerald-950/65 sm:text-lg">
-              Follow @thehimalayanshire for quiet corners, snowy mornings, and the view that never gets old.
+              Follow{" "}
+              <a
+                href="https://www.instagram.com/thehimalayanshire/?hl=en"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-bold text-emerald-800 underline decoration-gold-500/50 underline-offset-4 transition-colors hover:text-gold-700"
+              >
+                @thehimalayanshire
+              </a>{" "}
+              for quiet corners, snowy mornings, and the view that never gets old.
             </motion.p>
           </motion.div>
           <motion.div

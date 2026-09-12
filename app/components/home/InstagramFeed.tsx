@@ -1,62 +1,209 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from "lucide-react";
+import { ELFSIGHT_INSTAGRAM_ID } from "@/lib/content";
 
-const JUICER_FEED_ID = "my-feed-84c14c30-2cbf-4420-9e62-60bf9c9f469b";
-// ?per=3 is Juicer's documented mechanism: 3 posts show initially, then
-// Juicer's own Load More button reveals the rest.
-const JUICER_SCRIPT_SRC = `https://www.juicer.io/embed/${JUICER_FEED_ID}/embed-code.js?per=3`;
-const INSTAGRAM_URL = "https://www.instagram.com/thehimalayanshire/?hl=en";
+const ITEM_WIDTH = 240;
+const GAP = 14;
+const COMPACT_COUNT = 3;
+
+const FEED_CSS = `
+  .eapps-instagram-feed-container,
+  .eapps-instagram-feed-posts {
+    height: auto !important;
+    max-height: none !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scrollbar-width: none !important;
+  }
+  .eapps-instagram-feed-container::-webkit-scrollbar,
+  .eapps-instagram-feed-posts::-webkit-scrollbar {
+    display: none !important;
+  }
+  .eapps-instagram-feed-posts-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: ${GAP}px !important;
+    overflow: visible !important;
+    scroll-snap-type: x mandatory !important;
+  }
+  .eapps-instagram-feed-posts-item {
+    flex: 0 0 ${ITEM_WIDTH}px !important;
+    width: ${ITEM_WIDTH}px !important;
+    min-width: ${ITEM_WIDTH}px !important;
+    max-width: ${ITEM_WIDTH}px !important;
+    aspect-ratio: 1 / 1 !important;
+    scroll-snap-align: start !important;
+  }
+  @media (max-width: 640px) {
+    .eapps-instagram-feed-posts,
+    .eapps-instagram-feed-posts-grid {
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+    }
+    .eapps-instagram-feed-posts-grid {
+      scroll-snap-type: none !important;
+    }
+    .eapps-instagram-feed-posts-item,
+    .eapps-instagram-feed-posts-item-list,
+    .eapps-instagram-feed-posts-items-item {
+      flex: 0 0 74vw !important;
+      width: 74vw !important;
+      min-width: 74vw !important;
+      max-width: 74vw !important;
+      aspect-ratio: 1 / 1 !important;
+    }
+    .eapps-instagram-feed-posts {
+      -webkit-overflow-scrolling: touch !important;
+      overscroll-behavior-x: contain !important;
+      touch-action: pan-x !important;
+    }
+    .eapps-instagram-feed-posts-pagination,
+    .eapps-instagram-feed-posts-slider-pagination,
+    .eapps-instagram-feed-posts-navigation {
+      display: none !important;
+    }
+  }
+  :host([data-elfsight-show="compact"]) .eapps-instagram-feed-posts-item:nth-child(n+${COMPACT_COUNT + 1}) {
+    display: none !important;
+  }
+  :host([data-elfsight-show="compact"]) .eapps-instagram-feed-posts-grid {
+    justify-content: center !important;
+  }
+`;
+
+const HEAD_CSS = `
+  .elfsight-app-${ELFSIGHT_INSTAGRAM_ID} .eapps-instagram-feed-posts-item:nth-child(n+${COMPACT_COUNT + 1}) {
+    display: none !important;
+  }
+  .elfsight-app-${ELFSIGHT_INSTAGRAM_ID}[data-elfsight-show="all"] .eapps-instagram-feed-posts-item {
+    display: block !important;
+  }
+`;
+
+function findShadowRoot(root: HTMLElement): ShadowRoot | null {
+  if (root.shadowRoot) return root.shadowRoot;
+  for (const child of Array.from(root.querySelectorAll("*"))) {
+    if ((child as HTMLElement).shadowRoot) return (child as HTMLElement).shadowRoot;
+  }
+  return null;
+}
+
+function widgetElements(): HTMLElement[] {
+  return Array.from(
+    document.querySelectorAll<HTMLElement>(
+      `[class*="${ELFSIGHT_INSTAGRAM_ID}"], eapps-instagram-feed, [data-elfsight-app-lazy]`
+    )
+  );
+}
+
+function findScroller(): HTMLElement | null {
+  for (const el of widgetElements()) {
+    const scroller = el.querySelector<HTMLElement>(
+      ".eapps-instagram-feed-posts, .eapps-instagram-feed-container, .eapps-instagram-feed-items"
+    );
+    if (scroller) return scroller;
+  }
+  return null;
+}
 
 export function InstagramFeed() {
-  const [failed, setFailed] = useState(false);
+  const hostRef = useRef<HTMLDivElement>(null);
+  const feedHostRef = useRef<HTMLElement | null>(null);
+  const expandedRef = useRef(false);
+  const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
-    if (document.querySelector(`script[src="${JUICER_SCRIPT_SRC}"]`)) return;
-    const script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src = JUICER_SCRIPT_SRC;
-    script.async = true;
-    script.defer = true;
-    script.onerror = () => setFailed(true);
-    document.body.appendChild(script);
+    expandedRef.current = expanded;
+    hostRef.current?.setAttribute("data-elfsight-show", expanded ? "all" : "compact");
+    feedHostRef.current?.setAttribute("data-elfsight-show", expanded ? "all" : "compact");
+  }, [expanded]);
+
+  useEffect(() => {
+    const ensureHeadStyle = () => {
+      if (document.querySelector("style[data-elfsight-feed-css]")) return;
+      const style = document.createElement("style");
+      style.setAttribute("data-elfsight-feed-css", "");
+      style.textContent = HEAD_CSS;
+      document.head.appendChild(style);
+    };
+
+    const apply = () => {
+      ensureHeadStyle();
+      for (const el of widgetElements()) {
+        const shadow = findShadowRoot(el);
+        if (shadow) {
+          if (!shadow.querySelector("style[data-elfsight-style]")) {
+            const style = document.createElement("style");
+            style.setAttribute("data-elfsight-style", "");
+            style.textContent = FEED_CSS;
+            shadow.appendChild(style);
+          }
+          const hostEl = shadow.host as HTMLElement;
+          feedHostRef.current = hostEl;
+          hostEl.setAttribute("data-elfsight-show", expandedRef.current ? "all" : "compact");
+        }
+      }
+    };
+
+    apply();
+    // The widget hydrates asynchronously, so retry until its shadow root
+    // appears — then stop polling. Previously this interval ran forever
+    // (DOM-wide queries every 800ms for the life of the page). Cap the
+    // retries as a fallback so a blocked widget can't poll indefinitely.
+    let attempts = 0;
+    const timer = setInterval(() => {
+      attempts += 1;
+      apply();
+      if (feedHostRef.current || attempts >= 75) {
+        clearInterval(timer);
+      }
+    }, 800);
+    return () => clearInterval(timer);
   }, []);
 
-  if (failed) {
-    return (
-      <div className="px-4 py-10 text-center">
-        <p className="text-base leading-[1.9] text-emerald-950/65">
-          Our Instagram feed could not be loaded right now.
-        </p>
-        <a
-          href={INSTAGRAM_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="luxe-button mt-6 inline-flex"
-        >
-          Follow @thehimalayanshire
-        </a>
-      </div>
-    );
-  }
+  const scrollFeed = (dir: 1 | -1) => {
+    findScroller()?.scrollBy({ left: dir * (ITEM_WIDTH + GAP), behavior: "smooth" });
+  };
 
   return (
     <div className="relative">
-      <ul
-        className="juicer-feed"
-        data-feed-id={JUICER_FEED_ID}
-        data-per="3"
-      />
-      <div className="pb-2 pt-6 text-center">
-        <a
-          href={INSTAGRAM_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-800 transition-colors hover:text-gold-700"
-        >
-          Follow @thehimalayanshire on Instagram
-        </a>
-      </div>
+      <div ref={hostRef} className={`elfsight-app-${ELFSIGHT_INSTAGRAM_ID}`} data-elfsight-app-lazy />
+
+      <button
+        type="button"
+        onClick={() => scrollFeed(-1)}
+        aria-label="Previous Instagram posts"
+        className={`absolute -left-3 top-1/2 z-20 h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-emerald-950/15 bg-cream-50/90 text-emerald-950 shadow-[var(--shadow-soft)] backdrop-blur transition-all duration-300 hover:scale-105 hover:bg-gold-400 ${
+          expanded ? "hidden lg:flex" : "hidden"
+        }`}
+      >
+        <ChevronLeft size={18} strokeWidth={2.2} />
+      </button>
+      <button
+        type="button"
+        onClick={() => scrollFeed(1)}
+        aria-label="Next Instagram posts"
+        className={`absolute -right-3 top-1/2 z-20 h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-emerald-950/15 bg-cream-50/90 text-emerald-950 shadow-[var(--shadow-soft)] backdrop-blur transition-all duration-300 hover:scale-105 hover:bg-gold-400 ${
+          expanded ? "hidden lg:flex" : "hidden"
+        }`}
+      >
+        <ChevronRight size={18} strokeWidth={2.2} />
+      </button>
+
+      <button
+        type="button"
+        onClick={() => setExpanded((value) => !value)}
+        className="mx-auto mt-8 flex items-center gap-2 rounded-full border border-emerald-900/20 bg-cream-50 px-7 py-3 text-xs font-bold uppercase tracking-[0.2em] text-emerald-950 shadow-[var(--shadow-soft)] transition-all duration-300 hover:border-gold-500 hover:bg-gold-400"
+      >
+        {expanded ? "Show less" : "View more"}
+        {expanded ? <ChevronUp size={14} strokeWidth={2.2} /> : <ChevronDown size={14} strokeWidth={2.2} />}
+      </button>
     </div>
   );
 }
