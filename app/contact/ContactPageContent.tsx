@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
+import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from "react";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
-import { ArrowUpRight, Check, Mail, MapPin, MessageCircle, Phone, Send, X } from "lucide-react";
+import { ArrowUpRight, Mail, MapPin, MessageCircle, Phone, Send } from "lucide-react";
 import { SiteNav } from "../components/SiteNav";
 import { SiteFooter } from "../components/SiteFooter";
 import { brand } from "@/lib/content";
@@ -51,11 +51,33 @@ export default function ContactPageContent() {
     setShowSuccess(false);
   }
 
+  const okButtonRef = useRef<HTMLButtonElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (!showSuccess) return;
     document.body.style.overflow = "hidden";
+    okButtonRef.current?.focus();
+    // Strict modal: OK is the only exit — trap Tab focus inside, ignore Esc.
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setShowSuccess(false);
+      if (event.key !== "Tab") return;
+      const container = modalRef.current;
+      if (!container) return;
+      const focusables = Array.from(
+        container.querySelectorAll<HTMLElement>(
+          "button, [href], input, [tabindex]:not([tabindex='-1'])"
+        )
+      ).filter((el) => !el.hasAttribute("disabled"));
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => {
@@ -317,10 +339,10 @@ export default function ContactPageContent() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            onClick={closeSuccess}
             className="fixed inset-0 z-[100] flex items-center justify-center bg-emerald-950/60 p-5 backdrop-blur-sm sm:p-8"
           >
             <motion.div
+              ref={modalRef}
               role="dialog"
               aria-modal="true"
               aria-labelledby="inquiry-success-title"
@@ -328,27 +350,19 @@ export default function ContactPageContent() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 10 }}
               transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-              onClick={(event) => event.stopPropagation()}
               className="relative w-full max-w-sm rounded-[1.75rem] border border-emerald-900/10 bg-[#fffdf7] px-8 py-10 text-center shadow-[0_32px_80px_rgba(3,45,32,0.28)]"
             >
+              <p id="inquiry-success-title" className="font-display text-2xl font-semibold leading-snug text-emerald-950">
+                Thank you for reaching out, we will get back to you soon! 🙂
+              </p>
               <button
+                ref={okButtonRef}
                 type="button"
                 onClick={closeSuccess}
-                autoFocus
-                aria-label="Close confirmation"
-                className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full text-emerald-900/50 transition-colors hover:bg-emerald-900/5 hover:text-emerald-950"
+                className="mt-7 inline-flex items-center justify-center rounded-full bg-emerald-800 px-10 py-2.5 text-sm font-bold text-cream-50 shadow-md transition-all duration-300 hover:bg-emerald-700 active:scale-[0.98]"
               >
-                <X size={17} strokeWidth={2} />
+                OK
               </button>
-              <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-800">
-                <Check size={30} strokeWidth={2.2} className="text-cream-50" />
-              </span>
-              <h2 id="inquiry-success-title" className="mt-6 font-display text-2xl font-semibold leading-snug text-emerald-950">
-                Thank you for reaching out, we will get back to you soon! 🙂
-              </h2>
-              <p className="mx-auto mt-4 max-w-[32ch] text-sm leading-[1.8] text-emerald-950/60">
-                Your inquiry has been received by The Himalayan Shire.
-              </p>
             </motion.div>
           </motion.div>
         )}
