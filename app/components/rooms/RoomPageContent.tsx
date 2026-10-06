@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { AnimatePresence, motion, useScroll, useTransform, type Variants } from "framer-motion";
 import Image from "next/image";
@@ -222,7 +222,7 @@ export function RoomPageContent({
                 >
                   <Image
                     src={image.src}
-                    alt={`${room.name} - ${image.alt ?? image.caption ?? GALLERY_LABELS[index] ?? "Detail"}`}
+                    alt={`${room.name} - ${image.alt ?? image.caption ?? GALLERY_LABELS[index] ?? "room photo"}`}
                     fill
                     sizes="(max-width: 1024px) 100vw, 55vw"
                     className="object-cover"
@@ -283,7 +283,7 @@ export function RoomPageContent({
             >
               <Image
                 src={images[lightboxIndex].src}
-                alt={`${room.name} - ${images[lightboxIndex].alt ?? images[lightboxIndex].caption ?? GALLERY_LABELS[lightboxIndex] ?? "Detail"}`}
+                alt={`${room.name} - ${images[lightboxIndex].alt ?? images[lightboxIndex].caption ?? GALLERY_LABELS[lightboxIndex] ?? "room photo"}`}
                 fill
                 sizes="92vw"
                 className="object-contain"

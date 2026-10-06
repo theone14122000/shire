@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Allow: /api/ai/
 Disallow: /admin/
 Disallow: /api/
 Disallow: /auth/
@@ -7,32 +8,75 @@ Disallow: /dashboard
 
 # NOTE: /_next/ (JS/CSS) is intentionally NOT disallowed — crawlers need
 # these resources to render pages correctly.
+# /api/ai/ is a public, read-only facts endpoint (see llm.txt); it is
+# explicitly allowed while every other /api/ route stays blocked.
 
 # Allow all legitimate search crawlers
 User-agent: Googlebot
 Allow: /
+Allow: /api/ai/
+Disallow: /admin/
+Disallow: /api/
+Disallow: /auth/
+Disallow: /dashboard
 
 User-agent: Bingbot
 Allow: /
+Allow: /api/ai/
+Disallow: /admin/
+Disallow: /api/
+Disallow: /auth/
+Disallow: /dashboard
 
 User-agent: OAI-SearchBot
 Allow: /
+Allow: /api/ai/
+Disallow: /admin/
+Disallow: /api/
+Disallow: /auth/
+Disallow: /dashboard
 
 # Sitemap reference
 Sitemap: https://www.thehimalayanshire.com/sitemap.xml
 
-# AI/search crawler access — do not block AI discovery
+# AI/search crawler access — public content only. Admin and non-public API
+# routes stay disallowed for every crawler, AI or otherwise.
 User-agent: GPTBot
 Allow: /
+Allow: /api/ai/
+Disallow: /admin/
+Disallow: /api/
+Disallow: /auth/
+Disallow: /dashboard
 
 User-agent: ChatGPT-User
 Allow: /
+Allow: /api/ai/
+Disallow: /admin/
+Disallow: /api/
+Disallow: /auth/
+Disallow: /dashboard
 
 User-agent: ClaudeBot
 Allow: /
+Allow: /api/ai/
+Disallow: /admin/
+Disallow: /api/
+Disallow: /auth/
+Disallow: /dashboard
 
 User-agent: anthropic-ai
 Allow: /
+Allow: /api/ai/
+Disallow: /admin/
+Disallow: /api/
+Disallow: /auth/
+Disallow: /dashboard
 
 User-agent: PerplexityBot
 Allow: /
+Allow: /api/ai/
+Disallow: /admin/
+Disallow: /api/
+Disallow: /auth/
+Disallow: /dashboard

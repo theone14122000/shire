@@ -11,7 +11,7 @@ const blogSlugs = new Set(blogs.map((b) => b.slug));
 const staticRoutes = new Set([
   "/", "/#rooms", "/activities", "/sustainability", "/gallery", "/blog",
   "/faq", "/contact", "/pet-policy", "/pet-friendly-stay", "/private-villa",
-  "/sitemap.xml",
+  "/sitemap.xml", "/robots.txt", "/llm.txt", "/llms.txt", "/api/ai/property",
 ]);
 
 let failures = 0;

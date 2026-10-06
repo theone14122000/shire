@@ -35,7 +35,34 @@ export const metadata: Metadata = {
   },
 };
 
+const BREADCRUMB_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: "https://www.thehimalayanshire.com/",
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Blog",
+      item: "https://www.thehimalayanshire.com/blog",
+    },
+  ],
+};
+
 export default async function BlogListingPage() {
   const blogs = await getPublishedBlogs();
-  return <BlogListingClient blogs={blogs} />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_JSONLD) }}
+      />
+      <BlogListingClient blogs={blogs} />
+    </>
+  );
 }

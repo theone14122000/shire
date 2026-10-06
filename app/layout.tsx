@@ -2,6 +2,11 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { Raleway } from "next/font/google";
 import { prisma } from "@/lib/prisma";
+import {
+  getHeroImageJsonLd,
+  getLodgingBusinessJsonLd,
+  getWebSiteJsonLd,
+} from "@/lib/property";
 import { BookClickTracker } from "./components/BookClickTracker";
 import "./globals.css";
 
@@ -74,93 +79,11 @@ export const metadata: Metadata = {
   },
 };
 
-const JSONLD = {
-  "@context": "https://schema.org",
-  "@type": "LodgingBusiness",
-  "@id": "https://www.thehimalayanshire.com/#business",
-  name: "The Himalayan Shire",
-  alternateName: "Himalayan Shire Homestay Fagu",
-  description:
-    "A premium boutique homestay in Fagu, near Kufri, a short drive from Shimla. Seven spacious rooms with a private-villa calm, apple orchards, and Himalayan views — a peaceful mountain retreat in Himachal Pradesh.",
-  url: "https://www.thehimalayanshire.com/",
-  telephone: "+918580411998",
-  email: "himalayanshire@gmail.com",
-  priceRange: "₹₹",
-  image: "https://www.thehimalayanshire.com/images/hero-1.jpg",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "Dehna Road, near Talayi Village",
-    addressLocality: "Fagu",
-    addressRegion: "Himachal Pradesh",
-    postalCode: "171209",
-    addressCountry: "IN",
-  },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: 31.066671,
-    longitude: 77.309332,
-  },
-  sameAs: [
-    "https://www.instagram.com/thehimalayanshire/?hl=en",
-    "https://www.facebook.com/p/The-Himalayan-Shire-100089353303601/",
-    "https://www.youtube.com/channel/UCtwdXgLf4WsFtloqPWL23kw",
-  ],
-  amenityFeature: [
-    { "@type": "LocationFeatureSpecification", name: "Mountain view", value: true },
-    { "@type": "LocationFeatureSpecification", name: "Free parking", value: true },
-    { "@type": "LocationFeatureSpecification", name: "In-house kitchen", value: true },
-    { "@type": "LocationFeatureSpecification", name: "Electric fireplace", value: true },
-    { "@type": "LocationFeatureSpecification", name: "Lawn and orchard gardens", value: true },
-    { "@type": "LocationFeatureSpecification", name: "Wi-Fi", value: true },
-    { "@type": "LocationFeatureSpecification", name: "24/7 Hot water", value: true },
-  ],
-  containsPlace: {
-    "@type": "TouristAttraction",
-    name: "Kufri",
-    url: "https://www.thehimalayanshire.com/activities",
-  },
-  author: {
-    "@type": "Organization",
-    name: "The Himalayan Shire",
-    url: "https://www.thehimalayanshire.com/",
-    logo: "https://www.thehimalayanshire.com/images/logo2.jpg",
-  },
-};
-
-const HERO_IMAGE_JSONLD = {
-  "@context": "https://schema.org",
-  "@type": "ImageObject",
-  "@id": "https://www.thehimalayanshire.com/images/hero-1.jpg",
-  contentUrl: "https://www.thehimalayanshire.com/images/hero-1.jpg",
-  name: "The Himalayan Shire — Mountain Homestay in Fagu, Near Shimla",
-  description:
-    "A family-run offbeat homestay in Fagu, near Kufri. Pine views, apple orchards, and seven heritage rooms at 7,500 ft.",
-  caption: "The Himalayan Shire — Fagu, Himachal Pradesh",
-  width: 1920,
-  height: 1080,
-  inLanguage: "en-IN",
-};
-
-const WEBSITE_JSONLD = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "@id": "https://www.thehimalayanshire.com/#website",
-  name: "The Himalayan Shire",
-  url: "https://www.thehimalayanshire.com/",
-  description:
-    "A premium boutique homestay in Fagu, near Kufri and Shimla, Himachal Pradesh — spacious rooms, private villa calm, and Himalayan views.",
-  publisher: {
-    "@type": "Organization",
-    "@id": "https://www.thehimalayanshire.com/#business",
-    name: "The Himalayan Shire",
-    url: "https://www.thehimalayanshire.com/",
-    logo: {
-      "@type": "ImageObject",
-      url: "https://www.thehimalayanshire.com/images/logo2.jpg",
-    },
-  },
-  inLanguage: "en-IN",
-};
+// Canonical JSON-LD — built from the shared property entity (lib/property.ts)
+// so schema, the AI endpoint and the visible site always agree.
+const JSONLD = getLodgingBusinessJsonLd();
+const WEBSITE_JSONLD = getWebSiteJsonLd();
+const HERO_IMAGE_JSONLD = getHeroImageJsonLd();
 
 async function getGtmId(): Promise<string | null> {
   try {

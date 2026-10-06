@@ -3,66 +3,42 @@ import { prisma } from "@/lib/prisma";
 
 export const maxDuration = 60;
 
+// Public health check. Deliberately returns only booleans and timings —
+// DB host/port/name and raw error messages must never be exposed publicly.
 export async function GET() {
-  const url = process.env.DATABASE_URL;
-  const parsed = url ? new URL(url) : null;
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const diagnostics: Record<string, any> = {
-    host: parsed?.hostname,
-    port: parsed?.port,
-    database: parsed?.pathname?.slice(1),
-    hasConnectionLimit: url?.includes("connection_limit") ?? false,
-    clientVersion: "6.19.3",
-  };
+  const checks: Record<string, { ok: boolean; ms?: number; items?: number }> = {};
 
   // Test A: raw SQL
   try {
     const t0 = Date.now();
     await prisma.$queryRaw`SELECT 1`;
-    diagnostics.select1 = { ok: true, ms: Date.now() - t0 };
-  } catch (err) {
-    diagnostics.select1 = {
-      ok: false,
-      message: err instanceof Error ? err.message : "unknown",
-    };
+    checks.select1 = { ok: true, ms: Date.now() - t0 };
+  } catch {
+    checks.select1 = { ok: false };
   }
 
   // Test B: count
   try {
     const t0 = Date.now();
-    const count = await prisma.galleryItem.count();
-    diagnostics.galleryCount = { ok: true, count, ms: Date.now() - t0 };
-  } catch (err) {
-    diagnostics.galleryCount = {
-      ok: false,
-      message: err instanceof Error ? err.message : "unknown",
-    };
+    await prisma.galleryItem.count();
+    checks.galleryCount = { ok: true, ms: Date.now() - t0 };
+  } catch {
+    checks.galleryCount = { ok: false };
   }
 
   // Test C: findMany
   try {
     const t0 = Date.now();
     const items = await prisma.galleryItem.findMany({ take: 1 });
-    diagnostics.galleryFindMany = {
-      ok: true,
-      count: items.length,
-      ms: Date.now() - t0,
-    };
-  } catch (err) {
-    diagnostics.galleryFindMany = {
-      ok: false,
-      message: err instanceof Error ? err.message : "unknown",
-    };
+    checks.galleryFindMany = { ok: true, ms: Date.now() - t0, items: items.length };
+  } catch {
+    checks.galleryFindMany = { ok: false };
   }
 
-  const allOk =
-    diagnostics.select1?.ok &&
-    diagnostics.galleryCount?.ok &&
-    diagnostics.galleryFindMany?.ok;
+  const allOk = Object.values(checks).every((check) => check.ok);
 
   return NextResponse.json(
-    { ok: allOk, ...diagnostics },
+    { ok: allOk, status: allOk ? "up" : "degraded", checks },
     { status: allOk ? 200 : 503 }
   );
 }

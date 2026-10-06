@@ -195,7 +195,7 @@ export function HomeEditorial({
             <div className="relative ml-auto aspect-[4/5] max-w-[620px] overflow-hidden rounded-[1.5rem]">
               <Image
                 src={t("editorial", "image", "/images/brand-lifestyle.jpg")}
-                alt="The Himalayan Shire property"
+                alt="The Himalayan Shire homestay covered in winter snow at Fagu, near Shimla"
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 48vw"

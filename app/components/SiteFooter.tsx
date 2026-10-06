@@ -18,7 +18,10 @@ type FooterColumn = {
 const FOOTER_COLUMNS: FooterColumn[] = [
   {
     title: "Contact",
-    links: [{ label: brand.email, href: `mailto:${brand.email}` }],
+    links: [
+      { label: brand.email, href: `mailto:${brand.email}` },
+      { label: "Enquiry form", href: "/contact" },
+    ],
     phones: [
       { label: brand.phoneDisplay[0], href: brand.phoneHref[0] },
       { label: brand.phoneDisplay[1], href: brand.phoneHref[1] },
@@ -28,6 +31,7 @@ const FOOTER_COLUMNS: FooterColumn[] = [
     title: "Stay",
     links: [
       { label: "Rooms", href: "/#rooms" },
+      { label: "Private Villa", href: "/private-villa" },
       { label: "Pet-Friendly Stay", href: "/pet-friendly-stay" },
       { label: "Pet Policy", href: "/pet-policy" },
     ],
@@ -39,6 +43,7 @@ const FOOTER_COLUMNS: FooterColumn[] = [
       { label: "Sustainability", href: "/sustainability" },
       { label: "Gallery", href: "/gallery" },
       { label: "FAQs", href: "/faq" },
+      { label: "Blog", href: "/blog" },
     ],
   },
 ];

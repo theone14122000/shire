@@ -59,7 +59,7 @@ function transformMonthText(text: string): string {
     .replace(/Overall Weather:/gi, '<b><i>Overall Weather:</i></b>');
 }
 
-function SectionBlock({ section }: { section: BlogSection }) {
+function SectionBlock({ section, altFallback }: { section: BlogSection; altFallback?: string }) {
   switch (section.type) {
     case "paragraph":
       return (
@@ -86,7 +86,7 @@ function SectionBlock({ section }: { section: BlogSection }) {
           <div className="relative aspect-video">
             <Image
               src={section.src || ""}
-              alt={section.alt || ""}
+              alt={section.alt || altFallback || ""}
               fill
               className="object-cover"
               sizes="(max-width: 768px) 100vw, 768px"
@@ -259,7 +259,7 @@ export default async function BlogPostPage({
 
           <div className="mt-10 space-y-5 border-t border-emerald-100 pt-8">
             {post.content.map((section) => (
-              <SectionBlock key={section.id} section={section} />
+              <SectionBlock key={section.id} section={section} altFallback={post.title} />
             ))}
           </div>
 

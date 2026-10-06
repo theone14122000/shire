@@ -82,6 +82,13 @@ Waste segregation and recycling; glass bottles instead of plastic; refillable to
 - Contact: https://www.thehimalayanshire.com/contact
 - Sitemap: https://www.thehimalayanshire.com/sitemap.xml
 
+## Machine-readable resources
+
+- Property facts as JSON (public, read-only): https://www.thehimalayanshire.com/api/ai/property
+- Extended site guide for AI systems: https://www.thehimalayanshire.com/llm.txt
+- Short factual summary: https://www.thehimalayanshire.com/llms.txt
+- Robots policy (AI crawlers allowed on public content): https://www.thehimalayanshire.com/robots.txt
+
 ## Official profiles
 
 - Instagram: https://www.instagram.com/thehimalayanshire/?hl=en

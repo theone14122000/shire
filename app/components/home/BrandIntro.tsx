@@ -80,7 +80,7 @@ export function BrandIntro() {
             <motion.div style={{ y: imgY }} className="relative aspect-[4/5] rounded-[2rem] overflow-hidden shadow-2xl">
               <Image
                 src="/images/brand-lifestyle.jpg"
-                alt="The Himalayan Shire property"
+                alt="The Himalayan Shire homestay covered in winter snow at Fagu, near Shimla"
                 fill
                 priority
                 className="object-cover"
