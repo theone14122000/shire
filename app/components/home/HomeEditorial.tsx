@@ -197,7 +197,6 @@ export function HomeEditorial({
                 src={t("editorial", "image", "/images/brand-lifestyle.jpg")}
                 alt="The Himalayan Shire homestay covered in winter snow at Fagu, near Shimla"
                 fill
-                priority
                 sizes="(max-width: 1024px) 100vw, 48vw"
                 className="object-cover"
               />

@@ -145,7 +145,7 @@ export function SustainabilityContent({ content }: { content: SustainabilityCont
                   </p>
                 </div>
               </motion.div>
-              <ImageCard image={content.featured[0]} priority />
+              <ImageCard image={content.featured[0]} />
             </div>
           </section>
         )}

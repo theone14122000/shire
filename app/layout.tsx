@@ -8,6 +8,7 @@ import {
   getWebSiteJsonLd,
 } from "@/lib/property";
 import { BookClickTracker } from "./components/BookClickTracker";
+import { ImageErrorFallback } from "./components/ImageErrorFallback";
 import "./globals.css";
 
 const raleway = Raleway({
@@ -167,6 +168,7 @@ export default async function RootLayout({
           </>
         )}
         <BookClickTracker />
+        <ImageErrorFallback />
         {children}
       </body>
     </html>

@@ -305,7 +305,7 @@ export const traditionalRemedies = {
 You can choose to spend your days walking the orchard, sitting by the fire, or going on a snow trek with our local team. We will help you plan, and we will sit with you in the evening over a hot meal when you come back.`,
   cta: { label: "Read the full story", href: "#story" },
   image: {
-    src: "/images/setting-orchard-view.jpg",
+    src: "/images/setting-view.jpg",
     alt: "Panoramic view of apple orchards, pine forests, and the Kinnaur Kailash range from The Himalayan Shire",
   },
   theme: { bg: "bg-emerald-900", text: "text-black" },

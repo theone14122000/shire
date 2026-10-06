@@ -85,6 +85,11 @@ export function Hero({ content }: { content?: any }) {
             }}
             className="absolute inset-0"
           >
+            {/* Poster is the page's LCP candidate (hero fills the first
+                viewport before the video starts). Preload it so the browser
+                discovers it without waiting for the <video> markup; React
+                hoists this <link> into <head>. */}
+            <link rel="preload" as="image" href={poster} fetchPriority="high" />
             <video
               autoPlay
               loop

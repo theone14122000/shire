@@ -296,10 +296,9 @@ function GalleryTile({
               src={item.src}
               alt={item.title}
               fill
-              // Only the first tile is eager: the page hero already carries
-              // `priority`, and eager-loading the whole grid only contends
-              // with the LCP image. Visual result is identical.
-              priority={index === 0}
+              // Every tile lazy-loads: the page hero already carries
+              // `priority` as the LCP image, and preloading grid tiles only
+              // competes with it above the fold. Visual result is identical.
             sizes="(max-width: 1024px) 100vw, 50vw"
             className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-110"
           />
