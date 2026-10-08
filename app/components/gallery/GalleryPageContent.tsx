@@ -22,7 +22,7 @@ const GALLERY_FILES = [
   "ground-floor-lobby.jpg",
   "himachali-style-seating.jpg",
   "indoor-games.jpeg",
-  "lawn-withoutdoor-seating-1.jpg",
+  "lawn-with-outdoor-seating-1.jpg",
   "mesmerizing-views.jpg",
   "reception-area.png",
   "recreational-hall.jpg",

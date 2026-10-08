@@ -12,9 +12,17 @@ const CACHEABLE_EXTENSIONS = ["mp4", "webm", "jpg", "jpeg", "png", "webp", "avif
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
-    // The image optimizer SSRF-blocks loopback hosts, so newly uploaded
-    // DB-backed media can't be optimized on localhost. Dev only.
-    unoptimized: process.env.NODE_ENV !== "production",
+    // Serve images as plain files (no /_next/image round-trip).
+    // Vercel's image-optimization entitlement is exhausted on this project
+    // (edge responds 402 OPTIMIZED_IMAGE_REQUEST_PAYMENT_REQUIRED for every
+    // cache miss on /_next/image), so optimized srcsets were rendering as
+    // broken/blank images while only still-cached variants displayed. Raw
+    // files from /public and /api/media serve correctly with our long-lived
+    // Cache-Control below. If the Vercel plan/image quota is restored,
+    // switch this back to `process.env.NODE_ENV !== "production"` to
+    // re-enable AVIF + responsive resizing (formats/minimumCacheTTL below
+    // stay configured for that).
+    unoptimized: true,
     // Serve modern formats first: AVIF/WebP are 20-30% smaller than JPEG
     // at the same visual quality. Same pixels, fewer bytes.
     formats: ["image/avif", "image/webp"],
