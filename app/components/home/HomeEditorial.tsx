@@ -23,6 +23,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { brand, brandIntro, ELFSIGHT_GOOGLE_REVIEWS_ID } from "@/lib/content";
+import { LazyYouTube } from "../LazyYouTube";
 import { InstagramFeed } from "./InstagramFeed";
 import { RoomsCarousel } from "./RoomsCarousel";
 
@@ -35,15 +36,6 @@ const stagger: Variants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.08, delayChildren: 0.08 } },
 };
-
-function youtubeId(url: string): string {
-  const trimmed = url.trim();
-  const match = trimmed.match(
-    /(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/))([A-Za-z0-9_-]{11})/
-  );
-  return match ? match[1] : trimmed;
-}
-
 type AmenityItem = {
   title: string;
   note: string;
@@ -402,14 +394,10 @@ whileInView="show"
             className="mx-auto mt-12 w-full max-w-5xl lg:mt-16"
           >
             <div className="relative aspect-video w-full overflow-hidden border border-emerald-900/10 bg-emerald-950 shadow-[0_24px_70px_rgba(3,45,32,0.16)]">
-              <iframe
-                src={`https://www.youtube-nocookie.com/embed/${youtubeId(t("video", "videoUrl", "uVUTB5HsBXU"))}?rel=0`}
+              <LazyYouTube
+                videoId={t("video", "videoUrl", "uVUTB5HsBXU")}
                 title="The Himalayan Shire property video"
-                loading="lazy"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-                referrerPolicy="strict-origin-when-cross-origin"
-                className="absolute inset-0 h-full w-full"
+                query="rel=0"
               />
             </div>
           </motion.div>

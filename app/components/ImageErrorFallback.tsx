@@ -21,6 +21,23 @@ export function ImageErrorFallback() {
     const onError = (event: Event) => {
       const el = event.target;
       if (!(el instanceof HTMLImageElement)) return;
+      const current = el.currentSrc || el.src;
+      // Optimizer variant failed (e.g. Vercel image-quota 402) — degrade to
+      // the raw original file instead of losing the image. Strip srcset so
+      // the browser stays on the raw URL.
+      if (current.includes("/_next/image?")) {
+        let raw: string | null = null;
+        try {
+          raw = new URL(current, window.location.origin).searchParams.get("url");
+        } catch {
+          /* fall through to hide */
+        }
+        if (raw && !raw.includes("/_next/image?")) {
+          el.removeAttribute("srcset");
+          el.src = raw;
+          return;
+        }
+      }
       el.style.opacity = "0";
       if (process.env.NODE_ENV !== "production") {
         console.warn("[image] failed to load:", el.currentSrc || el.src);
