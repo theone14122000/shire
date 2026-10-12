@@ -16,8 +16,8 @@
 export const BOOKING_URL =
   "https://letsbook.me/booking/thehimalayanshire?checkin=2026-08-04&checkout=2026-08-05&adults=2&children=0";
 
-export const ELFSIGHT_GOOGLE_REVIEWS_ID = "b9e7c232-8950-4e65-9497-1821a28950e6";
-export const ELFSIGHT_INSTAGRAM_ID = "9ef91159-a379-4f0d-a025-404b95790fae";
+export const ELFSIGHT_GOOGLE_REVIEWS_ID = "c34cceee-a067-4849-9922-20f84691d6da";
+export const ELFSIGHT_INSTAGRAM_ID = "9b5c920d-17e8-456a-af44-ffd21eb33e17";
 
 export const brand = {
   name: "The Himalayan Shire",

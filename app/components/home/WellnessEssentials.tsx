@@ -10,6 +10,7 @@ import Script from "next/script";
 import { useRef } from "react";
 import { Container } from "../ui/Container";
 import { SectionHeading } from "../ui/SectionHeading";
+import { ELFSIGHT_GOOGLE_REVIEWS_ID } from "@/lib/content";
 
 /* ------------------------------------------------------------------ */
 /*  Data — "In-Room Tea & Coffee" removed as requested                 */
@@ -224,7 +225,7 @@ export function WellnessEssentials() {
               className="rounded-2xl border border-emerald-200 bg-white p-3 shadow-lg shadow-emerald-950/8 sm:p-5 lg:p-6"
             >
               <div
-                className="elfsight-app-b9e7c232-8950-4e65-9497-1821a28950e6"
+                className={`elfsight-app-${ELFSIGHT_GOOGLE_REVIEWS_ID}`}
                 data-elfsight-app-lazy
               />
             </motion.div>

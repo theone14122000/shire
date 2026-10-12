@@ -108,17 +108,17 @@ export function SiteNav() {
             }`}
             priority
           />
-          <div className="flex flex-col ml-3 leading-tight">
+          <div className="flex flex-col flex-1 ml-3 pr-2 xl:pr-0 leading-tight">
             <span className="font-display font-extrabold text-emerald-900 text-sm sm:text-lg tracking-wide">
               The Himalayan Shire
             </span>
-            <span className="font-bold text-emerald-800 text-[11px] sm:text-sm tracking-wider">
+            <span className="font-bold text-emerald-800 text-[11px] sm:text-sm tracking-wider whitespace-nowrap">
               Fagu (Shimla)
             </span>
           </div>
         </Link>
 
-        <div className="hidden lg:flex items-center gap-6 xl:gap-8">
+        <div className="hidden xl:flex items-center gap-6 xl:gap-8">
           <motion.nav
             aria-label="Primary"
             className="flex items-center gap-1"
@@ -238,7 +238,7 @@ export function SiteNav() {
           </motion.a>
         </div>
 
-        <div className="flex items-center gap-3 lg:hidden">
+        <div className="flex items-center gap-3 xl:hidden">
           <a
             href="https://letsbook.me/booking/thehimalayanshire?checkin=2026-08-04&checkout=2026-08-05&adults=2&children=0"
             className="inline-flex items-center gap-2 rounded-full bg-emerald-800 px-4 py-2 text-sm font-bold text-cream-50 transition-all duration-300 hover:bg-emerald-700 shadow-md whitespace-nowrap"
@@ -270,7 +270,7 @@ export function SiteNav() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:hidden border-t border-emerald-200/40 bg-white overflow-hidden"
+            className="xl:hidden border-t border-emerald-200/40 bg-white overflow-hidden"
           >
             <nav aria-label="Mobile" className="mx-auto w-full max-w-[1400px] py-4 px-5 sm:px-8 flex flex-col gap-1">
               {NAV_ITEMS.map((item) => {

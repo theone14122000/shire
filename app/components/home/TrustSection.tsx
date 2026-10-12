@@ -4,7 +4,7 @@ import { motion, type Variants } from "framer-motion";
 import Script from "next/script";
 import { Container } from "../ui/Container";
 import { SectionHeading } from "../ui/SectionHeading";
-import { trustSection } from "@/lib/content";
+import { trustSection, ELFSIGHT_GOOGLE_REVIEWS_ID } from "@/lib/content";
 import { fadeUp, stagger } from "../ui/Motion";
 
 const statHover: Variants = {
@@ -85,7 +85,7 @@ export function TrustSection() {
           className="mx-auto max-w-4xl"
         >
           <div className="rounded-2xl border border-emerald-200/40 bg-cream-50 p-4 sm:p-6">
-            <div className="elfsight-app-b9e7c232-8950-4e65-9497-1821a28950e6" data-elfsight-app-lazy />
+            <div className={`elfsight-app-${ELFSIGHT_GOOGLE_REVIEWS_ID}`} data-elfsight-app-lazy />
           </div>
         </motion.div>
       </Container>
